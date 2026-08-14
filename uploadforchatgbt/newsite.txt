@@ -1,0 +1,11320 @@
+پیشنهاد من برای سایت جدید Parsa Apps | پارسا اپس:
+ساختار:
+Parsa-apps.github.io
+│
+├── index.html          صفحه اصلی
+├── style.css           تمام طراحی و انیمیشن‌ها
+├── script.js           تعاملات و افکت‌ها
+│
+├── assets
+│   ├── logo.png
+│   ├── island.png
+│   └── screenshots/
+│
+└── pages
+    └── island.html     معرفی جزیره فندقی
+قابلیت‌هایی که داخلش می‌گذارم:
+✅ طراحی کاملاً فارسی RTL
+✅ حالت استارتاپ حرفه‌ای
+✅ Hero سه‌بعدی
+✅ ذرات متحرک در پس‌زمینه
+✅ ستاره‌ها و ابرهای شناور
+✅ کارت محصول با 3D Tilt
+✅ افکت شیشه‌ای Glassmorphism
+✅ انیمیشن هنگام اسکرول
+✅ دکمه‌های Ripple
+✅ پارالکس
+✅ منوی موبایل حرفه‌ای
+✅ حالت Dark/Light
+✅ بخش معرفی جزیره فندقی
+✅ بخش محصولات آینده
+✅ تایم‌لاین مسیر توسعه
+✅ Footer حرفه‌ای
+✅ SEO آماده
+✅ بدون هیچ کتابخانه خارجی (سریع و سبک)
+مثلاً ظاهر Hero چیزی شبیه:
+        ✨        ☁️
+
+       پارسا اپس
+
+ ساخت تجربه‌های دیجیتال
+ برای نسل آینده
+
+ [مشاهده محصولات]
+
+        🏝️
+     جزیره فندقی
+فقط یک نکته: چون حجم کد زیاد می‌شود، من نمی‌توانم همه‌ی index.html + style.css + script.js را در یک پیام کامل جا بدهم بدون اینکه نصفه قطع شود.
+بهترین کار: من در ۳ پیام پشت سر هم می‌فرستم:
+1️⃣ کد کامل index.html
+2️⃣ کد کامل style.css (بخش اصلی انیمیشن‌ها)
+3️⃣ کد کامل script.js
+بعد تو فقط داخل GitHub جایگزین می‌کنی.
+فقط قبلش یک چیز را مشخص کن: می‌خواهی سبک سایت بیشتر کدام باشد؟
+A) شبیه سایت‌های شرکت‌های هوش مصنوعی و تکنولوژی (مدرن، تیره، نئون، حرفه‌ای)
+B) شبیه دنیای کودکانه جزیره فندقی (رنگی، شاد، سه‌بعدی، انیمیشنی)
+C) ترکیبی: صفحه اصلی پارسا اپس تکنولوژی، محصول جزیره فندقی کودکانه
+من برای برندت گزینه C را پیشنهاد می‌کنم چون هم شرکت را حرفه‌ای نشان می‌دهد هم محصول کودکانه جذاب می‌ماند. 👌
+
+
+
+عالیه داداش 👌 انتخاب C برای «پارسا اپس» بهترینه. چون برند اصلی باید حس یک استودیو تکنولوژی بده، ولی محصول اول یعنی جزیره فندقی باید حس دنیای شاد و جادویی کودکانه داشته باشه.
+طراحی رو اینطوری می‌چینیم:
+هویت کلی سایت:
+پارسا اپس
+استودیو ساخت اپلیکیشن‌های خلاقانه
+استایل:
+پس‌زمینه مدرن (تیره + گرادیان‌های آبی/بنفش)
+افکت‌های نور و ذرات
+انیمیشن‌های نرم مثل سایت‌های استارتاپی
+کارت‌های شیشه‌ای (Glass)
+حرکت‌های 3D
+بخش محصول:
+🏝️ جزیره فندقی
+استایل جدا:
+رنگ‌های گرم
+ابر، ستاره، جزیره، المان‌های کارتونی
+کارت سه‌بعدی
+دکمه دانلود با افکت جذاب
+ساختار صفحه اصلی:
+┌─────────────────┐
+│ لوگو پارسا اپس  │
+│                 │
+│ آینده را        │
+│ با خلاقیت       │
+│ می‌سازیم        │
+│                 │
+│ [محصولات]       │
+└─────────────────┘
+
+        ↓
+
+🚀 درباره پارسا اپس
+
+        ↓
+
+🏝️ جزیره فندقی
+تصویر + معرفی + دانلود
+
+        ↓
+
+✨ ویژگی‌ها
+
+        ↓
+
+🛠️ مسیر آینده
+
+        ↓
+
+📱 محصولات آینده
+
+        ↓
+
+Footer
+من شروع می‌کنم با فایل اول:
+index.html کامل
+بعد از آن:
+style.css (بخش سنگین انیمیشن‌ها)
+script.js (تعاملات)
+فقط یک نکته قبل شروع: برای لوگو چون گفتی لوگوی رسمی ساختید، داخل کد مسیرش رو این می‌گذارم:
+assets/logo.png
+بعداً فقط لوگوی خودت را با همین اسم داخل پوشه بگذاری.
+شروع می‌کنم پیام بعدی با index.html کامل. 🚀
+
+
+عالی داداش 👌 شروع می‌کنیم.
+این فایل اول یعنی index.html هست. این نسخه پایه‌ی حرفه‌ای سایت پارسا اپس است که بعداً با CSS و JS تبدیلش می‌کنیم به یک سایت فول انیمیشنی.
+فایل فعلی index.html گیت‌هابت رو کامل با این جایگزین کن:
+
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>پارسا اپس | ساخت اپلیکیشن‌های خلاقانه</title>
+
+<meta name="description" content="پارسا اپس، استودیو ساخت اپلیکیشن‌های خلاقانه و تجربه‌های دیجیتال">
+
+<link rel="icon" href="assets/logo.png">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="background-effects">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+
+
+<header class="header">
+
+<div class="logo-box">
+
+<img src="assets/logo.png" alt="پارسا اپس">
+
+<div>
+<h2>پارسا اپس</h2>
+<p>ساخت آینده دیجیتال</p>
+</div>
+
+</div>
+
+
+
+<nav>
+
+<a href="#home">خانه</a>
+<a href="#about">درباره ما</a>
+<a href="#products">محصولات</a>
+<a href="#future">آینده</a>
+
+</nav>
+
+
+<button class="menu-btn">
+☰
+</button>
+
+
+</header>
+
+
+
+
+
+<section class="hero" id="home">
+
+
+<div class="hero-content">
+
+
+<h1>
+
+ما تجربه‌های دیجیتال
+<br>
+<span>خلاقانه و هوشمند</span>
+می‌سازیم
+
+</h1>
+
+
+<p>
+
+پارسا اپس یک استودیو توسعه نرم‌افزار است که با ترکیب
+تکنولوژی، طراحی و خلاقیت، محصولات دیجیتال نسل جدید را خلق می‌کند.
+
+</p>
+
+
+<div class="hero-buttons">
+
+<a href="#products" class="btn primary">
+
+مشاهده محصولات
+
+</a>
+
+
+<a href="#about" class="btn secondary">
+
+درباره ما
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="hero-logo">
+
+
+<div class="floating-card">
+
+<img src="assets/logo.png">
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="about section" id="about">
+
+
+<h2>
+🚀 درباره پارسا اپس
+</h2>
+
+
+<p>
+
+هدف ما ساخت برنامه‌هایی است که فقط یک نرم‌افزار نباشند؛
+بلکه تجربه‌ای جذاب، ساده و ماندگار برای کاربران ایجاد کنند.
+
+</p>
+
+
+
+<div class="values">
+
+
+<div class="glass-card">
+
+<h3>💡 خلاقیت</h3>
+
+<p>
+ایده‌های جدید برای دنیای دیجیتال
+</p>
+
+</div>
+
+
+
+<div class="glass-card">
+
+<h3>⚡ تکنولوژی</h3>
+
+<p>
+استفاده از فناوری‌های مدرن
+</p>
+
+</div>
+
+
+
+<div class="glass-card">
+
+<h3>🎨 طراحی</h3>
+
+<p>
+ساخت تجربه‌های زیبا و کاربردی
+</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="products section" id="products">
+
+
+<h2>
+محصولات ما
+</h2>
+
+
+
+<div class="product-card">
+
+
+<div class="product-image">
+
+🏝️
+
+</div>
+
+
+
+<div>
+
+<h3>
+جزیره فندقی
+</h3>
+
+
+<p>
+
+یک دنیای آموزشی و سرگرم‌کننده برای کودکان،
+پر از بازی، یادگیری و خلاقیت.
+
+</p>
+
+
+<a href="island.html" class="btn primary">
+
+مشاهده محصول
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="future section" id="future">
+
+
+<h2>
+🌌 مسیر آینده
+</h2>
+
+
+<p>
+
+ما در حال ساخت نسل جدیدی از برنامه‌های خلاقانه هستیم.
+
+</p>
+
+
+
+<div class="timeline">
+
+
+<div>
+<span>01</span>
+ایده‌پردازی
+</div>
+
+
+<div>
+<span>02</span>
+طراحی
+</div>
+
+
+<div>
+<span>03</span>
+توسعه
+</div>
+
+
+<div>
+<span>04</span>
+انتشار
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<footer>
+
+
+<h2>
+پارسا اپس
+</h2>
+
+
+<p>
+ساخت تجربه‌های دیجیتال برای آینده
+</p>
+
+
+<p>
+© ۱۴۰۵ تمامی حقوق محفوظ است
+</p>
+
+
+</footer>
+
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+بزن بریم داداش 🚀
+حالا می‌رسیم به بخش اصلی که سایت رو از یک صفحه معمولی تبدیل می‌کنه به یک سایت استارتاپی حرفه‌ای.
+این style.css شامل:
+طراحی مدرن پارسا اپس
+حالت شیشه‌ای
+نورهای متحرک
+پس‌زمینه زنده
+انیمیشن ورود
+کارت‌های سه‌بعدی
+افکت شناور
+ریسپانسیو موبایل
+فایل style.css رو کامل جایگزین کن:
+
+
+
+
+
+/* =========================
+   Parsa Apps - Main Style
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap');
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+html{
+    scroll-behavior:smooth;
+}
+
+
+body{
+
+    font-family:'Vazirmatn',sans-serif;
+
+    background:#050816;
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+
+
+/* =========================
+   Background Effects
+========================= */
+
+
+.background-effects span{
+
+    position:fixed;
+
+    width:350px;
+    height:350px;
+
+    border-radius:50%;
+
+    filter:blur(100px);
+
+    opacity:.35;
+
+    z-index:-1;
+
+    animation:moveGlow 12s infinite alternate;
+
+}
+
+
+.background-effects span:nth-child(1){
+
+    background:#6c5ce7;
+
+    top:10%;
+    right:10%;
+
+}
+
+
+.background-effects span:nth-child(2){
+
+    background:#00cec9;
+
+    bottom:15%;
+    left:5%;
+
+    animation-delay:3s;
+
+}
+
+
+.background-effects span:nth-child(3){
+
+    background:#fdcb6e;
+
+    top:50%;
+    right:40%;
+
+    animation-delay:5s;
+
+}
+
+
+.background-effects span:nth-child(4){
+
+    background:#ff7675;
+
+    bottom:5%;
+    right:30%;
+
+    animation-delay:7s;
+
+}
+
+
+
+@keyframes moveGlow{
+
+from{
+
+transform:translate(0,0);
+
+}
+
+
+to{
+
+transform:translate(80px,-60px);
+
+}
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Header
+========================= */
+
+
+.header{
+
+width:90%;
+
+max-width:1300px;
+
+margin:25px auto;
+
+padding:15px 25px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:25px;
+
+
+position:sticky;
+
+top:20px;
+
+z-index:100;
+
+}
+
+
+
+.logo-box{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+
+
+.logo-box img{
+
+width:60px;
+
+height:60px;
+
+object-fit:contain;
+
+animation:float 4s infinite ease-in-out;
+
+}
+
+
+
+.logo-box h2{
+
+font-size:22px;
+
+}
+
+
+
+.logo-box p{
+
+font-size:13px;
+
+color:#ccc;
+
+}
+
+
+
+nav{
+
+display:flex;
+
+gap:30px;
+
+}
+
+
+nav a{
+
+color:white;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+
+nav a:hover{
+
+color:#ffd166;
+
+}
+
+
+
+.menu-btn{
+
+display:none;
+
+background:none;
+
+border:none;
+
+color:white;
+
+font-size:30px;
+
+}
+
+
+
+
+
+
+/* =========================
+ Hero
+========================= */
+
+
+.hero{
+
+min-height:90vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+padding:40px 8%;
+
+}
+
+
+
+.hero-content{
+
+max-width:650px;
+
+animation:fadeUp 1s;
+
+}
+
+
+
+.hero h1{
+
+font-size:55px;
+
+font-weight:900;
+
+line-height:1.5;
+
+}
+
+
+
+.hero h1 span{
+
+background:linear-gradient(90deg,#ffd166,#ff6b6b);
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+}
+
+
+
+.hero p{
+
+margin-top:25px;
+
+font-size:18px;
+
+line-height:2;
+
+color:#ddd;
+
+}
+
+
+
+
+.hero-buttons{
+
+margin-top:35px;
+
+display:flex;
+
+gap:20px;
+
+}
+
+
+
+.btn{
+
+padding:15px 35px;
+
+border-radius:50px;
+
+text-decoration:none;
+
+display:inline-block;
+
+transition:.4s;
+
+}
+
+
+
+.primary{
+
+background:linear-gradient(90deg,#6c5ce7,#00cec9);
+
+color:white;
+
+box-shadow:0 0 30px #6c5ce7;
+
+}
+
+
+
+.secondary{
+
+border:1px solid white;
+
+color:white;
+
+}
+
+
+
+.btn:hover{
+
+transform:translateY(-8px) scale(1.05);
+
+}
+
+
+
+.hero-logo{
+
+perspective:1000px;
+
+}
+
+
+
+.floating-card{
+
+width:300px;
+
+height:300px;
+
+background:rgba(255,255,255,.1);
+
+border-radius:50px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+backdrop-filter:blur(20px);
+
+animation:float 5s infinite ease-in-out;
+
+box-shadow:0 30px 80px rgba(0,0,0,.5);
+
+}
+
+
+
+.floating-card img{
+
+width:180px;
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Sections
+========================= */
+
+
+.section{
+
+padding:100px 8%;
+
+text-align:center;
+
+}
+
+
+
+.section h2{
+
+font-size:38px;
+
+margin-bottom:30px;
+
+}
+
+
+
+
+.section p{
+
+color:#ccc;
+
+line-height:2;
+
+}
+
+
+
+
+
+
+/* =========================
+ Glass Cards
+========================= */
+
+
+.values{
+
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:30px;
+
+margin-top:50px;
+
+}
+
+
+
+.glass-card{
+
+width:280px;
+
+padding:35px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:30px;
+
+backdrop-filter:blur(15px);
+
+transition:.5s;
+
+}
+
+
+
+.glass-card:hover{
+
+transform:translateY(-15px);
+
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Product
+========================= */
+
+
+.product-card{
+
+max-width:900px;
+
+margin:auto;
+
+padding:40px;
+
+display:flex;
+
+gap:40px;
+
+align-items:center;
+
+background:linear-gradient(
+135deg,
+rgba(255,255,255,.15),
+rgba(255,255,255,.05)
+);
+
+border-radius:40px;
+
+backdrop-filter:blur(20px);
+
+}
+
+
+
+.product-image{
+
+font-size:120px;
+
+animation:float 4s infinite;
+
+}
+
+
+
+
+
+
+/* =========================
+ Timeline
+========================= */
+
+
+.timeline{
+
+display:flex;
+
+justify-content:center;
+
+gap:25px;
+
+flex-wrap:wrap;
+
+margin-top:50px;
+
+}
+
+
+.timeline div{
+
+background:white;
+
+color:#111;
+
+padding:25px;
+
+border-radius:25px;
+
+width:180px;
+
+font-weight:bold;
+
+}
+
+
+
+.timeline span{
+
+display:block;
+
+font-size:35px;
+
+color:#6c5ce7;
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Footer
+========================= */
+
+
+footer{
+
+text-align:center;
+
+padding:50px;
+
+background:#02030a;
+
+color:#aaa;
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ Animations
+========================= */
+
+
+@keyframes float{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-20px);
+
+}
+
+}
+
+
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(50px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ Mobile
+========================= */
+
+
+@media(max-width:800px){
+
+
+.header{
+
+width:95%;
+
+}
+
+
+nav{
+
+display:none;
+
+}
+
+
+
+.menu-btn{
+
+display:block;
+
+}
+
+
+
+.hero{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+
+
+.hero h1{
+
+font-size:38px;
+
+}
+
+
+.hero-buttons{
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+}
+
+
+
+.floating-card{
+
+width:240px;
+
+height:240px;
+
+margin-top:50px;
+
+}
+
+
+.product-card{
+
+flex-direction:column;
+
+}
+
+
+.section h2{
+
+font-size:30px;
+
+}
+
+
+
+}
+
+این شد نسخه‌ی اول CSS 🔥
+بعد از این مرحله، سایت ظاهرش خیلی تغییر می‌کنه ولی هنوز «جادویی» نشده.
+مرحله بعدی script.js هست که اضافه می‌کنیم:
+حرکت سه‌بعدی کارت با موس
+انیمیشن هنگام اسکرول
+Ripple روی دکمه‌ها
+ذرات متحرک
+منوی موبایل
+افکت ورود صفحات
+بعد از JS تازه حس سایت‌های حرفه‌ای میاد. 🚀
+
+
+
+بزن بریم داداش 🚀🔥
+حالا می‌رسیم به مغز انیمیشن‌های سایت یعنی script.js.
+این فایل این قابلیت‌ها رو اضافه می‌کنه:
+✅ انیمیشن ورود هنگام اسکرول
+✅ حرکت 3D لوگو و کارت محصول با موس
+✅ افکت Ripple روی دکمه‌ها
+✅ پارالکس نرم روی نورهای پس‌زمینه
+✅ منوی موبایل
+✅ تشخیص موبایل برای سبک‌تر شدن افکت‌ها
+✅ حرکت نرم و حرفه‌ای بدون سنگین کردن سایت
+فایل script.js رو کامل جایگزین کن:
+
+
+
+
+
+/* =====================================
+   Parsa Apps Motion Engine
+===================================== */
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+
+/* =========================
+   Scroll Reveal
+========================= */
+
+
+const revealElements =
+document.querySelectorAll(
+".section,.glass-card,.product-card,.timeline div"
+);
+
+
+
+const observer =
+new IntersectionObserver(
+(entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+observer.unobserve(entry.target);
+
+}
+
+
+});
+
+
+},
+{
+threshold:.15
+}
+);
+
+
+
+revealElements.forEach(el=>{
+
+el.classList.add("hidden");
+
+observer.observe(el);
+
+});
+
+
+
+
+
+
+
+/* =========================
+   3D Tilt Card
+========================= */
+
+
+const cards =
+document.querySelectorAll(
+".floating-card,.product-card"
+);
+
+
+
+cards.forEach(card=>{
+
+
+card.addEventListener(
+"mousemove",
+(e)=>{
+
+
+if(window.innerWidth < 800)
+return;
+
+
+
+const rect =
+card.getBoundingClientRect();
+
+
+
+const x =
+e.clientX - rect.left;
+
+
+
+const y =
+e.clientY - rect.top;
+
+
+
+const rotateY =
+(x / rect.width - .5) * 12;
+
+
+
+const rotateX =
+(y / rect.height - .5) * -12;
+
+
+
+card.style.transform =
+`
+perspective(900px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+scale(1.03)
+`;
+
+
+
+}
+);
+
+
+
+card.addEventListener(
+"mouseleave",
+()=>{
+
+
+card.style.transform="";
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+
+/* =========================
+   Ripple Effect
+========================= */
+
+
+const buttons =
+document.querySelectorAll(
+".btn,a"
+);
+
+
+
+buttons.forEach(button=>{
+
+
+button.addEventListener(
+"click",
+function(e){
+
+
+const ripple =
+document.createElement("span");
+
+
+const rect =
+this.getBoundingClientRect();
+
+
+
+const size =
+Math.max(
+rect.width,
+rect.height
+);
+
+
+
+ripple.style.width=size+"px";
+
+ripple.style.height=size+"px";
+
+
+ripple.style.left =
+e.clientX -
+rect.left -
+size/2
++"px";
+
+
+ripple.style.top =
+e.clientY -
+rect.top -
+size/2
++"px";
+
+
+
+ripple.className="ripple";
+
+
+
+this.appendChild(ripple);
+
+
+
+setTimeout(()=>{
+
+ripple.remove();
+
+},600);
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+/* =========================
+   Background Parallax
+========================= */
+
+
+const glow =
+document.querySelectorAll(
+".background-effects span"
+);
+
+
+
+window.addEventListener(
+"scroll",
+()=>{
+
+
+const y =
+window.scrollY;
+
+
+
+glow.forEach(
+(item,index)=>{
+
+
+item.style.transform =
+`
+translateY(${y*(index+1)*0.03}px)
+`;
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+
+/* =========================
+   Mobile Menu
+========================= */
+
+
+const menuBtn =
+document.querySelector(".menu-btn");
+
+
+const nav =
+document.querySelector("nav");
+
+
+
+if(menuBtn){
+
+
+menuBtn.onclick=()=>{
+
+
+nav.classList.toggle("active");
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   Smooth Page Load
+========================= */
+
+
+document.body.classList.add(
+"loaded"
+);
+
+
+
+});
+
+
+
+
+
+
+
+
+حالا یک تکه کوچک هم باید به آخر style.css اضافه کنیم تا کلاس‌های JS کار کنند:
+این را آخر فایل style.css بچسبان:
+/* =========================
+ JS Motion Addons
+========================= */
+
+
+.hidden{
+
+opacity:0;
+
+transform:
+translateY(50px);
+
+transition:
+1s ease;
+
+}
+
+
+.show{
+
+opacity:1;
+
+transform:none;
+
+}
+
+
+
+
+.ripple{
+
+position:absolute;
+
+border-radius:50%;
+
+background:
+rgba(255,255,255,.5);
+
+transform:scale(0);
+
+animation:ripple .6s linear;
+
+pointer-events:none;
+
+}
+
+
+
+.btn,a{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+
+
+
+@keyframes ripple{
+
+to{
+
+transform:scale(4);
+
+opacity:0;
+
+}
+
+}
+
+
+
+
+nav.active{
+
+display:flex;
+
+position:absolute;
+
+top:80px;
+
+right:20px;
+
+background:
+rgba(0,0,0,.8);
+
+padding:25px;
+
+border-radius:20px;
+
+flex-direction:column;
+
+}
+الان سه فایل اصلی داریم:
+✅ index.html
+✅ style.css
+✅ script.js
+بعد از گذاشتن این‌ها در GitHub Pages، سایت باید یک جهش بزرگ بکند.
+مرحله بعدی که پیشنهاد می‌کنم انجام بدیم:
+🔥 مرحله حرفه‌ای‌تر: ساخت صفحه مخصوص "جزیره فندقی"
+یعنی:
+Hero اختصاصی جزیره
+معرفی بازی
+اسکرین‌شات اپ
+دکمه دانلود
+انیمیشن جزیره شناور
+ابر و ستاره
+بخش والدین
+چون محصول اصلی ما همینه و باید مثل یک محصول واقعی معرفی بشه. 🏝️🚀
+
+
+
+
+عالی داداش 🚀🏝️
+حالا می‌ریم سراغ صفحه اختصاصی محصول: جزیره فندقی.
+هدف این صفحه اینه که وقتی کسی واردش میشه حس کنه وارد یک محصول واقعی شده، نه فقط یک صفحه معرفی ساده.
+ساختار صفحه:
+
+island.html
+
+🏝️ Hero جزیره
+↓
+🎮 معرفی بازی
+↓
+📱 تصاویر اپلیکیشن
+↓
+✨ امکانات
+↓
+👨‍👩‍👧 بخش والدین
+↓
+🚀 وضعیت توسعه
+↓
+⬇️ دانلود
+
+
+اول فایل جدید بساز:
+island.html
+و این کد رو داخلش قرار بده:
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>جزیره فندقی | پارسا اپس</title>
+
+<meta name="description" content="جزیره فندقی، دنیای آموزشی و سرگرمی کودکانه ساخته شده توسط پارسا اپس">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="island-bg">
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+</div>
+
+
+
+<header class="header">
+
+<div class="logo-box">
+
+<img src="assets/logo.png">
+
+<div>
+
+<h2>پارسا اپس</h2>
+
+<p>جزیره فندقی</p>
+
+</div>
+
+</div>
+
+
+<nav>
+
+<a href="index.html">
+خانه
+</a>
+
+
+<a href="island.html">
+جزیره فندقی
+</a>
+
+
+</nav>
+
+
+</header>
+
+
+
+
+
+
+
+<section class="island-hero">
+
+
+<div>
+
+
+<h1>
+🏝️ جزیره فندقی
+</h1>
+
+
+<h2>
+یک دنیای شاد برای یادگیری و بازی
+</h2>
+
+
+<p>
+
+محیطی امن، خلاقانه و سرگرم‌کننده
+برای کودکان عزیز
+
+</p>
+
+
+
+<a class="btn primary">
+
+دانلود برنامه
+
+</a>
+
+
+</div>
+
+
+
+
+<div class="island-character">
+
+🥜
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<section class="section">
+
+
+<h2>
+🎮 درباره جزیره فندقی
+</h2>
+
+
+<p>
+
+جزیره فندقی یک اپلیکیشن آموزشی کودکانه است
+که یادگیری را با بازی، داستان و سرگرمی ترکیب می‌کند.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="section">
+
+
+<h2>
+✨ امکانات برنامه
+</h2>
+
+
+
+<div class="values">
+
+
+<div class="glass-card">
+
+<h3>
+🎨 خلاقیت
+</h3>
+
+<p>
+فعالیت‌های جذاب برای رشد ذهن کودک
+</p>
+
+</div>
+
+
+
+
+<div class="glass-card">
+
+<h3>
+🧩 بازی آموزشی
+</h3>
+
+<p>
+یادگیری در کنار سرگرمی
+</p>
+
+</div>
+
+
+
+
+<div class="glass-card">
+
+<h3>
+🔒 محیط امن
+</h3>
+
+<p>
+طراحی شده برای خانواده‌ها
+</p>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="section parent-box">
+
+
+<h2>
+👨‍👩‍👧 مخصوص والدین
+</h2>
+
+
+<p>
+
+ما تلاش می‌کنیم تجربه‌ای امن بسازیم
+که والدین با خیال راحت اجازه استفاده از آن را بدهند.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="download-section">
+
+
+<h2>
+🚀 جزیره فندقی در حال توسعه است
+</h2>
+
+
+<p>
+
+به‌زودی نسخه نهایی منتشر خواهد شد.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+<footer>
+
+
+<h2>
+پارسا اپس
+</h2>
+
+
+<p>
+ساخت تجربه‌های دیجیتال خلاقانه
+</p>
+
+
+</footer>
+
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+کدهای Island CSS مخصوص جزیره فندقی را بده
+بزن بریم داداش 🏝️🔥
+این بخش رو آخر فایل style.css که قبلاً ساختیم اضافه کن.
+این CSS مخصوص صفحه جزیره فندقی هست و با استایل اصلی پارسا اپس هماهنگ میشه:
+
+
+/* =====================================
+   🏝️ Jazire Fandoghi Island Theme
+===================================== */
+
+
+/* آسمان جزیره */
+
+.island-bg{
+
+position:fixed;
+
+inset:0;
+
+z-index:-2;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+180deg,
+#6fd8ff,
+#b8f3ff 45%,
+#fff2b2
+);
+
+}
+
+
+
+/* ابرهای شناور */
+
+.cloud{
+
+position:absolute;
+
+width:180px;
+
+height:60px;
+
+background:white;
+
+border-radius:100px;
+
+opacity:.75;
+
+filter:blur(.5px);
+
+animation:
+cloudMove 25s linear infinite;
+
+}
+
+
+
+.cloud:before,
+.cloud:after{
+
+content:"";
+
+position:absolute;
+
+background:white;
+
+border-radius:50%;
+
+}
+
+
+
+.cloud:before{
+
+width:80px;
+
+height:80px;
+
+top:-35px;
+
+left:30px;
+
+}
+
+
+
+.cloud:after{
+
+width:60px;
+
+height:60px;
+
+top:-20px;
+
+right:30px;
+
+}
+
+
+
+.cloud1{
+
+top:15%;
+
+left:-200px;
+
+}
+
+
+
+.cloud2{
+
+top:35%;
+
+right:-200px;
+
+animation-delay:10s;
+
+}
+
+
+
+
+@keyframes cloudMove{
+
+
+from{
+
+transform:translateX(0);
+
+}
+
+
+to{
+
+transform:translateX(140vw);
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* Hero جزیره */
+
+
+.island-hero{
+
+min-height:90vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+padding:80px 8%;
+
+text-align:center;
+
+}
+
+
+
+.island-hero h1{
+
+
+font-size:65px;
+
+font-weight:900;
+
+
+background:
+linear-gradient(
+90deg,
+#ff8c42,
+#ffcc33
+);
+
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+
+animation:
+titleFloat 3s infinite ease-in-out;
+
+
+}
+
+
+
+.island-hero h2{
+
+font-size:30px;
+
+color:#5b3a00;
+
+margin:20px;
+
+}
+
+
+
+.island-hero p{
+
+font-size:20px;
+
+color:#634100;
+
+}
+
+
+
+@keyframes titleFloat{
+
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* کاراکتر فندق */
+
+.island-character{
+
+
+width:260px;
+
+height:260px;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:140px;
+
+
+background:
+
+rgba(255,255,255,.35);
+
+
+border-radius:50%;
+
+
+backdrop-filter:blur(15px);
+
+
+box-shadow:
+
+0 30px 70px rgba(120,70,0,.25);
+
+
+animation:
+
+nutFloat 4s infinite ease-in-out;
+
+
+}
+
+
+
+
+@keyframes nutFloat{
+
+
+0%,100%{
+
+transform:
+translateY(0)
+rotate(-5deg);
+
+}
+
+
+50%{
+
+transform:
+translateY(-25px)
+rotate(5deg);
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* کارت های جزیره */
+
+
+.island-hero + .section{
+
+background:
+
+rgba(255,255,255,.35);
+
+}
+
+
+
+
+
+.glass-card{
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+color:#5a3500;
+
+
+border:
+
+1px solid rgba(255,255,255,.8);
+
+
+box-shadow:
+
+0 20px 50px rgba(100,70,0,.15);
+
+
+}
+
+
+
+.glass-card h3{
+
+font-size:25px;
+
+}
+
+
+
+
+
+/* بخش والدین */
+
+
+.parent-box{
+
+
+background:
+
+linear-gradient(
+135deg,
+rgba(255,255,255,.6),
+rgba(255,220,120,.5)
+);
+
+
+border-radius:40px;
+
+
+max-width:1000px;
+
+margin:auto;
+
+
+}
+
+
+
+
+
+/* دانلود */
+
+
+.download-section{
+
+
+padding:100px 20px;
+
+
+text-align:center;
+
+
+background:
+
+linear-gradient(
+135deg,
+#ffb347,
+#ffcc33
+);
+
+
+color:#5a3500;
+
+
+border-radius:50px;
+
+
+margin:50px;
+
+
+}
+
+
+
+
+.download-section h2{
+
+font-size:35px;
+
+}
+
+
+
+
+
+
+
+
+/* ستاره های کوچک */
+
+
+.island-hero::before{
+
+
+content:"✨";
+
+
+position:absolute;
+
+
+font-size:50px;
+
+
+top:20%;
+
+right:15%;
+
+
+animation:
+sparkle 2s infinite;
+
+
+}
+
+
+
+.island-hero::after{
+
+
+content:"⭐";
+
+
+position:absolute;
+
+
+font-size:40px;
+
+
+bottom:20%;
+
+left:15%;
+
+
+animation:
+sparkle 3s infinite;
+
+
+}
+
+
+
+
+@keyframes sparkle{
+
+
+0%,100%{
+
+opacity:.3;
+
+transform:scale(.8);
+
+}
+
+
+50%{
+
+opacity:1;
+
+transform:scale(1.3);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* موبایل */
+
+
+@media(max-width:800px){
+
+
+.island-hero{
+
+
+flex-direction:column;
+
+
+}
+
+
+.island-hero h1{
+
+
+font-size:45px;
+
+
+}
+
+
+
+.island-character{
+
+
+margin-top:50px;
+
+width:200px;
+
+height:200px;
+
+font-size:100px;
+
+
+}
+
+
+
+.download-section{
+
+
+margin:20px;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+نتیجه بعد از این تغییر:
+🏝️ صفحه جزیره فندقی:
+آسمان رنگی
+ابرهای متحرک
+فندق شناور
+ستاره‌های چشمک‌زن
+کارت‌های شیشه‌ای کودکانه
+رنگ‌بندی گرم و دوستانه
+یک نکته مهم داداش: فعلاً به جای کاراکتر واقعی از 🥜 استفاده کردیم. مرحله بعدی اگر بخوای، خیلی بهترش می‌کنیم:
+🔥 ساخت تصویر سه‌بعدی رسمی جزیره فندقی (جزیره، فندق شخصیت اصلی، درخت‌ها، ابرها، فضای بازی)
+بعد همان تصویر را داخل سایت می‌گذاریم تا صفحه واقعاً شبیه محصول یک شرکت بازی‌سازی بشه. 🏝️🚀
+
+
+
+
+عالی داداش 🚀📱
+بریم سراغ App Showcase سه‌بعدی جزیره فندقی.
+اول در island.html این بخش را بعد از بخش "درباره جزیره فندقی" قرار بده:
+
+
+<section class="app-showcase">
+
+
+<div class="phone-wrapper">
+
+
+<div class="phone">
+
+
+<div class="phone-camera"></div>
+
+
+<div class="screen">
+
+
+<div class="app-screen">
+
+🥜
+
+<h3>
+جزیره فندقی
+</h3>
+
+
+<p>
+یادگیری + بازی + خلاقیت
+</p>
+
+
+<div class="mini-buttons">
+
+<span>🎮</span>
+<span>🎨</span>
+<span>📚</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="app-info">
+
+
+<h2>
+📱 تجربه‌ای جدید برای کودکان
+</h2>
+
+
+<p>
+
+جزیره فندقی با ترکیب آموزش و سرگرمی،
+محیطی جذاب برای رشد ذهنی کودکان ایجاد می‌کند.
+
+</p>
+
+
+
+<div class="app-details">
+
+
+<div>
+⭐
+<br>
+نسخه
+<br>
+1.0
+</div>
+
+
+
+<div>
+👶
+<br>
+سن مناسب
+<br>
+۳ تا ۸ سال
+</div>
+
+
+
+<div>
+🎮
+<br>
+دسته
+<br>
+آموزشی
+</div>
+
+
+
+<div>
+🔒
+<br>
+امنیت
+<br>
+خانواده محور
+</div>
+
+
+</div>
+
+
+
+<a class="btn primary">
+
+دانلود برنامه
+
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+حالا ب آخر style.css این قسمت رو اضافه کن؛
+
+
+/* =================================
+   📱 App Showcase 3D
+================================= */
+
+
+.app-showcase{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:80px;
+
+padding:120px 8%;
+
+perspective:1200px;
+
+}
+
+
+
+.phone-wrapper{
+
+animation:
+phoneFloat 5s ease-in-out infinite;
+
+}
+
+
+
+
+.phone{
+
+
+width:280px;
+
+height:560px;
+
+background:#111;
+
+border-radius:45px;
+
+padding:12px;
+
+box-shadow:
+
+0 40px 90px rgba(0,0,0,.35);
+
+
+transform:
+
+rotateY(-15deg);
+
+
+transition:.5s;
+
+
+}
+
+
+
+.phone:hover{
+
+
+transform:
+
+rotateY(0deg)
+translateY(-15px);
+
+
+}
+
+
+
+
+
+.phone-camera{
+
+
+width:80px;
+
+height:25px;
+
+background:#000;
+
+border-radius:20px;
+
+margin:auto;
+
+
+}
+
+
+
+
+.screen{
+
+
+height:480px;
+
+border-radius:35px;
+
+overflow:hidden;
+
+
+background:
+
+linear-gradient(
+180deg,
+#8de0ff,
+#fff1a8
+);
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+}
+
+
+
+
+
+.app-screen{
+
+
+text-align:center;
+
+background:
+
+rgba(255,255,255,.35);
+
+
+backdrop-filter:blur(15px);
+
+
+padding:30px;
+
+border-radius:30px;
+
+
+}
+
+
+
+.app-screen:first-letter{
+
+
+font-size:70px;
+
+
+}
+
+
+
+.mini-buttons{
+
+
+display:flex;
+
+gap:15px;
+
+justify-content:center;
+
+margin-top:25px;
+
+
+}
+
+
+
+.mini-buttons span{
+
+
+background:white;
+
+padding:12px;
+
+border-radius:50%;
+
+
+box-shadow:
+
+0 8px 20px #ddd;
+
+
+}
+
+
+
+
+.app-info{
+
+
+max-width:500px;
+
+
+}
+
+
+
+.app-info h2{
+
+
+font-size:35px;
+
+
+color:#6b4100;
+
+
+}
+
+
+
+.app-details{
+
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+margin:40px 0;
+
+
+}
+
+
+
+.app-details div{
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+padding:20px;
+
+
+border-radius:25px;
+
+
+text-align:center;
+
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.1);
+
+
+}
+
+
+
+@keyframes phoneFloat{
+
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-25px);
+
+}
+
+
+}
+
+
+
+
+@media(max-width:800px){
+
+
+.app-showcase{
+
+
+flex-direction:column;
+
+
+}
+
+
+
+.phone{
+
+
+width:230px;
+
+height:460px;
+
+
+}
+
+
+
+.app-details{
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+}
+
+
+
+
+و در script.js هم یک افکت کوچک اضافه می‌کنیم که گوشی با اسکرول کمی حرکت کند:
+آخر فایل اضافه کن:
+
+
+
+const phone =
+document.querySelector(".phone");
+
+
+window.addEventListener("scroll",()=>{
+
+
+if(!phone) return;
+
+
+let move =
+window.scrollY * 0.02;
+
+
+phone.style.transform =
+`
+rotateY(${-15 + move}deg)
+`;
+
+});
+
+
+
+
+
+نتیجه:
+📱 یک گوشی سه‌بعدی داخل سایت داری
+✨ حرکت شناور
+🌈 صفحه اپلیکیشن شیشه‌ای
+🥜 برند جزیره فندقی داخل گوشی
+⭐ مشخصات محصول
+
+
+
+ساخت بخش تصاویر واقعی اپ + گالری اسکرین‌شات + ویدئوی معرفی
+
+
+🏝️ جزیره فندقی
+
+📱 تصاویر محیط برنامه
+ ┌─────┐ ┌─────┐ ┌─────┐
+ │ عکس │ │ عکس │ │ عکس │
+ └─────┘ └─────┘ └─────┘
+
+▶️ ویدئوی معرفی
+
+[ پخش ویدئو ]
+
+✨ چرا جزیره فندقی؟
+
+
+
+مرحله ۱: ساخت پوشه تصاویر
+داخل گیت‌هاب یک پوشه بساز:
+assets/
+   images/
+       island/
+بعداً اسکرین‌شات‌های واقعی اپ را اینجا می‌گذاریم:
+screen1.jpg
+screen2.jpg
+screen3.jpg
+screen4.jpg
+
+
+
+
+
+
+مرحله ۲: اضافه کردن بخش گالری به island.html
+بعد از بخش App Showcase این را قرار بده:
+HTML
+
+
+<section class="gallery-section">
+
+
+<h2>
+📱 محیط واقعی جزیره فندقی
+</h2>
+
+
+<p>
+نگاهی به دنیای رنگارنگ و آموزشی برنامه
+</p>
+
+
+
+<div class="gallery">
+
+
+<div class="shot">
+
+<img src="assets/images/island/screen1.jpg">
+
+</div>
+
+
+<div class="shot">
+
+<img src="assets/images/island/screen2.jpg">
+
+</div>
+
+
+
+<div class="shot">
+
+<img src="assets/images/island/screen3.jpg">
+
+</div>
+
+
+
+<div class="shot">
+
+<img src="assets/images/island/screen4.jpg">
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+مرحله 3 بخش ویدیوی معرفی
+
+
+<section class="video-section">
+
+
+<h2>
+🎬 معرفی جزیره فندقی
+</h2>
+
+
+<div class="video-box">
+
+
+<video controls poster="assets/images/island/video-cover.jpg">
+
+<source src="assets/videos/island-demo.mp4" type="video/mp4">
+
+
+مرورگر شما از ویدئو پشتیبانی نمی‌کند.
+
+
+</video>
+
+
+</div>
+
+
+</section>
+
+
+ساختار فایل‌ها:
+assets
+
+├── images
+│
+│   └── island
+│       ├── screen1.jpg
+│       ├── screen2.jpg
+│       ├── screen3.jpg
+│       ├── screen4.jpg
+│       └── video-cover.jpg
+│
+└── videos
+    └── island-demo.mp4
+    
+    
+    
+    
+    مرحله ۴: CSS گالری حرفه‌ای
+آخر style.css اضافه کن:
+
+
+/* ===============================
+   📱 App Gallery
+================================ */
+
+
+.gallery-section{
+
+padding:100px 8%;
+
+text-align:center;
+
+}
+
+
+
+.gallery{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:35px;
+
+margin-top:50px;
+
+}
+
+
+
+
+.shot{
+
+
+background:white;
+
+padding:15px;
+
+border-radius:35px;
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.15);
+
+
+overflow:hidden;
+
+
+transition:.5s;
+
+
+}
+
+
+
+.shot img{
+
+
+width:100%;
+
+height:420px;
+
+object-fit:cover;
+
+border-radius:25px;
+
+
+}
+
+
+
+
+
+.shot:hover{
+
+
+transform:
+
+translateY(-20px)
+scale(1.03)
+rotate(2deg);
+
+
+}
+
+
+
+
+
+/* ===============================
+   Video
+================================ */
+
+
+.video-section{
+
+
+padding:100px 8%;
+
+text-align:center;
+
+
+}
+
+
+
+
+.video-box{
+
+
+max-width:900px;
+
+margin:auto;
+
+
+border-radius:40px;
+
+overflow:hidden;
+
+
+box-shadow:
+
+0 30px 80px rgba(0,0,0,.3);
+
+
+}
+
+
+
+.video-box video{
+
+
+width:100%;
+
+display:block;
+
+
+}
+
+
+
+
+
+
+مرحله بعدی که خیلی پیشنهاد می‌کنم:
+🔥 �⁠ساخت تریلر سینمایی جزیره فندقی برای سایت
+مثلاً:
+لوگوی پارسا اپس ظاهر شود
+جزیره از بین ابرها نمایان شود
+فندق شخصیت اصلی وارد شود
+متن‌ها با انیمیشن بیایند
+آخرش: «به‌زودی منتشر می‌شود»
+این ویدئو برای صفحه اول سایت هم استفاده می‌شود و خیلی برند را حرفه‌ای می‌کند.
+بعد از این می‌تونیم بریم سراغ: �⁠بخش دانلود + لینک بازار/گوگل‌پلی + سیستم خبر انتشار نسخه‌ها 🚀
+
+
+
+
+ساخت تریلر سینمایی جزیره فندقی برای سایت
+
+
+داداش این مرحله خیلی جذابه 🔥🎬
+اینجا دیگه سایت از حالت معرفی اپ درمیاد و حس برند واقعی بازی‌سازی می‌گیره.
+برای «جزیره فندقی» یک تریلر ۳۰ تا ۴۵ ثانیه‌ای پیشنهاد می‌کنم:
+سناریوی تریلر سینمایی 🏝️🥜
+صحنه ۱ — شروع (۰ تا ۵ ثانیه)
+پس‌زمینه تاریک، صدای آرام دریا...
+ابرها کنار می‌روند.
+متن:
+در جایی دور...
+دنیایی کوچک اما شگفت‌انگیز وجود دارد...
+لوگوی:
+پارسا اپس
+با نور طلایی ظاهر می‌شود.
+صحنه ۲ — کشف جزیره (۵ تا ۱۵ ثانیه)
+نمای هوایی از یک جزیره کارتونی:
+درخت‌ها
+رودخانه
+خانه‌های کوچک
+ستاره‌ها
+ابرها
+متن:
+به جزیره فندقی خوش آمدید 🌰
+کاراکتر فندق وارد می‌شود و دست تکان می‌دهد.
+صحنه ۳ — دنیای یادگیری (۱۵ تا ۳۰ ثانیه)
+نمایش سریع:
+🎮 بازی‌ها
+🎨 نقاشی
+🔤 آموزش حروف
+🔢 آموزش اعداد
+🎵 موسیقی کودکانه
+متن:
+
+
+یادگیری...
+با بازی
+با خلاقیت
+با شادی
+
+
+
+
+
+صحنه ۴ — پایان (۳۰ تا ۴۵ ثانیه)
+جزیره از بالا دیده می‌شود.
+لوگو وسط صفحه:
+
+
+
+جزیره فندقی
+
+به زودی...
+
+
+
+پایین:
+ساخته شده توسط پارسا اپس
+
+
+
+
+
+
+ساختار فایل در سایت
+داخل گیت‌هاب:
+assets
+
+├── trailer
+│
+├── island-trailer.mp4
+│
+└── trailer-cover.jpg
+
+
+کد HTML برای بخش تریلر
+داخل island.html اضافه کن:
+
+<section class="cinematic-trailer">
+
+
+<div class="trailer-title">
+
+<h2>
+🎬 تریلر جزیره فندقی
+</h2>
+
+<p>
+سفری کوتاه به دنیای یادگیری و بازی
+</p>
+
+</div>
+
+
+
+<div class="trailer-container">
+
+
+<video 
+controls
+poster="assets/trailer/trailer-cover.jpg">
+
+
+<source 
+src="assets/trailer/island-trailer.mp4"
+type="video/mp4">
+
+
+</video>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+;CSS سینمایی
+آخر style.css اضافه کن:
+
+
+
+/* ===============================
+ Cinematic Trailer
+================================ */
+
+
+.cinematic-trailer{
+
+padding:120px 8%;
+
+background:
+linear-gradient(
+135deg,
+#241000,
+#6b3900
+);
+
+color:white;
+
+text-align:center;
+
+}
+
+
+
+
+.trailer-title h2{
+
+font-size:45px;
+
+}
+
+
+
+
+.trailer-container{
+
+max-width:1000px;
+
+margin:50px auto;
+
+border-radius:40px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 40px 100px rgba(0,0,0,.5);
+
+
+position:relative;
+
+
+}
+
+
+
+.trailer-container video{
+
+width:100%;
+
+display:block;
+
+
+}
+
+
+
+.trailer-container::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+rgba(255,200,80,.15),
+transparent
+);
+
+
+animation:
+
+lightMove 4s infinite;
+
+
+pointer-events:none;
+
+}
+
+
+
+
+@keyframes lightMove{
+
+
+from{
+
+transform:translateX(-100%);
+
+}
+
+
+to{
+
+transform:translateX(100%);
+
+}
+
+
+}
+
+اما برای خود فایل ویدئو دو راه داریم:
+راه ۱ (حرفه‌ای‌تر)
+با هوش مصنوعی یک تریلر واقعی بسازیم:
+تصاویر سه‌بعدی جزیره
+کاراکتر فندق
+حرکت دوربین سینمایی
+موسیقی کودکانه
+
+
+راه ۲
+فعلاً یک تریلر ساده با:
+لوگو
+تصاویر اپ
+متن‌های متحرک
+بسازیم تا وقتی نسخه نهایی اپ آمد، جایگزین کنیم.
+پیشنهاد من برای برند پارسا اپس: راه ۱ بهتره.
+چون «جزیره فندقی» اسم خاصیه و می‌تونه یک هویت تصویری قوی داشته باشه. 🚀
+
+
+راه 1
+عالی داداش 🔥🏝️
+راه ۱ برای «جزیره فندقی» خیلی بهتره چون می‌خوایم یک هویت برند واقعی بسازیم، نه فقط یک ویدئوی تبلیغاتی ساده.
+برای ساخت تریلر، بهتره اول فریم‌های اصلی (Key Scenes) را با هوش مصنوعی بسازیم، بعد آن‌ها را تبدیل به ویدئو کنیم.
+🎬 پرامپت ساخت تریلر سینمایی «جزیره فندقی»
+این پرامپت را می‌توانی به ابزارهای ساخت ویدئو AI بدهی:
+
+
+
+
+
+
+
+
+
+Create a cinematic 3D animated trailer for a children's educational mobile app called "جزیره فندقی".
+
+Style:
+High quality Pixar-inspired 3D animation, colorful, magical, warm, friendly, suitable for children ages 3-8.
+
+Scene 1:
+A beautiful sunrise over a magical ocean.
+Soft golden light appears.
+White clouds slowly move away and reveal a small fantasy island floating in the sea.
+The camera flies toward the island with cinematic drone movement.
+
+Scene 2:
+Reveal a magical children's island:
+green forests, colorful houses, rivers, flowers, cute animals, playgrounds and educational areas.
+A cute friendly hazelnut character appears, smiling and waving to children.
+
+Scene 3:
+Show children exploring the island:
+playing educational games,
+learning letters and numbers,
+drawing colorful pictures,
+solving puzzles,
+discovering new places.
+
+Scene 4:
+Show a modern smartphone floating in the air displaying the "جزیره فندقی" app interface.
+The screen glows with magical light.
+
+Scene 5:
+Epic final shot:
+The camera moves above the island.
+The logo "پارسا اپس" appears with golden particles.
+Text appears:
+"جزیره فندقی"
+"دنیایی از یادگیری، بازی و خلاقیت"
+
+Camera:
+cinematic movement,
+slow motion,
+depth of field,
+soft lighting,
+high detail,
+professional animation quality.
+
+Mood:
+Happy, magical, safe, educational, inspiring.
+
+Duration:
+40 seconds.
+
+🎵 برای موسیقی:
+پرامپت موسیقی:
+Create a magical children's cinematic soundtrack.
+Happy and emotional melody.
+Soft piano, xylophone, gentle strings and fantasy sounds.
+Feeling of discovery, adventure and learning.
+Suitable for a premium children's educational app trailer.
+
+
+
+
+
+
+پیشنهاد من برای برند پارسا اپس:
+تریلر را اینطوری بسازیم:
+نسخه کوتاه ۱۵ ثانیه‌ای برای صفحه اصلی سایت (Hero)
+نسخه کامل ۴۵ ثانیه‌ای برای صفحه جزیره فندقی و شبکه‌های اجتماعی
+نسخه عمودی ۹:۱۶ برای اینستاگرام، آپارات، یوتیوب Shorts
+بعداً همین شخصیت فندق می‌تواند تبدیل شود به کاراکتر اصلی برند پارسا اپس.
+مرحله بعدی من پیشنهاد می‌کنم: ساخت Design Bible جزیره فندقی (یعنی قوانین ثابت شخصیت فندق، رنگ‌ها، سبک سه‌بعدی، محیط جزیره) تا هر تصویر و انیمیشنی که بعداً می‌سازیم یکدست باشد. 🚀
+
+
+
+
+
+
+
+ساخت Mockup گوشی با اسکرین‌شات اپ داخل سایت را انجام بده
+
+
+کدهای Island CSS مخصوص جزیره فندقی را بده
+
+
+
+باشه داداش 🚀🏝️
+این نسخه‌ی Island CSS حرفه‌ای‌تر هست؛ مخصوص صفحه «جزیره فندقی».
+این رو آخر فایل style.css اضافه کن. طوری نوشته شده که انیمیشن‌ها بیشتر با transform و opacity باشند تا روی موبایل هم روان‌تر بمانند. �
+web.dev
+/* =========================================
+   🏝️ جزیره فندقی - Premium Island Theme v2
+   ========================================= */
+
+
+/* پس زمینه آسمان */
+
+.island-bg{
+
+position:fixed;
+
+inset:0;
+
+z-index:-5;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+180deg,
+#65d9ff 0%,
+#bdf4ff 45%,
+#fff1ad 100%
+);
+
+}
+
+
+
+/* نور خورشید */
+
+.island-bg::before{
+
+content:"";
+
+position:absolute;
+
+width:350px;
+
+height:350px;
+
+top:80px;
+
+right:100px;
+
+background:
+
+radial-gradient(
+circle,
+rgba(255,220,80,.8),
+transparent 70%
+);
+
+
+animation:sunGlow 6s infinite alternate;
+
+
+}
+
+
+
+@keyframes sunGlow{
+
+from{
+
+transform:scale(1);
+
+opacity:.6;
+
+}
+
+to{
+
+transform:scale(1.2);
+
+opacity:1;
+
+}
+
+}
+
+
+
+/* ابرها */
+
+.cloud{
+
+position:absolute;
+
+background:white;
+
+border-radius:100px;
+
+opacity:.75;
+
+filter:blur(.5px);
+
+}
+
+
+
+.cloud::before,
+.cloud::after{
+
+content:"";
+
+position:absolute;
+
+background:white;
+
+border-radius:50%;
+
+}
+
+
+
+.cloud::before{
+
+width:90px;
+
+height:90px;
+
+top:-45px;
+
+left:35px;
+
+}
+
+
+
+.cloud::after{
+
+width:70px;
+
+height:70px;
+
+top:-30px;
+
+right:35px;
+
+}
+
+
+
+.cloud1{
+
+width:220px;
+
+height:70px;
+
+top:20%;
+
+left:-250px;
+
+animation:cloudMove 35s linear infinite;
+
+}
+
+
+
+.cloud2{
+
+width:180px;
+
+height:60px;
+
+top:45%;
+
+right:-220px;
+
+animation:cloudMoveReverse 40s linear infinite;
+
+}
+
+
+
+@keyframes cloudMove{
+
+to{
+
+transform:translateX(140vw);
+
+}
+
+}
+
+
+@keyframes cloudMoveReverse{
+
+to{
+
+transform:translateX(-140vw);
+
+}
+
+}
+
+
+
+
+
+/* =========================
+   Hero جزیره
+========================= */
+
+
+.island-hero{
+
+position:relative;
+
+min-height:90vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+padding:60px 8%;
+
+}
+
+
+
+.island-hero h1{
+
+font-size:70px;
+
+font-weight:900;
+
+
+background:
+
+linear-gradient(
+45deg,
+#ff8a00,
+#ffd43b
+);
+
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+
+animation:
+titleFloat 4s infinite;
+
+}
+
+
+
+@keyframes titleFloat{
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+}
+
+
+
+
+/* شخصیت فندق */
+
+.island-character{
+
+
+width:300px;
+
+height:300px;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:150px;
+
+
+background:
+
+rgba(255,255,255,.35);
+
+
+backdrop-filter:blur(20px);
+
+
+border-radius:50%;
+
+
+box-shadow:
+
+0 30px 80px rgba(100,60,0,.25);
+
+
+animation:
+
+characterFloat 5s infinite ease-in-out;
+
+
+}
+
+
+
+@keyframes characterFloat{
+
+
+50%{
+
+transform:
+translateY(-30px)
+rotate(5deg);
+
+}
+
+}
+
+
+
+
+
+
+/* =========================
+   کارت های شیشه ای
+========================= */
+
+
+.glass-card{
+
+
+background:
+
+rgba(255,255,255,.55);
+
+
+border-radius:35px;
+
+
+padding:35px;
+
+
+transition:.5s;
+
+
+}
+
+
+
+.glass-card:hover{
+
+
+transform:
+
+translateY(-15px)
+scale(1.04);
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.15);
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   App Showcase
+========================= */
+
+
+.phone{
+
+
+animation:
+
+phoneFloat 5s infinite;
+
+
+}
+
+
+
+@keyframes phoneFloat{
+
+
+50%{
+
+transform:
+
+translateY(-25px)
+rotateY(-10deg);
+
+}
+
+
+}
+
+
+
+
+
+
+/* =========================
+   گالری تصاویر
+========================= */
+
+
+.gallery-section{
+
+padding:100px 8%;
+
+}
+
+
+
+.gallery{
+
+
+display:grid;
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(220px,1fr));
+
+
+gap:30px;
+
+
+}
+
+
+
+
+.shot{
+
+
+border-radius:35px;
+
+
+overflow:hidden;
+
+
+background:white;
+
+
+padding:12px;
+
+
+transition:.5s;
+
+
+}
+
+
+
+.shot img{
+
+
+width:100%;
+
+border-radius:25px;
+
+
+transition:.6s;
+
+
+}
+
+
+
+.shot:hover img{
+
+
+transform:scale(1.08);
+
+
+}
+
+
+
+.shot:hover{
+
+
+transform:
+
+translateY(-20px);
+
+
+}
+
+
+
+
+
+
+/* =========================
+   تریلر سینمایی
+========================= */
+
+
+.cinematic-trailer{
+
+
+background:
+
+linear-gradient(
+135deg,
+#2b1600,
+#8b4b00
+);
+
+
+color:white;
+
+
+padding:120px 8%;
+
+
+}
+
+
+
+.trailer-container{
+
+
+border-radius:40px;
+
+
+overflow:hidden;
+
+
+box-shadow:
+
+0 40px 100px rgba(0,0,0,.5);
+
+
+}
+
+
+
+.trailer-container video{
+
+
+width:100%;
+
+
+}
+
+
+
+
+
+/* =========================
+   ستاره ها
+========================= */
+
+
+.island-hero::before{
+
+
+content:"✨";
+
+
+position:absolute;
+
+
+font-size:70px;
+
+
+top:15%;
+
+
+right:20%;
+
+
+animation:
+
+sparkle 2s infinite;
+
+
+}
+
+
+
+.island-hero::after{
+
+
+content:"⭐";
+
+
+position:absolute;
+
+
+font-size:55px;
+
+
+bottom:15%;
+
+
+left:20%;
+
+
+animation:
+
+sparkle 3s infinite;
+
+
+}
+
+
+
+
+@keyframes sparkle{
+
+
+50%{
+
+opacity:.3;
+
+transform:scale(.7);
+
+}
+
+}
+
+
+
+
+
+
+
+
+/* موبایل */
+
+@media(max-width:800px){
+
+
+.island-hero{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+
+
+.island-hero h1{
+
+font-size:45px;
+
+}
+
+
+
+.island-character{
+
+width:200px;
+
+height:200px;
+
+font-size:100px;
+
+margin-top:40px;
+
+}
+
+
+
+}
+
+
+
+
+
+این نسخه نسبت به قبلی:
+🌤️ آسمان زنده‌تر
+☁️ ابرهای متحرک
+☀️ نور خورشید
+🥜 فندق شناورتر
+📱 هماهنگ با Mockup گوشی
+📸 گالری حرفه‌ای‌تر
+🎬 تریلر سینمایی هماهنگ
+📱 مناسب موبایل
+
+
+
+مرحله بعدی که واقعاً سایت رو یک پله بالا می‌بره: ساخت Mockup گوشی واقعی با قاب آیفون/اندروید + قرار دادن اسکرین‌شات واقعی اپ داخلش + چرخش سه‌بعدی با موس و لمس موبایل 📱🔥
+
+
+
+ساخت Mockup گوشی واقعی با قاب آیفون/اندروید + قرار دادن اسکرین‌شات واقعی اپ داخلش + چرخش سه‌بعدی با موس و لمس موبایل 📱🔥
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="phone-text">
+
+
+<h2>
+📱 جزیره فندقی در دستان شما
+</h2>
+
+
+<p>
+محیطی شاد، امن و آموزشی برای کودکان
+</p>
+
+
+<div class="phone-features">
+
+<span>🎮 بازی</span>
+
+<span>🎨 خلاقیت</span>
+
+<span>📚 آموزش</span>
+
+<span>🔒 امنیت</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+بزن بریم داداش 🔥📱
+الان می‌خوایم Mockup رو از حالت ساده خارج کنیم و یک گوشی سه‌بعدی واقعی‌تر بسازیم که:
+✅ قاب شبیه گوشی مدرن داشته باشد
+✅ اسکرین‌شات واقعی اپ داخلش نمایش داده شود
+✅ با حرکت موس بچرخد
+✅ روی موبایل با لمس حرکت کند
+✅ انعکاس نور داشته باشد
+✅ حالت شناور سینمایی داشته باشد
+این تکنیک بر پایه‌ی perspective و transform-style: preserve-3d است که برای ساخت اجسام سه‌بعدی در CSS استفاده می‌شود. �
+
+
+
+
+
+اول در ISLAND.HTML
+
+بخش Mockup قبلی گوشی را پاک کن و این را جایگزین کن:
+
+<section class="real-phone-showcase">
+
+
+<div class="phone-stage">
+
+
+<div class="real-phone" id="phone">
+
+
+<div class="phone-frame">
+
+
+<div class="dynamic-island"></div>
+
+
+<div class="phone-screen">
+
+
+<img 
+src="assets/images/island/app-screen-1.jpg"
+alt="جزیره فندقی">
+
+
+</div>
+
+
+<div class="phone-reflection"></div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="phone-text">
+
+
+<h2>
+📱 جزیره فندقی در دستان شما
+</h2>
+
+
+<p>
+محیطی شاد، امن و آموزشی برای کودکان
+</p>
+
+
+<div class="phone-features">
+
+<span>🎮 بازی</span>
+
+<span>🎨 خلاقیت</span>
+
+<span>📚 آموزش</span>
+
+<span>🔒 امنیت</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+2) عکس اپ را اینجا قرار بده:
+داخل گیت‌هاب:
+assets
+ └── images
+      └── island
+           └── app-screen-1.jpg
+فعلاً هر اسکرین‌شاتی از اپ داری بگذار.
+3) CSS گوشی سه‌بعدی
+آخر style.css اضافه کن:
+
+
+/* =================================
+   Real 3D Phone Mockup
+================================= */
+
+
+.real-phone-showcase{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:80px;
+
+padding:120px 8%;
+
+perspective:1200px;
+
+}
+
+
+
+
+
+.phone-stage{
+
+
+width:350px;
+
+height:650px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+}
+
+
+
+
+.real-phone{
+
+
+width:290px;
+
+height:590px;
+
+
+transform-style:preserve-3d;
+
+
+animation:
+
+phoneIdle 5s infinite ease-in-out;
+
+
+cursor:pointer;
+
+
+}
+
+
+
+
+.phone-frame{
+
+
+position:relative;
+
+
+width:100%;
+
+height:100%;
+
+
+background:
+
+linear-gradient(
+145deg,
+#333,
+#050505
+);
+
+
+border-radius:55px;
+
+
+padding:12px;
+
+
+box-shadow:
+
+
+0 50px 100px rgba(0,0,0,.45);
+
+
+
+}
+
+
+
+
+
+/* دوربین بالای گوشی */
+
+.dynamic-island{
+
+
+position:absolute;
+
+
+top:18px;
+
+left:50%;
+
+
+transform:translateX(-50%);
+
+
+width:90px;
+
+height:25px;
+
+
+background:#000;
+
+
+border-radius:20px;
+
+
+z-index:5;
+
+
+}
+
+
+
+
+
+.phone-screen{
+
+
+width:100%;
+
+height:100%;
+
+
+overflow:hidden;
+
+
+border-radius:45px;
+
+
+background:#fff;
+
+
+}
+
+
+
+
+
+.phone-screen img{
+
+
+width:100%;
+
+height:100%;
+
+
+object-fit:cover;
+
+
+}
+
+
+
+
+
+/* انعکاس نور */
+
+.phone-reflection{
+
+
+position:absolute;
+
+
+inset:0;
+
+
+border-radius:55px;
+
+
+background:
+
+linear-gradient(
+120deg,
+rgba(255,255,255,.35),
+transparent 40%
+);
+
+
+pointer-events:none;
+
+
+}
+
+
+
+
+
+@keyframes phoneIdle{
+
+
+50%{
+
+
+transform:
+
+translateY(-25px)
+rotateY(-8deg);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+.phone-text h2{
+
+
+font-size:40px;
+
+
+color:#6b4000;
+
+
+}
+
+
+
+.phone-features{
+
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+
+margin-top:30px;
+
+
+}
+
+
+
+.phone-features span{
+
+
+background:white;
+
+
+padding:15px 25px;
+
+
+border-radius:30px;
+
+
+box-shadow:
+
+0 10px 30px rgba(0,0,0,.1);
+
+
+}
+
+
+
+
+@media(max-width:800px){
+
+
+.real-phone-showcase{
+
+
+flex-direction:column;
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+4) کنترل حرکت با موس و لمس
+آخر script.js اضافه کن:
+const phone = document.getElementById("phone");
+
+
+if(phone){
+
+
+phone.addEventListener(
+"mousemove",
+(e)=>{
+
+
+const rect =
+phone.getBoundingClientRect();
+
+
+const x =
+e.clientX - rect.left;
+
+
+const y =
+e.clientY - rect.top;
+
+
+
+const rotateY =
+(x / rect.width - .5) * 25;
+
+
+const rotateX =
+(y / rect.height - .5) * -25;
+
+
+
+phone.style.animation="none";
+
+
+phone.style.transform =
+`
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+`;
+
+
+
+});
+
+
+
+phone.addEventListener(
+"mouseleave",
+()=>{
+
+
+phone.style.transform="";
+
+phone.style.animation=
+"phoneIdle 5s infinite ease-in-out";
+
+
+});
+
+
+
+
+
+/* موبایل */
+
+phone.addEventListener(
+"touchmove",
+(e)=>{
+
+
+let touch=e.touches[0];
+
+
+let move =
+touch.clientX /
+window.innerWidth;
+
+
+phone.style.transform=
+`
+rotateY(${move*30-15}deg)
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+نتیجه:
+
+🔥 یک گوشی واقعی وسط سایت داری
+🔥 اسکرین‌شات واقعی اپ داخلش
+🔥 حرکت سه‌بعدی
+🔥 نور روی شیشه
+🔥 مناسب دسکتاپ و موبایل
+
+مرحله بعدی که خیلی ارزش دارد:  یعنی چند اسکرین‌شات اپ یکی‌یکی داخل گوشی عوض شوند و مثل تبلیغات حرفه‌ای اپ‌ها نمایش داده شود. 📱✨ساخت اسلایدشو داخل خود گوشی
+
+
+عالی داداش 🔥📱
+این مرحله خیلی سایت رو شبیه صفحه معرفی اپ‌های حرفه‌ای می‌کنه. کاری می‌کنیم که داخل همان گوشی سه‌بعدی، اسکرین‌شات‌های اپ یکی‌یکی عوض شوند.
+قابلیت‌ها:
+✅ تغییر خودکار تصاویر
+✅ Fade نرم بین صفحات
+✅ نقطه‌های وضعیت پایین گوشی
+✅ توقف هنگام رفتن موس روی گوشی
+✅ آماده برای اضافه کردن هر تعداد اسکرین‌شات
+۱) تغییر کوچک در island.html
+قسمت عکس گوشی را پیدا کن:
+
+<img 
+src="assets/images/island/app-screen-1.jpg"
+alt="جزیره فندقی">
+
+با این جایگزین کن:
+
+<div class="screen-slider">
+
+
+<img 
+class="app-shot active"
+src="assets/images/island/app-screen-1.jpg">
+
+
+<img 
+class="app-shot"
+src="assets/images/island/app-screen-2.jpg">
+
+
+<img 
+class="app-shot"
+src="assets/images/island/app-screen-3.jpg">
+
+
+<img 
+class="app-shot"
+src="assets/images/island/app-screen-4.jpg">
+
+
+</div>
+
+
+<div class="slider-dots">
+
+<span class="dot active"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+
+</div>
+
+
+
+</div>
+۲) CSS اسلایدشو
+آخر style.css اضافه کن:
+
+
+
+
+
+
+/* =================================
+   📱 Inside Phone Slider
+================================= */
+
+
+.screen-slider{
+
+position:relative;
+
+width:100%;
+
+height:100%;
+
+}
+
+
+
+.app-shot{
+
+
+position:absolute;
+
+inset:0;
+
+
+width:100%;
+
+height:100%;
+
+
+object-fit:cover;
+
+
+opacity:0;
+
+
+transform:scale(1.05);
+
+
+transition:
+
+opacity 1s ease,
+transform 1.2s ease;
+
+
+}
+
+
+
+.app-shot.active{
+
+
+opacity:1;
+
+
+transform:scale(1);
+
+
+}
+
+
+
+
+
+.slider-dots{
+
+
+position:absolute;
+
+
+bottom:25px;
+
+
+left:50%;
+
+
+transform:translateX(-50%);
+
+
+display:flex;
+
+
+gap:8px;
+
+
+z-index:10;
+
+
+}
+
+
+
+.dot{
+
+
+width:9px;
+
+height:9px;
+
+
+border-radius:50%;
+
+
+background:white;
+
+
+opacity:.5;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.dot.active{
+
+
+opacity:1;
+
+
+transform:scale(1.4);
+
+
+}
+
+
+
+
+۳) جاوااسکریپت اسلایدشو
+آخر script.js اضافه کن:
+
+/* =================================
+   Phone App Screenshot Slider
+================================= */
+
+
+const shots =
+document.querySelectorAll(".app-shot");
+
+
+const dots =
+document.querySelectorAll(".dot");
+
+
+
+let currentShot = 0;
+
+
+let sliderTimer;
+
+
+
+function changeShot(){
+
+
+shots.forEach(img=>{
+
+img.classList.remove("active");
+
+});
+
+
+dots.forEach(dot=>{
+
+dot.classList.remove("active");
+
+});
+
+
+
+shots[currentShot].classList.add("active");
+
+dots[currentShot].classList.add("active");
+
+
+
+currentShot++;
+
+
+if(currentShot >= shots.length){
+
+currentShot = 0;
+
+}
+
+
+}
+
+
+
+function startSlider(){
+
+
+sliderTimer =
+setInterval(changeShot,3000);
+
+
+}
+
+
+
+function stopSlider(){
+
+
+clearInterval(sliderTimer);
+
+
+}
+
+
+
+if(shots.length){
+
+
+startSlider();
+
+
+const phone =
+document.querySelector(".real-phone");
+
+
+if(phone){
+
+
+phone.addEventListener(
+"mouseenter",
+stopSlider
+);
+
+
+
+phone.addEventListener(
+"mouseleave",
+startSlider
+);
+
+
+
+}
+
+
+}
+
+
+
+
+ساختار فایل تصاویر:
+گیت‌هاب:
+assets
+└── images
+    └── island
+        ├── app-screen-1.jpg
+        ├── app-screen-2.jpg
+        ├── app-screen-3.jpg
+        └── app-screen-4.jpg
+نتیجه نهایی:
+📱 گوشی سه‌بعدی وسط سایت
+⬇️
+🥜 صفحه اول اپ نمایش داده می‌شود
+⬇️
+بعد از ۳ ثانیه صفحه بعدی می‌آید
+⬇️
+با افکت سینمایی داخل گوشی عوض می‌شود
+⬇️
+موس روی گوشی برود، اسلاید متوقف می‌شود
+مرحله بعدی که پیشنهاد می‌کنم برای حرفه‌ای‌تر شدن:
+
+
+
+
+باشه داداش 🔥📱
+چون دوباره گفتی ساخت اسلایدشو داخل خود گوشی، یک نسخه تمیزتر و حرفه‌ای‌تر می‌دم که با Mockup سه‌بعدی قبلی هماهنگ باشد.
+این نسخه:
+داخل صفحه گوشی اجرا می‌شود
+تصاویر واقعی اپ را عوض می‌کند
+Fade + Zoom دارد
+دکمه‌های نقطه‌ای دارد
+خودکار حرکت می‌کند
+۱) در island.html
+داخل قسمت phone-screen این را قرار بده:
+
+<div class="phone-screen">
+
+    <div class="app-slider">
+
+        <img 
+        src="assets/images/island/app-screen-1.jpg"
+        class="app-slide active">
+
+
+        <img 
+        src="assets/images/island/app-screen-2.jpg"
+        class="app-slide">
+
+
+        <img 
+        src="assets/images/island/app-screen-3.jpg"
+        class="app-slide">
+
+
+        <img 
+        src="assets/images/island/app-screen-4.jpg"
+        class="app-slide">
+
+    </div>
+
+
+    <div class="phone-dots">
+
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+2.آخر STYLES.CSS اضافه کن:
+
+/* =================================
+   📱 App Screenshot Slider
+================================= */
+
+
+.app-slider{
+
+position:relative;
+
+width:100%;
+
+height:100%;
+
+overflow:hidden;
+
+}
+
+
+
+.app-slide{
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+
+opacity:0;
+
+
+transform:
+scale(1.08);
+
+
+transition:
+
+opacity 1s ease,
+transform 3s ease;
+
+
+}
+
+
+
+.app-slide.active{
+
+opacity:1;
+
+
+transform:
+scale(1);
+
+
+}
+
+
+
+
+
+.phone-dots{
+
+position:absolute;
+
+bottom:18px;
+
+left:50%;
+
+
+transform:translateX(-50%);
+
+
+display:flex;
+
+gap:8px;
+
+
+z-index:20;
+
+}
+
+
+
+.phone-dots span{
+
+
+width:8px;
+
+height:8px;
+
+
+background:white;
+
+
+border-radius:50%;
+
+
+opacity:.5;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.phone-dots span.active{
+
+
+opacity:1;
+
+
+transform:
+scale(1.5);
+
+
+}
+
+
+۳) آخر script.js
+اضافه کن:
+
+// 📱 Phone Screenshot Slider
+
+
+const slides =
+document.querySelectorAll(".app-slide");
+
+
+const dots =
+document.querySelectorAll(".phone-dots span");
+
+
+let slideIndex = 0;
+
+
+function nextSlide(){
+
+
+slides.forEach(slide=>{
+
+slide.classList.remove("active");
+
+});
+
+
+dots.forEach(dot=>{
+
+dot.classList.remove("active");
+
+});
+
+
+
+slides[slideIndex].classList.add("active");
+
+dots[slideIndex].classList.add("active");
+
+
+
+slideIndex++;
+
+
+if(slideIndex >= slides.length){
+
+slideIndex=0;
+
+}
+
+
+}
+
+
+
+if(slides.length > 0){
+
+
+setInterval(nextSlide,3500);
+
+
+}
+
+
+
+
+
+
+
+ساختار عکس‌ها:
+assets
+ └── images
+      └── island
+           ├── app-screen-1.jpg
+           ├── app-screen-2.jpg
+           ├── app-screen-3.jpg
+           └── app-screen-4.jpg
+نتیجه:
+📱 گوشی وسط صفحه
+✨ داخل گوشی اسکرین‌شات‌های واقعی اپ آرام عوض می‌شوند
+🌈 افکت زوم سینمایی دارد
+🥜 کاملاً مناسب «جزیره فندقی» است
+پیشنهاد مرحله بعدی من: اضافه کردن حالت "App Store Showcase" یعنی کنار گوشی:
+امتیاز ⭐⭐⭐⭐⭐
+تعداد دانلود
+نسخه اپ
+حجم APK
+دکمه دانلود
+QR Code
+که سایت را شبیه صفحه معرفی اپ‌های بزرگ می‌کند. 🚀
+
+
+
+باشه داداش 🔥📱
+این بار یک نسخه کامل‌تر و نهایی‌تر برای اسلایدشو داخل گوشی می‌دهم که مستقیم با Mockup گوشی سه‌بعدی قبلی کار کند.
+قابلیت‌ها: ✅ تعویض خودکار اسکرین‌شات‌ها
+✅ افکت Zoom + Fade سینمایی
+✅ توقف هنگام لمس/هاور گوشی
+✅ حرکت دستی با نقطه‌ها
+✅ مناسب موبایل و دسکتاپ
+۱) island.html
+داخل بخش:
+HTML
+<div class="phone-screen">
+این را بگذار:
+
+<div class="app-slider">
+
+    <img 
+    src="assets/images/island/app-screen-1.jpg"
+    class="app-slide active"
+    alt="جزیره فندقی">
+
+    <img 
+    src="assets/images/island/app-screen-2.jpg"
+    class="app-slide"
+    alt="جزیره فندقی">
+
+    <img 
+    src="assets/images/island/app-screen-3.jpg"
+    class="app-slide"
+    alt="جزیره فندقی">
+
+    <img 
+    src="assets/images/island/app-screen-4.jpg"
+    class="app-slide"
+    alt="جزیره فندقی">
+
+
+</div>
+
+
+<div class="phone-slider-dots">
+
+<span class="active"></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+
+۲) آخر style.css
+اضافه کن:
+/* ==================================
+   Island Phone App Slider
+================================== */
+
+
+.phone-screen{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+
+
+.app-slider{
+
+width:100%;
+
+height:100%;
+
+position:relative;
+
+}
+
+
+
+.app-slide{
+
+position:absolute;
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+top:0;
+
+left:0;
+
+
+opacity:0;
+
+
+transform:scale(1.12);
+
+
+transition:
+
+opacity 1s ease,
+transform 4s ease;
+
+
+}
+
+
+
+.app-slide.active{
+
+
+opacity:1;
+
+
+transform:scale(1);
+
+
+}
+
+
+
+
+
+.phone-slider-dots{
+
+
+position:absolute;
+
+bottom:20px;
+
+left:50%;
+
+
+transform:translateX(-50%);
+
+
+display:flex;
+
+gap:10px;
+
+
+z-index:20;
+
+
+}
+
+
+
+.phone-slider-dots span{
+
+
+width:9px;
+
+height:9px;
+
+
+background:white;
+
+
+border-radius:50%;
+
+
+opacity:.5;
+
+
+cursor:pointer;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.phone-slider-dots span.active{
+
+
+opacity:1;
+
+
+transform:scale(1.5);
+
+
+}
+
+
+
+
+
+۳) آخر script.js
+اضافه کن:
+// ==================================
+// Phone Screenshot Cinematic Slider
+// ==================================
+
+
+const appSlides =
+document.querySelectorAll(".app-slide");
+
+
+const sliderDots =
+document.querySelectorAll(".phone-slider-dots span");
+
+
+const phoneMockup =
+document.querySelector(".real-phone");
+
+
+let activeSlide = 0;
+
+let sliderInterval;
+
+
+
+function showSlide(index){
+
+
+appSlides.forEach(item=>{
+
+item.classList.remove("active");
+
+});
+
+
+sliderDots.forEach(item=>{
+
+item.classList.remove("active");
+
+});
+
+
+appSlides[index].classList.add("active");
+
+sliderDots[index].classList.add("active");
+
+
+}
+
+
+
+function nextAppSlide(){
+
+
+activeSlide++;
+
+
+if(activeSlide >= appSlides.length){
+
+activeSlide=0;
+
+}
+
+
+showSlide(activeSlide);
+
+
+}
+
+
+
+function startAppSlider(){
+
+
+sliderInterval =
+setInterval(nextAppSlide,3500);
+
+
+}
+
+
+
+function stopAppSlider(){
+
+
+clearInterval(sliderInterval);
+
+
+}
+
+
+
+if(appSlides.length){
+
+
+showSlide(0);
+
+startAppSlider();
+
+
+
+}
+
+
+// توقف با موس
+
+if(phoneMockup){
+
+
+phoneMockup.addEventListener(
+"mouseenter",
+stopAppSlider
+);
+
+
+phoneMockup.addEventListener(
+"mouseleave",
+startAppSlider
+);
+
+
+}
+
+
+// کلیک روی نقطه‌ها
+
+
+sliderDots.forEach((dot,index)=>{
+
+
+dot.addEventListener(
+"click",
+()=>{
+
+
+activeSlide=index;
+
+showSlide(index);
+
+
+});
+
+
+
+});
+ساختار تصاویر در GitHub:
+assets
+ └── images
+      └── island
+           ├── app-screen-1.jpg
+           ├── app-screen-2.jpg
+           ├── app-screen-3.jpg
+           └── app-screen-4.jpg
+الان گوشی سایتت مثل صفحات معرفی اپ‌های حرفه‌ای می‌شود:
+📱 گوشی سه‌بعدی
+✨ اسکرین‌شات واقعی داخل صفحه
+🎞️ تغییر نرم تصاویر
+🌈 حس تبلیغاتی و سینمایی
+مرحله بعدی که پیشنهاد می‌کنم برای «جزیره فندقی»: اضافه کردن انعکاس نور متحرک روی صفحه گوشی + افکت روشن شدن صفحه هنگام ورود کاربر به بخش گوشی 🔥
+
+
+
+
+
+
+باشه داداش 🔥📱
+چون چند بار تکرار شد، این نسخه رو به عنوان نسخه نهایی اسلایدشو داخل گوشی می‌ذاریم. فقط همین ۳ کار را انجام بده:
+۱) داخل island.html
+قسمت صفحه گوشی را این شکلی کن:
+HTML
+<div class="phone-screen">
+
+    <div class="app-slider">
+
+        <img src="assets/images/island/app-screen-1.jpg"
+        class="app-slide active">
+
+        <img src="assets/images/island/app-screen-2.jpg"
+        class="app-slide">
+
+        <img src="assets/images/island/app-screen-3.jpg"
+        class="app-slide">
+
+        <img src="assets/images/island/app-screen-4.jpg"
+        class="app-slide">
+
+    </div>
+
+
+    <div class="phone-slider-dots">
+
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+</div>
+۲) آخر style.css
+اضافه کن:
+/* =================================
+   📱 Island Phone Screenshot Slider
+================================= */
+
+
+.phone-screen{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+
+
+.app-slider{
+
+width:100%;
+
+height:100%;
+
+position:relative;
+
+}
+
+
+
+.app-slide{
+
+position:absolute;
+
+inset:0;
+
+
+width:100%;
+
+height:100%;
+
+
+object-fit:cover;
+
+
+opacity:0;
+
+
+transform:scale(1.1);
+
+
+transition:
+
+opacity 1s ease,
+transform 4s ease;
+
+
+}
+
+
+
+.app-slide.active{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+
+
+
+.phone-slider-dots{
+
+position:absolute;
+
+bottom:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+
+display:flex;
+
+gap:10px;
+
+z-index:5;
+
+
+}
+
+
+
+.phone-slider-dots span{
+
+
+width:10px;
+
+height:10px;
+
+
+background:white;
+
+
+border-radius:50%;
+
+
+opacity:.5;
+
+
+cursor:pointer;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.phone-slider-dots span.active{
+
+
+opacity:1;
+
+transform:scale(1.5);
+
+
+}
+۳) آخر script.js
+اضافه کن:
+// 📱 Phone App Screenshot Slider
+
+
+const slides =
+document.querySelectorAll(".app-slide");
+
+
+const dots =
+document.querySelectorAll(".phone-slider-dots span");
+
+
+let currentSlide = 0;
+
+let timer;
+
+
+
+function changeSlide(number){
+
+
+slides.forEach(slide => {
+
+slide.classList.remove("active");
+
+});
+
+
+dots.forEach(dot=>{
+
+dot.classList.remove("active");
+
+});
+
+
+slides[number].classList.add("active");
+
+dots[number].classList.add("active");
+
+
+}
+
+
+
+
+function autoSlide(){
+
+
+currentSlide++;
+
+
+if(currentSlide >= slides.length){
+
+currentSlide = 0;
+
+}
+
+
+changeSlide(currentSlide);
+
+
+}
+
+
+
+if(slides.length){
+
+
+timer = setInterval(autoSlide,3500);
+
+
+}
+
+
+
+
+dots.forEach((dot,index)=>{
+
+
+dot.addEventListener("click",()=>{
+
+
+currentSlide=index;
+
+
+changeSlide(index);
+
+
+});
+
+
+});
+حالا داخل GitHub این عکس‌ها را قرار بده:
+assets/images/island/
+
+app-screen-1.jpg
+app-screen-2.jpg
+app-screen-3.jpg
+app-screen-4.jpg
+نتیجه:
+📱 گوشی سه‌بعدی
+⬇️
+🖼️ اسکرین‌شات اپ داخل گوشی
+⬇️
+✨ تغییر نرم هر ۳.۵ ثانیه
+⬇️
+⚪ نقطه‌های پایین برای کنترل دستی
+
+
+
+
+
+
+
+عالی داداش 🔥📱
+این مرحله Mockup گوشی رو خیلی حرفه‌ای‌تر می‌کنه. کاری می‌کنیم وقتی کاربر اسکرول می‌کنه و گوشی وارد صفحه میشه:
+✨ صفحه گوشی خاموش → روشن شود
+✨ نور از داخل صفحه پخش شود
+✨ انعکاس نور روی شیشه حرکت کند
+✨ گوشی کمی ظاهر سینمایی بگیرد
+✨ بعد اسلایدشو شروع شود
+۱) تغییر کوچک در island.html
+روی خود گوشی این کلاس را اضافه کن:
+HTML
+<div class="real-phone reveal-phone" id="phone">
+و داخل phone-frame این لایه را اضافه کن:
+HTML
+<div class="screen-glow"></div>
+
+<div class="phone-reflection"></div>
+ساختار نهایی:
+HTML
+<div class="phone-frame">
+
+<div class="dynamic-island"></div>
+
+
+<div class="phone-screen">
+
+    <!-- اسلایدشو اینجاست -->
+
+</div>
+
+
+<div class="screen-glow"></div>
+
+<div class="phone-reflection"></div>
+
+
+</div>
+۲) CSS افکت روشن شدن گوشی
+آخر style.css اضافه کن:
+/* =================================
+   📱 Cinematic Screen Wake Effect
+================================= */
+
+
+.reveal-phone{
+
+opacity:0;
+
+transform:
+
+translateY(80px)
+scale(.9)
+rotateY(-25deg);
+
+
+}
+
+
+
+.reveal-phone.phone-active{
+
+
+opacity:1;
+
+
+transform:
+
+translateY(0)
+scale(1)
+rotateY(-10deg);
+
+
+transition:
+
+1.5s cubic-bezier(.2,.8,.2,1);
+
+
+}
+
+
+
+
+
+/* نور داخل صفحه هنگام روشن شدن */
+
+
+.screen-glow{
+
+
+position:absolute;
+
+inset:20px;
+
+
+border-radius:45px;
+
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(255,230,120,.8),
+
+transparent 70%
+
+);
+
+
+opacity:0;
+
+
+pointer-events:none;
+
+
+}
+
+
+
+.phone-active .screen-glow{
+
+
+animation:
+
+screenPowerOn 1.8s ease forwards;
+
+
+}
+
+
+
+
+@keyframes screenPowerOn{
+
+
+0%{
+
+opacity:0;
+
+transform:scale(.5);
+
+
+}
+
+
+
+40%{
+
+opacity:1;
+
+transform:scale(1.2);
+
+
+}
+
+
+
+100%{
+
+opacity:.15;
+
+transform:scale(1);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* انعکاس روی شیشه */
+
+
+.phone-reflection{
+
+
+position:absolute;
+
+inset:0;
+
+
+border-radius:55px;
+
+
+overflow:hidden;
+
+
+pointer-events:none;
+
+
+}
+
+
+
+.phone-reflection::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:120%;
+
+height:40%;
+
+
+top:-50%;
+
+left:-100%;
+
+
+background:
+
+linear-gradient(
+
+120deg,
+
+transparent,
+
+rgba(255,255,255,.45),
+
+transparent
+
+);
+
+
+
+transform:rotate(25deg);
+
+
+}
+
+
+
+
+.phone-active .phone-reflection::after{
+
+
+animation:
+
+glassLight 2.5s ease forwards;
+
+
+}
+
+
+
+
+
+@keyframes glassLight{
+
+
+from{
+
+left:-120%;
+
+}
+
+
+
+to{
+
+left:130%;
+
+}
+
+
+}
+۳) فعال شدن هنگام ورود به صفحه
+آخر script.js اضافه کن:
+// =================================
+// Phone Wake On Scroll
+// =================================
+
+
+const phoneReveal =
+document.querySelector(".reveal-phone");
+
+
+
+if(phoneReveal){
+
+
+const phoneObserver =
+new IntersectionObserver((entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+phoneReveal.classList.add(
+"phone-active"
+);
+
+
+phoneObserver.disconnect();
+
+
+}
+
+
+});
+
+
+},{
+
+threshold:.4
+
+});
+
+
+
+phoneObserver.observe(phoneReveal);
+
+
+}
+نتیجه نهایی:
+وقتی کاربر پایین می‌آید:
+⬇️ گوشی از پایین وارد می‌شود
+✨ صفحه مثل روشن شدن واقعی نور می‌دهد
+💎 نور روی شیشه حرکت می‌کند
+📱 گوشی حالت سه‌بعدی می‌گیرد
+🖼️ بعد اسلایدهای اپ شروع می‌شوند
+الان Mockup جزیره فندقی تقریباً به سطح Landing Page یک اپ حرفه‌ای رسیده.
+
+
+
+
+عالی داداش 🔥🚀
+این مرحله باعث میشه صفحه «جزیره فندقی» فقط یک معرفی اپ نباشه؛ تبدیل بشه به یک Landing Page حرفه‌ای بازی/آموزش کودک.
+می‌سازیم:
+✨ کارت‌های شیشه‌ای
+✨ آیکون‌های سه‌بعدی شناور
+✨ حرکت آرام بالا و پایین
+✨ چرخش هنگام Hover
+✨ نور و سایه واقعی
+✨ ورود انیمیشنی هنگام اسکرول
+۱) اضافه کردن بخش ویژگی‌ها در island.html
+این بخش را بعد از Mockup گوشی قرار بده:
+
+<section class="features-3d">
+
+
+<h2>
+✨ امکانات جزیره فندقی
+</h2>
+
+
+<p class="features-subtitle">
+دنیایی امن برای یادگیری، بازی و خلاقیت کودکان
+</p>
+
+
+
+<div class="features-grid">
+
+
+
+<div class="feature-3d-card">
+
+<div class="feature-icon">
+
+🎮
+
+</div>
+
+<h3>
+بازی‌های آموزشی
+</h3>
+
+<p>
+یادگیری با بازی‌های سرگرم‌کننده و خلاقانه
+</p>
+
+</div>
+
+
+
+
+<div class="feature-3d-card">
+
+<div class="feature-icon">
+
+🎨
+
+</div>
+
+<h3>
+خلاقیت و نقاشی
+</h3>
+
+<p>
+پرورش ذهن کودک با فعالیت‌های هنری
+</p>
+
+</div>
+
+
+
+
+<div class="feature-3d-card">
+
+<div class="feature-icon">
+
+📚
+
+</div>
+
+<h3>
+آموزش هوشمند
+</h3>
+
+<p>
+یادگیری حروف، اعداد و مفاهیم پایه
+</p>
+
+</div>
+
+
+
+
+<div class="feature-3d-card">
+
+<div class="feature-icon">
+
+🔒
+
+</div>
+
+<h3>
+محیط امن
+</h3>
+
+<p>
+فضایی مناسب و کنترل‌شده برای کودکان
+</p>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+2.cSS سه بعدی
+آخری STYLE.CSS اینو آضافه کن:::
+/* ==================================
+   🥜 3D Feature Cards
+================================== */
+
+
+.features-3d{
+
+padding:120px 8%;
+
+text-align:center;
+
+
+}
+
+
+
+.features-3d h2{
+
+font-size:45px;
+
+color:#6b4000;
+
+
+}
+
+
+
+
+.features-subtitle{
+
+font-size:20px;
+
+color:#765000;
+
+margin-bottom:60px;
+
+
+}
+
+
+
+
+
+.features-grid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(240px,1fr));
+
+
+gap:35px;
+
+
+perspective:1000px;
+
+
+}
+
+
+
+
+
+.feature-3d-card{
+
+
+background:
+
+rgba(255,255,255,.65);
+
+
+backdrop-filter:blur(15px);
+
+
+border-radius:35px;
+
+
+padding:40px 25px;
+
+
+box-shadow:
+
+
+0 25px 60px rgba(100,60,0,.15);
+
+
+
+transition:
+
+.5s;
+
+
+transform-style:
+
+preserve-3d;
+
+
+position:relative;
+
+
+overflow:hidden;
+
+
+}
+
+
+
+
+.feature-3d-card::before{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:120px;
+
+height:120px;
+
+
+background:
+
+rgba(255,210,80,.35);
+
+
+border-radius:50%;
+
+
+top:-50px;
+
+right:-40px;
+
+
+filter:blur(20px);
+
+
+}
+
+
+
+
+
+.feature-3d-card:hover{
+
+
+transform:
+
+
+translateY(-20px)
+
+rotateX(8deg)
+
+rotateY(-8deg);
+
+
+box-shadow:
+
+
+0 40px 80px rgba(100,60,0,.25);
+
+
+}
+
+
+
+
+
+.feature-icon{
+
+
+width:100px;
+
+height:100px;
+
+
+margin:auto;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:55px;
+
+
+background:white;
+
+
+border-radius:35px;
+
+
+box-shadow:
+
+
+0 20px 40px rgba(0,0,0,.15);
+
+
+animation:
+
+iconFloat 4s infinite ease-in-out;
+
+
+}
+
+
+
+
+
+@keyframes iconFloat{
+
+
+0%,100%{
+
+transform:
+
+translateY(0)
+rotate(-5deg);
+
+
+}
+
+
+
+50%{
+
+transform:
+
+translateY(-18px)
+rotate(5deg);
+
+
+}
+
+
+}
+
+
+
+
+
+.feature-3d-card h3{
+
+
+font-size:25px;
+
+
+color:#5a3500;
+
+
+margin-top:30px;
+
+
+}
+
+
+
+
+
+.feature-3d-card p{
+
+
+line-height:2;
+
+
+color:#684900;
+
+
+}
+
+
+
+
+۳) افکت ورود هنگام اسکرول
+آخر script.js:
+// Feature Cards Reveal
+
+
+const featureCards =
+document.querySelectorAll(".feature-3d-card");
+
+
+
+const featureObserver =
+new IntersectionObserver((entries)=>{
+
+
+entries.forEach((entry)=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add(
+"show-feature"
+);
+
+
+}
+
+
+});
+
+
+},{
+
+threshold:.2
+
+});
+
+
+
+featureCards.forEach(card=>{
+
+
+featureObserver.observe(card);
+
+
+});
+و در CSS اضافه کن:
+.feature-3d-card{
+
+
+opacity:0;
+
+
+transform:
+
+translateY(60px);
+
+
+}
+
+
+
+.feature-3d-card.show-feature{
+
+
+opacity:1;
+
+
+transform:
+
+translateY(0);
+
+
+transition:
+
+1s ease;
+
+
+}
+نتیجه:
+🎮 کارت بازی شناور
+🎨 کارت خلاقیت
+📚 کارت آموزش
+🔒 کارت امنیت
+با:
+حرکت سه‌بعدی
+سایه واقعی
+افکت شیشه‌ای
+انیمیشن ورود
+
+
+
+
+
+مرحله بعدی پیشنهادی من برای کامل شدن صفحه جزیره فندقی:
+🔥 ساخت بخش "والدین و اعتماد" (کنترل والدین، امنیت کودک، بدون تبلیغات، محیط سالم)
+
+
+
+عالی داداش 🔥👨‍👩‍👧‍👦
+این بخش برای «جزیره فندقی» خیلی مهمه؛ چون برای اپ کودک فقط ظاهر جذاب کافی نیست، والدین باید حس اعتماد و امنیت بگیرند.
+این بخش را می‌سازیم با:
+✅ کارت اعتماد والدین
+✅ آیکون‌های سه‌بعدی
+✅ افکت شیشه‌ای
+✅ انیمیشن ورود هنگام اسکرول
+✅ بخش مخصوص ارزش‌های خانواده
+
+
+
+اضافه کردن HTML در ISLAND.HTML
+بعد از بخش ویژگی هاقرار بده:
+<section class="parent-trust">
+
+
+<div class="trust-header">
+
+<h2>
+👨‍👩‍👧‍👦 ساخته شده برای آرامش والدین
+</h2>
+
+
+<p>
+جزیره فندقی محیطی امن، شاد و کنترل‌شده برای کودکان فراهم می‌کند.
+</p>
+
+</div>
+
+
+
+
+<div class="trust-grid">
+
+
+
+<div class="trust-card">
+
+
+<div class="trust-icon">
+🔒
+</div>
+
+
+<h3>
+امنیت کودک
+</h3>
+
+
+<p>
+محیطی امن و بدون محتوای نامناسب برای کودکان.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="trust-card">
+
+
+<div class="trust-icon">
+🚫
+</div>
+
+
+<h3>
+بدون تبلیغات مزاحم
+</h3>
+
+
+<p>
+تمرکز کامل کودک روی بازی و یادگیری.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="trust-card">
+
+
+<div class="trust-icon">
+👨‍👩‍👧
+</div>
+
+
+<h3>
+کنترل والدین
+</h3>
+
+
+<p>
+والدین همیشه دید بهتری روی تجربه کودک دارند.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="trust-card">
+
+
+<div class="trust-icon">
+🌱
+</div>
+
+
+<h3>
+رشد و یادگیری
+</h3>
+
+
+<p>
+کمک به پرورش خلاقیت و مهارت‌های کودک.
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+۲) CSS بخش والدین
+آخر style.css اضافه کن:
+/* =================================
+   👨‍👩‍👧 Parent Trust Section
+================================= */
+
+
+.parent-trust{
+
+padding:120px 8%;
+
+
+background:
+
+linear-gradient(
+
+180deg,
+
+transparent,
+
+rgba(255,220,120,.25)
+
+);
+
+
+text-align:center;
+
+
+}
+
+
+
+
+
+.trust-header h2{
+
+
+font-size:45px;
+
+
+color:#633800;
+
+
+}
+
+
+
+
+
+.trust-header p{
+
+
+font-size:20px;
+
+
+color:#795000;
+
+
+margin-bottom:60px;
+
+
+}
+
+
+
+
+.trust-grid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(240px,1fr));
+
+
+gap:30px;
+
+
+perspective:1000px;
+
+
+}
+
+
+
+
+
+.trust-card{
+
+
+background:
+
+rgba(255,255,255,.7);
+
+
+backdrop-filter:
+
+blur(20px);
+
+
+
+padding:35px 25px;
+
+
+border-radius:35px;
+
+
+
+box-shadow:
+
+0 25px 60px rgba(100,60,0,.15);
+
+
+
+transition:.6s;
+
+
+opacity:0;
+
+
+transform:
+
+translateY(70px);
+
+
+}
+
+
+
+
+
+.trust-card.show{
+
+
+opacity:1;
+
+
+transform:
+
+translateY(0);
+
+
+}
+
+
+
+
+
+.trust-card:hover{
+
+
+transform:
+
+translateY(-15px)
+
+rotateX(8deg);
+
+
+box-shadow:
+
+0 40px 90px rgba(100,60,0,.25);
+
+
+}
+
+
+
+
+.trust-icon{
+
+
+width:100px;
+
+
+height:100px;
+
+
+margin:auto;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+font-size:55px;
+
+
+
+background:white;
+
+
+border-radius:35px;
+
+
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.15);
+
+
+
+animation:
+
+trustFloat 4s infinite ease-in-out;
+
+
+}
+
+
+
+
+
+@keyframes trustFloat{
+
+
+50%{
+
+
+transform:
+
+translateY(-15px);
+
+
+}
+
+
+}
+
+
+
+
+.trust-card h3{
+
+
+font-size:25px;
+
+
+color:#5c3500;
+
+
+margin-top:25px;
+
+
+}
+
+
+
+
+
+.trust-card p{
+
+
+line-height:2;
+
+
+color:#694800;
+
+
+}
+۳) فعال کردن انیمیشن اسکرول
+آخر script.js:
+// Parent Trust Animation
+
+
+const trustCards =
+document.querySelectorAll(".trust-card");
+
+
+
+const trustObserver =
+new IntersectionObserver((entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add("show");
+
+
+}
+
+
+});
+
+
+},{
+
+threshold:.2
+
+});
+
+
+
+trustCards.forEach(card=>{
+
+
+trustObserver.observe(card);
+
+
+});
+نتیجه صفحه الان مسیر خیلی حرفه‌ای‌تری پیدا می‌کند:
+🏝️ معرفی جزیره فندقی
+⬇️
+📱 Mockup گوشی سه‌بعدی
+⬇️
+🎮 امکانات اپ
+⬇️
+👨‍👩‍👧 اعتماد والدین
+⬇️
+⬇️ دانلود برنامه
+
+
+
+عالی داداش 🔥🚀
+الان می‌رسیم به یکی از مهم‌ترین بخش‌های سایت: بخش دانلود حرفه‌ای اپ جزیره فندقی.
+
+هدف این بخش:
+
+📱 معرفی نسخه فعلی برنامه
+
+⬇️ دکمه دانلود APK
+
+📦 نمایش حجم برنامه
+
+🤖 سازگاری اندروید
+
+⭐ امتیاز کاربران
+
+🔳 QR Code برای دانلود سریع
+
+✨ انیمیشن جذاب برای جلب توجه
+
+
+
+---
+
+۱) اضافه کردن HTML در island.html
+
+بعد از بخش «والدین و اعتماد» قرار بده:
+
+<section class="download-section">
+
+
+<div class="download-box">
+
+
+
+<div class="download-info">
+
+
+<h2>
+🚀 جزیره فندقی را دانلود کنید
+</h2>
+
+
+<p>
+دنیای بازی، آموزش و خلاقیت همین حالا آماده است.
+</p>
+
+
+
+<div class="app-details">
+
+
+<div>
+<span>📱</span>
+<h4>نسخه</h4>
+<p>1.0.0</p>
+</div>
+
+
+
+<div>
+<span>📦</span>
+<h4>حجم</h4>
+<p>52 MB</p>
+</div>
+
+
+
+
+<div>
+<span>🤖</span>
+<h4>اندروید</h4>
+<p>Android 8+</p>
+</div>
+
+
+
+<div>
+<span>🔐</span>
+<h4>امن</h4>
+<p>بدون تبلیغات</p>
+</div>
+
+
+</div>
+
+
+
+<a href="downloads/island.apk" 
+class="download-button">
+
+⬇️ دانلود APK
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="qr-box">
+
+
+<div class="qr-placeholder">
+
+🔳
+
+</div>
+
+
+<p>
+اسکن کنید و دانلود کنید
+</p>
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+
+
+---
+
+۲) CSS بخش دانلود
+
+آخر style.css اضافه کن:
+
+/* =================================
+   🚀 Professional Download Section
+================================= */
+
+
+.download-section{
+
+padding:120px 8%;
+
+
+}
+
+
+
+.download-box{
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:space-between;
+
+
+gap:50px;
+
+
+background:
+
+
+linear-gradient(
+
+135deg,
+
+#fff3c4,
+
+#ffffff
+
+);
+
+
+
+border-radius:50px;
+
+
+padding:60px;
+
+
+box-shadow:
+
+0 30px 80px rgba(100,60,0,.15);
+
+
+overflow:hidden;
+
+
+position:relative;
+
+
+}
+
+
+
+
+
+.download-box::before{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:300px;
+
+
+height:300px;
+
+
+background:#ffd95c;
+
+
+border-radius:50%;
+
+
+filter:blur(80px);
+
+
+right:-100px;
+
+
+top:-100px;
+
+
+animation:
+
+downloadGlow 5s infinite;
+
+
+}
+
+
+
+
+
+@keyframes downloadGlow{
+
+
+50%{
+
+transform:scale(1.3);
+
+}
+
+
+}
+
+
+
+
+
+.download-info h2{
+
+
+font-size:45px;
+
+
+color:#633800;
+
+
+}
+
+
+
+
+
+.download-info p{
+
+
+font-size:20px;
+
+
+color:#765000;
+
+
+}
+
+
+
+
+
+.app-details{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(4,1fr);
+
+
+gap:20px;
+
+
+margin:40px 0;
+
+
+}
+
+
+
+
+
+.app-details div{
+
+
+background:white;
+
+
+padding:20px;
+
+
+border-radius:25px;
+
+
+box-shadow:
+
+0 10px 30px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+
+.app-details span{
+
+
+font-size:35px;
+
+
+}
+
+
+
+
+
+.app-details h4{
+
+
+margin:10px 0 5px;
+
+
+color:#633800;
+
+
+}
+
+
+
+
+
+.download-button{
+
+
+display:inline-block;
+
+
+background:
+
+
+linear-gradient(
+
+45deg,
+
+#ff9d00,
+
+#ffcc33
+
+);
+
+
+color:white;
+
+
+padding:18px 45px;
+
+
+border-radius:40px;
+
+
+font-size:22px;
+
+
+text-decoration:none;
+
+
+font-weight:bold;
+
+
+box-shadow:
+
+0 15px 35px rgba(255,150,0,.35);
+
+
+transition:.4s;
+
+
+}
+
+
+
+
+
+.download-button:hover{
+
+
+transform:
+
+translateY(-8px)
+scale(1.05);
+
+
+}
+
+
+
+
+
+
+.qr-box{
+
+
+text-align:center;
+
+
+}
+
+
+
+.qr-placeholder{
+
+
+width:180px;
+
+
+height:180px;
+
+
+background:white;
+
+
+border-radius:30px;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+font-size:100px;
+
+
+box-shadow:
+
+0 20px 50px rgba(0,0,0,.15);
+
+
+animation:
+
+qrFloat 4s infinite;
+
+
+}
+
+
+
+@keyframes qrFloat{
+
+
+50%{
+
+
+transform:
+
+translateY(-15px);
+
+
+}
+
+
+}
+
+
+
+
+@media(max-width:800px){
+
+
+.download-box{
+
+
+flex-direction:column;
+
+
+text-align:center;
+
+
+}
+
+
+
+.app-details{
+
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+
+}
+
+
+}
+
+
+---
+
+۳) بعداً QR واقعی اضافه می‌کنیم
+
+فعلاً:
+
+🔳
+
+است.
+
+وقتی لینک دانلود واقعی APK آماده شد، تبدیلش می‌کنیم به QR واقعی.
+
+
+---
+
+نتیجه:
+
+وقتی کاربر وارد بخش دانلود شود:
+
+🔥 کارت طلایی باز می‌شود
+📱 اطلاعات اپ را می‌بیند
+⬇️ دانلود مستقیم دارد
+🔳 QR برای موبایل دیگر دارد
+✨ حس یک محصول آماده انتشار می‌دهد
+
+مرحله بعدی پیشنهادی من برای تکمیل صفحه:
+
+🎬 ساخت بخش تریلر سینمایی جزیره فندقی
+
+ویدئوی معرفی
+
+کاور سینمایی
+
+دکمه Play وسط
+
+افکت نور و ذرات
+
+متن تبلیغاتی حرفه‌ای
+
+
+این بخش معمولاً بیشترین تأثیر را روی بازدیدکننده می‌گذارد. 🔥
+
+
+
+
+عالی داداش 🔥🎬
+برای «جزیره فندقی» باید متن تبلیغاتی فقط معرفی نباشه؛ باید احساس ایجاد کنه. چون مخاطب اصلی والدین هستند، باید همزمان حس:
+
+👨‍👩‍👧 اعتماد
+🎮 سرگرمی
+🧠 یادگیری
+🌱 رشد کودک
+
+را منتقل کند.
+
+من چند مدل متن می‌دهم که می‌توانیم در سایت، تریلر و صفحه دانلود استفاده کنیم:
+
+
+---
+
+🎬 متن اصلی تریلر سینمایی (Hero Trailer)
+
+عنوان:
+
+🏝️ جزیره فندقی
+
+جایی که یادگیری، بازی می‌شود...
+
+متن:
+
+در دنیایی رنگارنگ و پر از شگفتی،
+کودکان می‌توانند یاد بگیرند، بازی کنند و خلاقیت خود را کشف کنند.
+
+جزیره فندقی فقط یک برنامه نیست...
+یک ماجراجویی امن برای رشد ذهن‌های کوچک و رویاهای بزرگ است.
+
+اینجا هر بازی یک فرصت یادگیری است،
+هر لحظه یک تجربه تازه،
+و هر کودک یک کاشف کوچک.
+
+🌱 یادگیری هوشمند
+🎮 بازی‌های خلاقانه
+🔒 محیط امن برای کودکان
+❤️ ساخته شده با عشق برای خانواده‌ها
+
+به جزیره فندقی خوش آمدید...
+
+
+---
+
+📱 متن بخش دانلود
+
+آماده‌ای وارد دنیای جزیره فندقی شوی؟
+
+یک دنیای کوچک، اما پر از اتفاق‌های بزرگ...
+
+همین حالا جزیره فندقی را نصب کن و اجازه بده کودک تو در محیطی امن، شاد و آموزشی تجربه‌ای متفاوت داشته باشد.
+
+⬇️ دانلود کن و اولین ماجراجویی را شروع کن.
+
+
+---
+
+👨‍👩‍👧 متن مخصوص والدین
+
+آرامش والدین، شادی کودکان
+
+ما باور داریم کودکان باید در فضایی رشد کنند که هم سرگرم شوند و هم یاد بگیرند.
+
+جزیره فندقی با تمرکز روی امنیت، خلاقیت و آموزش طراحی شده تا خانواده‌ها تجربه‌ای مطمئن داشته باشند.
+
+
+---
+
+⚡ متن کوتاه تبلیغاتی برای بنر
+
+گزینه ۱:
+
+> یک جزیره کوچک برای رویاهای بزرگ کودکان 🏝️
+
+
+
+گزینه ۲:
+
+> بازی کن، یاد بگیر، رشد کن... در جزیره فندقی 🌱
+
+
+
+گزینه ۳:
+
+> دنیایی امن برای ذهن‌های خلاق ✨
+
+
+
+
+---
+
+🎥 متن شروع تریلر ۳۰ ثانیه‌ای
+
+(صحنه تاریک، صدای آرام)
+
+«هر کودکی یک دنیای بزرگ در ذهن خود دارد...»
+
+(تصاویر رنگی جزیره)
+
+«جایی که بازی تبدیل به یادگیری می‌شود...»
+
+(نمایش اپ)
+
+«و هر کشف کوچک، شروع یک ماجراجویی بزرگ است.»
+
+(لوگو)
+
+جزیره فندقی
+«دنیایی برای یادگیری، خلاقیت و شادی کودکان.»
+
+
+---
+
+به نظرم برای سایت پارسا اپس بهترین ترکیب اینه:
+
+Hero صفحه: جمله کوتاه و احساسی
+
+بخش گوشی: متن معرفی
+
+بخش والدین: متن اعتمادساز
+
+تریلر: متن سینمایی
+
+
+مرحله بعدی خیلی جذاب می‌شود: 🔥 ساخت خود بخش تریلر سینمایی در سایت (ویدئو + کاور + دکمه Play + افکت نور و ذرات) تا این متن‌ها تبدیل به یک معرفی واقعی شوند.
+
+
+
+
+
+ساخت بخش تریلر سینمایی در سایت با ویدئو، کاور، دکمه Play و افکت نور و ذرات
+
+
+
+عالی داداش 🔥🎬
+الان می‌ریم سراغ یکی از جذاب‌ترین بخش‌های سایت جزیره فندقی؛ یک بخش معرفی شبیه صفحه معرفی اپ‌های حرفه‌ای.
+
+طراحی می‌کنیم:
+
+✅ کاور سینمایی قبل از پخش
+✅ دکمه Play بزرگ وسط
+✅ پخش ویدئو با کلیک
+✅ افکت نور روی کاور
+✅ ذرات شناور (ستاره، حباب، جرقه)
+✅ انیمیشن ورود هنگام اسکرول
+✅ مناسب موبایل و دسکتاپ
+
+
+---
+
+۱) ساختار فایل‌ها در GitHub
+
+اول این پوشه‌ها را بساز:
+
+assets/
+
+ └── videos/
+      └── island-trailer.mp4
+
+
+ └── images/
+      └── island/
+           └── trailer-cover.jpg
+
+island-trailer.mp4 → ویدئوی معرفی
+
+trailer-cover.jpg → تصویر قبل از پخش
+
+
+
+---
+
+۲) اضافه کردن HTML در island.html
+
+بعد از بخش والدین یا قبل از دانلود قرار بده:
+
+<section class="cinematic-trailer">
+
+
+<div class="trailer-particles">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+
+<div class="trailer-header">
+
+<h2>
+🎬 تریلر جزیره فندقی
+</h2>
+
+<p>
+یک ماجراجویی کوچک برای رویاهای بزرگ
+</p>
+
+</div>
+
+
+
+<div class="video-container">
+
+
+<video 
+id="islandVideo"
+poster="assets/images/island/trailer-cover.jpg">
+
+
+<source 
+src="assets/videos/island-trailer.mp4"
+type="video/mp4">
+
+
+مرورگر شما از ویدئو پشتیبانی نمی‌کند.
+
+</video>
+
+
+
+<div class="play-button" id="playButton">
+
+▶
+
+</div>
+
+
+
+<div class="video-light"></div>
+
+
+</div>
+
+
+
+</section>
+
+
+---
+
+۳) CSS بخش تریلر
+
+آخر style.css اضافه کن:
+
+/* =================================
+   🎬 Cinematic Trailer Section
+================================= */
+
+
+.cinematic-trailer{
+
+padding:120px 8%;
+
+text-align:center;
+
+position:relative;
+
+overflow:hidden;
+
+
+}
+
+
+
+.trailer-header h2{
+
+font-size:45px;
+
+color:#633800;
+
+
+}
+
+
+
+.trailer-header p{
+
+font-size:22px;
+
+color:#765000;
+
+margin-bottom:50px;
+
+}
+
+
+
+
+
+.video-container{
+
+
+max-width:950px;
+
+
+margin:auto;
+
+
+position:relative;
+
+
+border-radius:45px;
+
+
+overflow:hidden;
+
+
+box-shadow:
+
+0 40px 100px rgba(0,0,0,.35);
+
+
+background:#000;
+
+
+}
+
+
+
+
+.video-container video{
+
+
+width:100%;
+
+
+display:block;
+
+
+}
+
+
+
+
+
+.play-button{
+
+
+position:absolute;
+
+
+top:50%;
+
+
+left:50%;
+
+
+transform:
+
+translate(-50%,-50%);
+
+
+
+width:100px;
+
+
+height:100px;
+
+
+border-radius:50%;
+
+
+
+background:
+
+rgba(255,190,40,.9);
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+font-size:45px;
+
+
+color:white;
+
+
+cursor:pointer;
+
+
+
+box-shadow:
+
+0 0 50px rgba(255,190,40,.8);
+
+
+transition:.4s;
+
+
+z-index:5;
+
+
+}
+
+
+
+.play-button:hover{
+
+
+transform:
+
+translate(-50%,-50%)
+scale(1.15);
+
+
+}
+
+
+
+
+
+.video-light{
+
+
+position:absolute;
+
+
+inset:0;
+
+
+background:
+
+linear-gradient(
+
+120deg,
+
+transparent,
+
+rgba(255,255,255,.25),
+
+transparent
+
+);
+
+
+
+transform:translateX(-120%);
+
+
+
+}
+
+
+
+.video-container:hover .video-light{
+
+
+animation:
+
+videoShine 2s;
+
+
+}
+
+
+
+@keyframes videoShine{
+
+
+to{
+
+transform:translateX(120%);
+
+}
+
+
+}
+
+
+
+
+
+
+/* ذرات */
+
+
+.trailer-particles span{
+
+
+position:absolute;
+
+
+width:15px;
+
+height:15px;
+
+
+background:#ffd45c;
+
+
+border-radius:50%;
+
+
+animation:
+
+particleMove 8s infinite;
+
+
+opacity:.7;
+
+
+}
+
+
+
+.trailer-particles span:nth-child(1){
+
+left:10%;
+
+top:20%;
+
+}
+
+
+
+.trailer-particles span:nth-child(2){
+
+left:80%;
+
+top:30%;
+
+animation-delay:2s;
+
+}
+
+
+
+.trailer-particles span:nth-child(3){
+
+left:50%;
+
+top:80%;
+
+animation-delay:4s;
+
+}
+
+
+
+.trailer-particles span:nth-child(4){
+
+left:25%;
+
+top:70%;
+
+}
+
+
+
+.trailer-particles span:nth-child(5){
+
+left:90%;
+
+top:80%;
+
+}
+
+
+
+@keyframes particleMove{
+
+
+50%{
+
+
+transform:
+
+translateY(-80px)
+scale(1.5);
+
+
+}
+
+
+}
+
+
+---
+
+۴) JavaScript پخش ویدئو
+
+آخر script.js اضافه کن:
+
+// 🎬 Trailer Play Button
+
+
+const video =
+document.getElementById("islandVideo");
+
+
+const playButton =
+document.getElementById("playButton");
+
+
+
+if(video && playButton){
+
+
+playButton.addEventListener(
+"click",
+()=>{
+
+
+video.play();
+
+
+playButton.style.display="none";
+
+
+});
+
+
+video.addEventListener(
+"click",
+()=>{
+
+
+if(video.paused){
+
+video.play();
+
+}
+else{
+
+video.pause();
+
+playButton.style.display="flex";
+
+}
+
+
+});
+
+
+}
+
+
+---
+
+نتیجه:
+
+وقتی کاربر وارد بخش تریلر شود:
+
+🎬 کاور سینمایی می‌بیند
+✨ نور روی تصویر حرکت می‌کند
+⭐ ذرات اطراف شناور هستند
+▶️ دکمه Play جذاب وسط صفحه است
+🎥 با کلیک، ویدئو شروع می‌شود
+
+
+---
+
+قدم بعدی پیشنهادی برای کامل کردن سایت:
+
+🔥 ساخت بخش نظرات والدین + امتیاز ۵ ستاره + کارت‌های متحرک
+چون برای اپ کودک، اعتماد اجتماعی خیلی روی دانلود تاثیر دارد. 🚀
+
+
+
+عالی داداش 🔥⭐
+الان یک بخش خیلی مهم برای اعتمادسازی می‌سازیم: نظرات والدین.
+
+برای اپ کودک این بخش خیلی تاثیر دارد چون کاربر قبل از دانلود دنبال این است که ببیند خانواده‌های دیگر چه حسی داشتند.
+
+طراحی:
+
+✅ کارت‌های شیشه‌ای مدرن
+✅ امتیاز ۵ ستاره
+✅ آواتار والدین
+✅ انیمیشن ورود هنگام اسکرول
+✅ حرکت شناور کارت‌ها
+✅ افکت سه‌بعدی هنگام حرکت موس
+
+
+---
+
+۱) اضافه کردن HTML در island.html
+
+بعد از بخش تریلر قرار بده:
+
+<section class="parent-reviews">
+
+
+<div class="reviews-title">
+
+<h2>
+⭐ تجربه والدین از جزیره فندقی
+</h2>
+
+
+<p>
+نظر خانواده‌هایی که این ماجراجویی را تجربه کرده‌اند
+</p>
+
+
+</div>
+
+
+
+<div class="reviews-grid">
+
+
+
+<div class="review-card">
+
+
+<div class="parent-avatar">
+👩
+</div>
+
+
+<div class="stars">
+★★★★★
+</div>
+
+
+<p>
+"دخترم عاشق جزیره فندقی شده. هم سرگرم می‌شود هم چیزهای جدید یاد می‌گیرد."
+</p>
+
+
+<h3>
+مادر آوا
+</h3>
+
+
+</div>
+
+
+
+
+
+<div class="review-card">
+
+
+<div class="parent-avatar">
+👨
+</div>
+
+
+<div class="stars">
+★★★★★
+</div>
+
+
+<p>
+"طراحی برنامه خیلی زیباست و حس امنیت خوبی برای استفاده کودک دارد."
+</p>
+
+
+<h3>
+پدر آرین
+</h3>
+
+
+</div>
+
+
+
+
+
+<div class="review-card">
+
+
+<div class="parent-avatar">
+👩‍👧
+</div>
+
+
+<div class="stars">
+★★★★★
+</div>
+
+
+<p>
+"بالاخره یک برنامه کودک پیدا کردیم که هم جذاب است هم آموزشی."
+</p>
+
+
+<h3>
+خانواده نیلا
+</h3>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+---
+
+۲) CSS بخش نظرات
+
+آخر style.css اضافه کن:
+
+/* =================================
+   ⭐ Parent Reviews
+================================= */
+
+
+.parent-reviews{
+
+
+padding:120px 8%;
+
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,220,120,.15),
+
+transparent
+
+);
+
+
+text-align:center;
+
+
+}
+
+
+
+
+.reviews-title h2{
+
+
+font-size:45px;
+
+
+color:#633800;
+
+
+}
+
+
+
+
+.reviews-title p{
+
+
+font-size:20px;
+
+
+color:#765000;
+
+
+margin-bottom:60px;
+
+
+}
+
+
+
+
+
+.reviews-grid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(280px,1fr));
+
+
+gap:35px;
+
+
+perspective:1000px;
+
+
+}
+
+
+
+
+.review-card{
+
+
+background:
+
+rgba(255,255,255,.75);
+
+
+backdrop-filter:
+
+blur(20px);
+
+
+
+border-radius:35px;
+
+
+padding:40px 30px;
+
+
+
+box-shadow:
+
+0 25px 70px rgba(100,60,0,.15);
+
+
+
+transition:.6s;
+
+
+opacity:0;
+
+
+transform:
+
+translateY(60px);
+
+
+animation:
+
+reviewFloat 5s infinite ease-in-out;
+
+
+}
+
+
+
+
+
+.review-card.show-review{
+
+
+opacity:1;
+
+
+transform:
+
+translateY(0);
+
+
+}
+
+
+
+
+.review-card:hover{
+
+
+transform:
+
+translateY(-20px)
+
+rotateX(8deg)
+
+rotateY(-8deg);
+
+
+box-shadow:
+
+0 45px 90px rgba(100,60,0,.25);
+
+
+}
+
+
+
+
+.parent-avatar{
+
+
+width:90px;
+
+height:90px;
+
+
+margin:auto;
+
+
+border-radius:50%;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+font-size:50px;
+
+
+background:white;
+
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.15);
+
+
+}
+
+
+
+
+.stars{
+
+
+margin:25px 0;
+
+
+font-size:30px;
+
+
+color:#ffb300;
+
+
+letter-spacing:5px;
+
+
+}
+
+
+
+
+.review-card p{
+
+
+line-height:2;
+
+
+font-size:18px;
+
+
+color:#604000;
+
+
+}
+
+
+
+
+
+.review-card h3{
+
+
+margin-top:25px;
+
+
+color:#633800;
+
+
+}
+
+
+
+
+
+@keyframes reviewFloat{
+
+
+50%{
+
+
+transform:
+
+translateY(-12px);
+
+
+}
+
+
+}
+
+
+---
+
+۳) فعال کردن انیمیشن اسکرول
+
+آخر script.js اضافه کن:
+
+// ⭐ Reviews Reveal Animation
+
+
+const reviews =
+document.querySelectorAll(".review-card");
+
+
+
+const reviewObserver =
+new IntersectionObserver((entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add(
+"show-review"
+);
+
+
+}
+
+
+});
+
+
+},{
+
+threshold:.2
+
+});
+
+
+
+reviews.forEach(card=>{
+
+
+reviewObserver.observe(card);
+
+
+});
+
+
+---
+
+نتیجه:
+
+وقتی کاربر پایین صفحه می‌آید:
+
+⭐ عنوان نظرات ظاهر می‌شود
+👩👨 کارت والدین وارد صفحه می‌شوند
+✨ کارت‌ها آرام شناور هستند
+🖱️ با موس حالت سه‌بعدی می‌گیرند
+⭐ امتیاز ۵ ستاره اعتماد ایجاد می‌کند
+
+
+---
+
+یک نکته حرفه‌ای برای نسخه نهایی: فعلاً این‌ها نمونه نمایشی هستند. وقتی اپ منتشر شد بهتر است نظرات واقعی کاربران را از:
+
+کافه‌بازار
+
+گوگل‌پلی
+
+فرم سایت
+
+
+بگیریم و جایگزین کنیم.
+
+مرحله بعدی پیشنهادی من: 🔥 ساخت بخش FAQ (سوالات متداول والدین) با آکاردئون متحرک
+مثل:
+
+آیا برنامه اینترنت لازم دارد؟
+
+مناسب چه سنی است؟
+
+حجم برنامه چقدر است؟
+
+اطلاعات کودک امن است؟
+
+
+این بخش قبل از دانلود خیلی روی اعتماد تاثیر دارد. 🚀
+
+
+
+
+
+
+
+عالی داداش 🔥🧡
+بخش FAQ آخرین مرحله‌های حرفه‌ای یک صفحه معرفی اپه. مخصوصاً برای اپ کودک خیلی مهمه چون قبل از دانلود، والدین سوال‌های زیادی دارند.
+
+می‌سازیم:
+
+✅ آکاردئون باز و بسته‌شونده
+✅ انیمیشن نرم
+✅ آیکون + و - متحرک
+✅ طراحی شیشه‌ای هماهنگ با سایت
+✅ ورود هنگام اسکرول
+
+
+---
+
+۱) اضافه کردن HTML در island.html
+
+بعد از بخش نظرات والدین قرار بده:
+
+<section class="faq-section">
+
+
+<div class="faq-header">
+
+<h2>
+❓ سوالات متداول والدین
+</h2>
+
+
+<p>
+پاسخ سوال‌هایی که قبل از نصب ممکن است داشته باشید
+</p>
+
+</div>
+
+
+
+<div class="faq-container">
+
+
+
+<div class="faq-item">
+
+
+<button class="faq-question">
+
+آیا جزیره فندقی برای چه سنی مناسب است؟
+
+<span>+</span>
+
+</button>
+
+
+<div class="faq-answer">
+
+<p>
+جزیره فندقی برای کودکان طراحی شده و محتوای آن متناسب با یادگیری و سرگرمی کودکانه است.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="faq-item">
+
+
+<button class="faq-question">
+
+آیا برنامه نیاز به اینترنت دارد؟
+
+<span>+</span>
+
+</button>
+
+
+<div class="faq-answer">
+
+<p>
+بخش‌های اصلی برنامه می‌توانند بدون نیاز دائمی به اینترنت استفاده شوند.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="faq-item">
+
+
+<button class="faq-question">
+
+آیا اطلاعات کودک امن است؟
+
+<span>+</span>
+
+</button>
+
+
+<div class="faq-answer">
+
+<p>
+امنیت و حریم خصوصی کاربران یکی از اولویت‌های طراحی جزیره فندقی است.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="faq-item">
+
+
+<button class="faq-question">
+
+حجم برنامه چقدر است؟
+
+<span>+</span>
+
+</button>
+
+
+<div class="faq-answer">
+
+<p>
+حجم نسخه فعلی برنامه حدود ۵۲ مگابایت است و برای نصب راحت بهینه شده است.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="faq-item">
+
+
+<button class="faq-question">
+
+آیا تبلیغات داخل برنامه وجود دارد؟
+
+<span>+</span>
+
+</button>
+
+
+<div class="faq-answer">
+
+<p>
+هدف جزیره فندقی ایجاد یک تجربه آرام و مناسب کودک است.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+---
+
+۲) CSS بخش FAQ
+
+آخر style.css اضافه کن:
+
+/* =================================
+   ❓ FAQ Accordion
+================================= */
+
+
+.faq-section{
+
+padding:120px 8%;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+transparent,
+
+rgba(255,220,120,.2)
+
+);
+
+
+}
+
+
+
+
+.faq-header{
+
+text-align:center;
+
+margin-bottom:60px;
+
+}
+
+
+
+.faq-header h2{
+
+font-size:45px;
+
+color:#633800;
+
+}
+
+
+
+.faq-header p{
+
+font-size:20px;
+
+color:#765000;
+
+}
+
+
+
+
+
+.faq-container{
+
+max-width:850px;
+
+margin:auto;
+
+}
+
+
+
+.faq-item{
+
+
+background:
+
+rgba(255,255,255,.75);
+
+
+backdrop-filter:blur(15px);
+
+
+border-radius:25px;
+
+
+margin-bottom:20px;
+
+
+overflow:hidden;
+
+
+box-shadow:
+
+0 15px 40px rgba(100,60,0,.12);
+
+
+}
+
+
+
+
+
+.faq-question{
+
+
+width:100%;
+
+
+border:none;
+
+
+background:none;
+
+
+padding:30px;
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+font-size:22px;
+
+
+font-family:inherit;
+
+
+color:#633800;
+
+
+cursor:pointer;
+
+
+}
+
+
+
+
+.faq-question span{
+
+
+font-size:35px;
+
+
+transition:.4s;
+
+
+color:#ffad00;
+
+
+}
+
+
+
+
+
+.faq-item.active .faq-question span{
+
+
+transform:
+
+rotate(45deg);
+
+
+}
+
+
+
+
+
+.faq-answer{
+
+
+max-height:0;
+
+
+overflow:hidden;
+
+
+transition:
+
+max-height .5s ease;
+
+
+}
+
+
+
+
+
+.faq-answer p{
+
+
+padding:0 30px 30px;
+
+
+line-height:2;
+
+
+font-size:18px;
+
+
+color:#694800;
+
+
+}
+
+
+---
+
+۳) JavaScript آکاردئون
+
+آخر script.js اضافه کن:
+
+// =================================
+// FAQ Accordion
+// =================================
+
+
+const faqItems =
+document.querySelectorAll(".faq-item");
+
+
+
+faqItems.forEach(item=>{
+
+
+const button =
+item.querySelector(".faq-question");
+
+
+const answer =
+item.querySelector(".faq-answer");
+
+
+
+button.addEventListener("click",()=>{
+
+
+faqItems.forEach(other=>{
+
+
+if(other !== item){
+
+
+other.classList.remove("active");
+
+other.querySelector(".faq-answer").style.maxHeight=null;
+
+
+}
+
+
+});
+
+
+
+item.classList.toggle("active");
+
+
+
+if(item.classList.contains("active")){
+
+
+answer.style.maxHeight =
+answer.scrollHeight + "px";
+
+
+}
+
+else{
+
+
+answer.style.maxHeight=null;
+
+
+}
+
+
+
+});
+
+
+});
+
+
+---
+
+نتیجه:
+
+وقتی کاربر برسد به FAQ:
+
+❓ سوال‌ها به شکل کارت‌های زیبا دیده می‌شوند
+➕ با کلیک باز می‌شوند
+✨ جواب با انیمیشن نرم ظاهر می‌شود
+➕ تبدیل به × می‌شود
+📱 روی موبایل هم کاملاً درست کار می‌کند
+
+
+---
+
+تا اینجا صفحه «جزیره فندقی» تقریباً ساختار یک Landing Page کامل اپ حرفه‌ای را دارد:
+
+1. Hero معرفی 🏝️
+
+
+2. Mockup گوشی سه‌بعدی 📱
+
+
+3. اسلایدشو داخل گوشی 🎞️
+
+
+4. ویژگی‌ها 🎮
+
+
+5. اعتماد والدین 👨‍👩‍👧
+
+
+6. تریلر سینمایی 🎬
+
+
+7. نظرات کاربران ⭐
+
+
+8. FAQ ❓
+
+
+9. دانلود اپ 🚀
+
+
+
+مرحله خیلی حرفه‌ای بعدی که پیشنهاد می‌کنم: 🔥 ساخت Footer نهایی + لینک شبکه‌های اجتماعی + قوانین حریم خصوصی + صفحه درباره پارسا اپس
+تا سایت از نظر انتشار واقعی آماده شود.
+
+
+
+
+
+عالی داداش 🔥🏝️
+الان می‌ریم سراغ آخرین بخش‌های حرفه‌ای سایت: Footer نهایی + صفحه درباره پارسا اپس + قوانین حریم خصوصی.
+
+این بخش باعث میشه سایت از حالت معرفی ساده خارج بشه و ظاهر یک شرکت واقعی تولید اپلیکیشن بگیره.
+
+می‌سازیم:
+
+✅ Footer چندستونه
+✅ لینک شبکه‌های اجتماعی
+✅ لینک دانلود
+✅ لینک قوانین و حریم خصوصی
+✅ صفحه درباره ما
+✅ طراحی هماهنگ با برند پارسا اپس
+✅ انیمیشن نرم
+
+
+---
+
+۱) Footer در index.html و island.html
+
+قبل از </body> قرار بده:
+
+<footer class="main-footer">
+
+
+<div class="footer-container">
+
+
+
+<div class="footer-brand">
+
+
+<h2>
+پارسا اپس
+</h2>
+
+
+<p>
+ساخت اپلیکیشن‌های خلاقانه برای آینده‌ای هوشمند
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="footer-links">
+
+
+<h3>
+دسترسی سریع
+</h3>
+
+
+<a href="index.html">
+خانه
+</a>
+
+
+<a href="island.html">
+جزیره فندقی
+</a>
+
+
+<a href="about.html">
+درباره ما
+</a>
+
+
+<a href="privacy.html">
+حریم خصوصی
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="footer-links">
+
+
+<h3>
+ارتباط با ما
+</h3>
+
+
+<a href="#">
+📱 تلگرام
+</a>
+
+
+<a href="#">
+📷 اینستاگرام
+</a>
+
+
+<a href="#">
+▶️ یوتیوب
+</a>
+
+
+<a href="#">
+✉️ ایمیل
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="footer-download">
+
+
+<h3>
+دانلود اپ
+</h3>
+
+
+<p>
+جزیره فندقی آماده تجربه شماست
+</p>
+
+
+<a href="island.html" class="footer-btn">
+
+مشاهده برنامه
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© ۱۴۰۵ پارسا اپس | تمامی حقوق محفوظ است
+
+</p>
+
+
+</div>
+
+
+
+</footer>
+
+
+---
+
+۲) CSS Footer
+
+آخر style.css اضافه کن:
+
+/* =================================
+   Footer Parssa Apps
+================================= */
+
+
+.main-footer{
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#3b2600,
+
+#704400
+
+);
+
+
+color:white;
+
+
+padding:80px 8% 20px;
+
+
+}
+
+
+
+.footer-container{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(220px,1fr));
+
+
+gap:40px;
+
+
+}
+
+
+
+
+.footer-brand h2{
+
+
+font-size:40px;
+
+
+color:#ffd45c;
+
+
+}
+
+
+
+
+.footer-brand p{
+
+
+line-height:2;
+
+
+color:#ffe9b0;
+
+
+}
+
+
+
+
+
+.footer-links h3,
+.footer-download h3{
+
+
+font-size:22px;
+
+
+color:#ffd45c;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+.footer-links a{
+
+
+display:block;
+
+
+color:white;
+
+
+text-decoration:none;
+
+
+margin:15px 0;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.footer-links a:hover{
+
+
+color:#ffd45c;
+
+
+transform:translateX(-8px);
+
+
+}
+
+
+
+
+.footer-download p{
+
+
+line-height:2;
+
+
+}
+
+
+
+
+
+.footer-btn{
+
+
+display:inline-block;
+
+
+background:#ffd45c;
+
+
+color:#5b3600;
+
+
+padding:14px 30px;
+
+
+border-radius:30px;
+
+
+text-decoration:none;
+
+
+font-weight:bold;
+
+
+margin-top:15px;
+
+
+transition:.4s;
+
+
+}
+
+
+
+.footer-btn:hover{
+
+
+transform:translateY(-5px);
+
+
+}
+
+
+
+
+.footer-bottom{
+
+
+border-top:1px solid rgba(255,255,255,.2);
+
+
+margin-top:50px;
+
+
+padding-top:25px;
+
+
+text-align:center;
+
+
+color:#ffe9b0;
+
+
+}
+
+
+---
+
+۳) ساخت صفحه درباره ما
+
+یک فایل بساز:
+
+about.html
+
+کد:
+
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>درباره پارسا اپس</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+
+<section class="about-page">
+
+
+<h1>
+درباره پارسا اپس
+</h1>
+
+
+<p>
+
+پارسا اپس یک مجموعه خلاق در زمینه طراحی و توسعه اپلیکیشن‌های موبایل است.
+
+هدف ما ساخت تجربه‌های دیجیتال زیبا، کاربردی و امن برای کاربران است.
+
+</p>
+
+
+
+<h2>
+ماموریت ما
+</h2>
+
+
+<p>
+
+ساخت محصولاتی که فناوری را ساده‌تر، جذاب‌تر و مفیدتر برای همه کنند.
+
+</p>
+
+
+
+</section>
+
+
+
+</body>
+
+</html>
+
+
+---
+
+۴) ساخت صفحه حریم خصوصی
+
+فایل:
+
+privacy.html
+
+کد:
+
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>حریم خصوصی</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<section class="about-page">
+
+
+<h1>
+قوانین حریم خصوصی
+</h1>
+
+
+
+<p>
+
+پارسا اپس به حریم خصوصی کاربران اهمیت می‌دهد.
+
+</p>
+
+
+
+<h2>
+اطلاعات کاربران
+</h2>
+
+
+<p>
+
+ما تلاش می‌کنیم کمترین اطلاعات مورد نیاز را دریافت کنیم و امنیت اطلاعات کاربران را حفظ کنیم.
+
+</p>
+
+
+
+<h2>
+امنیت کودکان
+</h2>
+
+
+<p>
+
+جزیره فندقی با هدف ایجاد محیطی امن و مناسب برای کودکان طراحی شده است.
+
+</p>
+
+
+</section>
+
+
+
+</body>
+
+
+</html>
+
+
+---
+
+نتیجه سایت:
+
+الان پارسا اپس ظاهر یک برند واقعی دارد:
+
+🏝️ صفحه معرفی جزیره فندقی
+📱 معرفی اپ
+🎬 تریلر
+⭐ نظرات کاربران
+❓ FAQ
+⬇️ دانلود
+🏢 درباره شرکت
+🔒 حریم خصوصی
+🌐 شبکه‌های اجتماعی
+
+مرحله بعدی که پیشنهاد می‌کنم برای حرفه‌ای شدن نهایی:
+
+🔥 ساخت صفحه 404 اختصاصی پارسا اپس + انیمیشن پیدا نشدن صفحه
+(باعث میشه حتی وقتی لینک اشتباه باز شد سایت حرفه‌ای دیده بشه) 🚀
+
+
+عالی داداش 🔥🏝️
+صفحه 404 شاید کم استفاده شود، ولی برای یک سایت حرفه‌ای خیلی مهم است. وقتی کاربر وارد لینک اشتباه شود نباید یک صفحه خشک GitHub ببیند؛ باید همان حس برند پارسا اپس + جزیره فندقی را دریافت کند.
+
+طراحی:
+
+✅ تصویر/کاراکتر گمشده در جزیره
+✅ عدد 404 سه‌بعدی
+✅ انیمیشن شناور
+✅ ذرات نور و ستاره
+✅ دکمه بازگشت به خانه
+✅ کاملاً RTL و فارسی
+
+
+---
+
+۱) ساخت فایل 404.html
+
+در ریشه پروژه GitHub بساز:
+
+404.html
+
+کد کامل:
+
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>صفحه پیدا نشد | پارسا اپس</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<section class="error-page">
+
+
+<div class="error-particles">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+
+<div class="error-content">
+
+
+<div class="error-island">
+
+🏝️
+
+</div>
+
+
+
+<h1>
+
+404
+
+</h1>
+
+
+
+<h2>
+
+اوه! این صفحه پیدا نشد
+
+</h2>
+
+
+
+<p>
+
+به نظر می‌رسد این مسیر در جزیره فندقی وجود ندارد.
+
+اما نگران نباشید، می‌توانیم شما را به خانه برگردانیم.
+
+</p>
+
+
+
+<a href="index.html" class="error-button">
+
+🏠 بازگشت به صفحه اصلی
+
+</a>
+
+
+</div>
+
+
+
+</section>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+---
+
+۲) CSS صفحه 404
+
+آخر style.css اضافه کن:
+
+/* =================================
+   🏝️ Parsa Apps 404 Page
+================================= */
+
+
+.error-page{
+
+
+min-height:100vh;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+text-align:center;
+
+
+overflow:hidden;
+
+
+position:relative;
+
+
+background:
+
+
+linear-gradient(
+
+180deg,
+
+#ffe98a,
+
+#fff8dc
+
+);
+
+
+padding:30px;
+
+
+}
+
+
+
+
+
+.error-content{
+
+
+position:relative;
+
+
+z-index:2;
+
+
+}
+
+
+
+.error-island{
+
+
+font-size:120px;
+
+
+animation:
+
+islandFloat 4s infinite ease-in-out;
+
+
+}
+
+
+
+
+
+.error-content h1{
+
+
+font-size:150px;
+
+
+margin:0;
+
+
+font-weight:900;
+
+
+background:
+
+linear-gradient(
+
+45deg,
+
+#ff9d00,
+
+#ffd43b
+
+);
+
+
+-webkit-background-clip:text;
+
+
+color:transparent;
+
+
+text-shadow:
+
+0 20px 40px rgba(100,60,0,.2);
+
+
+}
+
+
+
+
+.error-content h2{
+
+
+font-size:38px;
+
+
+color:#633800;
+
+
+}
+
+
+
+
+
+.error-content p{
+
+
+font-size:20px;
+
+
+max-width:600px;
+
+
+line-height:2;
+
+
+color:#765000;
+
+
+margin:30px auto;
+
+
+}
+
+
+
+
+
+.error-button{
+
+
+display:inline-block;
+
+
+background:
+
+linear-gradient(
+
+45deg,
+
+#ff9800,
+
+#ffd43b
+
+);
+
+
+color:white;
+
+
+padding:18px 40px;
+
+
+border-radius:40px;
+
+
+text-decoration:none;
+
+
+font-size:20px;
+
+
+font-weight:bold;
+
+
+box-shadow:
+
+0 20px 40px rgba(255,150,0,.35);
+
+
+transition:.4s;
+
+
+}
+
+
+
+
+
+.error-button:hover{
+
+
+transform:
+
+translateY(-8px)
+scale(1.05);
+
+
+}
+
+
+
+
+@keyframes islandFloat{
+
+
+50%{
+
+
+transform:
+
+translateY(-25px)
+rotate(5deg);
+
+
+}
+
+
+}
+
+
+
+
+
+/* ذرات */
+
+.error-particles span{
+
+
+position:absolute;
+
+
+width:15px;
+
+
+height:15px;
+
+
+background:#ffc928;
+
+
+border-radius:50%;
+
+
+animation:
+
+errorParticle 7s infinite;
+
+
+opacity:.7;
+
+
+}
+
+
+
+.error-particles span:nth-child(1){
+
+top:20%;
+
+left:20%;
+
+}
+
+
+.error-particles span:nth-child(2){
+
+top:30%;
+
+right:20%;
+
+animation-delay:2s;
+
+}
+
+
+.error-particles span:nth-child(3){
+
+bottom:20%;
+
+left:40%;
+
+animation-delay:4s;
+
+}
+
+
+.error-particles span:nth-child(4){
+
+bottom:30%;
+
+right:35%;
+
+}
+
+
+
+@keyframes errorParticle{
+
+
+50%{
+
+
+transform:
+
+translateY(-80px)
+scale(1.5);
+
+
+}
+
+
+}
+
+
+---
+
+۳) تست صفحه 404
+
+بعد از Push روی GitHub Pages:
+
+یک آدرس اشتباه باز کن:
+
+مثلاً:
+
+https://parsa-apps.github.io/test123
+
+باید صفحه اختصاصی خودت نمایش داده شود.
+
+
+---
+
+الان سایت پارسا اپس از نظر ساختار خیلی کامل شده:
+
+✅ صفحه اصلی
+✅ جزیره فندقی
+✅ Mockup گوشی
+✅ تریلر
+✅ ویژگی‌ها
+✅ اعتماد والدین
+✅ نظرات
+✅ FAQ
+✅ دانلود
+✅ درباره ما
+✅ حریم خصوصی
+✅ 404 اختصاصی
+
+مرحله حرفه‌ای بعدی که پیشنهاد می‌کنم:
+
+🔥 ساخت PWA برای سایت پارسا اپس (نصب سایت مثل اپ روی گوشی + آیکون + Splash Screen)
+
+این باعث می‌شود سایتت حتی روی موبایل حس یک برنامه واقعی بدهد. 🚀
+
+
+
+
+عالی داداش 🔥📱
+این مرحله سایت پارسا اپس را یک پله حرفه‌ای‌تر می‌کند. با PWA کاربر می‌تواند سایت را مثل یک اپ روی گوشی نصب کند:
+
+📲 آیکون روی صفحه اصلی گوشی
+🚀 باز شدن بدون نوار مرورگر
+✨ Splash Screen هنگام اجرا
+⚡ کش شدن فایل‌ها برای سرعت بیشتر
+🏝️ هماهنگ با برند جزیره فندقی
+
+
+---
+
+ساختار فایل‌های جدید:
+
+در ریشه GitHub این‌ها را اضافه کن:
+
+Parsa-apps.github.io
+
+│
+├── index.html
+├── style.css
+├── script.js
+│
+├── manifest.json
+│
+├── sw.js
+│
+└── icons
+    ├── icon-192.png
+    └── icon-512.png
+
+
+---
+
+۱) ساخت فایل manifest.json
+
+در ریشه پروژه بساز:
+
+{
+  "name": "پارسا اپس | جزیره فندقی",
+  "short_name": "پارسا اپس",
+  "description": "دنیایی از بازی، آموزش و خلاقیت برای کودکان",
+  "lang": "fa",
+  "dir": "rtl",
+
+  "start_url": "/",
+
+  "display": "standalone",
+
+  "background_color": "#fff3c4",
+
+  "theme_color": "#ffb300",
+
+  "orientation": "portrait",
+
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
+
+---
+
+۲) اتصال PWA به index.html
+
+داخل <head> اضافه کن:
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#ffb300">
+
+<link rel="apple-touch-icon" href="icons/icon-512.png">
+
+
+---
+
+۳) ساخت Service Worker
+
+یک فایل بساز:
+
+sw.js
+
+کد:
+
+const CACHE_NAME = "parsa-apps-v1";
+
+
+const FILES_TO_CACHE = [
+
+"/",
+"/index.html",
+"/style.css",
+"/script.js",
+"/manifest.json"
+
+];
+
+
+
+self.addEventListener(
+"install",
+event => {
+
+
+event.waitUntil(
+
+caches.open(CACHE_NAME)
+
+.then(cache => {
+
+return cache.addAll(FILES_TO_CACHE);
+
+})
+
+);
+
+
+});
+
+
+
+
+
+self.addEventListener(
+"fetch",
+
+event => {
+
+
+event.respondWith(
+
+caches.match(event.request)
+
+.then(response => {
+
+
+return response ||
+
+fetch(event.request);
+
+
+})
+
+);
+
+
+});
+
+
+---
+
+۴) فعال کردن Service Worker
+
+آخر script.js اضافه کن:
+
+// =================================
+// PWA Service Worker
+// =================================
+
+
+if("serviceWorker" in navigator){
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+navigator.serviceWorker.register(
+"sw.js"
+
+)
+
+.then(()=>{
+
+console.log(
+"PWA Ready"
+);
+
+});
+
+
+});
+
+
+}
+
+
+---
+
+۵) Splash Screen حرفه‌ای
+
+برای موبایل:
+
+در style.css اضافه کن:
+
+/* PWA Launch Theme */
+
+
+@media (display-mode: standalone){
+
+
+body{
+
+
+padding-top:env(safe-area-inset-top);
+
+
+}
+
+
+
+}
+
+
+---
+
+۶) ساخت آیکون‌ها
+
+لوگوی پارسا اپس که ساختیم را تبدیل کن به:
+
+icon-192.png
+icon-512.png
+
+پیشنهاد:
+
+پس‌زمینه: طلایی/کرم
+
+لوگوی جزیره فندقی وسط
+
+بدون نوشته کوچک (چون روی موبایل خوانده نمی‌شود)
+
+
+
+---
+
+نتیجه بعد از نصب:
+
+کاربر با Chrome وارد سایت می‌شود:
+
+⬇️
+پیغام:
+
+Install پارسا اپس
+
+⬇️
+نصب می‌کند:
+
+📱 آیکون روی صفحه گوشی
+✨ باز شدن تمام صفحه
+🏝️ حس یک اپ واقعی
+⚡ سرعت بالاتر
+
+
+---
+
+یک مرحله خیلی خفن بعد از این:
+
+🔥 ساخت صفحه App Store برای جزیره فندقی داخل سایت یعنی:
+
+نسخه برنامه
+
+تاریخ آخرین آپدیت
+
+تغییرات نسخه‌ها (Changelog)
+
+دانلود APK
+
+دکمه گزارش مشکل
+
+پشتیبانی
+
+
+که سایت را شبیه صفحه رسمی یک اپ در گوگل‌پلی می‌کند. 🚀
+
+
+
+
