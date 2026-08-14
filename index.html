@@ -20,10 +20,13 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://parsa-apps.github.io/assets/brand/social-og-1200x630.jpg">
 
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="assets/brand/parsa-apps-icon-180.png" sizes="180x180">
-  <link rel="manifest" href="site.webmanifest">
+  <!-- لوگوی رسمی پارسا اپس در تب مرورگر؛ نسخه برای شکستن کش قدیمی -->
+  <link rel="icon" href="/assets/favicon.svg?v=3" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="/assets/icons/favicon-32.png?v=3" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/icons/favicon-16.png?v=3" sizes="16x16" type="image/png">
+  <link rel="shortcut icon" href="/favicon.ico?v=3">
+  <link rel="apple-touch-icon" href="/assets/brand/parsa-apps-icon-180.png?v=3" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
@@ -46,7 +49,10 @@
   <header class="site-header home-header">
     <div class="container nav-wrap">
       <a class="brand" href="index.html" aria-label="پارسا اپس؛ صفحه اصلی">
-        <img src="assets/brand/parsa-apps-gold-96.png" alt="" width="48" height="48">
+        <span class="nav-brand-mark" aria-hidden="true">
+          <img src="assets/brand/parsa-apps-gold-96.png" alt="" width="48" height="48">
+          <i class="nav-brand-shine"></i>
+        </span>
         <span class="brand-copy">
           <strong>پارسا اپس</strong>
           <span>تجربه‌های دیجیتال خلاقانه</span>
@@ -75,7 +81,16 @@
       <div class="container home-hero-grid">
         <div class="home-hero-copy" data-reveal>
           <span class="home-kicker"><i aria-hidden="true"></i> استودیوی خلاق محصول دیجیتال</span>
-          <h1 id="hero-title">پارسا اپس</h1>
+          <h1 id="hero-title" class="hero-brand-title">
+            <span class="hero-title-mark" aria-hidden="true">
+              <span class="hero-title-aura"></span>
+              <span class="hero-title-ring"></span>
+              <img src="assets/brand/parsa-apps-gold-192.png" alt="" width="192" height="192" fetchpriority="high">
+              <i class="hero-title-spark spark-a"></i>
+              <i class="hero-title-spark spark-b"></i>
+            </span>
+            <span class="hero-title-text">پارسا اپس<small>PARSA APPS</small></span>
+          </h1>
           <p class="hero-lead">سازنده اپلیکیشن‌های <span>خلاقانه و هوشمند</span></p>
           <p class="hero-description">ما تجربه‌های دیجیتالی می‌سازیم که آموزش، سرگرمی و فناوری را کنار هم قرار می‌دهند.</p>
 
