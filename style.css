@@ -3347,3 +3347,76 @@ form.panel {
     transform: none !important;
   }
 }
+
+/* ==========================================================
+   Gold brand mark
+   The official Parsa Apps logo is a gold PA monogram on a dark
+   tile. These rules give it a warm rim + glow so the dark tile
+   reads as intentional on both light and dark surfaces.
+   ========================================================== */
+
+.brand img,
+.home-page .brand img,
+.footer-logo img,
+.brand-core img,
+.future-core img {
+  background: #0b1220;
+}
+
+/* Header mark: soft gold rim instead of the old orange drop shadow */
+.brand img {
+  box-shadow:
+    0 8px 18px rgba(11, 18, 32, 0.22),
+    0 0 0 1px rgba(233, 185, 73, 0.28);
+}
+
+.home-page .brand img {
+  box-shadow:
+    0 8px 22px rgba(11, 18, 32, 0.18),
+    0 0 0 1px rgba(233, 185, 73, 0.26);
+}
+
+.js-motion .site-header .brand:hover img {
+  box-shadow:
+    0 12px 26px rgba(11, 18, 32, 0.26),
+    0 0 0 1px rgba(233, 185, 73, 0.5),
+    0 0 22px rgba(233, 185, 73, 0.22);
+}
+
+/* Hero showcase mark sits on the dark studio panel */
+.brand-core img {
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(233, 185, 73, 0.22);
+}
+
+.brand-core::before {
+  box-shadow: 0 0 80px rgba(233, 185, 73, 0.2);
+}
+
+/* Footer + future core marks */
+.footer-logo img {
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(233, 185, 73, 0.24);
+}
+
+.future-core img {
+  border-radius: 18px;
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(233, 185, 73, 0.22);
+}
+
+.js-motion .footer-logo:hover img {
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(233, 185, 73, 0.46),
+    0 0 20px rgba(233, 185, 73, 0.2);
+}
+
+/* Brand-kit preview tiles on brand.html */
+.kit-card .preview img[src*="parsa-apps-gold"] {
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(11, 18, 32, 0.22);
+}
