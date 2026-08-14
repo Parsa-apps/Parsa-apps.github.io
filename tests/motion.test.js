@@ -158,15 +158,22 @@ console.log("\n=== B. island.html ===\n");
   );
   check("phone wake observer created", !!wakeObs);
   if (wakeObs) {
+    check("phone hidden pre-reveal (js-reveal)", phone.classList.contains("js-reveal"));
     wakeObs.fireAll(true);
     check("phone wakes (phone-active)", phone.classList.contains("phone-active"));
+    check("phone js-reveal removed after wake", !phone.classList.contains("js-reveal"));
   }
 
   // feature / trust / review reveal
+  check("feature cards hidden pre-reveal", doc.querySelectorAll(".feature-3d-card.js-reveal").length === 4);
+  check("trust cards hidden pre-reveal", doc.querySelectorAll(".trust-card.js-reveal").length === 4);
+  check("review cards hidden pre-reveal", doc.querySelectorAll(".review-card.js-reveal").length === 3);
+
   observed.forEach((o) => o.fireAll(true));
   check("feature cards revealed", doc.querySelectorAll(".feature-3d-card.show-feature").length === 4);
   check("trust cards revealed", doc.querySelectorAll(".trust-card.show").length === 4);
   check("review cards revealed", doc.querySelectorAll(".review-card.show-review").length === 3);
+  check("js-reveal removed after reveal", doc.querySelectorAll(".feature-3d-card.js-reveal, .trust-card.js-reveal, .review-card.js-reveal").length === 0);
 
   // FAQ accordion
   const faqItems = doc.querySelectorAll(".faq-item");
@@ -303,8 +310,9 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v1"));
+  check("sw: cache name", sw.includes("parsa-apps-v2"));
   check("sw: caches main pages", sw.includes("./island.html"));
+  check("sw: network-first for css/js", /request\.destination === "style"[\s\S]*request\.destination === "script"/.test(sw));
 
   // فایل‌های مورد نیاز وجود دارند
   ["assets/fonts/Vazirmatn-Bold.woff2",
@@ -315,6 +323,24 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
    "icons/icon-512.png"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
   });
+}
+
+console.log("\n=== E. مقاوم‌سازی نمایش محتوا (بدون IntersectionObserver) ===\n");
+{
+  const { doc, errors } = makeDom("island.html", { noObserver: true });
+  check("no-IO: no runtime errors", errors.length === 0, errors.join(" | "));
+  check(
+    "no-IO: cards stay visible (no js-reveal)",
+    doc.querySelectorAll(".feature-3d-card.js-reveal, .trust-card.js-reveal, .review-card.js-reveal").length === 0
+  );
+  check("no-IO: sections not hidden", doc.querySelectorAll(".section.hidden").length === 0);
+  check("no-IO: phone not hidden", !doc.getElementById("phone").classList.contains("js-reveal"));
+  check("no-IO: FAQ still works", (() => {
+    const first = doc.querySelector(".faq-item");
+    if (!first) return false;
+    first.querySelector(".faq-question").click();
+    return first.classList.contains("active");
+  })());
 }
 
 console.log("\n================================");

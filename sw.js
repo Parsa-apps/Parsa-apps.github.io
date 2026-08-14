@@ -1,9 +1,13 @@
 /* ============================================================
    پارسا اپس — Service Worker
-   نسخه‌ی کش: v1
+   نسخه‌ی کش: v2
+   استراتژی:
+   - صفحات (ناوبری): شبکه‌اول → کش → 404
+   - HTML / CSS / JS: شبکه‌اول → کش (همیشه تازه؛ آفلاین از کش)
+   - تصاویر / فونت / آیکون: کش‌اول + به‌روزرسانی پس‌زمینه
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v1";
+const CACHE_NAME = "parsa-apps-v2";
 
 const FILES_TO_CACHE = [
   "./",
@@ -51,12 +55,15 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-/* دریافت: صفحات شبکه-اول (همیشه تازه) / دارایی‌ها کش-اول (سریع) */
+/* دریافت */
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET") return;
 
-  /* ناوبری صفحات: اول شبکه، در آفلاین از کش */
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  /* ۱) ناوبری صفحات: شبکه‌اول، در آفلاین از کش */
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request)
@@ -72,7 +79,30 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* دارایی‌های استاتیک: اول کش، بعد شبکه (با به‌روزرسانی کش) */
+  /* ۲) فایل‌های همیشه‌تازه (HTML/CSS/JS): شبکه‌اول تا به‌روزرسانی‌ها
+        بلافاصله اعمال شوند و کاربر نسخه قدیمی نبیند */
+  if (
+    request.destination === "style" ||
+    request.destination === "script" ||
+    request.destination === "document"
+  ) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() =>
+          caches.match(request).then((c) => c || caches.match("./404.html"))
+        )
+    );
+    return;
+  }
+
+  /* ۳) دارایی‌های سنگین (تصویر/فونت/آیکون): کش‌اول + به‌روزرسانی در پس‌زمینه */
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)
@@ -83,7 +113,7 @@ self.addEventListener("fetch", (event) => {
           }
           return response;
         })
-        .catch(() => cached || caches.match("./404.html"));
+        .catch(() => cached);
 
       return cached || network;
     })
