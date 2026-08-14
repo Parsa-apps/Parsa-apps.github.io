@@ -1245,7 +1245,7 @@ body.island-page .glass-card h3 {
 }
 
 /* ورود سینمایی گوشی */
-.reveal-phone {
+.reveal-phone.js-reveal {
   opacity: 0;
   transform: translateY(90px) scale(0.9) rotateY(-28deg);
 }
@@ -1334,6 +1334,11 @@ body.island-page .glass-card h3 {
   transform-style: preserve-3d;
   position: relative;
   overflow: hidden;
+}
+
+/* حالت مخفی فقط وقتی JS فعال و آماده باشد اضافه می‌شود —
+   اگر اسکریپت لود نشود، کارت‌ها همیشه قابل مشاهده می‌مانند */
+.feature-3d-card.js-reveal {
   opacity: 0;
   transform: translateY(60px);
 }
@@ -1430,6 +1435,9 @@ body.island-page .glass-card h3 {
   border-radius: 36px;
   box-shadow: 0 25px 62px rgba(100, 60, 0, 0.15);
   transition: transform 0.55s var(--ease-spring), box-shadow 0.5s ease;
+}
+
+.trust-card.js-reveal {
   opacity: 0;
   transform: translateY(70px);
 }
@@ -1567,47 +1575,6 @@ body.island-page .glass-card h3 {
   to { transform: translateX(130%); }
 }
 
-/* پیام «به‌زودی» وقتی ویدئو هنوز آپلود نشده */
-.coming-soon-overlay {
-  position: absolute;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(10, 6, 0, 0.72);
-  backdrop-filter: blur(6px);
-  z-index: 6;
-  text-align: center;
-}
-
-.coming-soon-overlay.show {
-  display: flex;
-  animation: fadeIn 0.6s ease;
-}
-
-.coming-soon-overlay .inner {
-  color: #fff;
-}
-
-.coming-soon-overlay .emoji {
-  font-size: 64px;
-  display: block;
-  margin-bottom: 10px;
-  animation: titleFloat 3s infinite ease-in-out;
-}
-
-.coming-soon-overlay h3 {
-  font-size: 30px;
-  color: var(--gold);
-  font-weight: 900;
-  margin-bottom: 6px;
-}
-
-.coming-soon-overlay p {
-  color: #ffe9b0;
-  font-size: 16px;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -1673,6 +1640,9 @@ body.island-page .glass-card h3 {
   padding: 40px 30px;
   box-shadow: 0 25px 70px rgba(100, 60, 0, 0.15);
   transition: transform 0.55s var(--ease-spring), box-shadow 0.5s ease;
+}
+
+.review-card.js-reveal {
   opacity: 0;
   transform: translateY(60px);
 }
@@ -1960,6 +1930,386 @@ body.island-page .glass-card h3 {
 @keyframes qrFloat {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50%      { transform: translateY(-15px) rotate(-2deg); }
+}
+
+/* لینک استور زیر دکمه دانلود */
+.store-hint {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.store-hint a {
+  color: #8a5c00;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(138, 92, 0, 0.5);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.store-hint a:hover {
+  color: #5a3500;
+  border-color: #5a3500;
+}
+
+/* ============================================================
+   🖼️ گالری اسکرین‌شات اپ (جزیره فندقی)
+   ============================================================ */
+.gallery-section {
+  padding: 110px 8%;
+  text-align: center;
+}
+
+.gallery-section > p {
+  color: var(--brown-2);
+  font-size: 19px;
+  margin-bottom: 50px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.shot {
+  background: #fff;
+  padding: 12px;
+  border-radius: 32px;
+  box-shadow: 0 24px 60px rgba(100, 60, 0, 0.18);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-spring), box-shadow 0.5s ease;
+}
+
+.shot img {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 22px;
+  transition: transform 0.6s ease;
+}
+
+.shot:hover {
+  transform: translateY(-18px) scale(1.03) rotate(2deg);
+  box-shadow: 0 40px 90px rgba(100, 60, 0, 0.28);
+}
+
+.shot:hover img {
+  transform: scale(1.05);
+}
+
+/* ============================================================
+   🧾 صفحه استور جزیره فندقی (store.html)
+   ============================================================ */
+.store-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
+  min-height: 88vh;
+  padding: 130px 8% 80px;
+}
+
+.store-app-icon {
+  width: 260px;
+  height: 260px;
+  flex: 0 0 auto;
+  border-radius: 60px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(100, 60, 0, 0.28);
+  animation: characterFloat 5.5s infinite ease-in-out;
+}
+
+.store-app-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.store-hero-info {
+  max-width: 560px;
+  text-align: right;
+}
+
+.store-hero-info h1 {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900;
+  background: linear-gradient(45deg, #ff8a00, #ffd43b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.6;
+}
+
+.store-tagline {
+  font-size: 20px;
+  color: var(--brown-2);
+  margin-top: 6px;
+}
+
+.store-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.store-chips span {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  color: #5a3500;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 14.5px;
+  font-weight: 700;
+  box-shadow: 0 10px 26px rgba(100, 60, 0, 0.12);
+}
+
+.store-rating {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  color: #765000;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.store-stars {
+  color: #ffb300;
+  font-size: 24px;
+  letter-spacing: 3px;
+}
+
+.store-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.store-actions .btn.secondary,
+.support-card .btn.secondary {
+  color: #5a3500;
+  border-color: rgba(90, 53, 0, 0.35);
+}
+
+/* مشخصات برنامه */
+.store-specs {
+  padding: 40px 8% 30px;
+}
+
+.store-spec-box {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 42px;
+  padding: 40px;
+  box-shadow: 0 24px 60px rgba(100, 60, 0, 0.14);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.store-spec-box .app-details {
+  margin: 0;
+}
+
+.store-spec-box .app-details + .app-details {
+  margin-top: 18px;
+}
+
+/* تغییرات نسخه‌ها */
+.store-changelog {
+  padding: 90px 8% 50px;
+  text-align: center;
+}
+
+.store-changelog h2 {
+  color: var(--brown);
+  font-size: clamp(30px, 3.8vw, 45px);
+  font-weight: 900;
+}
+
+.store-changelog > p {
+  color: var(--brown-2);
+  font-size: 19px;
+  margin: 14px 0 50px;
+}
+
+.changelog-list {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: right;
+  display: grid;
+  gap: 24px;
+}
+
+.changelog-item {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 32px;
+  padding: 30px 34px;
+  box-shadow: 0 18px 50px rgba(100, 60, 0, 0.13);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease;
+}
+
+.changelog-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 70px rgba(100, 60, 0, 0.2);
+}
+
+.changelog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.changelog-version {
+  background: linear-gradient(45deg, #ff9d00, #ffcc33);
+  color: #fff;
+  padding: 6px 20px;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 15.5px;
+  box-shadow: 0 10px 26px rgba(255, 150, 0, 0.3);
+}
+
+.changelog-date {
+  color: #8a5c00;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.changelog-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.changelog-item li {
+  position: relative;
+  padding-right: 26px;
+  margin: 10px 0;
+  color: #694800;
+  line-height: 2;
+  font-size: 15.5px;
+}
+
+.changelog-item li::before {
+  content: "🌰";
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 13px;
+}
+
+/* پشتیبانی و گزارش مشکل */
+.store-support {
+  padding: 60px 8% 110px;
+  text-align: center;
+}
+
+.store-support h2 {
+  color: var(--brown);
+  font-size: clamp(30px, 3.8vw, 45px);
+  font-weight: 900;
+}
+
+.store-support > p {
+  color: var(--brown-2);
+  font-size: 19px;
+  margin: 14px 0 50px;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  max-width: 1050px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.support-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 32px;
+  padding: 34px 26px;
+  box-shadow: 0 20px 55px rgba(100, 60, 0, 0.13);
+  transition: transform 0.5s var(--ease-spring), box-shadow 0.5s ease;
+}
+
+.support-card:hover {
+  transform: translateY(-14px) rotateX(4deg);
+  box-shadow: 0 35px 80px rgba(100, 60, 0, 0.22);
+}
+
+.support-icon {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.13);
+  animation: trustFloat 4s infinite ease-in-out;
+}
+
+.support-card h3 {
+  color: #5c3500;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.support-card p {
+  color: #694800;
+  font-size: 15px;
+  line-height: 2;
+  margin: 12px 0 22px;
+}
+
+@media (max-width: 800px) {
+  .store-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .store-hero-info {
+    text-align: center;
+  }
+
+  .store-app-icon {
+    width: 200px;
+    height: 200px;
+    border-radius: 48px;
+  }
+
+  .store-actions,
+  .store-chips,
+  .store-rating {
+    justify-content: center;
+  }
+
+  .store-spec-box {
+    padding: 26px 18px;
+  }
+
+  .changelog-item {
+    padding: 24px 20px;
+  }
 }
 
 /* اعلان (Toast) */
@@ -2392,6 +2742,12 @@ body.island-page .glass-card h3 {
   .hidden {
     opacity: 1;
     transform: none;
+  }
+
+  /* اگر JS هنوز اجرا نشده هم محتوا هرگز مخفی نماند */
+  .js-reveal {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

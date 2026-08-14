@@ -10,27 +10,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* -----------------------------
      1) Scroll Reveal
+     (حالت مخفی فقط وقتی IntersectionObserver موجود باشد اعمال می‌شود؛
+      در غیر این صورت محتوا همیشه قابل مشاهده می‌ماند)
   ----------------------------- */
   const revealElements = document.querySelectorAll(
     ".section, .glass-card, .product-card, .timeline-item, .about-block"
   );
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
+  if ("IntersectionObserver" in window && revealElements.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
 
-  revealElements.forEach((el) => {
-    el.classList.add("hidden");
-    observer.observe(el);
-  });
+    revealElements.forEach((el) => {
+      el.classList.add("hidden");
+      observer.observe(el);
+    });
+  }
 
   /* -----------------------------
      2) 3D Tilt Cards (دسکتاپ)
@@ -194,11 +198,14 @@ document.addEventListener("DOMContentLoaded", () => {
      9) روشن شدن سینمایی گوشی هنگام اسکرول
   ----------------------------- */
   const phoneReveal = document.querySelector(".reveal-phone");
-  if (phoneReveal) {
+  if (phoneReveal && "IntersectionObserver" in window) {
+    phoneReveal.classList.add("js-reveal");
+
     const phoneObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            phoneReveal.classList.remove("js-reveal");
             phoneReveal.classList.add("phone-active");
             phoneObserver.disconnect();
           }
@@ -260,50 +267,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -----------------------------
-     11) تریلر: دکمه پخش + حالت «به‌زودی»
+     11) تریلر: دکمه پخش سینمایی
   ----------------------------- */
   const video = document.getElementById("islandVideo");
   const playButton = document.getElementById("playButton");
-  const comingSoon = document.getElementById("comingSoon");
 
   if (video && playButton) {
-    let videoAvailable = false;
-
-    video.addEventListener("loadeddata", () => {
-      videoAvailable = true;
-    });
-    video.addEventListener("error", () => {
-      videoAvailable = false;
-    });
-
     playButton.addEventListener("click", () => {
-      if (video.readyState >= 2) {
-        videoAvailable = true;
-      }
-      if (videoAvailable) {
-        video.play().catch(() => {
-          if (comingSoon) comingSoon.classList.add("show");
-        });
-        playButton.style.display = "none";
-      } else if (comingSoon) {
-        comingSoon.classList.add("show");
-      }
-    });
-
-    video.addEventListener("click", () => {
-      if (video.paused && videoAvailable) {
-        video.play();
-      } else if (!videoAvailable && comingSoon) {
-        comingSoon.classList.add("show");
-      } else {
-        video.pause();
-        playButton.style.display = "flex";
-      }
+      video.play().catch(() => {
+        /* در صورت محدودیت autoplay، پخش با کنترل‌های خود ویدئو ادامه می‌یابد */
+      });
     });
 
     video.addEventListener("play", () => {
-      if (comingSoon) comingSoon.classList.remove("show");
       playButton.style.display = "none";
+    });
+
+    video.addEventListener("pause", () => {
+      playButton.style.display = "flex";
+    });
+
+    video.addEventListener("ended", () => {
+      playButton.style.display = "flex";
     });
   }
 
@@ -334,15 +319,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* -----------------------------
      13) ورود کارت‌های جزیره هنگام اسکرول
+     (حالت مخفی با js-reveal فقط وقتی JS و IntersectionObserver فعال‌اند)
   ----------------------------- */
   const featureCards = document.querySelectorAll(".feature-3d-card");
   const trustCards = document.querySelectorAll(".trust-card");
   const reviewCards = document.querySelectorAll(".review-card");
 
-  const cardObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+  if ("IntersectionObserver" in window) {
+    featureCards.forEach((c) => c.classList.add("js-reveal"));
+    trustCards.forEach((c) => c.classList.add("js-reveal"));
+    reviewCards.forEach((c) => c.classList.add("js-reveal"));
+
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.remove("js-reveal");
           if (entry.target.classList.contains("feature-3d-card")) {
             entry.target.classList.add("show-feature");
           } else if (entry.target.classList.contains("trust-card")) {
@@ -351,15 +344,15 @@ document.addEventListener("DOMContentLoaded", () => {
             entry.target.classList.add("show-review");
           }
           cardObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+        });
+      },
+      { threshold: 0.2 }
+    );
 
-  featureCards.forEach((c) => cardObserver.observe(c));
-  trustCards.forEach((c) => cardObserver.observe(c));
-  reviewCards.forEach((c) => cardObserver.observe(c));
+    featureCards.forEach((c) => cardObserver.observe(c));
+    trustCards.forEach((c) => cardObserver.observe(c));
+    reviewCards.forEach((c) => cardObserver.observe(c));
+  }
 
   /* -----------------------------
      14) فرم تماس — ساخت پیش‌نویس ایمیل
