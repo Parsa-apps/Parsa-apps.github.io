@@ -46,6 +46,7 @@ body {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -162,6 +163,8 @@ ul {
 .brand img {
   width: 48px;
   height: 48px;
+  object-fit: cover;
+  flex-shrink: 0;
   border-radius: 14px;
   box-shadow: 0 8px 18px rgba(239, 122, 26, 0.22);
 }
@@ -721,6 +724,13 @@ form.panel {
   color: #fff;
 }
 
+.page-hero h1 {
+  font-size: clamp(1.6rem, 6vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 10px 0 12px;
+}
+
 .page-hero p {
   max-width: 40rem;
   color: rgba(255, 255, 255, 0.84);
@@ -802,9 +812,15 @@ form.panel {
   .island-hero .container,
   .about-grid,
   .contact-grid,
-  .split {
+  .split,
+  .featured-product {
     grid-template-columns: 1fr 1fr;
     align-items: center;
+  }
+
+  .featured-product img {
+    height: 100%;
+    min-height: 280px;
   }
 
   .product-grid {
@@ -818,7 +834,8 @@ form.panel {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .shot-grid {
+  .shot-grid,
+  .roadmap {
     grid-template-columns: repeat(3, 1fr);
   }
 
