@@ -283,6 +283,18 @@
           { top: "62%", start: "12%", size: 62, radius: "50%", rot: "-18deg", dx: "-14px", dy: "-20px", dur: 15, delay: 1.2, op: 0.5 },
           { top: "24%", start: "86%", size: 84, radius: "34%", rot: "16deg", dx: "-20px", dy: "22px", dur: 21, delay: 0.6, op: 0.45 },
         ],
+        blobs:
+          density === "full"
+            ? [
+                { top: "6%", start: "58%", size: 330, fill: "rgba(245, 138, 36, 0.10)", dur: 24 },
+                { top: "44%", start: "-4%", size: 290, fill: "rgba(37, 183, 160, 0.10)", dur: 28, delay: 2 },
+              ]
+            : [],
+        stars: 5,
+        starColor: "rgba(233, 185, 73, 0.8)",
+        clouds: 2,
+        bubbles: 3,
+        bubbleColor: "rgba(37, 183, 160, 0.4)",
         dots: density === "full" ? 10 : 5,
         dotColor: "rgba(245, 138, 36, 0.45)",
         rise: 620,
@@ -294,6 +306,11 @@
           { top: "10%", start: "4%", size: 150, radius: "42%", rot: "14deg", dx: "16px", dy: "-18px", dur: 24, op: 0.5 },
           { top: "70%", start: "90%", size: 90, radius: "50%", rot: "-20deg", dx: "-16px", dy: "-24px", dur: 19, delay: 1, op: 0.42 },
         ],
+        clouds: density === "full" ? 2 : 1,
+        bubbles: density === "full" ? 4 : 2,
+        bubbleColor: "rgba(47, 158, 107, 0.35)",
+        stars: 3,
+        starColor: "rgba(245, 138, 36, 0.7)",
         dots: density === "full" ? 6 : 3,
         dotColor: "rgba(37, 183, 160, 0.35)",
         rise: 520,
@@ -316,6 +333,8 @@
           { top: "14%", start: "5%", size: 130, radius: "40%", rot: "20deg", dx: "20px", dy: "-22px", dur: 23, op: 0.55, stroke: "rgba(255, 255, 255, 0.07)" },
           { top: "66%", start: "82%", size: 78, radius: "50%", rot: "-22deg", dx: "-18px", dy: "-18px", dur: 18, delay: 1.4, op: 0.5, stroke: "rgba(255, 255, 255, 0.08)" },
         ],
+        stars: density === "full" ? 7 : 4,
+        starColor: "rgba(255, 224, 138, 0.9)",
         dots: density === "full" ? 12 : 6,
         dotColor: "rgba(255, 182, 92, 0.55)",
         rise: 560,
@@ -337,6 +356,11 @@
           { top: "18%", start: "7%", size: 104, radius: "40%", rot: "18deg", dx: "16px", dy: "-20px", dur: 20, op: 0.5 },
           { top: "64%", start: "88%", size: 68, radius: "50%", rot: "-16deg", dx: "-16px", dy: "-18px", dur: 17, delay: 1.1, op: 0.45 },
         ],
+        clouds: density === "full" ? 3 : 2,
+        stars: density === "full" ? 6 : 3,
+        starColor: "rgba(239, 122, 26, 0.75)",
+        bubbles: density === "full" ? 5 : 3,
+        bubbleColor: "rgba(78, 179, 212, 0.45)",
         dots: density === "full" ? 7 : 3,
         dotColor: "rgba(255, 255, 255, 0.45)",
         rise: 420,
@@ -375,6 +399,65 @@
         if (shape.stroke) el.style.setProperty("--pa-stroke", shape.stroke);
         layer.appendChild(el);
       });
+
+      // Large soft gradient blobs (hero-grade depth, GPU-only transforms).
+      (scene.blobs || []).forEach((blob, i) => {
+        const el = document.createElement("span");
+        el.className = "pa-blob";
+        el.style.setProperty("--pa-top", blob.top);
+        el.style.setProperty("--pa-start", blob.start);
+        el.style.setProperty("--pa-size", blob.size + "px");
+        el.style.setProperty("--pa-fill", blob.fill);
+        el.style.setProperty("--pa-dur-s", blob.dur + "s");
+        el.style.setProperty("--pa-delay", (blob.delay || 0) + "s");
+        el.style.setProperty("--pa-alt", i % 2 ? "-1" : "1");
+        layer.appendChild(el);
+      });
+
+      // Tiny twinkling stars — the "Jazireh Fandoghi" adventure feel.
+      const starCount = scene.stars || 0;
+      for (let i = 0; i < starCount; i += 1) {
+        const star = document.createElement("span");
+        const ratio = (i + 0.5) / starCount;
+        star.className = "pa-star";
+        star.style.setProperty("--pa-top", (8 + ((i * 31) % 62)).toFixed(0) + "%");
+        star.style.setProperty("--pa-start", (4 + ratio * 92).toFixed(1) + "%");
+        star.style.setProperty("--pa-size", (7 + ((i * 3) % 6)).toFixed(0) + "px");
+        star.style.setProperty("--pa-fill", scene.starColor || "rgba(233, 185, 73, 0.8)");
+        star.style.setProperty("--pa-dur-s", (2.6 + ((i * 0.7) % 2.4)).toFixed(1) + "s");
+        star.style.setProperty("--pa-delay", (ratio * 3.4).toFixed(1) + "s");
+        layer.appendChild(star);
+      }
+
+      // Soft drifting clouds (pure CSS shapes, very low opacity).
+      const cloudCount = scene.clouds || 0;
+      for (let i = 0; i < cloudCount; i += 1) {
+        const cloud = document.createElement("span");
+        cloud.className = "pa-cloud";
+        cloud.style.setProperty("--pa-top", (10 + i * 34 + ((i * 13) % 12)).toFixed(0) + "%");
+        cloud.style.setProperty("--pa-start", (i % 2 ? 70 : 6) + ((i * 7) % 12) + "%");
+        cloud.style.setProperty("--pa-size", (90 + ((i * 37) % 50)).toFixed(0) + "px");
+        cloud.style.setProperty("--pa-dur-s", (34 + i * 9).toFixed(0) + "s");
+        cloud.style.setProperty("--pa-delay", (i * 4.5).toFixed(1) + "s");
+        cloud.style.setProperty("--pa-alt", i % 2 ? "-1" : "1");
+        layer.appendChild(cloud);
+      }
+
+      // Rising bubbles with a soft rim — playful but restrained.
+      const bubbleCount = scene.bubbles || 0;
+      for (let i = 0; i < bubbleCount; i += 1) {
+        const bubble = document.createElement("span");
+        const ratio = (i + 0.5) / bubbleCount;
+        bubble.className = "pa-bubble";
+        bubble.style.setProperty("--pa-start", (10 + ratio * 80).toFixed(1) + "%");
+        bubble.style.setProperty("--pa-size", (10 + ((i * 9) % 14)).toFixed(0) + "px");
+        bubble.style.setProperty("--pa-stroke", scene.bubbleColor || "rgba(37, 183, 160, 0.4)");
+        bubble.style.setProperty("--pa-dur-s", (16 + ((i * 6) % 10)).toFixed(0) + "s");
+        bubble.style.setProperty("--pa-delay", (ratio * 11).toFixed(1) + "s");
+        bubble.style.setProperty("--pa-dx", (((i % 3) - 1) * 22).toFixed(0) + "px");
+        bubble.style.setProperty("--pa-rise", (scene.rise || 420) + "px");
+        layer.appendChild(bubble);
+      }
 
       const dotCount = scene.dots || 0;
       for (let i = 0; i < dotCount; i += 1) {
@@ -477,6 +560,186 @@
   };
 
   /**
+   * 3D tilt + travelling light on the hero product cards.
+   * Desktop / fine pointer only; rAF-throttled; transform + opacity only.
+   */
+  const startTilt = () => {
+    if (prefersReduced() || isCoarse() || lowPower) return;
+
+    const cards = document.querySelectorAll(
+      ".main-product-card, .featured-product, .product-card"
+    );
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+      if (card.classList.contains("pa-tilt")) return;
+      card.classList.add("pa-tilt");
+
+      const light = document.createElement("span");
+      light.className = "pa-tilt-light";
+      light.setAttribute("aria-hidden", "true");
+      card.appendChild(light);
+
+      let frame = 0;
+      let px = 0;
+      let py = 0;
+      let inside = false;
+
+      const render = () => {
+        frame = 0;
+        if (!inside) {
+          card.style.setProperty("--pa-rx", "0deg");
+          card.style.setProperty("--pa-ry", "0deg");
+          card.style.setProperty("--pa-lo", "0");
+          return;
+        }
+        // Max ±2.2deg: perceptible depth without looking like a gimmick.
+        card.style.setProperty("--pa-rx", (py * -2.2).toFixed(2) + "deg");
+        card.style.setProperty("--pa-ry", (px * 2.2).toFixed(2) + "deg");
+        card.style.setProperty("--pa-lx", ((px + 1) * 50).toFixed(1) + "%");
+        card.style.setProperty("--pa-ly", ((py + 1) * 50).toFixed(1) + "%");
+        card.style.setProperty("--pa-lo", "1");
+      };
+
+      card.addEventListener(
+        "pointermove",
+        (event) => {
+          if (event.pointerType !== "mouse") return;
+          const rect = card.getBoundingClientRect();
+          px = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          py = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+          inside = true;
+          if (!frame) frame = window.requestAnimationFrame(render);
+        },
+        { passive: true }
+      );
+
+      card.addEventListener("pointerleave", () => {
+        inside = false;
+        if (!frame) frame = window.requestAnimationFrame(render);
+      });
+    });
+  };
+
+  /**
+   * Soft press ripple on buttons and primary links.
+   * Composited scale/opacity only; nodes are recycled after the animation.
+   */
+  const startRipples = () => {
+    if (prefersReduced()) return;
+
+    const targets = document.querySelectorAll(".btn, .product-link, .nav-cta");
+    targets.forEach((el) => {
+      if (el.classList.contains("pa-ripple-host")) return;
+      el.classList.add("pa-ripple-host");
+      el.addEventListener("pointerdown", (event) => {
+        const rect = el.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 1.9;
+        const x = (event.clientX || rect.left + rect.width / 2) - rect.left;
+        const y = (event.clientY || rect.top + rect.height / 2) - rect.top;
+
+        const ripple = document.createElement("span");
+        ripple.className = "pa-ripple";
+        ripple.style.width = ripple.style.height = size + "px";
+        ripple.style.left = x - size / 2 + "px";
+        ripple.style.top = y - size / 2 + "px";
+        el.appendChild(ripple);
+        ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+        // Safety net if animationend never fires.
+        window.setTimeout(() => ripple.remove(), 900);
+      });
+    });
+  };
+
+  /**
+   * Gentle scroll parallax on decorative layers (never on text).
+   * One rAF-throttled scroll listener drives every registered layer.
+   */
+  const startScrollParallax = () => {
+    if (prefersReduced() || isCoarse() || lowPower) return;
+
+    const layers = [];
+    const register = (el, speed) => {
+      if (!el) return;
+      el.classList.add("pa-scrolled");
+      layers.push({ el, speed });
+    };
+
+    register(document.querySelector(".hero-glow-one"), -0.06);
+    register(document.querySelector(".hero-glow-two"), 0.05);
+    document.querySelectorAll(".pa-shape").forEach((el, i) => {
+      register(el, (i % 2 ? 0.035 : -0.045));
+    });
+    document.querySelectorAll(".pa-blob").forEach((el, i) => {
+      register(el, (i % 2 ? 0.05 : -0.04));
+    });
+
+    if (!layers.length) return;
+
+    let frame = 0;
+    const render = () => {
+      frame = 0;
+      const vh = window.innerHeight;
+      layers.forEach(({ el, speed }) => {
+        const host = el.closest(".pa-ambient-host, .home-hero");
+        if (host && host.classList.contains("pa-idle")) return;
+        const rect = (host || el).getBoundingClientRect();
+        // Progress of the section through the viewport: -1 → 1
+        const progress = (rect.top + rect.height / 2 - vh / 2) / vh;
+        el.style.setProperty("--pa-sy", (progress * speed * -220).toFixed(1) + "px");
+      });
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!frame) frame = window.requestAnimationFrame(render);
+      },
+      { passive: true }
+    );
+    render();
+  };
+
+  /**
+   * Soft page-to-page transition: fade the page out before navigating to
+   * another internal page. Anchors, downloads, external and modified
+   * clicks are left untouched.
+   */
+  const startPageTransitions = () => {
+    if (prefersReduced()) return;
+
+    document.addEventListener("click", (event) => {
+      if (event.defaultPrevented) return;
+      if (event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const link = event.target.closest("a[href]");
+      if (!link) return;
+      if (link.target && link.target !== "_self") return;
+      if (link.hasAttribute("download")) return;
+
+      const href = link.getAttribute("href") || "";
+      if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
+
+      const url = new URL(link.href, window.location.href);
+      if (url.origin !== window.location.origin) return;
+      // Same page + hash → let the browser scroll.
+      if (url.pathname === window.location.pathname && url.hash) return;
+
+      event.preventDefault();
+      body.classList.add("pa-leaving");
+      window.setTimeout(() => {
+        window.location.href = link.href;
+      }, 230);
+    });
+
+    // Restore state when the page is served from the bfcache.
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) body.classList.remove("pa-leaving");
+    });
+  };
+
+  /**
    * Boot the motion layer.
    */
   const initMotion = () => {
@@ -494,6 +757,10 @@
     startReveals();
     buildAmbient();
     startParallax();
+    startTilt();
+    startRipples();
+    startScrollParallax();
+    startPageTransitions();
   };
 
   // Reveal state must be applied before first paint to avoid a flash.
@@ -512,6 +779,9 @@
         body.classList.add("js-motion");
         buildAmbient();
         startParallax();
+        startTilt();
+        startRipples();
+        startScrollParallax();
       }
     };
 

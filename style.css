@@ -3753,3 +3753,382 @@ form.panel {
     -webkit-text-fill-color: currentColor;
   }
 }
+
+
+/* ==========================================================
+   Motion layer v2 — depth, play & polish
+   Adds: gradient blobs, twinkling stars, drifting clouds,
+   rising bubbles, 3D product-card tilt with travelling light,
+   button press ripples and scroll-linked parallax.
+   All effects are transform/opacity only (GPU friendly) and
+   fully disabled under prefers-reduced-motion.
+   ========================================================== */
+
+/* ---------- Ambient: large soft gradient blobs ---------- */
+.pa-blob {
+  position: absolute;
+  top: var(--pa-top, 20%);
+  inset-inline-start: var(--pa-start, 10%);
+  width: var(--pa-size, 300px);
+  height: var(--pa-size, 300px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, var(--pa-fill, rgba(245, 138, 36, 0.1)), transparent 70%);
+  filter: blur(14px);
+  animation: pa-blob-drift var(--pa-dur-s, 26s) ease-in-out infinite alternate;
+  animation-delay: var(--pa-delay, 0s);
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes pa-blob-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(calc(28px * var(--pa-alt, 1)), -22px, 0) scale(1.07);
+  }
+  100% {
+    transform: translate3d(calc(-20px * var(--pa-alt, 1)), 16px, 0) scale(0.97);
+  }
+}
+
+/* ---------- Ambient: tiny twinkling stars ---------- */
+.pa-star {
+  position: absolute;
+  top: var(--pa-top, 20%);
+  inset-inline-start: var(--pa-start, 50%);
+  width: var(--pa-size, 9px);
+  height: var(--pa-size, 9px);
+  background: var(--pa-fill, rgba(233, 185, 73, 0.8));
+  clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
+  opacity: 0.25;
+  animation: pa-star-twinkle var(--pa-dur-s, 3s) ease-in-out infinite;
+  animation-delay: var(--pa-delay, 0s);
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes pa-star-twinkle {
+  0%, 100% {
+    opacity: 0.18;
+    transform: scale(0.7) rotate(0deg);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15) rotate(24deg);
+  }
+}
+
+/* ---------- Ambient: soft drifting clouds ---------- */
+.pa-cloud {
+  position: absolute;
+  top: var(--pa-top, 20%);
+  inset-inline-start: var(--pa-start, 10%);
+  width: var(--pa-size, 110px);
+  height: calc(var(--pa-size, 110px) * 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  filter: blur(1px);
+  opacity: 0.5;
+  animation: pa-cloud-drift var(--pa-dur-s, 38s) ease-in-out infinite alternate;
+  animation-delay: var(--pa-delay, 0s);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.pa-cloud::before,
+.pa-cloud::after {
+  content: "";
+  position: absolute;
+  bottom: 42%;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.pa-cloud::before {
+  inset-inline-start: 18%;
+  width: 42%;
+  aspect-ratio: 1;
+}
+
+.pa-cloud::after {
+  inset-inline-end: 16%;
+  width: 30%;
+  aspect-ratio: 1;
+}
+
+@keyframes pa-cloud-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(46px * var(--pa-alt, 1)), -8px, 0);
+  }
+}
+
+/* Clouds sit on dark sections too — keep them extra subtle there */
+.future-section .pa-cloud,
+.home-footer .pa-cloud {
+  opacity: 0.1;
+}
+
+/* ---------- Ambient: rising bubbles ---------- */
+.pa-bubble {
+  position: absolute;
+  bottom: -20px;
+  inset-inline-start: var(--pa-start, 50%);
+  width: var(--pa-size, 12px);
+  height: var(--pa-size, 12px);
+  border-radius: 50%;
+  border: 1.5px solid var(--pa-stroke, rgba(37, 183, 160, 0.4));
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.75), transparent 42%);
+  opacity: 0;
+  animation: pa-bubble-rise var(--pa-dur-s, 18s) linear infinite;
+  animation-delay: var(--pa-delay, 0s);
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes pa-bubble-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.55);
+  }
+  10% {
+    opacity: 0.75;
+  }
+  80% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--pa-dx, 0px), calc(var(--pa-rise, 420px) * -1), 0) scale(1.05);
+  }
+}
+
+/* Pause the new ambient layers together with the old ones */
+.pa-idle .pa-blob,
+.pa-idle .pa-star,
+.pa-idle .pa-cloud,
+.pa-idle .pa-bubble {
+  animation-play-state: paused;
+}
+
+/* ---------- Scroll-linked parallax (decorative layers only) ----------
+   Uses the standalone `translate` property so it composes with the
+   keyframe `transform` animations instead of overriding them. */
+.pa-scrolled {
+  translate: 0 var(--pa-sy, 0px);
+}
+
+/* ---------- Product card: floating + 3D tilt + travelling light ---------- */
+.js-motion .main-product-card {
+  animation: pa-card-float 7.5s ease-in-out infinite;
+}
+
+@keyframes pa-card-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+.pa-tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: perspective(1100px) rotateX(var(--pa-rx, 0deg)) rotateY(var(--pa-ry, 0deg));
+  transition:
+    transform 0.35s var(--pa-ease-soft),
+    box-shadow 0.45s var(--pa-ease);
+  will-change: transform;
+}
+
+/* Once revealed, the tilt transform must win over the reveal engine's
+   resting transform and the v1 hover lift (higher specificity on purpose). */
+.js-motion .pa-tilt[data-reveal].is-visible,
+.js-motion .pa-tilt[data-reveal].is-visible:hover,
+.main-product-card.pa-tilt:hover,
+.product-card.pa-tilt:hover,
+.featured-product.pa-tilt:hover {
+  transform: perspective(1100px) rotateX(var(--pa-rx, 0deg)) rotateY(var(--pa-ry, 0deg));
+}
+
+/* After the entry transition settles, tilt reacts quickly to the pointer. */
+.js-motion .pa-tilt[data-reveal].pa-settled {
+  transition:
+    transform 0.3s var(--pa-ease-soft),
+    box-shadow 0.45s var(--pa-ease);
+}
+
+.pa-tilt:hover {
+  box-shadow:
+    0 40px 90px rgba(11, 18, 32, 0.16),
+    0 12px 30px rgba(11, 18, 32, 0.1);
+}
+
+/* travelling specular light that follows the pointer */
+.pa-tilt-light {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  background: radial-gradient(
+    460px circle at var(--pa-lx, 50%) var(--pa-ly, 50%),
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 214, 150, 0.05) 38%,
+    transparent 62%
+  );
+  opacity: var(--pa-lo, 0);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* the card's inner content pops slightly forward while tilting */
+.pa-tilt .product-content,
+.pa-tilt .product-art {
+  transform: translateZ(0);
+}
+
+/* ---------- Press ripple on buttons ---------- */
+.pa-ripple-host {
+  position: relative;
+  overflow: hidden;
+}
+
+.pa-ripple {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.12) 45%, transparent 70%);
+  transform: scale(0);
+  opacity: 0.9;
+  animation: pa-ripple-out 0.65s var(--pa-ease-soft) forwards;
+  pointer-events: none;
+}
+
+@keyframes pa-ripple-out {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* keep button label above the ripple */
+.pa-ripple-host > svg,
+.pa-ripple-host > span:not(.pa-ripple) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Primary CTA: soft breathing glow ----------
+   Only the one or two primary CTAs per page carry this, so the
+   repaint region is tiny; hover pauses it so the stronger hover
+   shadow from the v1 layer takes over cleanly. */
+.js-motion .home-primary:not(:hover),
+.js-motion .btn-primary:not(:hover) {
+  animation: pa-cta-glow 4.5s ease-in-out infinite;
+}
+
+@keyframes pa-cta-glow {
+  0%, 100% {
+    box-shadow: 0 10px 26px rgba(239, 122, 26, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 14px 32px rgba(239, 122, 26, 0.3),
+      0 0 26px rgba(255, 154, 60, 0.3);
+  }
+}
+
+/* ---------- Scroll cue: gentle bob ---------- */
+.js-motion .scroll-cue {
+  animation: pa-cue-bob 2.6s ease-in-out infinite;
+}
+
+@keyframes pa-cue-bob {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 5px;
+  }
+}
+
+/* ---------- Mobile tuning ---------- */
+@media (max-width: 760px) {
+  .pa-blob {
+    filter: blur(10px);
+  }
+
+  .pa-cloud {
+    display: none;
+  }
+
+  .js-motion .main-product-card {
+    animation: none;
+  }
+
+  .pa-tilt {
+    transform: none;
+    transform-style: flat;
+  }
+
+  .pa-tilt-light {
+    display: none;
+  }
+}
+
+/* ---------- Reduced motion: full stop for v2 too ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .pa-blob,
+  .pa-star,
+  .pa-cloud,
+  .pa-bubble,
+  .pa-ripple {
+    animation: none !important;
+    display: none !important;
+  }
+
+  .pa-scrolled {
+    translate: none !important;
+  }
+
+  .js-motion .main-product-card,
+  .js-motion .home-primary,
+  .js-motion .btn-primary,
+  .js-motion .scroll-cue {
+    animation: none !important;
+  }
+
+  .pa-tilt {
+    transform: none !important;
+  }
+
+  .pa-tilt-light {
+    display: none !important;
+  }
+}
+
+/* ---------- Page-to-page transition ---------- */
+.js-motion main,
+.js-motion .site-footer {
+  transition: opacity 0.24s ease, translate 0.24s var(--pa-ease-soft);
+}
+
+.pa-leaving main,
+.pa-leaving .site-footer {
+  opacity: 0;
+  translate: 0 -8px;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pa-leaving main,
+  .pa-leaving .site-footer {
+    opacity: 1;
+    translate: none;
+  }
+}
