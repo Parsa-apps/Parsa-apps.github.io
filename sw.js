@@ -102,7 +102,13 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* ۳) دارایی‌های سنگین (تصویر/فونت/آیکون): کش‌اول + به‌روزرسانی در پس‌زمینه */
+  /* ۳) ویدئو و صوت: عبور مستقیم از شبکه (بدون کش، تا استریم و Seek سالم بماند) */
+  if (request.destination === "video" || request.destination === "audio") {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  /* ۴) دارایی‌های سنگین (تصویر/فونت/آیکون): کش‌اول + به‌روزرسانی در پس‌زمینه */
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)

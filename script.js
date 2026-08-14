@@ -267,50 +267,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -----------------------------
-     11) تریلر: دکمه پخش + حالت «به‌زودی»
+     11) تریلر: دکمه پخش سینمایی
   ----------------------------- */
   const video = document.getElementById("islandVideo");
   const playButton = document.getElementById("playButton");
-  const comingSoon = document.getElementById("comingSoon");
 
   if (video && playButton) {
-    let videoAvailable = false;
-
-    video.addEventListener("loadeddata", () => {
-      videoAvailable = true;
-    });
-    video.addEventListener("error", () => {
-      videoAvailable = false;
-    });
-
     playButton.addEventListener("click", () => {
-      if (video.readyState >= 2) {
-        videoAvailable = true;
-      }
-      if (videoAvailable) {
-        video.play().catch(() => {
-          if (comingSoon) comingSoon.classList.add("show");
-        });
-        playButton.style.display = "none";
-      } else if (comingSoon) {
-        comingSoon.classList.add("show");
-      }
-    });
-
-    video.addEventListener("click", () => {
-      if (video.paused && videoAvailable) {
-        video.play();
-      } else if (!videoAvailable && comingSoon) {
-        comingSoon.classList.add("show");
-      } else {
-        video.pause();
-        playButton.style.display = "flex";
-      }
+      video.play().catch(() => {
+        /* در صورت محدودیت autoplay، پخش با کنترل‌های خود ویدئو ادامه می‌یابد */
+      });
     });
 
     video.addEventListener("play", () => {
-      if (comingSoon) comingSoon.classList.remove("show");
       playButton.style.display = "none";
+    });
+
+    video.addEventListener("pause", () => {
+      playButton.style.display = "flex";
+    });
+
+    video.addEventListener("ended", () => {
+      playButton.style.display = "flex";
     });
   }
 

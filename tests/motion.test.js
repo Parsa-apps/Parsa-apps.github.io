@@ -190,8 +190,18 @@ console.log("\n=== B. island.html ===\n");
 
   // trailer
   check("trailer video exists", !!doc.getElementById("islandVideo"));
+  check(
+    "trailer video source points to mp4",
+    !!doc.querySelector('video source[src="assets/videos/island-trailer.mp4"]')
+  );
+  check("trailer video has poster", !!doc.getElementById("islandVideo").getAttribute("poster"));
+  check(
+    "trailer has controls + playsinline",
+    doc.getElementById("islandVideo").hasAttribute("controls") &&
+      doc.getElementById("islandVideo").hasAttribute("playsinline")
+  );
   check("play button exists", !!doc.getElementById("playButton"));
-  check("coming-soon overlay exists", !!doc.getElementById("comingSoon"));
+  check("coming-soon overlay removed", !doc.getElementById("comingSoon"));
 
   // گالری اسکرین‌شات
   const gallery = doc.querySelector(".gallery-section");
@@ -313,12 +323,14 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("sw: cache name", sw.includes("parsa-apps-v2"));
   check("sw: caches main pages", sw.includes("./island.html"));
   check("sw: network-first for css/js", /request\.destination === "style"[\s\S]*request\.destination === "script"/.test(sw));
+  check("sw: video pass-through (no cache)", /request\.destination === "video"/.test(sw));
 
   // فایل‌های مورد نیاز وجود دارند
   ["assets/fonts/Vazirmatn-Bold.woff2",
    "assets/images/island/app-screen-1.jpg",
    "assets/images/island/trailer-cover.jpg",
    "assets/images/island/mascot.jpg",
+   "assets/videos/island-trailer.mp4",
    "assets/logo-sm.png",
    "icons/icon-512.png"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
