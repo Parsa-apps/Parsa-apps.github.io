@@ -1,13 +1,13 @@
 /* ============================================================
    پارسا اپس — Service Worker
-   نسخه‌ی کش: v2
+   نسخه‌ی کش: v3
    استراتژی:
    - صفحات (ناوبری): شبکه‌اول → کش → 404
    - HTML / CSS / JS: شبکه‌اول → کش (همیشه تازه؛ آفلاین از کش)
    - تصاویر / فونت / آیکون: کش‌اول + به‌روزرسانی پس‌زمینه
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v2";
+const CACHE_NAME = "parsa-apps-v3";
 
 const FILES_TO_CACHE = [
   "./",
@@ -24,7 +24,7 @@ const FILES_TO_CACHE = [
   "./manifest.json",
   "./assets/logo-sm.png",
   "./assets/images/island/mascot.jpg",
-  "./assets/images/island/trailer-cover.jpg",
+  "./assets/images/island/jazireh-promo-cover.jpg",
   "./assets/images/island/app-screen-1.jpg",
   "./assets/images/island/app-screen-2.jpg",
   "./assets/images/island/app-screen-3.jpg",
