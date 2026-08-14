@@ -3,18 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>پارسا اپس | ساخت تجربه‌های دیجیتال خلاقانه</title>
-  <meta name="description" content="پارسا اپس اپلیکیشن‌هایی می‌سازد که ترکیبی از آموزش، سرگرمی، فناوری و طراحی زیبا هستند. اولین محصول: جزیره فندقی.">
-  <meta name="theme-color" content="#0F172A">
-  <meta property="og:title" content="پارسا اپس | ساخت تجربه‌های دیجیتال خلاقانه">
-  <meta property="og:description" content="آموزش، سرگرمی، فناوری و طراحی زیبا در محصولات پارسا اپس.">
+  <title>پارسا اپس | سازنده اپلیکیشن‌های خلاقانه و هوشمند</title>
+  <meta name="description" content="پارسا اپس تجربه‌های دیجیتالی خلاقانه‌ای می‌سازد که آموزش، سرگرمی و فناوری را کنار هم قرار می‌دهند. با محصول اصلی ما، جزیره فندقی، آشنا شوید.">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="canonical" href="https://parsa-apps.github.io/">
+
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:title" content="پارسا اپس | سازنده اپلیکیشن‌های خلاقانه و هوشمند">
+  <meta property="og:description" content="ساخت تجربه‌های دیجیتال خلاقانه در حوزه آموزش، سرگرمی و فناوری.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://parsa-apps.github.io/">
-  <meta property="og:image" content="assets/images/og-cover.jpg">
+  <meta property="og:image" content="https://parsa-apps.github.io/assets/brand/social-og-1200x630.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="پارسا اپس؛ ساخت تجربه‌های دیجیتال خلاقانه">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="assets/images/og-cover.jpg">
+  <meta name="twitter:image" content="https://parsa-apps.github.io/assets/brand/social-og-1200x630.jpg">
+
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/brand/parsa-apps-icon-180.png" sizes="180x180">
@@ -22,22 +27,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "پارسا اپس",
+    "alternateName": "Parsa Apps",
+    "url": "https://parsa-apps.github.io/",
+    "logo": "https://parsa-apps.github.io/assets/brand/parsa-apps-icon-512.png",
+    "description": "سازنده اپلیکیشن‌های خلاقانه و هوشمند در حوزه آموزش، سرگرمی و فناوری"
+  }
+  </script>
 </head>
-<body>
-  <a class="skip-link" href="#main">رفتن به محتوا</a>
-  <header class="site-header">
+<body class="home-page">
+  <a class="skip-link" href="#main">رفتن به محتوای اصلی</a>
+
+  <header class="site-header home-header">
     <div class="container nav-wrap">
-      <a class="brand" href="index.html">
-        <img src="assets/logo.png" alt="لوگوی پارسا اپس" width="48" height="48">
+      <a class="brand" href="index.html" aria-label="پارسا اپس؛ صفحه اصلی">
+        <img src="assets/brand/parsa-apps-icon.svg" alt="" width="48" height="48">
         <span class="brand-copy">
           <strong>پارسا اپس</strong>
-          <span>ساخت تجربه‌های دیجیتال خلاقانه</span>
+          <span>تجربه‌های دیجیتال خلاقانه</span>
         </span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="باز کردن فهرست"><span></span></button>
-      <nav id="site-nav" class="nav-links">
-        <a href="index.html" aria-current="page">خانه</a>
-        <a href="island.html">جزیره فندقی</a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="باز کردن فهرست">
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="nav-links" aria-label="فهرست اصلی">
+        <a href="#main" aria-current="page">خانه</a>
+        <a href="#products">محصولات</a>
+        <a href="#values">ارزش‌ها</a>
+        <a href="#future">آینده</a>
         <a href="about.html">درباره ما</a>
         <a class="nav-cta" href="contact.html">تماس با ما</a>
       </nav>
@@ -45,110 +69,213 @@
   </header>
 
   <main id="main">
-    <section class="hero">
-      <div class="container">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">🟠 پارسا اپس</span>
-          <h1>ساخت تجربه‌های <em>دیجیتال خلاقانه</em></h1>
-          <p>ما اپلیکیشن‌هایی می‌سازیم که ترکیبی از آموزش، سرگرمی، فناوری و طراحی زیبا هستند.</p>
-          <div class="mix-row">
-            <span class="mix-pill">آموزش</span>
-            <span class="mix-pill">سرگرمی</span>
-            <span class="mix-pill">فناوری</span>
-            <span class="mix-pill">طراحی زیبا</span>
+    <section class="home-hero" aria-labelledby="hero-title">
+      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+      <div class="container home-hero-grid">
+        <div class="home-hero-copy" data-reveal>
+          <span class="home-kicker"><i aria-hidden="true"></i> استودیوی خلاق محصول دیجیتال</span>
+          <h1 id="hero-title">پارسا اپس</h1>
+          <p class="hero-lead">سازنده اپلیکیشن‌های <span>خلاقانه و هوشمند</span></p>
+          <p class="hero-description">ما تجربه‌های دیجیتالی می‌سازیم که آموزش، سرگرمی و فناوری را کنار هم قرار می‌دهند.</p>
+
+          <div class="hero-actions home-actions">
+            <a class="btn btn-primary home-primary" href="#products">
+              مشاهده محصولات
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 7.5 12l7 7"/></svg>
+            </a>
+            <a class="btn home-secondary" href="about.html">درباره ما</a>
           </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="island.html">مشاهده جزیره فندقی</a>
-            <a class="btn btn-ghost" href="about.html">درباره استودیو</a>
-          </div>
+
+          <ul class="hero-fields" aria-label="حوزه‌های فعالیت پارسا اپس">
+            <li><span aria-hidden="true">●</span> آموزش</li>
+            <li><span aria-hidden="true">●</span> سرگرمی</li>
+            <li><span aria-hidden="true">●</span> فناوری</li>
+          </ul>
         </div>
-        <div class="hero-visual reveal">
-          <img src="assets/island-logo.jpg" alt="لوگوی جزیره فندقی" width="720" height="720" fetchpriority="high">
+
+        <div class="brand-showcase" data-reveal role="img" aria-label="هویت بصری پارسا اپس">
+          <div class="showcase-grid" aria-hidden="true"></div>
+          <div class="showcase-top" aria-hidden="true">
+            <span class="showcase-dots"><i></i><i></i><i></i></span>
+            <span class="showcase-label">PARSA APPS / STUDIO 01</span>
+          </div>
+          <div class="brand-core">
+            <span class="brand-orbit orbit-one" aria-hidden="true"></span>
+            <span class="brand-orbit orbit-two" aria-hidden="true"></span>
+            <span class="brand-spark spark-one" aria-hidden="true"></span>
+            <span class="brand-spark spark-two" aria-hidden="true"></span>
+            <img src="assets/brand/parsa-apps-icon.svg" alt="نشان پارسا اپس" width="176" height="176" fetchpriority="high">
+          </div>
+          <div class="showcase-card showcase-card-design">
+            <span class="mini-icon mini-icon-orange" aria-hidden="true">✦</span>
+            <span><small>طراحی هدفمند</small><strong>تجربه‌ای دوست‌داشتنی</strong></span>
+          </div>
+          <div class="showcase-card showcase-card-tech">
+            <span class="mini-icon mini-icon-teal" aria-hidden="true">⌁</span>
+            <span><small>فناوری هوشمند</small><strong>ساخته‌شده برای رشد</strong></span>
+          </div>
+          <div class="showcase-caption" aria-hidden="true">
+            <span>ایده</span><i></i><span>طراحی</span><i></i><span>محصول</span>
+          </div>
         </div>
       </div>
+
+      <a class="scroll-cue" href="#products" aria-label="رفتن به بخش محصولات">
+        <span>کشف بیشتر</span><i aria-hidden="true"></i>
+      </a>
     </section>
 
-    <section id="products" class="section products">
+    <section id="products" class="home-section product-section" aria-labelledby="product-title">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">🏝️ محصولات ما</span>
-          <h2>اولین محصول پارسا اپس</h2>
-        </div>
-        <article class="featured-product">
-          <img src="assets/images/hero-island.jpg" alt="نمایی از دنیای جزیره فندقی" width="1200" height="700" loading="lazy">
-          <div class="featured-body">
-            <span class="eyebrow">محصول اصلی</span>
-            <h3 class="display" style="margin:10px 0">جزیره فندقی</h3>
-            <p class="lede">اولین محصول پارسا اپس. یک دنیای شاد و امن برای کودکان؛ برای یادگیری، بازی و خیال‌پردازی.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="island.html">مشاهده محصول</a>
+        <header class="home-section-head" data-reveal>
+          <div>
+            <span class="section-index">۰۱ / محصول اصلی</span>
+            <h2 id="product-title">دنیایی برای یادگیری،<br>بازی و خیال‌پردازی</h2>
+          </div>
+          <p>اولین تجربه‌ای که با عشق در پارسا اپس ساخته‌ایم؛ برای کودکان و با خیال آسوده خانواده‌ها.</p>
+        </header>
+
+        <article class="main-product-card" data-reveal>
+          <div class="product-art">
+            <img src="assets/images/hero-island.jpg" alt="دنیای شاد و خیال‌انگیز جزیره فندقی" width="1200" height="700" loading="lazy">
+            <div class="product-art-shade" aria-hidden="true"></div>
+            <span class="product-status"><i aria-hidden="true"></i> محصول اصلی پارسا اپس</span>
+          </div>
+
+          <div class="product-content">
+            <div class="product-brand-row">
+              <img src="assets/brand/jazireh-fandoghi-app-icon-192.png" alt="آیکون جزیره فندقی" width="72" height="72" loading="lazy">
+              <span><small>PARSA APPS PRESENTS</small><strong>🏝️ جزیره فندقی</strong></span>
             </div>
+            <h3>یک دنیای شاد و امن برای کودکان</h3>
+            <p>بازی، آموزش، داستان و سرگرمی در یک محیط دوست‌داشتنی کنار هم قرار گرفته‌اند.</p>
+            <ul class="product-tags" aria-label="بخش‌های جزیره فندقی">
+              <li>بازی</li>
+              <li>آموزش</li>
+              <li>داستان</li>
+              <li>سرگرمی</li>
+            </ul>
+            <a class="product-link" href="island.html">
+              مشاهده جزیره فندقی
+              <span aria-hidden="true">←</span>
+            </a>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="section" style="background:var(--sand)">
+    <section id="values" class="home-section values-section" aria-labelledby="values-title">
       <div class="container">
-        <div class="section-head center">
-          <h2>چرا پارسا اپس؟</h2>
-        </div>
-        <div class="value-grid">
-          <article class="value-card"><div class="icon-orb">⭐</div><h3>تمرکز روی تجربه کاربر</h3><p>هر صفحه باید برای کودک روشن و برای والد قابل اعتماد باشد.</p></article>
-          <article class="value-card"><div class="icon-orb">🚀</div><h3>توسعه مداوم</h3><p>محصول زنده است؛ نسخه به نسخه بهتر، پایدارتر و کامل‌تر می‌شود.</p></article>
-          <article class="value-card"><div class="icon-orb">🔒</div><h3>امنیت و حریم خصوصی</h3><p>دادهٔ کودک جای تجارت نیست. شفافیت برای خانواده اصل کار است.</p></article>
-          <article class="value-card"><div class="icon-orb">🎨</div><h3>طراحی مدرن و جذاب</h3><p>رنگ، حرکت و تایپ فارسی با حوصله چیده می‌شوند؛ نه شلوغ و نه سرد.</p></article>
+        <header class="home-section-head values-head" data-reveal>
+          <div>
+            <span class="section-index">۰۲ / ارزش‌های ما</span>
+            <h2 id="values-title">چیزی فراتر از<br>ساختن یک اپلیکیشن</h2>
+          </div>
+          <p>هر محصول پارسا اپس بر پایه چهار اصل شکل می‌گیرد؛ تا تجربه‌ای زیبا، ماندگار و قابل اعتماد بسازیم.</p>
+        </header>
+
+        <div class="home-values-grid">
+          <article class="home-value-card value-design" data-reveal>
+            <span class="value-number">۰۱</span>
+            <div class="value-icon" aria-hidden="true">🎨</div>
+            <h3>طراحی زیبا</h3>
+            <p>جزئیات سنجیده و رابطی ساده که استفاده از محصول را دلنشین می‌کند.</p>
+            <i class="value-line" aria-hidden="true"></i>
+          </article>
+          <article class="home-value-card value-growth" data-reveal>
+            <span class="value-number">۰۲</span>
+            <div class="value-icon" aria-hidden="true">🚀</div>
+            <h3>توسعه مداوم</h3>
+            <p>محصولات ما همیشه در مسیر بهترشدن، کامل‌ترشدن و رشدکردن هستند.</p>
+            <i class="value-line" aria-hidden="true"></i>
+          </article>
+          <article class="home-value-card value-security" data-reveal>
+            <span class="value-number">۰۳</span>
+            <div class="value-icon" aria-hidden="true">🔒</div>
+            <h3>امنیت و اعتماد</h3>
+            <p>احترام به کاربر و حفاظت از حریم خصوصی، بخش جدانشدنی کار ماست.</p>
+            <i class="value-line" aria-hidden="true"></i>
+          </article>
+          <article class="home-value-card value-idea" data-reveal>
+            <span class="value-number">۰۴</span>
+            <div class="value-icon" aria-hidden="true">💡</div>
+            <h3>ایده‌های خلاقانه</h3>
+            <p>برای هر نیاز، راهی تازه و هوشمندانه پیدا می‌کنیم و آن را می‌سازیم.</p>
+            <i class="value-line" aria-hidden="true"></i>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>مسیر آینده</h2>
-          <p class="lede">جزیره فندقی شروع راه است. استودیو برای ساختن بیشتر آمده است.</p>
+    <section id="future" class="future-section" aria-labelledby="future-title">
+      <div class="future-pattern" aria-hidden="true"></div>
+      <div class="container future-grid">
+        <div class="future-copy" data-reveal>
+          <span class="future-label"><i aria-hidden="true"></i> مسیر آینده</span>
+          <h2 id="future-title">ما تازه شروع کرده‌ایم<span>...</span></h2>
+          <p>در آینده محصولات بیشتری در حوزه آموزش، سرگرمی و فناوری ارائه خواهیم کرد.</p>
+          <div class="future-topics" aria-label="حوزه‌های محصولات آینده">
+            <span>آموزش</span>
+            <span>سرگرمی</span>
+            <span>فناوری</span>
+          </div>
         </div>
-        <ul class="roadmap">
-          <li>اپلیکیشن‌های بیشتر</li>
-          <li>ابزارهای آموزشی</li>
-          <li>محصولات هوشمند</li>
-        </ul>
+
+        <div class="future-visual" data-reveal aria-hidden="true">
+          <span class="future-ring ring-outer"></span>
+          <span class="future-ring ring-middle"></span>
+          <span class="future-ring ring-inner"></span>
+          <span class="future-node node-one">آموزش</span>
+          <span class="future-node node-two">سرگرمی</span>
+          <span class="future-node node-three">فناوری</span>
+          <div class="future-core">
+            <img src="assets/brand/parsa-apps-icon.svg" alt="" width="82" height="82" loading="lazy">
+            <strong>ایده بعدی</strong>
+            <small>در حال شکل‌گیری</small>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer home-footer">
     <div class="container">
-      <div class="footer-grid">
-        <div>
-          <a class="brand" href="index.html">
-            <img src="assets/logo.png" alt="" width="48" height="48">
-            <span class="brand-copy"><strong>پارسا اپس</strong><span>جزیره فندقی</span></span>
+      <div class="home-footer-top">
+        <div class="footer-brand-block">
+          <a class="footer-logo" href="index.html" aria-label="پارسا اپس؛ صفحه اصلی">
+            <img src="assets/brand/parsa-apps-icon.svg" alt="" width="56" height="56">
+            <span><strong>پارسا اپس</strong><small>PARSA APPS</small></span>
           </a>
+          <p>ساخت تجربه‌های دیجیتال خلاقانه</p>
         </div>
-        <div>
-          <h4>صفحات</h4>
-          <a href="index.html">خانه</a>
-          <a href="island.html">جزیره فندقی</a>
-          <a href="about.html">درباره ما</a>
-        </div>
-        <div>
-          <h4>حقوقی</h4>
-          <a href="privacy.html">حریم خصوصی</a>
-          <a href="contact.html">تماس با ما</a>
-        </div>
-        <div>
-          <h4>شبکه</h4>
-          <a href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">تلگرام</a>
-          <a href="mailto:farshadparsa2019@gmail.com">ایمیل</a>
-        </div>
+
+        <nav class="footer-nav" aria-label="پیوندهای پایین صفحه">
+          <div>
+            <h3>پارسا اپس</h3>
+            <a href="about.html">درباره ما</a>
+            <a href="contact.html">تماس با ما</a>
+          </div>
+          <div>
+            <h3>محصولات</h3>
+            <a href="island.html">جزیره فندقی</a>
+            <a href="#future">مسیر آینده</a>
+          </div>
+          <div>
+            <h3>اطلاعات</h3>
+            <a href="privacy.html">حریم خصوصی</a>
+            <a href="mailto:farshadparsa2019@gmail.com">ایمیل</a>
+          </div>
+        </nav>
       </div>
-      <div class="legal">
+
+      <div class="home-footer-bottom">
         <span>© <span data-year>۱۴۰۵</span> پارسا اپس</span>
-        <span>جزیره فندقی</span>
+        <span class="footer-made"><i aria-hidden="true"></i> ساخت تجربه‌های دیجیتال خلاقانه</span>
       </div>
     </div>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
