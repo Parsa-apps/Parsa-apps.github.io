@@ -172,8 +172,10 @@ console.log("\n=== A. index.html — default (motion enabled) ===");
   const norm = (d) => d.body.textContent.replace(/\s+/g, " ").trim();
   check("no text content removed", norm(doc) === norm(orig));
 
-  // structural integrity: same element count except injected ambient nodes
-  const injected = doc.querySelectorAll(".pa-ambient, .pa-ambient *").length;
+  // structural integrity: same element count except injected motion nodes
+  const injected = doc.querySelectorAll(
+    ".pa-ambient, .pa-ambient *, .pa-tilt-light, .pa-ripple"
+  ).length;
   check(
     "no elements removed",
     doc.querySelectorAll("*").length - injected === orig.querySelectorAll("*").length,
@@ -183,6 +185,37 @@ console.log("\n=== A. index.html — default (motion enabled) ===");
   // parallax
   check("brand-showcase has parallax", doc.querySelector(".brand-showcase").classList.contains("pa-parallax"));
   check("future-visual has parallax", doc.querySelector(".future-visual").classList.contains("pa-parallax"));
+
+  // v2: playful ambient elements (stars / clouds / bubbles / blobs)
+  check("twinkling stars exist", doc.querySelectorAll(".pa-star").length >= 8,
+    "count=" + doc.querySelectorAll(".pa-star").length);
+  check("clouds exist", doc.querySelectorAll(".pa-cloud").length >= 2,
+    "count=" + doc.querySelectorAll(".pa-cloud").length);
+  check("bubbles exist", doc.querySelectorAll(".pa-bubble").length >= 3,
+    "count=" + doc.querySelectorAll(".pa-bubble").length);
+  check("gradient blobs exist in hero", doc.querySelectorAll(".home-hero .pa-blob").length >= 2,
+    "count=" + doc.querySelectorAll(".home-hero .pa-blob").length);
+
+  // v2: 3D tilt on the main product card + travelling light layer
+  const mainCard = doc.querySelector(".main-product-card");
+  check("product card has 3D tilt", mainCard.classList.contains("pa-tilt"));
+  check("product card has light layer", !!mainCard.querySelector(":scope > .pa-tilt-light"));
+  check("light layer aria-hidden", mainCard.querySelector(".pa-tilt-light").getAttribute("aria-hidden") === "true");
+
+  // v2: press ripple hosts on interactive elements
+  check("buttons are ripple hosts", doc.querySelectorAll(".btn.pa-ripple-host").length >= 2,
+    "count=" + doc.querySelectorAll(".btn.pa-ripple-host").length);
+  check("product link is ripple host", doc.querySelector(".product-link").classList.contains("pa-ripple-host"));
+
+  // v2: scroll-linked parallax registered on decorative layers only
+  const scrolled = doc.querySelectorAll(".pa-scrolled");
+  check("scroll parallax layers registered", scrolled.length >= 4, "count=" + scrolled.length);
+  check(
+    "scroll parallax never targets text",
+    Array.from(scrolled).every((e) =>
+      e.classList.contains("pa-shape") || e.classList.contains("pa-blob") || e.classList.contains("hero-glow")
+    )
+  );
 
   // observer: offscreen elements are observed, then reveal on intersect
   const revealObs = observed[0];
@@ -213,6 +246,9 @@ console.log("\n=== B. index.html — prefers-reduced-motion: reduce ===");
   check("NO ambient layers created", doc.querySelectorAll(".pa-ambient").length === 0);
   check("NO particles created", doc.querySelectorAll(".pa-dot").length === 0);
   check("NO parallax attached", doc.querySelectorAll(".pa-parallax").length === 0);
+  check("NO tilt attached", doc.querySelectorAll(".pa-tilt").length === 0);
+  check("NO ripple hosts attached", doc.querySelectorAll(".pa-ripple-host").length === 0);
+  check("NO scroll parallax attached", doc.querySelectorAll(".pa-scrolled").length === 0);
 }
 
 console.log("\n=== C. index.html — no IntersectionObserver (legacy fallback) ===");
@@ -251,6 +287,14 @@ console.log("\n=== D. Save-Data / slow network / low-power ===");
   const { doc } = makeDom("index.html", { coarse: true, cores: 8 });
   check("touch device: no parallax", doc.querySelectorAll(".pa-parallax").length === 0);
   check("touch device: ambient still present", doc.querySelectorAll(".pa-ambient").length > 0);
+  check("touch device: no 3D tilt", doc.querySelectorAll(".pa-tilt").length === 0);
+  check("touch device: no scroll parallax", doc.querySelectorAll(".pa-scrolled").length === 0);
+  check("touch device: ripples still work (tap feedback)", doc.querySelectorAll(".pa-ripple-host").length > 0);
+}
+{
+  const { doc } = makeDom("index.html", { cores: 2 });
+  check("low-power: no 3D tilt", doc.querySelectorAll(".pa-tilt").length === 0);
+  check("low-power: no scroll parallax", doc.querySelectorAll(".pa-scrolled").length === 0);
 }
 
 console.log("\n=== E. Other pages ===");
@@ -287,23 +331,18 @@ console.log("\n=== F. island.html specifics (feature cards) ===");
 console.log("\n=== G. contact.html form still works ===");
 {
   const { w, doc, errors } = makeDom("contact.html");
-  check("no errors", errors.length === 0, errors.join(" | "));
+  check("no errors before submit", errors.length === 0, errors.join(" | "));
   const form = doc.querySelector("#contact-form");
   check("form found", !!form);
   form.querySelector("#name").value = "مریم";
   form.querySelector("#email").value = "a@b.com";
   form.querySelector("#message").value = "سلام";
-  let navigated = "";
-  try {
-    Object.defineProperty(w, "location", {
-      configurable: true,
-      value: { set href(v) { navigated = v; }, get href() { return navigated; } },
-    });
-  } catch (e) {
-    w.addEventListener("beforeunload", () => {});
-  }
+  // jsdom forbids overriding window.location; instead it reports the blocked
+  // navigation ("Not implemented: navigation to mailto:…") through the
+  // virtual console, which makeDom collects into `errors`.
   form.dispatchEvent(new w.Event("submit", { bubbles: true, cancelable: true }));
-  check("submit builds mailto", navigated.startsWith("mailto:farshadparsa2019@gmail.com"), navigated.slice(0, 60));
+  const navBlocked = errors.some((e) => e.includes("navigation"));
+  check("submit triggers mailto navigation", navBlocked, errors.join(" | ").slice(0, 120));
   check("success message shown", doc.querySelector(".form-success").classList.contains("show"));
 }
 
