@@ -1,18 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="پارسا اپس">
   <defs>
-    <linearGradient id="g" x1="12" y1="8" x2="52" y2="58" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F3C15A"/>
-      <stop offset="1" stop-color="#D48912"/>
+    <linearGradient id="g1" x1="14" y1="14" x2="50" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FBD06F"/>
+      <stop offset="50%" stop-color="#EF7A1A"/>
+      <stop offset="100%" stop-color="#A84A08"/>
     </linearGradient>
-    <linearGradient id="leaf" x1="44" y1="14" x2="56" y2="28" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#5EEAD4"/>
-      <stop offset="1" stop-color="#14B8A6"/>
+    <linearGradient id="g2" x1="12" y1="18" x2="22" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E76E18"/>
+      <stop offset="100%" stop-color="#8E3D07"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="42" y1="15" x2="54" y2="27" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6BECCD"/>
+      <stop offset="100%" stop-color="#1EB398"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="#0B1220"/>
-  <path d="M32 8.5 54 21.2v21.6L32 55.5 10 42.8V21.2L32 8.5z" fill="#121A2B" stroke="#2A3550" stroke-width="1.4"/>
-  <path d="M32 16c6.6 0 11 5.4 12.2 12.2.4 2.3-.2 4.2-1.6 5.2-1.2.8-2.8.7-4.2.1 1.6 4.6.4 9.2-3.6 12.2-5.4 4-13.2 2.2-15.6-4.4-1.8-5 0-10.4 4.6-13.4-1.6-1.4-2.2-3.4-1.6-5.6C23.4 18.6 27.2 16 32 16z" fill="url(#g)"/>
-  <path d="M24.2 36.2c2.2-4.4 6.4-6.6 11.6-6.2" fill="none" stroke="#0B1220" stroke-width="1.6" stroke-linecap="round" opacity=".35"/>
-  <circle cx="32" cy="14.2" r="2.1" fill="#F8E08A"/>
-  <path d="M46 18.5c3.2 1.4 5.6 4.6 5.2 8.2-2.4-1-4.6-1.2-6.6-.2-1.6-3.2-1.2-6.2 1.4-8z" fill="url(#leaf)"/>
+  <rect width="64" height="64" rx="16" fill="#0F172A"/>
+  <!-- Left shell / P stem -->
+  <path d="M20.2 19 C 13.8 21.6 10.8 29 12 36.6 C 12.7 40.7 14.6 43.8 14 49 C 15.7 48.2 18.2 47.3 21 47.7 C 22.2 45.1 23.5 38.8 24.2 32.2 C 24.9 25.6 24.3 20.8 23.5 18.2 C 22.4 18.4 21.2 18.6 20.2 19 Z" fill="url(#g2)"/>
+  <path d="M23.5 18.2 C 23.5 18.2 26.5 16.2 31.5 16.2 C 36.5 16.2 37 16 37 16 C 36 16 42 20 44.5 23.5 C 43 22.5 37.5 19 33.5 19 L 21 19 C 21 19 22 18.4 23.5 18.2 Z" fill="#E67A22"/>
+  <path d="M21 19 L 21 51 C 21 51 23 50 26 50.8 L 26 41 L 36.5 41 C 41.5 41 44.5 37.6 44.5 34.2 C 44.5 30.8 42 27.9 36.8 27.9 L 21 27.9 L 21 19 Z" fill="url(#g1)"/>
+  <!-- Outer shell stroke -->
+  <path d="M31.5 16.2 C 38.5 16.2 45.5 21 49.5 27.5 C 53.5 34 54.2 42.2 48.5 48.2 C 45.5 51.2 40.8 53.2 35.8 53.2" fill="none" stroke="url(#g1)" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- spark -->
+  <path d="M38.7 12.8 L 39.9 15 L 38.7 17.2 L 37.5 15 Z" fill="#FBE07B"/>
+  <!-- leaf -->
+  <path d="M43.8 28.5 C 45.3 27 48.8 24.4 50.5 21.2 C 52 18.2 52 15.8 51.5 14.6 C 49.5 14 45 14.6 42.6 18.4 C 40.8 21.2 41 25.6 42.4 28.8 C 43 27.8 46.2 24.6 49.2 21.8 C 46.5 24.6 44.3 27.3 43.8 28.5 Z" fill="url(#leaf)"/>
 </svg>
