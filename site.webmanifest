@@ -1,0 +1,19 @@
+{
+  "name": "پارسا اپس",
+  "short_name": "پارسا اپس",
+  "description": "استودیوی ساخت اپلیکیشن‌های امن و خلاقانه برای کودکان و خانواده",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070A12",
+  "theme_color": "#0B1220",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
