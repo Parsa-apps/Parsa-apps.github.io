@@ -1,18 +1,18 @@
 {
   "name": "پارسا اپس",
   "short_name": "پارسا اپس",
-  "description": "استودیوی ساخت اپلیکیشن‌های امن و خلاقانه برای کودکان و خانواده",
+  "description": "سازنده تجربه‌های دیجیتال خلاق — خانهٔ جزیره فندقی",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070A12",
-  "theme_color": "#0B1220",
+  "background_color": "#FFF6EB",
+  "theme_color": "#EF7A1A",
   "lang": "fa",
   "dir": "rtl",
   "icons": [
     {
-      "src": "assets/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
     }
   ]
