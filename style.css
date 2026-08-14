@@ -2094,20 +2094,18 @@ form.panel {
   outline-offset: 4px;
 }
 
-.js-ready [data-reveal] {
+/* Legacy reveal fallback — superseded by the motion layer at the end of this
+   file. Kept only for browsers that run script.js but lack the motion engine. */
+.js-ready:not(.js-motion) [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
 }
 
-.js-ready [data-reveal].is-visible {
+.js-ready:not(.js-motion) [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
 }
-
-.home-values-grid [data-reveal]:nth-child(2) { transition-delay: 0.08s; }
-.home-values-grid [data-reveal]:nth-child(3) { transition-delay: 0.16s; }
-.home-values-grid [data-reveal]:nth-child(4) { transition-delay: 0.24s; }
 
 @media (max-width: 1020px) {
   .home-hero {
@@ -2521,4 +2519,904 @@ form.panel {
     opacity: 1;
     transform: none;
   }
+}
+
+
+/* ==========================================================
+   Motion layer — Parsa Apps
+   Entry animations, ambient backgrounds, button polish.
+   Additive only: no layout, content or structural changes.
+   All animations are transform/opacity based (GPU friendly)
+   and fully disabled under prefers-reduced-motion.
+   ========================================================== */
+
+:root {
+  --pa-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pa-ease-soft: cubic-bezier(0.33, 0, 0.2, 1);
+  --pa-dur: 0.7s;
+  --pa-stagger: 90ms;
+  --pa-lift: -3px;
+}
+
+/* ---------- 1. Scroll reveal engine ---------- */
+.js-motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition:
+    opacity var(--pa-dur) var(--pa-ease),
+    transform var(--pa-dur) var(--pa-ease);
+  transition-delay: calc(var(--pa-i, 0) * var(--pa-stagger));
+}
+
+.js-motion .home-values-grid [data-reveal],
+.js-motion .home-hero-grid [data-reveal] {
+  transition-delay: calc(var(--pa-i, 0) * var(--pa-stagger));
+}
+
+.js-motion [data-reveal="fade"] {
+  transform: none;
+}
+
+.js-motion [data-reveal="zoom"] {
+  transform: translate3d(0, 20px, 0) scale(0.955);
+}
+
+.js-motion [data-reveal="scale"] {
+  transform: scale(0.9);
+}
+
+/* RTL-aware side slides: "start" = right edge in fa-IR */
+.js-motion [data-reveal="start"] {
+  transform: translate3d(34px, 0, 0);
+}
+
+.js-motion [data-reveal="end"] {
+  transform: translate3d(-34px, 0, 0);
+}
+
+[dir="ltr"].js-motion [data-reveal="start"],
+[dir="ltr"] .js-motion [data-reveal="start"] {
+  transform: translate3d(-34px, 0, 0);
+}
+
+[dir="ltr"].js-motion [data-reveal="end"],
+[dir="ltr"] .js-motion [data-reveal="end"] {
+  transform: translate3d(34px, 0, 0);
+}
+
+/* Resting state keeps the pointer-parallax offsets so both systems compose
+   instead of overriding each other. */
+.js-motion [data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(var(--pa-px, 0px), var(--pa-py, 0px), 0);
+}
+
+.js-motion [data-reveal].pa-settled {
+  transition-delay: 0s;
+}
+
+.js-motion [data-reveal].pa-parallax.pa-settled {
+  transition: transform 0.45s var(--pa-ease-soft);
+}
+
+/* The legacy .reveal load animation would fight the observer engine
+   (its implicit "to" keyframe resolves to the hidden state), so the
+   motion layer takes over wherever it is active. */
+.js-motion .reveal {
+  animation: none;
+}
+
+/* ---------- 2. Cascading children (hero copy, section heads) ---------- */
+.js-motion [data-cascade] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.js-motion [data-cascade] > * {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.js-motion [data-cascade].is-visible > * {
+  animation: pa-rise-in 0.68s var(--pa-ease) both;
+}
+
+.js-motion [data-cascade].is-visible > *:nth-child(1) { animation-delay: 0.04s; }
+.js-motion [data-cascade].is-visible > *:nth-child(2) { animation-delay: 0.12s; }
+.js-motion [data-cascade].is-visible > *:nth-child(3) { animation-delay: 0.2s; }
+.js-motion [data-cascade].is-visible > *:nth-child(4) { animation-delay: 0.28s; }
+.js-motion [data-cascade].is-visible > *:nth-child(5) { animation-delay: 0.36s; }
+.js-motion [data-cascade].is-visible > *:nth-child(6) { animation-delay: 0.44s; }
+.js-motion [data-cascade].is-visible > *:nth-child(n + 7) { animation-delay: 0.5s; }
+
+@keyframes pa-rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 3. Header entrance ---------- */
+.js-motion .site-header {
+  animation: pa-header-in 0.6s var(--pa-ease) both;
+}
+
+@keyframes pa-header-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+.js-motion .site-header .brand img {
+  transition: transform 0.35s var(--pa-ease), box-shadow 0.35s var(--pa-ease);
+}
+
+.js-motion .site-header .brand:hover img {
+  transform: translateY(-2px) rotate(-3deg) scale(1.04);
+}
+
+.nav-links a {
+  position: relative;
+  transition: color 0.22s ease, background-color 0.22s ease, transform 0.22s var(--pa-ease);
+}
+
+.nav-links a:not(.nav-cta)::after {
+  content: "";
+  position: absolute;
+  inset-inline: 12px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 99px;
+  background: currentColor;
+  opacity: 0.55;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.28s var(--pa-ease);
+}
+
+[dir="ltr"] .nav-links a:not(.nav-cta)::after {
+  transform-origin: left;
+}
+
+.nav-links a:not(.nav-cta):hover::after,
+.nav-links a:not(.nav-cta)[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav-cta {
+  transition: transform 0.25s var(--pa-ease), box-shadow 0.25s var(--pa-ease), filter 0.25s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(239, 122, 26, 0.32);
+}
+
+.nav-toggle span,
+.nav-toggle span::before,
+.nav-toggle span::after {
+  transition: transform 0.3s var(--pa-ease), opacity 0.2s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span {
+  background: transparent;
+}
+
+.nav-toggle[aria-expanded="true"] span::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav-links.open {
+  animation: pa-menu-in 0.32s var(--pa-ease) both;
+}
+
+@keyframes pa-menu-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+/* ---------- 4. Ambient animated backgrounds ---------- */
+.pa-ambient-host {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.pa-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint style;
+}
+
+/* Soft moving gradient wash */
+.pa-wash {
+  position: absolute;
+  inset: -35%;
+  background:
+    radial-gradient(closest-side, var(--pa-wash-a, rgba(245, 138, 36, 0.16)), transparent 72%),
+    radial-gradient(closest-side, var(--pa-wash-b, rgba(37, 183, 160, 0.14)), transparent 72%);
+  background-repeat: no-repeat;
+  background-size: 62% 62%, 55% 55%;
+  background-position: 15% 20%, 85% 78%;
+  filter: blur(26px);
+  animation: pa-wash-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes pa-wash-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 2.5%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-1.5%, 2%, 0) scale(1.03);
+  }
+}
+
+/* Floating decorative shapes */
+.pa-shape {
+  position: absolute;
+  top: var(--pa-top, 20%);
+  inset-inline-start: var(--pa-start, 10%);
+  width: var(--pa-size, 90px);
+  height: var(--pa-size, 90px);
+  border-radius: var(--pa-radius, 50%);
+  border: 1px solid var(--pa-stroke, rgba(11, 18, 32, 0.07));
+  background: var(--pa-fill, transparent);
+  opacity: var(--pa-op, 0.75);
+  animation: pa-shape-float var(--pa-dur-s, 16s) var(--pa-ease-soft) infinite alternate;
+  animation-delay: var(--pa-delay, 0s);
+  will-change: transform;
+}
+
+@keyframes pa-shape-float {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(var(--pa-dx, 14px), var(--pa-dy, -22px), 0) rotate(var(--pa-rot, 18deg));
+  }
+}
+
+/* Lightweight rising particles */
+.pa-dot {
+  position: absolute;
+  bottom: -12px;
+  inset-inline-start: var(--pa-start, 50%);
+  width: var(--pa-size, 4px);
+  height: var(--pa-size, 4px);
+  border-radius: 50%;
+  background: var(--pa-fill, rgba(245, 138, 36, 0.5));
+  opacity: 0;
+  animation: pa-dot-rise var(--pa-dur-s, 15s) linear infinite;
+  animation-delay: var(--pa-delay, 0s);
+  will-change: transform, opacity;
+}
+
+@keyframes pa-dot-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6);
+  }
+  12% {
+    opacity: var(--pa-op, 0.7);
+  }
+  85% {
+    opacity: var(--pa-op, 0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--pa-dx, 18px), calc(var(--pa-rise, 460px) * -1), 0) scale(1);
+  }
+}
+
+/* Pause ambient work while the section is off-screen */
+.pa-idle .pa-wash,
+.pa-idle .pa-shape,
+.pa-idle .pa-dot {
+  animation-play-state: paused;
+}
+
+/* Existing hero glows: give them slow life */
+.js-motion .hero-glow {
+  will-change: transform;
+}
+
+.js-motion .hero-glow-one {
+  animation: pa-glow-a 22s ease-in-out infinite alternate;
+}
+
+.js-motion .hero-glow-two {
+  animation: pa-glow-b 26s ease-in-out infinite alternate;
+}
+
+@keyframes pa-glow-a {
+  to {
+    transform: translate3d(40px, 34px, 0) scale(1.14);
+  }
+}
+
+@keyframes pa-glow-b {
+  to {
+    transform: translate3d(-46px, -30px, 0) scale(1.1);
+  }
+}
+
+.js-motion .future-pattern {
+  animation: pa-pattern-pan 40s linear infinite;
+}
+
+@keyframes pa-pattern-pan {
+  to {
+    background-position: 290px 0;
+  }
+}
+
+/* Subtle pointer parallax targets */
+.pa-parallax {
+  transition: transform 0.45s var(--pa-ease-soft);
+  transform: translate3d(var(--pa-px, 0px), var(--pa-py, 0px), 0);
+}
+
+/* ---------- 5. Hero showcase & future visual life ---------- */
+.js-motion .brand-core img {
+  animation: pa-breathe 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes pa-breathe {
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.018);
+  }
+}
+
+.js-motion .brand-spark {
+  animation: pa-spark 4.2s ease-in-out infinite;
+}
+
+.js-motion .spark-two {
+  animation-duration: 5.6s;
+  animation-delay: 0.9s;
+}
+
+@keyframes pa-spark {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.55);
+    opacity: 1;
+  }
+}
+
+.js-motion .showcase-dots i:first-child {
+  animation: pa-pulse-dot 2.6s ease-in-out infinite;
+}
+
+.js-motion .product-status i,
+.js-motion .home-kicker i,
+.js-motion .future-label i,
+.js-motion .footer-made i {
+  animation: pa-pulse-dot 2.8s ease-in-out infinite;
+}
+
+@keyframes pa-pulse-dot {
+  50% {
+    transform: scale(1.25);
+    opacity: 0.7;
+  }
+}
+
+.js-motion .future-node {
+  animation: pa-shape-float 9s var(--pa-ease-soft) infinite alternate;
+  --pa-dx: 0px;
+  --pa-dy: -9px;
+  --pa-rot: 0deg;
+  transition: transform 0.3s var(--pa-ease), border-color 0.3s ease, color 0.3s ease;
+}
+
+.js-motion .node-two { animation-duration: 11s; animation-delay: 0.7s; }
+.js-motion .node-three { animation-duration: 10s; animation-delay: 1.3s; }
+
+/* .future-core is centred with translate(-50%, -50%), so it needs its own
+   keyframe that preserves that offset. */
+.js-motion .future-core {
+  animation: pa-core-breathe 9s ease-in-out infinite;
+}
+
+@keyframes pa-core-breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 8px)) scale(1.02);
+  }
+}
+
+.js-motion .ring-inner {
+  animation: pa-ring-pulse 6s ease-in-out infinite;
+}
+
+@keyframes pa-ring-pulse {
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+    border-color: rgba(37, 183, 160, 0.34);
+  }
+}
+
+.brand-showcase,
+.future-visual {
+  transition: transform 0.5s var(--pa-ease-soft);
+}
+
+.showcase-card {
+  transition: transform 0.3s var(--pa-ease), box-shadow 0.3s var(--pa-ease), border-color 0.3s ease;
+}
+
+.brand-showcase:hover .showcase-card {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- 6. Button polish: hover, glow, sheen ---------- */
+.btn,
+.product-link,
+.nav-cta {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform 0.28s var(--pa-ease),
+    box-shadow 0.28s var(--pa-ease),
+    background-color 0.28s ease,
+    background 0.28s ease,
+    border-color 0.28s ease,
+    color 0.28s ease,
+    filter 0.28s ease;
+}
+
+.btn::before,
+.product-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    -75deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.28) 48%,
+    transparent 64%
+  );
+  opacity: 0;
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+
+.btn:hover::before,
+.btn:focus-visible::before,
+.product-link:hover::before,
+.product-link:focus-visible::before {
+  opacity: 1;
+  animation: pa-sheen 0.85s var(--pa-ease-soft) both;
+}
+
+@keyframes pa-sheen {
+  from {
+    transform: translateX(140%);
+  }
+  to {
+    transform: translateX(-140%);
+  }
+}
+
+.btn:not(.is-disabled):not([aria-disabled="true"]):hover,
+.product-link:hover {
+  transform: translate3d(0, var(--pa-lift), 0);
+}
+
+.btn:not(.is-disabled):not([aria-disabled="true"]):active,
+.product-link:active {
+  transform: translate3d(0, -1px, 0) scale(0.985);
+  transition-duration: 0.09s;
+}
+
+.btn-primary:not(.is-disabled):hover {
+  box-shadow:
+    0 16px 34px rgba(239, 122, 26, 0.34),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 0 26px rgba(255, 154, 60, 0.35);
+  filter: saturate(1.06);
+}
+
+.btn-ghost:not(.is-disabled):hover {
+  background: rgba(31, 122, 156, 0.17);
+  box-shadow: 0 12px 26px rgba(31, 122, 156, 0.18);
+}
+
+.btn-dark:not(.is-disabled):hover {
+  box-shadow: 0 16px 32px rgba(11, 18, 32, 0.28), 0 0 22px rgba(11, 18, 32, 0.18);
+}
+
+.btn-line:not(.is-disabled):hover {
+  border-color: rgba(239, 122, 26, 0.45);
+  box-shadow: 0 12px 26px rgba(31, 70, 90, 0.12);
+}
+
+.home-primary:hover {
+  box-shadow:
+    0 18px 38px rgba(11, 18, 32, 0.26),
+    0 0 24px rgba(245, 138, 36, 0.22);
+}
+
+.home-secondary:hover {
+  box-shadow: 0 14px 30px rgba(245, 138, 36, 0.16);
+}
+
+.product-link:hover {
+  box-shadow: 0 16px 34px rgba(11, 18, 32, 0.24), 0 0 22px rgba(245, 138, 36, 0.16);
+}
+
+.btn:focus-visible,
+.product-link:focus-visible,
+.nav-cta:focus-visible {
+  outline: 3px solid rgba(245, 138, 36, 0.42);
+  outline-offset: 3px;
+}
+
+.scroll-cue {
+  transition: transform 0.3s var(--pa-ease), color 0.3s ease;
+}
+
+.scroll-cue:hover {
+  color: var(--home-orange, #f58a24);
+  transform: translateX(-50%) translateY(3px);
+}
+
+/* ---------- 7. Card & element hover animations ---------- */
+.feature,
+.why-card,
+.value-card,
+.step,
+.shot-card,
+.contact-card,
+.roadmap li,
+.mix-pill,
+.founder,
+form.panel {
+  transition:
+    transform 0.32s var(--pa-ease),
+    box-shadow 0.32s var(--pa-ease),
+    border-color 0.32s ease,
+    background-color 0.32s ease;
+}
+
+.feature:hover,
+.why-card:hover,
+.value-card:hover,
+.step:hover,
+.contact-card:hover,
+.shot-card:hover {
+  transform: translate3d(0, -6px, 0);
+  border-color: rgba(239, 122, 26, 0.28);
+  box-shadow: 0 20px 42px rgba(31, 70, 90, 0.13);
+}
+
+.roadmap li:hover,
+.mix-pill:hover {
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(239, 122, 26, 0.3);
+  box-shadow: 0 12px 26px rgba(31, 70, 90, 0.1);
+}
+
+.icon-orb,
+.value-icon {
+  transition: transform 0.35s var(--pa-ease), box-shadow 0.35s var(--pa-ease);
+}
+
+.feature:hover .icon-orb,
+.value-card:hover .icon-orb,
+.home-value-card:hover .value-icon {
+  transform: translateY(-3px) rotate(-6deg) scale(1.08);
+  box-shadow: 0 12px 24px rgba(239, 122, 26, 0.18);
+}
+
+.js-motion .icon-orb,
+.js-motion .value-icon {
+  animation: pa-idle-float 7s ease-in-out infinite;
+}
+
+.js-motion .feature:nth-child(2) .icon-orb,
+.js-motion .home-value-card:nth-child(2) .value-icon { animation-delay: 0.6s; }
+.js-motion .feature:nth-child(3) .icon-orb,
+.js-motion .home-value-card:nth-child(3) .value-icon { animation-delay: 1.2s; }
+.js-motion .feature:nth-child(4) .icon-orb,
+.js-motion .home-value-card:nth-child(4) .value-icon { animation-delay: 1.8s; }
+
+@keyframes pa-idle-float {
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+.product-tags li,
+.future-topics span,
+.hero-fields li,
+.tag,
+.eyebrow {
+  transition: transform 0.28s var(--pa-ease), background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+}
+
+.product-tags li:hover,
+.future-topics span:hover {
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(245, 138, 36, 0.4);
+}
+
+.future-topics span:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.product-card {
+  transition: transform 0.4s var(--pa-ease), box-shadow 0.4s var(--pa-ease);
+}
+
+.product-card img {
+  transition: transform 0.7s var(--pa-ease);
+}
+
+.product-card:hover {
+  transform: translate3d(0, -6px, 0);
+  box-shadow: 0 26px 54px rgba(16, 28, 36, 0.22);
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+.main-product-card {
+  transition: transform 0.45s var(--pa-ease), box-shadow 0.45s var(--pa-ease);
+}
+
+.main-product-card:hover {
+  transform: translate3d(0, -5px, 0);
+  box-shadow: 0 34px 84px rgba(11, 18, 32, 0.14);
+}
+
+.product-brand-row img {
+  transition: transform 0.4s var(--pa-ease);
+}
+
+.main-product-card:hover .product-brand-row img {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+.shot-card img,
+.shot img,
+.about-photo img {
+  transition: transform 0.6s var(--pa-ease);
+}
+
+.shot-card:hover img,
+.shot:hover img,
+.about-photo:hover img {
+  transform: scale(1.045);
+}
+
+.contact-list a {
+  transition: transform 0.26s var(--pa-ease), background-color 0.26s ease, box-shadow 0.26s ease;
+}
+
+.contact-list a:hover {
+  transform: translateX(-4px);
+  background: rgba(239, 122, 26, 0.13);
+  box-shadow: 0 10px 22px rgba(31, 70, 90, 0.1);
+}
+
+.field input,
+.field textarea,
+.field select {
+  transition: border-color 0.24s ease, box-shadow 0.24s ease, background-color 0.24s ease;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: rgba(239, 122, 26, 0.55);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(239, 122, 26, 0.13);
+}
+
+.form-success.show {
+  animation: pa-rise-in 0.45s var(--pa-ease) both;
+}
+
+/* ---------- 8. Footer motion ---------- */
+.site-footer a {
+  transition: color 0.24s ease, transform 0.24s var(--pa-ease), opacity 0.24s ease;
+}
+
+.site-footer a:hover {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+.footer-logo img {
+  transition: transform 0.4s var(--pa-ease);
+}
+
+.footer-logo:hover img {
+  transform: translateY(-3px) rotate(-4deg) scale(1.05);
+}
+
+/* ---------- 9. Mobile tuning: shorter travel, fewer effects ---------- */
+@media (max-width: 760px) {
+  :root {
+    --pa-dur: 0.55s;
+    --pa-stagger: 70ms;
+  }
+
+  .js-motion [data-reveal] {
+    transform: translate3d(0, 18px, 0);
+  }
+
+  .js-motion [data-reveal="start"],
+  .js-motion [data-reveal="end"] {
+    transform: translate3d(0, 18px, 0);
+  }
+
+  .js-motion [data-reveal="zoom"] {
+    transform: translate3d(0, 14px, 0) scale(0.975);
+  }
+
+  .js-motion [data-cascade] > * {
+    transform: translate3d(0, 14px, 0);
+  }
+
+  .pa-wash {
+    filter: blur(18px);
+    animation-duration: 32s;
+  }
+
+  .pa-parallax {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .btn::before,
+  .product-link::before {
+    display: none;
+  }
+}
+
+/* ---------- 10. Reduced motion: full stop ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js-motion [data-reveal],
+  .js-motion [data-reveal].is-visible,
+  .js-motion [data-cascade],
+  .js-motion [data-cascade] > *,
+  .js-motion [data-cascade].is-visible > * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .pa-ambient,
+  .pa-wash,
+  .pa-shape,
+  .pa-dot {
+    animation: none !important;
+    display: none !important;
+  }
+
+  .pa-parallax {
+    transform: none !important;
+  }
+
+  .js-motion .site-header,
+  .js-motion .hero-glow,
+  .js-motion .brand-core img,
+  .js-motion .brand-spark,
+  .js-motion .future-node,
+  .js-motion .future-core,
+  .js-motion .icon-orb,
+  .js-motion .value-icon,
+  .js-motion .future-pattern {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================
+   Gold brand mark
+   The official Parsa Apps logo is a gold PA monogram on a dark
+   tile. These rules give it a warm rim + glow so the dark tile
+   reads as intentional on both light and dark surfaces.
+   ========================================================== */
+
+.brand img,
+.home-page .brand img,
+.footer-logo img,
+.brand-core img,
+.future-core img {
+  background: #0b1220;
+}
+
+/* Header mark: soft gold rim instead of the old orange drop shadow */
+.brand img {
+  box-shadow:
+    0 8px 18px rgba(11, 18, 32, 0.22),
+    0 0 0 1px rgba(233, 185, 73, 0.28);
+}
+
+.home-page .brand img {
+  box-shadow:
+    0 8px 22px rgba(11, 18, 32, 0.18),
+    0 0 0 1px rgba(233, 185, 73, 0.26);
+}
+
+.js-motion .site-header .brand:hover img {
+  box-shadow:
+    0 12px 26px rgba(11, 18, 32, 0.26),
+    0 0 0 1px rgba(233, 185, 73, 0.5),
+    0 0 22px rgba(233, 185, 73, 0.22);
+}
+
+/* Hero showcase mark sits on the dark studio panel */
+.brand-core img {
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(233, 185, 73, 0.22);
+}
+
+.brand-core::before {
+  box-shadow: 0 0 80px rgba(233, 185, 73, 0.2);
+}
+
+/* Footer + future core marks */
+.footer-logo img {
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(233, 185, 73, 0.24);
+}
+
+.future-core img {
+  border-radius: 18px;
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(233, 185, 73, 0.22);
+}
+
+.js-motion .footer-logo:hover img {
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(233, 185, 73, 0.46),
+    0 0 20px rgba(233, 185, 73, 0.2);
+}
+
+/* Brand-kit preview tiles on brand.html */
+.kit-card .preview img[src*="parsa-apps-gold"] {
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(11, 18, 32, 0.22);
 }
