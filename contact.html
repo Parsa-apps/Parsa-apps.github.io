@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>تماس با ما | پارسا اپس</title>
+  <meta name="description" content="ارتباط با پارسا اپس برای پشتیبانی جزیره فندقی، همکاری و پیشنهاد محتوا.">
+  <meta name="theme-color" content="#EF7A1A">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">رفتن به محتوا</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="لوگوی پارسا اپس" width="48" height="48">
+        <span class="brand-copy"><strong>پارسا اپس</strong><span>ساخت تجربه‌های دیجیتال خلاقانه</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="باز کردن فهرست"><span></span></button>
+      <nav id="site-nav" class="nav-links">
+        <a href="index.html">خانه</a>
+        <a href="island.html">جزیره فندقی</a>
+        <a href="about.html">درباره ما</a>
+        <a class="nav-cta" href="contact.html" aria-current="page">تماس با ما</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">تماس با ما</span>
+        <h1>برای همکاری، پشتیبانی یا ایده</h1>
+        <p>پیام‌ها مستقیم به سازنده می‌رسد. اگر کودک به مشکلی خورد، همان روز پیگیری می‌شود.</p>
+      </div>
+    </section>
+
+    <section class="section contact">
+      <div class="container contact-grid">
+        <div class="contact-card">
+          <h3>راه‌های رسمی</h3>
+          <div class="contact-list">
+            <a href="mailto:farshadparsa2019@gmail.com"><span>ایمیل</span><small>farshadparsa2019@gmail.com</small></a>
+            <a href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener"><span>تلگرام</span><small>@Parsaappsadmin</small></a>
+            <a href="https://github.com/Parsa-apps" target="_blank" rel="noopener"><span>گیت‌هاب</span><small>github.com/Parsa-apps</small></a>
+          </div>
+        </div>
+        <form class="panel" id="contact-form" novalidate>
+          <div class="form-success" role="status"></div>
+          <div class="field"><label for="name">نام</label><input id="name" name="name" required placeholder="مثلاً مریم احمدی"></div>
+          <div class="field"><label for="email">ایمیل</label><input id="email" name="email" type="email" required dir="ltr" placeholder="you@email.com"></div>
+          <div class="field">
+            <label for="topic">موضوع</label>
+            <select id="topic" name="topic">
+              <option>پشتیبانی محصول</option>
+              <option>همکاری و انتشار</option>
+              <option>پیشنهاد محتوا</option>
+              <option>سایر</option>
+            </select>
+          </div>
+          <div class="field"><label for="message">پیام</label><textarea id="message" name="message" rows="5" required></textarea></div>
+          <button class="btn btn-dark" type="submit">ارسال پیام</button>
+          <p class="form-note">فرم، پیش‌نویس ایمیل را باز می‌کند. داده‌ای روی سرور ذخیره نمی‌شود.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="legal">
+        <span>© <span data-year>۱۴۰۵</span> پارسا اپس</span>
+        <a href="privacy.html">حریم خصوصی</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
