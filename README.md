@@ -1,8 +1,9 @@
 # پارسا اپس
 
-وب‌سایت رسمی استودیوی [Parsa Apps](https://parsa-apps.github.io/) — اپلیکیشن‌های فارسی کودک و خانواده.
+وب‌سایت رسمی استودیوی [Parsa Apps](https://parsa-apps.github.io/) — ساخت تجربه‌های دیجیتال خلاقانه.
 
 - خانه: `index.html`
 - جزیره فندقی: `island.html`
-- کارتونیا: `kartoniya.html`
+- درباره ما: `about.html`
+- تماس با ما: `contact.html`
 - حریم خصوصی: `privacy.html`
