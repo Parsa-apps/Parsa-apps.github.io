@@ -2,105 +2,172 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>کارتونیا | پارسا اپس</title>
   <meta name="description" content="کارتونیا، فضای امن تماشای کارتون برای کودکان. قفل والدین، علاقه‌مندی‌ها، ادامه تماشا و رابط فارسی راست‌چین.">
-  <meta name="theme-color" content="#0B1220">
+  <meta name="theme-color" content="#050816">
+  <link rel="canonical" href="https://parsa-apps.github.io/kartoniya.html">
   <meta property="og:title" content="کارتونیا — تماشای آرام برای کودک">
   <meta property="og:image" content="assets/images/app-kartoniya.jpg">
-  <!-- لوگوی رسمی پارسا اپس در تب مرورگر -->
-  <link rel="icon" href="/assets/favicon.svg?v=3" type="image/svg+xml" sizes="any">
-  <link rel="icon" href="/assets/icons/favicon-32.png?v=3" sizes="32x32" type="image/png">
-  <link rel="icon" href="/assets/icons/favicon-16.png?v=3" sizes="16x16" type="image/png">
-  <link rel="shortcut icon" href="/favicon.ico?v=3">
-  <link rel="apple-touch-icon" href="/assets/brand/parsa-apps-icon-180.png?v=3" sizes="180x180">
-  <link rel="manifest" href="/site.webmanifest?v=3">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <a class="skip-link" href="#main">رفتن به محتوا</a>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html">
-        <img src="assets/brand/parsa-apps-gold-96.png" alt="لوگوی پارسا اپس" width="48" height="48">
-        <span class="brand-copy"><strong>پارسا اپس</strong><span>ساخت تجربه‌های دیجیتال خلاقانه</span></span>
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="باز کردن فهرست"><span></span></button>
-      <nav id="site-nav" class="nav-links">
-        <a href="index.html">خانه</a>
-        <a href="island.html">جزیره فندقی</a>
-        <a href="about.html">درباره ما</a>
-        <a class="nav-cta" href="contact.html">تماس با ما</a>
-      </nav>
+
+  <div class="background-effects" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <header class="header">
+    <a class="logo-box" href="index.html">
+      <img src="assets/logo-sm.png" alt="لوگوی پارسا اپس" width="54" height="54">
+      <div>
+        <h2>پارسا اپس</h2>
+        <p>کارتونیا</p>
+      </div>
+    </a>
+
+    <nav aria-label="منوی اصلی">
+      <a href="index.html">خانه</a>
+      <a href="index.html#products">محصولات</a>
+      <a href="island.html">جزیره فندقی</a>
+      <a href="contact.html">تماس با ما</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="theme-toggle" aria-label="تغییر حالت روشن و تاریک">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5"></circle>
+          <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+        </svg>
+      </button>
+      <button class="menu-btn" aria-label="باز کردن منو">☰</button>
     </div>
   </header>
 
-  <main id="main">
-    <section class="page-hero kartoniya">
-      <div class="container">
-        <span class="eyebrow">نسخه ۱.۱ · فضای امن تماشا</span>
+  <main>
+
+    <!-- هیروی کارتونیا -->
+    <section class="hero" style="min-height: 60vh;">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> نسخه ۱.۱ · فضای امن تماشا</div>
         <h1>کارتونیا</h1>
-        <p>پیدا کردن و تماشای محتوای کودک، با تجربهٔ رنگی برای خردسال و تنظیمات محافظت‌شده برای والد. شناسهٔ برنامه: ir.parsaapps.kartoniya</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">پیگیری انتشار</a>
-          <a class="btn btn-ghost" href="island.html">جزیره فندقی را ببینید</a>
+        <p>
+          پیدا کردن و تماشای محتوای کودک، با تجربهٔ رنگی برای خردسال
+          و تنظیمات محافظت‌شده برای والد.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn primary" href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">پیگیری انتشار</a>
+          <a class="btn secondary" href="island.html">جزیره فندقی را ببینید</a>
+        </div>
+      </div>
+
+      <div class="hero-logo">
+        <div class="floating-card" style="width: 340px;">
+          <img src="assets/images/app-kartoniya.jpg" alt="رابط کارتونیا روی گوشی" style="width: 240px; border-radius: 24px;">
         </div>
       </div>
     </section>
 
+    <!-- توضیح محصول -->
     <section class="section">
-      <div class="container split">
-        <div class="shot">
-          <img src="assets/images/app-kartoniya.jpg" alt="رابط کارتونیا روی گوشی همراه کارت‌های داستان" width="1200" height="800" loading="lazy">
+      <span class="section-tag">طراحی‌شده برای آرامش</span>
+      <h2>تماشا ساده است؛ کنترل سخت نیست</h2>
+      <p>
+        خانه، دسته‌بندی، جست‌وجوی فارسی و علاقه‌مندی‌ها.
+        پخش واقعی با جلو و عقب ۱۰ ثانیه‌ای و ادامه از همان‌جا که کودک ایستاد.
+      </p>
+
+      <div class="about-block" style="max-width: 780px; margin: 40px auto 0; text-align: right;">
+        <ul class="checklist">
+          <li>قفل والدین با مسئلهٔ ریاضی تصادفی؛ بدون پین ثابت قابل حدس</li>
+          <li>تم روشن و تاریک، Material ۳، کاملاً راست‌چین</li>
+          <li>ذخیرهٔ محلی علاقه‌مندی، نام نمایشی و موقعیت پخش</li>
+          <li>حالت‌های بارگذاری، خالی و خطا برای جریان‌های اصلی</li>
+          <li>گرید واکنش‌گرا برای موبایل و تبلت</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- وضعیت محصول -->
+    <section class="section">
+      <span class="section-tag">وضعیت محصول</span>
+      <h2>کاتالوگ محلی، مسیر آماده برای محتوا</h2>
+      <p>
+        نسخهٔ فعلی پخش‌کننده و تنظیمات پایدار دارد.
+        پیش از انتشار فروشگاهی، محتوا با آثار دارای مجوز جایگزین می‌شود.
+      </p>
+
+      <div class="values">
+        <div class="glass-card">
+          <span class="icon">🧒</span>
+          <h3>برای کودک</h3>
+          <p>ورود کوتاه، پوسترهای بزرگ، رنگ‌های گرم و مسیر تماشای بدون پیچیدگی.</p>
         </div>
-        <div>
-          <span class="eyebrow">طراحی‌شده برای آرامش</span>
-          <h2 class="display">تماشا ساده است؛ کنترل سخت نیست</h2>
-          <p class="lede">خانه، دسته‌بندی، جست‌وجوی فارسی و علاقه‌مندی‌ها. پخش واقعی با جلو و عقب ۱۰ ثانیه‌ای و ادامه از همان‌جا که کودک ایستاد.</p>
-          <ul class="checklist">
-            <li>قفل والدین با مسئلهٔ ریاضی تصادفی؛ بدون پین ثابت قابل حدس</li>
-            <li>تم روشن و تاریک، Material ۳، کاملاً راست‌چین</li>
-            <li>ذخیرهٔ محلی علاقه‌مندی، نام نمایشی و موقعیت پخش</li>
-            <li>حالت‌های بارگذاری، خالی و خطا برای جریان‌های اصلی</li>
-            <li>گرید واکنش‌گرا برای موبایل و تبلت</li>
-          </ul>
+        <div class="glass-card">
+          <span class="icon">👨‍👩‍👧</span>
+          <h3>برای والد</h3>
+          <p>تنظیمات پشت دروازهٔ ریاضی. پخش خودکار و محدودیت‌ها روی خود دستگاه می‌ماند.</p>
+        </div>
+        <div class="glass-card">
+          <span class="icon">🛠️</span>
+          <h3>برای استودیو</h3>
+          <p>معماری تمیز با مخزن قابل تعویض؛ اتصال CMS بدون بازنویسی صفحه‌ها ممکن است.</p>
         </div>
       </div>
     </section>
 
-    <section class="section" style="background:var(--paper)">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">وضعیت محصول</span>
-          <h2>کاتالوگ محلی، مسیر آماده برای محتوا</h2>
-          <p class="lede">نسخهٔ فعلی پخش‌کننده و تنظیمات پایدار دارد. پیش از انتشار فروشگاهی، محتوا با آثار دارای مجوز جایگزین می‌شود.</p>
-        </div>
-        <div class="feature-grid">
-          <article class="feature">
-            <h3>برای کودک</h3>
-            <p>ورود کوتاه، پوسترهای بزرگ، رنگ‌های گرم و مسیر تماشای بدون پیچیدگی.</p>
-          </article>
-          <article class="feature">
-            <h3>برای والد</h3>
-            <p>تنظیمات پشت دروازهٔ ریاضی. پخش خودکار و محدودیت‌ها روی خود دستگاه می‌ماند.</p>
-          </article>
-          <article class="feature">
-            <h3>برای استودیو</h3>
-            <p>معماری تمیز با مخزن قابل تعویض؛ اتصال CMS بدون بازنویسی صفحه‌ها ممکن است.</p>
-          </article>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="legal">
-        <span>© <span data-year>۱۴۰۵</span> پارسا اپس — کارتونیا</span>
-        <a href="index.html">بازگشت به خانه</a>
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h2>پارسا اپس</h2>
+        <p>ساخت اپلیکیشن‌های خلاقانه برای آینده‌ای هوشمند</p>
+      </div>
+
+      <div class="footer-links">
+        <h3>دسترسی سریع</h3>
+        <a href="index.html">خانه</a>
+        <a href="island.html">جزیره فندقی</a>
+        <a href="about.html">درباره ما</a>
+        <a href="privacy.html">حریم خصوصی</a>
+      </div>
+
+      <div class="footer-links">
+        <h3>ارتباط با ما</h3>
+        <a href="contact.html">💬 تماس با ما</a>
+        <a href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">📱 تلگرام</a>
+        <a href="https://github.com/Parsa-apps" target="_blank" rel="noopener">🐙 گیت‌هاب</a>
+        <a href="mailto:farshadparsa2019@gmail.com">✉️ ایمیل</a>
+      </div>
+
+      <div class="footer-download">
+        <h3>دانلود اپ</h3>
+        <p>جزیره فندقی آماده تجربه شماست</p>
+        <a href="island.html" class="footer-btn">مشاهده برنامه</a>
       </div>
     </div>
+
+    <div class="footer-bottom">
+      <p>© ۱۴۰۵ پارسا اپس — کارتونیا | تمامی حقوق محفوظ است</p>
+    </div>
   </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
   <script src="script.js"></script>
 </body>
 </html>

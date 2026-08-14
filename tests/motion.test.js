@@ -1,3 +1,8 @@
+/* ============================================================
+   تست‌های موتور حرکتی سایت جدید پارسا اپس
+   اجرا: node tests/motion.test.js
+   ============================================================ */
+
 const fs = require("fs");
 const path = require("path");
 const { JSDOM, VirtualConsole } = require("jsdom");
@@ -34,35 +39,14 @@ function makeDom(page, opts = {}) {
   const w = dom.window;
   const observed = [];
 
-  // matchMedia stub
-  w.matchMedia = (q) => {
-    let matches = false;
-    if (q.includes("prefers-reduced-motion")) matches = !!opts.reducedMotion;
-    if (q.includes("hover: none")) matches = !!opts.coarse;
-    const listeners = [];
-    return {
-      media: q,
-      matches,
-      addEventListener: (_, cb) => listeners.push(cb),
-      removeEventListener: () => {},
-      addListener: (cb) => listeners.push(cb),
-      removeListener: () => {},
-      _listeners: listeners,
-    };
-  };
-
-  if (opts.saveData || opts.effectiveType) {
-    Object.defineProperty(w.navigator, "connection", {
-      value: { saveData: !!opts.saveData, effectiveType: opts.effectiveType || "4g" },
-      configurable: true,
-    });
-  }
-  if (opts.cores) {
-    Object.defineProperty(w.navigator, "hardwareConcurrency", {
-      value: opts.cores,
-      configurable: true,
-    });
-  }
+  w.matchMedia = (q) => ({
+    media: q,
+    matches: q.includes("prefers-reduced-motion") ? !!opts.reducedMotion : false,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+  });
 
   if (!opts.noObserver) {
     w.IntersectionObserver = class {
@@ -72,300 +56,241 @@ function makeDom(page, opts = {}) {
         this.targets = [];
         observed.push(this);
       }
-      observe(t) {
-        this.targets.push(t);
-      }
-      unobserve(t) {
-        this.targets = this.targets.filter((x) => x !== t);
-      }
-      disconnect() {
-        this.targets = [];
-      }
+      observe(t) { this.targets.push(t); }
+      unobserve(t) { this.targets = this.targets.filter((x) => x !== t); }
+      disconnect() { this.targets = []; }
       fireAll(isIntersecting = true) {
-        this.cb(
-          this.targets.map((t) => ({ target: t, isIntersecting })),
-          this
-        );
+        this.cb(this.targets.map((t) => ({ target: t, isIntersecting })), this);
       }
     };
   }
 
-  // jsdom getBoundingClientRect always returns zeros -> everything counts as
-  // "already in view" via the bottom>0 test failing. Give elements a real box
-  // so the observer path is genuinely exercised.
   w.Element.prototype.getBoundingClientRect = function () {
-    const far = this.hasAttribute("data-pa-offscreen");
-    const top = far ? 5000 : 100;
-    return { top, bottom: top + 300, left: 0, right: 800, width: 800, height: 300, x: 0, y: top };
+    return { top: 100, bottom: 400, left: 0, right: 800, width: 800, height: 300, x: 0, y: 100 };
   };
 
+  w.HTMLMediaElement.prototype.play = () => Promise.resolve();
+  w.HTMLMediaElement.prototype.pause = () => {};
+
   w.eval(SCRIPT);
+  // شبیه‌سازی رویدادی که در مرورگر واقعی بعد از اجرای اسکریپت فایر می‌شود
+  w.document.dispatchEvent(new w.Event("DOMContentLoaded", { bubbles: true }));
   return { dom, w, doc: w.document, errors, observed };
 }
 
-console.log("\n=== A. index.html — default (motion enabled) ===");
+console.log("\n=== A. index.html ===\n");
 {
-  const { w, doc, errors, observed } = makeDom("index.html", { cores: 8, effectiveType: "4g" });
+  const { w, doc, errors, observed } = makeDom("index.html");
   check("no runtime errors", errors.length === 0, errors.join(" | "));
-  check("body has js-ready", doc.body.classList.contains("js-ready"));
-  check("body has js-motion", doc.body.classList.contains("js-motion"));
+  check("body loaded class", doc.body.classList.contains("loaded"));
 
-  const reveals = doc.querySelectorAll("[data-reveal]");
-  check("reveal targets found (>=14)", reveals.length >= 14, "count=" + reveals.length);
+  check("header exists", !!doc.querySelector(".header"));
+  check("nav has 4 links", doc.querySelectorAll("nav a").length === 4);
 
-  const visible = doc.querySelectorAll("[data-reveal].is-visible");
-  check("in-view elements revealed", visible.length > 0, "count=" + visible.length);
+  // Scroll reveal
+  const reveals = doc.querySelectorAll(".section, .glass-card, .product-card, .timeline-item");
+  check("reveal targets found", reveals.length >= 10, "count=" + reveals.length);
+  check("reveal targets start hidden", doc.querySelectorAll(".section.hidden").length >= 2);
+  observed.forEach((o) => o.fireAll(true));
+  check("in-view elements revealed", doc.querySelectorAll(".section.show").length >= 2);
 
-  // cascade upgrades
-  check(".home-hero-copy is cascade", doc.querySelector(".home-hero-copy").hasAttribute("data-cascade"));
-  check(".future-copy is cascade", doc.querySelector(".future-copy").hasAttribute("data-cascade"));
-  check(
-    "all .home-section-head are cascade",
-    Array.from(doc.querySelectorAll(".home-section-head")).every((e) => e.hasAttribute("data-cascade"))
-  );
+  // dark/light toggle
+  const toggle = doc.querySelector(".theme-toggle");
+  check("theme toggle exists", !!toggle);
+  if (toggle) {
+    toggle.click();
+    check("body gets light class", doc.body.classList.contains("light"));
+    toggle.click();
+    check("body returns to dark", !doc.body.classList.contains("light"));
+  }
 
-  // planned kinds
-  check(".brand-showcase reveal=zoom", doc.querySelector(".brand-showcase").getAttribute("data-reveal") === "zoom",
-    doc.querySelector(".brand-showcase").getAttribute("data-reveal"));
-  check(".main-product-card reveal=zoom", doc.querySelector(".main-product-card").getAttribute("data-reveal") === "zoom");
-  check(".future-visual reveal=scale", doc.querySelector(".future-visual").getAttribute("data-reveal") === "scale");
+  // mobile menu
+  const menuBtn = doc.querySelector(".menu-btn");
+  const nav = doc.querySelector("nav");
+  check("menu button exists", !!menuBtn);
+  if (menuBtn && nav) {
+    menuBtn.click();
+    check("nav opens (active)", nav.classList.contains("active"));
+    menuBtn.click();
+    check("nav closes", !nav.classList.contains("active"));
+  }
 
-  // all five required sections animate
-  const required = {
-    Hero: ".home-hero-copy[data-reveal], .brand-showcase[data-reveal]",
-    "Island product card": ".main-product-card[data-reveal]",
-    "Feature/value cards": ".home-value-card[data-reveal]",
-    "Future section": ".future-copy[data-reveal], .future-visual[data-reveal]",
-    Footer: ".home-footer-top > [data-reveal]",
-  };
-  Object.entries(required).forEach(([label, sel]) => {
-    check("section animated: " + label, doc.querySelectorAll(sel).length > 0);
-  });
+  // ripple targets
+  check("buttons for ripple", doc.querySelectorAll(".btn").length >= 2);
 
-  check("4 value cards tagged", doc.querySelectorAll(".home-value-card[data-reveal]").length === 4);
+  // لینک‌های واقعی تماس در فوتر
+  check("footer contact link", !!doc.querySelector('a[href="contact.html"]'));
+  check("footer telegram link", !!doc.querySelector('a[href*="t.me/Parsaappsadmin"]'));
 
-  // stagger indices
-  const idx = Array.from(doc.querySelectorAll(".home-values-grid > [data-reveal]")).map((e) =>
-    e.style.getPropertyValue("--pa-i")
-  );
-  check("value cards staggered 0..3", idx.join(",") === "0,1,2,3", idx.join(","));
+  // محصولات: جزیره فندقی + کارتونیا
+  check("two product cards", doc.querySelectorAll(".product-card").length === 2);
+  check("kartoniya card linked", !!doc.querySelector('a[href="kartoniya.html"]'));
 
-  // ambient
-  const amb = doc.querySelectorAll(".pa-ambient");
-  check("ambient layers built", amb.length >= 4, "count=" + amb.length);
-  check("ambient is aria-hidden", Array.from(amb).every((a) => a.getAttribute("aria-hidden") === "true"));
-  check("wash layers exist", doc.querySelectorAll(".pa-wash").length >= 4);
-  check("floating shapes exist", doc.querySelectorAll(".pa-shape").length >= 8,
-    "count=" + doc.querySelectorAll(".pa-shape").length);
-  check("particles exist", doc.querySelectorAll(".pa-dot").length >= 15,
-    "count=" + doc.querySelectorAll(".pa-dot").length);
-  check("hero has ambient", !!doc.querySelector(".home-hero > .pa-ambient"));
-  check("future has ambient", !!doc.querySelector(".future-section > .pa-ambient"));
-  check("footer has ambient", !!doc.querySelector(".home-footer > .pa-ambient"));
-  check("hosts start pa-idle (paused)", doc.querySelectorAll(".pa-ambient-host.pa-idle").length >= 4);
-
-  // ambient must never become a reveal target
-  check("no ambient tagged as reveal", doc.querySelectorAll(".pa-ambient[data-reveal]").length === 0);
-
-  // no content loss
-  const orig = new JSDOM(fs.readFileSync(path.join(ROOT, "index.html"), "utf8")).window.document;
-  const norm = (d) => d.body.textContent.replace(/\s+/g, " ").trim();
-  check("no text content removed", norm(doc) === norm(orig));
-
-  // structural integrity: same element count except injected motion nodes
-  const injected = doc.querySelectorAll(
-    ".pa-ambient, .pa-ambient *, .pa-tilt-light, .pa-ripple"
-  ).length;
-  check(
-    "no elements removed",
-    doc.querySelectorAll("*").length - injected === orig.querySelectorAll("*").length,
-    `${doc.querySelectorAll("*").length - injected} vs ${orig.querySelectorAll("*").length}`
-  );
-
-  // parallax
-  check("brand-showcase has parallax", doc.querySelector(".brand-showcase").classList.contains("pa-parallax"));
-  check("future-visual has parallax", doc.querySelector(".future-visual").classList.contains("pa-parallax"));
-
-  // v2: playful ambient elements (stars / clouds / bubbles / blobs)
-  check("twinkling stars exist", doc.querySelectorAll(".pa-star").length >= 8,
-    "count=" + doc.querySelectorAll(".pa-star").length);
-  check("clouds exist", doc.querySelectorAll(".pa-cloud").length >= 2,
-    "count=" + doc.querySelectorAll(".pa-cloud").length);
-  check("bubbles exist", doc.querySelectorAll(".pa-bubble").length >= 3,
-    "count=" + doc.querySelectorAll(".pa-bubble").length);
-  check("gradient blobs exist in hero", doc.querySelectorAll(".home-hero .pa-blob").length >= 2,
-    "count=" + doc.querySelectorAll(".home-hero .pa-blob").length);
-
-  // v2: 3D tilt on the main product card + travelling light layer
-  const mainCard = doc.querySelector(".main-product-card");
-  check("product card has 3D tilt", mainCard.classList.contains("pa-tilt"));
-  check("product card has light layer", !!mainCard.querySelector(":scope > .pa-tilt-light"));
-  check("light layer aria-hidden", mainCard.querySelector(".pa-tilt-light").getAttribute("aria-hidden") === "true");
-
-  // v2: press ripple hosts on interactive elements
-  check("buttons are ripple hosts", doc.querySelectorAll(".btn.pa-ripple-host").length >= 2,
-    "count=" + doc.querySelectorAll(".btn.pa-ripple-host").length);
-  check("product link is ripple host", doc.querySelector(".product-link").classList.contains("pa-ripple-host"));
-
-  // v2: scroll-linked parallax registered on decorative layers only
-  const scrolled = doc.querySelectorAll(".pa-scrolled");
-  check("scroll parallax layers registered", scrolled.length >= 4, "count=" + scrolled.length);
-  check(
-    "scroll parallax never targets text",
-    Array.from(scrolled).every((e) =>
-      e.classList.contains("pa-shape") || e.classList.contains("pa-blob") || e.classList.contains("hero-glow")
-    )
-  );
-
-  // observer: offscreen elements are observed, then reveal on intersect
-  const revealObs = observed[0];
-  check("an IntersectionObserver was created", !!revealObs);
-
-  // RTL preserved
-  check("html dir=rtl untouched", doc.documentElement.getAttribute("dir") === "rtl");
-  check("html lang=fa untouched", doc.documentElement.getAttribute("lang") === "fa");
-
-  // year
-  check("year localised to fa-IR", /[۰-۹]/.test(doc.querySelector("[data-year]").textContent),
-    doc.querySelector("[data-year]").textContent);
+  // parallax targets
+  check("background glow spans", doc.querySelectorAll(".background-effects span").length === 4);
 }
 
-console.log("\n=== B. index.html — prefers-reduced-motion: reduce ===");
+console.log("\n=== B. island.html ===\n");
 {
-  const { doc, errors } = makeDom("index.html", { reducedMotion: true });
+  const { w, doc, errors, observed } = makeDom("island.html");
   check("no runtime errors", errors.length === 0, errors.join(" | "));
-  check("js-motion NOT applied", !doc.body.classList.contains("js-motion"));
-  const rv = doc.querySelectorAll("[data-reveal]");
-  check("reveal targets still tagged", rv.length >= 14, "count=" + rv.length);
-  check(
-    "ALL content immediately visible",
-    Array.from(rv).every((e) => e.classList.contains("is-visible")),
-    Array.from(rv).filter((e) => !e.classList.contains("is-visible")).length + " hidden"
+  check("island page class", doc.body.classList.contains("island-page"));
+  check("island bg + clouds", doc.querySelectorAll(".island-bg .cloud").length === 3);
+
+  // phone slider
+  const slides = doc.querySelectorAll(".app-slide");
+  const dots = doc.querySelectorAll(".phone-slider-dots span");
+  check("4 app screenshots", slides.length === 4, "count=" + slides.length);
+  check("4 slider dots", dots.length === 4, "count=" + dots.length);
+  check("first slide active", slides[0].classList.contains("active"));
+
+  // manual dot navigation
+  if (dots.length >= 2) {
+    dots[2].click();
+    check("dot click switches slide", slides[2].classList.contains("active"));
+  }
+
+  // phone wake observer
+  const phone = doc.getElementById("phone");
+  check("phone mockup exists", !!phone);
+  const wakeObs = observed.find(
+    (o) => o.targets.length && o.targets[0].classList.contains("reveal-phone")
   );
-  check("ALL marked settled", Array.from(rv).every((e) => e.classList.contains("pa-settled")));
-  check("NO ambient layers created", doc.querySelectorAll(".pa-ambient").length === 0);
-  check("NO particles created", doc.querySelectorAll(".pa-dot").length === 0);
-  check("NO parallax attached", doc.querySelectorAll(".pa-parallax").length === 0);
-  check("NO tilt attached", doc.querySelectorAll(".pa-tilt").length === 0);
-  check("NO ripple hosts attached", doc.querySelectorAll(".pa-ripple-host").length === 0);
-  check("NO scroll parallax attached", doc.querySelectorAll(".pa-scrolled").length === 0);
+  check("phone wake observer created", !!wakeObs);
+  if (wakeObs) {
+    wakeObs.fireAll(true);
+    check("phone wakes (phone-active)", phone.classList.contains("phone-active"));
+  }
+
+  // feature / trust / review reveal
+  observed.forEach((o) => o.fireAll(true));
+  check("feature cards revealed", doc.querySelectorAll(".feature-3d-card.show-feature").length === 4);
+  check("trust cards revealed", doc.querySelectorAll(".trust-card.show").length === 4);
+  check("review cards revealed", doc.querySelectorAll(".review-card.show-review").length === 3);
+
+  // FAQ accordion
+  const faqItems = doc.querySelectorAll(".faq-item");
+  check("5 FAQ items", faqItems.length === 5, "count=" + faqItems.length);
+  if (faqItems.length >= 2) {
+    const first = faqItems[0];
+    const btn = first.querySelector(".faq-question");
+    btn.click();
+    check("FAQ opens", first.classList.contains("active"));
+    check("FAQ answer has height", first.querySelector(".faq-answer").style.maxHeight !== "");
+    btn.click();
+    check("FAQ closes", !first.classList.contains("active"));
+  }
+
+  // trailer
+  check("trailer video exists", !!doc.getElementById("islandVideo"));
+  check("play button exists", !!doc.getElementById("playButton"));
+  check("coming-soon overlay exists", !!doc.getElementById("comingSoon"));
+
+  // download
+  const dlBtn = doc.querySelector(".download-button");
+  check("download button exists", !!dlBtn);
+  check("download is coming-soon", dlBtn.hasAttribute("data-coming-soon"));
+
+  // toast appears on coming-soon click
+  const toast = doc.getElementById("toast");
+  if (dlBtn && toast) {
+    dlBtn.click();
+    check("toast shows coming-soon", toast.classList.contains("show"));
+  }
+
+  // فوتر جزیره لینک تماس دارد
+  check("island footer contact link", !!doc.querySelector('a[href="contact.html"]'));
 }
 
-console.log("\n=== C. index.html — no IntersectionObserver (legacy fallback) ===");
+console.log("\n=== C. about / privacy / contact / kartoniya / 404 ===\n");
 {
-  const { doc, errors } = makeDom("index.html", { noObserver: true, cores: 8 });
-  check("no runtime errors", errors.length === 0, errors.join(" | "));
-  const rv = doc.querySelectorAll("[data-reveal]");
-  check("everything visible (no blank page)", Array.from(rv).every((e) => e.classList.contains("is-visible")),
-    Array.from(rv).filter((e) => !e.classList.contains("is-visible")).length + " hidden");
-  check("ambient hosts un-idled", doc.querySelectorAll(".pa-ambient-host.pa-idle").length === 0);
-}
-
-console.log("\n=== D. Save-Data / slow network / low-power ===");
-{
-  const { doc, errors } = makeDom("index.html", { saveData: true, cores: 8 });
-  check("saveData: no errors", errors.length === 0, errors.join(" | "));
-  check("saveData: ambient skipped", doc.querySelectorAll(".pa-ambient").length === 0);
-  check("saveData: reveals still work", doc.querySelectorAll("[data-reveal].is-visible").length > 0);
-}
-{
-  const { doc } = makeDom("index.html", { effectiveType: "2g", cores: 8 });
-  check("2g: ambient skipped", doc.querySelectorAll(".pa-ambient").length === 0);
-}
-{
-  const { doc } = makeDom("index.html", { effectiveType: "4g", cores: 8 });
-  check("4g: ambient enabled", doc.querySelectorAll(".pa-ambient").length > 0);
-}
-{
-  const { doc } = makeDom("index.html", { cores: 2 });
-  check("low-power: ambient still on but no parallax", doc.querySelectorAll(".pa-ambient").length > 0 &&
-    doc.querySelectorAll(".pa-parallax").length === 0);
-  check("low-power: fewer particles", doc.querySelectorAll(".pa-dot").length <= 25,
-    "count=" + doc.querySelectorAll(".pa-dot").length);
-}
-{
-  const { doc } = makeDom("index.html", { coarse: true, cores: 8 });
-  check("touch device: no parallax", doc.querySelectorAll(".pa-parallax").length === 0);
-  check("touch device: ambient still present", doc.querySelectorAll(".pa-ambient").length > 0);
-  check("touch device: no 3D tilt", doc.querySelectorAll(".pa-tilt").length === 0);
-  check("touch device: no scroll parallax", doc.querySelectorAll(".pa-scrolled").length === 0);
-  check("touch device: ripples still work (tap feedback)", doc.querySelectorAll(".pa-ripple-host").length > 0);
-}
-{
-  const { doc } = makeDom("index.html", { cores: 2 });
-  check("low-power: no 3D tilt", doc.querySelectorAll(".pa-tilt").length === 0);
-  check("low-power: no scroll parallax", doc.querySelectorAll(".pa-scrolled").length === 0);
-}
-
-console.log("\n=== E. Other pages ===");
-["island.html", "contact.html", "kartoniya.html", "brand.html", "404.html", "about.html", "privacy.html"].forEach(
-  (page) => {
+  ["about.html", "privacy.html"].forEach((page) => {
     const { doc, errors } = makeDom(page);
     check(page + ": no runtime errors", errors.length === 0, errors.join(" | "));
-    const n = doc.querySelectorAll("[data-reveal]").length;
-    check(page + ": has reveal targets", n > 0, "count=" + n);
+    check(page + ": header present", !!doc.querySelector(".header"));
+    check(page + ": footer present", !!doc.querySelector(".main-footer"));
+    check(page + ": content blocks", doc.querySelectorAll(".about-block").length >= 2);
+    check(page + ": theme toggle", !!doc.querySelector(".theme-toggle"));
+  });
+
+  // تماس با ما + فرم
+  {
+    const { doc, w, errors } = makeDom("contact.html");
+    check("contact.html: no runtime errors", errors.length === 0, errors.join(" | "));
+    check("contact.html: form exists", !!doc.getElementById("contact-form"));
+    check("contact.html: 3 contact channels", doc.querySelectorAll(".contact-list a").length === 3);
+
+    const form = doc.getElementById("contact-form");
+    doc.getElementById("name").value = "آزمایش";
+    doc.getElementById("email").value = "test@test.com";
+    doc.getElementById("message").value = "سلام";
+    form.dispatchEvent(new w.Event("submit", { bubbles: true, cancelable: true }));
     check(
-      page + ": in-view content visible",
-      doc.querySelectorAll("[data-reveal].is-visible").length > 0
+      "contact.html: mailto draft built",
+      String(form.dataset.lastMailto).startsWith("mailto:farshadparsa2019@gmail.com?subject=")
     );
-    const orig = new JSDOM(fs.readFileSync(path.join(ROOT, page), "utf8")).window.document;
-    const norm = (d) => d.body.textContent.replace(/\s+/g, " ").trim();
-    check(page + ": text preserved", norm(doc) === norm(orig));
   }
-);
 
-console.log("\n=== F. island.html specifics (feature cards) ===");
-{
-  const { doc } = makeDom("island.html");
-  check("4 feature cards animated", doc.querySelectorAll(".feature[data-reveal]").length === 4);
-  check("feature cards staggered", Array.from(doc.querySelectorAll(".feature-grid > [data-reveal]"))
-    .map((e) => e.style.getPropertyValue("--pa-i")).join(",") === "0,1,2,3");
-  check("why cards animated", doc.querySelectorAll(".why-card[data-reveal]").length === 4);
-  check("shot cards animated", doc.querySelectorAll(".shot-card[data-reveal]").length === 3);
-  check("island hero has ambient", !!doc.querySelector(".island-hero > .pa-ambient"));
-  check("footer legal animated", !!doc.querySelector(".legal[data-reveal]"));
-  check("legacy .reveal elements not double-tagged into hidden state",
-    Array.from(doc.querySelectorAll(".reveal")).every((e) => !e.hasAttribute("data-reveal") || e.classList.contains("is-visible")));
+  // کارتونیا
+  {
+    const { doc, errors } = makeDom("kartoniya.html");
+    check("kartoniya.html: no runtime errors", errors.length === 0, errors.join(" | "));
+    check("kartoniya.html: hero title", doc.querySelector("h1").textContent.includes("کارتونیا"));
+    check("kartoniya.html: checklist", doc.querySelectorAll(".checklist li").length >= 4);
+    check("kartoniya.html: telegram CTA", !!doc.querySelector('a[href*="t.me/Parsaappsadmin"]'));
+  }
+
+  // برند
+  {
+    const { doc, errors } = makeDom("brand.html");
+    check("brand.html: no runtime errors", errors.length === 0, errors.join(" | "));
+    check("brand.html: color chips", doc.querySelectorAll(".color-chip").length === 5);
+    check("brand.html: kit cards", doc.querySelectorAll(".kit-card").length >= 10);
+  }
+
+  const html404 = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
+  const dom404 = new JSDOM(html404);
+  check("404: error content", !!dom404.window.document.querySelector(".error-content"));
+  check("404: home link", !!dom404.window.document.querySelector("a[href='index.html']"));
 }
 
-console.log("\n=== G. contact.html form still works ===");
+console.log("\n=== D. سلامتی فایل‌ها ===\n");
 {
-  const { w, doc, errors } = makeDom("contact.html");
-  check("no errors before submit", errors.length === 0, errors.join(" | "));
-  const form = doc.querySelector("#contact-form");
-  check("form found", !!form);
-  form.querySelector("#name").value = "مریم";
-  form.querySelector("#email").value = "a@b.com";
-  form.querySelector("#message").value = "سلام";
-  // jsdom forbids overriding window.location; instead it reports the blocked
-  // navigation ("Not implemented: navigation to mailto:…") through the
-  // virtual console, which makeDom collects into `errors`.
-  form.dispatchEvent(new w.Event("submit", { bubbles: true, cancelable: true }));
-  const navBlocked = errors.some((e) => e.includes("navigation"));
-  check("submit triggers mailto navigation", navBlocked, errors.join(" | ").slice(0, 120));
-  check("success message shown", doc.querySelector(".form-success").classList.contains("show"));
+  ["index.html", "island.html", "about.html", "privacy.html"].forEach((page) => {
+    const html = fs.readFileSync(path.join(ROOT, page), "utf8");
+    check(page + ": links to style.css", html.includes('rel="stylesheet" href="style.css"'));
+    check(page + ": links to script.js", html.includes('src="script.js"'));
+    check(page + ": manifest", html.includes('rel="manifest"'));
+    check(page + ": self-hosted font (no external import)", !html.includes("@import") && !html.includes("fonts.googleapis.com"));
+  });
+
+  const css = fs.readFileSync(path.join(ROOT, "style.css"), "utf8");
+  check("css: no google fonts import", !css.includes("fonts.googleapis.com"));
+  check("css: font-face Vazirmatn", css.includes('url("assets/fonts/Vazirmatn-Regular.woff2")'));
+  check("css: RTL-friendly (no negative letter-spacing)", !/letter-spacing:\s*-/.test(css));
+  check("css: reduced-motion support", css.includes("prefers-reduced-motion"));
+
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
+  check("manifest: name", manifest.name.includes("پارسا اپس"));
+  check("manifest: rtl", manifest.dir === "rtl");
+  check("manifest: icons", manifest.icons.length === 2);
+
+  const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+  check("sw: cache name", sw.includes("parsa-apps-v1"));
+  check("sw: caches main pages", sw.includes("./island.html"));
+
+  // فایل‌های مورد نیاز وجود دارند
+  ["assets/fonts/Vazirmatn-Bold.woff2",
+   "assets/images/island/app-screen-1.jpg",
+   "assets/images/island/trailer-cover.jpg",
+   "assets/images/island/mascot.jpg",
+   "assets/logo-sm.png",
+   "icons/icon-512.png"].forEach((f) => {
+    check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
+  });
 }
 
-console.log("\n=== H. Nav toggle behaviour ===");
-{
-  const { w, doc } = makeDom("index.html");
-  const toggle = doc.querySelector(".nav-toggle");
-  const links = doc.querySelector(".nav-links");
-  toggle.dispatchEvent(new w.Event("click", { bubbles: true }));
-  check("menu opens", links.classList.contains("open") && toggle.getAttribute("aria-expanded") === "true");
-  check("aria-label switches to close", toggle.getAttribute("aria-label") === "بستن فهرست");
-  toggle.dispatchEvent(new w.Event("click", { bubbles: true }));
-  check("menu closes", !links.classList.contains("open") && toggle.getAttribute("aria-expanded") === "false");
-}
-
-console.log("\n=== I. Idempotency (double init safety) ===");
-{
-  const { w, doc } = makeDom("index.html", { cores: 8 });
-  const before = doc.querySelectorAll(".pa-ambient").length;
-  w.eval(SCRIPT);
-  const after = doc.querySelectorAll(".pa-ambient").length;
-  check("re-running script does not duplicate ambient", before === after, before + " -> " + after);
-}
-
-console.log(`\n================ ${pass} passed, ${fail} failed ================\n`);
-process.exit(fail ? 1 : 0);
+console.log("\n================================");
+console.log("نتایج: " + pass + " موفق | " + fail + " ناموفق");
+console.log("================================");
+process.exit(fail > 0 ? 1 : 0);
