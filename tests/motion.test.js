@@ -191,10 +191,14 @@ console.log("\n=== B. island.html ===\n");
   // trailer
   check("trailer video exists", !!doc.getElementById("islandVideo"));
   check(
-    "trailer video source points to mp4",
-    !!doc.querySelector('video source[src="assets/videos/island-trailer.mp4"]')
+    "promo video source points to mp4",
+    !!doc.querySelector('video source[src="assets/videos/jazireh-fandoghi-promo.mp4"]')
   );
-  check("trailer video has poster", !!doc.getElementById("islandVideo").getAttribute("poster"));
+  check(
+    "promo video has matching poster",
+    doc.getElementById("islandVideo").getAttribute("poster") ===
+      "assets/images/island/jazireh-promo-cover.jpg"
+  );
   check(
     "trailer has controls + playsinline",
     doc.getElementById("islandVideo").hasAttribute("controls") &&
@@ -320,7 +324,7 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v2"));
+  check("sw: cache name", sw.includes("parsa-apps-v3"));
   check("sw: caches main pages", sw.includes("./island.html"));
   check("sw: network-first for css/js", /request\.destination === "style"[\s\S]*request\.destination === "script"/.test(sw));
   check("sw: video pass-through (no cache)", /request\.destination === "video"/.test(sw));
@@ -328,9 +332,9 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   // فایل‌های مورد نیاز وجود دارند
   ["assets/fonts/Vazirmatn-Bold.woff2",
    "assets/images/island/app-screen-1.jpg",
-   "assets/images/island/trailer-cover.jpg",
+   "assets/images/island/jazireh-promo-cover.jpg",
    "assets/images/island/mascot.jpg",
-   "assets/videos/island-trailer.mp4",
+   "assets/videos/jazireh-fandoghi-promo.mp4",
    "assets/logo-sm.png",
    "icons/icon-512.png"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
