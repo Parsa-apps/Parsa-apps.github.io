@@ -1,280 +1,165 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>جزیره فندقی | پارسا اپس</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-.island-hero{
-
-background:linear-gradient(135deg,#ffb347,#ffcc33);
-
-padding:80px 20px;
-
-text-align:center;
-
-color:#fff;
-
-}
-
-
-.island-hero h1{
-
-font-size:45px;
-
-}
-
-
-.island-card{
-
-background:white;
-
-padding:35px;
-
-border-radius:25px;
-
-box-shadow:0 5px 20px #ddd;
-
-margin:40px auto;
-
-max-width:700px;
-
-}
-
-
-.features-list{
-
-display:flex;
-
-flex-wrap:wrap;
-
-justify-content:center;
-
-gap:20px;
-
-}
-
-
-.feature-box{
-
-background:#fff;
-
-padding:25px;
-
-border-radius:20px;
-
-width:220px;
-
-box-shadow:0 4px 15px #ddd;
-
-}
-
-
-.download{
-
-background:#4b4cff;
-
-color:white;
-
-padding:15px 35px;
-
-border-radius:30px;
-
-text-decoration:none;
-
-display:inline-block;
-
-margin-top:20px;
-
-}
-
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جزیره فندقی | پارسا اپس</title>
+  <meta name="description" content="جزیره فندقی، اپ آموزشی آفلاین کودکان ۳ تا ۸ سال: الفبا، حیوانات ایران، مهارت زندگی، بازی و پنل والدین. بدون تبلیغ.">
+  <meta name="theme-color" content="#0B1220">
+  <meta property="og:title" content="جزیره فندقی — یادگیری امن، بازی شاد">
+  <meta property="og:image" content="assets/images/og-cover.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
-
-
-<header>
-
-<div class="logo">
-
-<h1>پارسا اپس</h1>
-
-<p>ساخت اپلیکیشن‌های خلاقانه برای آینده‌ای هوشمند</p>
-
-</div>
-
-
-<nav>
-
-<a href="index.html">خانه</a>
-
-<a href="island.html">جزیره فندقی</a>
-
-</nav>
-
-
-</header>
-
-
-
-
-<section class="island-hero">
-
-
-<h1>🏝️ جزیره فندقی</h1>
-
-
-<h2>
-دنیایی از یادگیری، بازی و خلاقیت
-</h2>
-
-
-<p>
-
-یک تجربه امن و سرگرم‌کننده برای کودکان
-
-</p>
-
-
-<a class="download">
-
-دانلود برنامه
-
-</a>
-
-
-</section>
-
-
-
-
-
-<section class="section">
-
-
-<div class="island-card">
-
-
-<h2>
-درباره جزیره فندقی
-</h2>
-
-
-<p>
-
-جزیره فندقی یک اپلیکیشن آموزشی و سرگرمی کودکانه است
-که با هدف ایجاد محیطی شاد، امن و خلاقانه طراحی شده است.
-
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section class="section">
-
-
-<h2>
-امکانات برنامه
-</h2>
-
-
-
-<div class="features-list">
-
-
-<div class="feature-box">
-
-<h3>🎮 بازی آموزشی</h3>
-
-<p>
-یادگیری همراه با سرگرمی
-</p>
-
-</div>
-
-
-
-
-<div class="feature-box">
-
-<h3>🎨 محیط جذاب</h3>
-
-<p>
-طراحی رنگارنگ و کودکانه
-</p>
-
-</div>
-
-
-
-
-
-<div class="feature-box">
-
-<h3>🔒 محیط امن</h3>
-
-<p>
-مناسب استفاده خانواده‌ها
-</p>
-
-</div>
-
-
-
-
-<div class="feature-box">
-
-<h3>🚀 توسعه مداوم</h3>
-
-<p>
-بهبود همیشگی برنامه
-</p>
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<footer>
-
-<p>
-
-© ۱۴۰۵ پارسا اپس - جزیره فندقی
-
-</p>
-
-</footer>
-
-
-
+  <a class="skip-link" href="#main">رفتن به محتوا</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.svg" alt="" width="42" height="42">
+        <span class="brand-copy"><strong>پارسا اپس</strong><span>Parsa Apps</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="باز کردن فهرست"><span></span></button>
+      <nav id="site-nav" class="nav-links">
+        <a href="index.html">خانه</a>
+        <a href="island.html" aria-current="page">جزیره فندقی</a>
+        <a href="kartoniya.html">کارتونیا</a>
+        <a href="privacy.html">حریم خصوصی</a>
+        <a class="nav-cta" href="index.html#contact">ارتباط</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">محصول اصلی · نسخه ۶.۲ رشد خانواده</span>
+        <h1>جزیره فندقی</h1>
+        <p>دنیایی از یادگیری، بازی و خلاقیت برای کودکان ۳ تا ۸ سال. مربی مهربان «فندقی» کنار کودک است؛ گزارش شفاف هم کنار والد.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">درخواست نسخه / پشتیبانی</a>
+          <a class="btn btn-ghost" href="#features">امکانات کامل</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div class="shot" style="position:relative">
+          <img src="assets/images/app-jazire.jpg" alt="نقشهٔ جزیره‌های یادگیری در اپ جزیره فندقی">
+          <img src="assets/images/mascot-fandoghi.jpg" alt="فندقی، مربی مهربان جزیره" style="position:absolute;bottom:12px;inset-inline-start:12px;width:118px;height:118px;object-fit:cover;border-radius:28px;box-shadow:0 12px 30px rgba(0,0,0,.35);border:3px solid rgba(255,255,255,.2)">
+        </div>
+        <div>
+          <span class="eyebrow">برای کودک و برای خانه</span>
+          <h2 class="display">۱۶ بازی، یک جزیره، صفر حساب کاربری</h2>
+          <p class="lede">ورود با لقب اختیاری و بازهٔ سنی. بدون ثبت‌نام، بدون تبلیغ، و بخش آموزشی کاملاً آفلاین.</p>
+          <ul class="checklist">
+            <li>آکادمی الفبا با تمرین نوشتن و ارزیابی محلی</li>
+            <li>دانشنامهٔ ۳۰ حیوان ایران، اعداد، شغل‌ها و احساسات</li>
+            <li>۱۰ دنیای مهارت زندگی بومی: هفته، تومان، ترافیک، بهداشت</li>
+            <li>تا ۳ پروفایل خواهر و برادر با پیشرفت جدا</li>
+            <li>بکاپ آفلاین رمزنگاری‌شده از پنل والدین</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section" style="background:var(--paper)">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">امکانات</span>
+          <h2>هر گوشهٔ جزیره یک مهارت است</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="icon-orb">🎮</div>
+            <h3>بازی‌های آموزشی</h3>
+            <p>حافظه، حباب‌ترکان، ستاره‌گیری، نقاشی آفلاین با Undo و استیکر؛ یادگیری بدون فشار.</p>
+          </article>
+          <article class="feature">
+            <div class="icon-orb">🐿️</div>
+            <h3>مربی فندقی</h3>
+            <p>شخصیت راهنما در اسپلش، داشبورد و بازی‌ها؛ تشویق، راهنمایی و بازخورد پاسخ.</p>
+          </article>
+          <article class="feature">
+            <div class="icon-orb">📊</div>
+            <h3>شفافیت برای والد</h3>
+            <p>نمودار زمان صفحه، گزارش هفتگی قابل کپی، هدف یادگیری هفته و صندوق جایزه.</p>
+          </article>
+          <article class="feature">
+            <div class="icon-orb">🌙</div>
+            <h3>ساعت خواب هوشمند</h3>
+            <p>لالایی، سکوت شب، فیلتر کارتون و فروشگاه؛ خانه آرام می‌ماند.</p>
+          </article>
+          <article class="feature">
+            <div class="icon-orb">🗺️</div>
+            <h3>نقشهٔ مرحله‌ای</h3>
+            <p>مسیر واقعی بین دنیاها، ادامهٔ بازی، جستجوی سراسری و ارقام فارسی همه‌جا.</p>
+          </article>
+          <article class="feature">
+            <div class="icon-orb">🛡️</div>
+            <h3>امنیت انتشار</h3>
+            <p>خرید فقط با رسید معتبر استور. اطلاعات کارت نزد برنامه نیست.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">خانواده</span>
+          <h2 class="display">یک گوشی، چند کودک، پیشرفت جدا</h2>
+          <p class="lede">نسخهٔ ۶.۲ برای خانه‌هایی ساخته شد که خواهر و برادر یک دستگاه را شریک می‌شوند.</p>
+          <ul class="checklist">
+            <li>تعویض یک‌لمسی پروفایل</li>
+            <li>چالش هفته، گواهی افتخار و رویدادهای شمسی</li>
+            <li>حالت تمرکز، کاهش حرکت و صرفه‌جویی داده</li>
+            <li>کارتون‌ها فقط در صورت نیاز، از سرورهای داخلی ایران</li>
+          </ul>
+          <div class="hero-actions" style="margin-top:24px">
+            <a class="btn btn-dark" href="privacy.html">سیاست حریم خصوصی</a>
+            <a class="btn btn-line" href="index.html#contact">سؤال دارید؟</a>
+          </div>
+        </div>
+        <div class="shot">
+          <img src="assets/images/feature-family.jpg" alt="والد و کودک در حال استفادهٔ آرام از تبلت">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <img src="assets/logo.svg" alt="" width="42" height="42">
+            <span class="brand-copy"><strong>پارسا اپس</strong><span>جزیره فندقی</span></span>
+          </a>
+        </div>
+        <div>
+          <h4>محصولات</h4>
+          <a href="island.html">جزیره فندقی</a>
+          <a href="kartoniya.html">کارتونیا</a>
+        </div>
+        <div>
+          <h4>استودیو</h4>
+          <a href="index.html#about">درباره</a>
+          <a href="privacy.html">حریم خصوصی</a>
+        </div>
+        <div>
+          <h4>پشتیبانی</h4>
+          <a href="mailto:farshadparsa2019@gmail.com">ایمیل</a>
+          <a href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener">تلگرام</a>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© <span data-year>۱۴۰۵</span> پارسا اپس</span>
+        <span>فرشاد پارسا</span>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
 </body>
-
 </html>
