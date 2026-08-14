@@ -9,6 +9,7 @@ const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./island.html",
+  "./store.html",
   "./about.html",
   "./privacy.html",
   "./contact.html",

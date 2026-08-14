@@ -186,6 +186,16 @@ console.log("\n=== B. island.html ===\n");
   check("play button exists", !!doc.getElementById("playButton"));
   check("coming-soon overlay exists", !!doc.getElementById("comingSoon"));
 
+  // گالری اسکرین‌شات
+  const gallery = doc.querySelector(".gallery-section");
+  check("gallery section exists", !!gallery);
+  check("4 gallery shots", doc.querySelectorAll(".gallery .shot").length === 4, "count=" + doc.querySelectorAll(".gallery .shot").length);
+  check("gallery images point to app screens", doc.querySelectorAll(".gallery .shot img[src*='assets/images/island/app-screen-']").length === 4);
+
+  // لینک استور در بخش دانلود
+  check("store link in download section", !!doc.querySelector(".download-section a[href='store.html']"));
+  check("faq anchor id", !!doc.getElementById("faq"));
+
   // download
   const dlBtn = doc.querySelector(".download-button");
   check("download button exists", !!dlBtn);
@@ -248,6 +258,23 @@ console.log("\n=== C. about / privacy / contact / kartoniya / 404 ===\n");
     check("brand.html: kit cards", doc.querySelectorAll(".kit-card").length >= 10);
   }
 
+  // استور جزیره فندقی
+  {
+    const { doc, errors } = makeDom("store.html");
+    check("store.html: no runtime errors", errors.length === 0, errors.join(" | "));
+    check("store.html: island theme", doc.body.classList.contains("island-page"));
+    check("store.html: header present", !!doc.querySelector(".header"));
+    check("store.html: footer present", !!doc.querySelector(".main-footer"));
+    check("store.html: hero title", !!doc.querySelector(".store-hero h1") && doc.querySelector(".store-hero h1").textContent.includes("جزیره فندقی"));
+    check("store.html: app icon", !!doc.querySelector(".store-app-icon img[src*='jazireh-fandoghi-app-icon']"));
+    check("store.html: specs (8 detail cards)", doc.querySelectorAll(".store-spec-box .app-details > div").length === 8, "count=" + doc.querySelectorAll(".store-spec-box .app-details > div").length);
+    check("store.html: changelog versions", doc.querySelectorAll(".changelog-item").length === 2, "count=" + doc.querySelectorAll(".changelog-item").length);
+    check("store.html: download coming-soon", !!doc.querySelector(".download-button[data-coming-soon]"));
+    check("store.html: report problem mailto", !!doc.querySelector('a[href^="mailto:farshadparsa2019@gmail.com?subject="]'));
+    check("store.html: 3 support cards", doc.querySelectorAll(".support-card").length === 3, "count=" + doc.querySelectorAll(".support-card").length);
+    check("store.html: island page link", !!doc.querySelector('a[href="island.html"]'));
+  }
+
   const html404 = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
   const dom404 = new JSDOM(html404);
   check("404: error content", !!dom404.window.document.querySelector(".error-content"));
@@ -256,7 +283,7 @@ console.log("\n=== C. about / privacy / contact / kartoniya / 404 ===\n");
 
 console.log("\n=== D. سلامتی فایل‌ها ===\n");
 {
-  ["index.html", "island.html", "about.html", "privacy.html"].forEach((page) => {
+  ["index.html", "island.html", "store.html", "about.html", "privacy.html"].forEach((page) => {
     const html = fs.readFileSync(path.join(ROOT, page), "utf8");
     check(page + ": links to style.css", html.includes('rel="stylesheet" href="style.css"'));
     check(page + ": links to script.js", html.includes('src="script.js"'));
