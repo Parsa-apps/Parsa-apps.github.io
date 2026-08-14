@@ -64,6 +64,32 @@
 
   <main>
 
+    <!-- 🎬 ویدئوی معرفی اپلیکیشن (اول صفحه) -->
+    <section class="cinematic-trailer" id="trailer">
+      <div class="trailer-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="trailer-header">
+        <h2>🎬 ویدئوی معرفی جزیره فندقی</h2>
+        <p>یک سفر کوتاه و جذاب به دنیای رنگارنگ جزیره — فقط دکمه پخش رو بزن!</p>
+      </div>
+
+      <div class="video-container">
+        <video id="islandVideo" poster="assets/images/island/jazireh-promo-cover.jpg" controls playsinline preload="metadata">
+          <source src="assets/videos/jazire_fandoqi_promo_portrait.mp4" type="video/mp4">
+          مرورگر شما از ویدئو پشتیبانی نمی‌کند.
+        </video>
+
+        <button class="play-button" id="playButton" aria-label="پخش ویدئو">
+          <span class="play-icon">▶</span>
+        </button>
+
+        <div class="play-hint" aria-hidden="true">✨ تماشا کنید ✨</div>
+        <div class="video-light"></div>
+      </div>
+    </section>
+
     <!-- هیروی جزیره -->
     <section class="island-hero" id="home">
       <div class="hero-copy">
@@ -207,28 +233,6 @@
           <h3>رشد و یادگیری</h3>
           <p>کمک به پرورش خلاقیت و مهارت‌های کودک.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- ویدئوی معرفی اپلیکیشن -->
-    <section class="cinematic-trailer">
-      <div class="trailer-particles" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-
-      <div class="trailer-header">
-        <h2>🎬 ویدئوی معرفی جزیره فندقی</h2>
-        <p>یک سفر کوتاه و جذاب به دنیای رنگارنگ جزیره</p>
-      </div>
-
-      <div class="video-container">
-        <video id="islandVideo" poster="assets/images/island/jazireh-promo-cover.jpg" controls playsinline preload="metadata">
-          <source src="assets/videos/jazireh-fandoghi-promo.mp4" type="video/mp4">
-          مرورگر شما از ویدئو پشتیبانی نمی‌کند.
-        </video>
-
-        <button class="play-button" id="playButton" aria-label="پخش ویدئو">▶</button>
-        <div class="video-light"></div>
       </div>
     </section>
 
