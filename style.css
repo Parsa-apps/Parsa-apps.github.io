@@ -3420,3 +3420,336 @@ form.panel {
   border-radius: 18px;
   box-shadow: 0 12px 28px rgba(11, 18, 32, 0.22);
 }
+
+/* ==========================================================
+   Signature logo treatment — favicon companion + hero lockup
+   The official ornate PA mark is intentionally part of the
+   main heading, not just a decorative image elsewhere.
+   ========================================================== */
+
+/* Animated logo container in the sticky masthead */
+.home-header .nav-brand-mark {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 48px;
+  overflow: hidden;
+  border-radius: 13px;
+  isolation: isolate;
+}
+
+.home-header .nav-brand-mark img {
+  width: 48px;
+  height: 48px;
+}
+
+.home-header .nav-brand-shine {
+  position: absolute;
+  z-index: 2;
+  inset: -35%;
+  display: block;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgba(255, 236, 177, 0.5) 49%,
+    transparent 62%
+  );
+  transform: translateX(115%) rotate(8deg);
+}
+
+.js-motion .home-header .nav-brand-shine {
+  animation: pa-nav-logo-shine 5.8s 1.4s var(--pa-ease-soft) infinite;
+}
+
+@keyframes pa-nav-logo-shine {
+  0%, 72%, 100% { transform: translateX(115%) rotate(8deg); opacity: 0; }
+  78% { opacity: 1; }
+  91% { transform: translateX(-115%) rotate(8deg); opacity: 0; }
+}
+
+/* Logo integrated into the main page title */
+.home-hero .hero-brand-title {
+  display: flex;
+  align-items: center;
+  gap: clamp(17px, 2.1vw, 27px);
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 18px;
+  letter-spacing: normal;
+}
+
+.hero-title-mark {
+  position: relative;
+  width: clamp(88px, 9vw, 108px);
+  height: clamp(88px, 9vw, 108px);
+  display: grid;
+  place-items: center;
+  flex: 0 0 clamp(88px, 9vw, 108px);
+  isolation: isolate;
+}
+
+.hero-title-mark img {
+  position: relative;
+  z-index: 3;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: cover;
+  border-radius: 25%;
+  background: #05070b;
+  box-shadow:
+    0 18px 38px rgba(11, 18, 32, 0.26),
+    0 0 0 1px rgba(233, 185, 73, 0.42),
+    0 0 30px rgba(213, 158, 47, 0.16);
+}
+
+.hero-title-aura {
+  position: absolute;
+  z-index: 0;
+  inset: -25%;
+  border-radius: 50%;
+  opacity: 0.66;
+  background: radial-gradient(circle, rgba(232, 183, 72, 0.34), rgba(232, 183, 72, 0) 68%);
+  filter: blur(10px);
+}
+
+.hero-title-ring {
+  position: absolute;
+  z-index: 2;
+  inset: -1px;
+  padding: 1.5px;
+  border-radius: 29%;
+  background: conic-gradient(
+    from 30deg,
+    rgba(251, 224, 138, 0),
+    rgba(251, 224, 138, 0.9),
+    rgba(201, 146, 43, 0.1),
+    rgba(251, 224, 138, 0)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.hero-title-spark {
+  position: absolute;
+  z-index: 5;
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fbe08a;
+  box-shadow: 0 0 0 4px rgba(251, 224, 138, 0.1), 0 0 16px rgba(251, 224, 138, 0.85);
+}
+
+.hero-title-spark.spark-a {
+  top: 2px;
+  inset-inline-start: 4px;
+}
+
+.hero-title-spark.spark-b {
+  width: 5px;
+  height: 5px;
+  inset-inline-end: 1px;
+  bottom: 10px;
+  background: #42cfb8;
+  box-shadow: 0 0 0 4px rgba(66, 207, 184, 0.1), 0 0 15px rgba(66, 207, 184, 0.76);
+}
+
+.hero-title-text {
+  display: block;
+  color: var(--home-navy);
+  font-size: clamp(3.2rem, 6.4vw, 5.85rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.075em;
+  white-space: nowrap;
+}
+
+.hero-title-text small {
+  display: block;
+  margin-top: 10px;
+  padding-inline-start: 4px;
+  color: #9b7934;
+  font: 700 clamp(0.54rem, 0.72vw, 0.68rem)/1.2 Arial, sans-serif;
+  letter-spacing: 0.32em;
+  direction: ltr;
+  text-align: start;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-mark {
+  animation: pa-hero-mark-float 6.5s 1.15s ease-in-out infinite;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-mark img {
+  animation: pa-hero-logo-arrive 0.95s 0.17s var(--pa-ease) both;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-ring {
+  animation: pa-hero-ring-spin 9s 0.7s linear infinite;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-aura {
+  animation: pa-hero-aura-breathe 4.8s 0.9s ease-in-out infinite;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-spark {
+  animation: pa-hero-spark 2.7s 0.8s ease-in-out infinite;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-spark.spark-b {
+  animation-delay: 1.45s;
+  animation-duration: 3.4s;
+}
+
+.js-motion .home-hero-copy.is-visible .hero-title-text {
+  color: transparent;
+  background:
+    linear-gradient(
+      105deg,
+      var(--home-navy) 0%,
+      var(--home-navy) 41%,
+      #b77c16 48%,
+      #f0cf75 50%,
+      #b77c16 52%,
+      var(--home-navy) 59%,
+      var(--home-navy) 100%
+    );
+  background-size: 260% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: pa-hero-wordmark-shimmer 6.8s 1.7s ease-in-out infinite;
+}
+
+/* Keep the English signature gold while the Persian wordmark shimmers. */
+.js-motion .home-hero-copy.is-visible .hero-title-text small {
+  color: #9b7934;
+  -webkit-text-fill-color: #9b7934;
+}
+
+@keyframes pa-hero-logo-arrive {
+  from {
+    opacity: 0;
+    transform: scale(0.62) rotate(11deg);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes pa-hero-mark-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0); }
+  50% { transform: translate3d(0, -7px, 0) rotate(-1.5deg); }
+}
+
+@keyframes pa-hero-ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pa-hero-aura-breathe {
+  0%, 100% { opacity: 0.48; transform: scale(0.88); }
+  50% { opacity: 0.84; transform: scale(1.12); }
+}
+
+@keyframes pa-hero-spark {
+  0%, 100% { opacity: 0.55; transform: scale(0.72); }
+  50% { opacity: 1; transform: scale(1.35); }
+}
+
+@keyframes pa-hero-wordmark-shimmer {
+  0%, 58%, 100% { background-position: 100% 0; }
+  82% { background-position: -72% 0; }
+}
+
+.home-hero .hero-brand-title:hover .hero-title-mark img {
+  box-shadow:
+    0 22px 44px rgba(11, 18, 32, 0.3),
+    0 0 0 1px rgba(251, 224, 138, 0.72),
+    0 0 38px rgba(213, 158, 47, 0.28);
+}
+
+@media (max-width: 1020px) and (min-width: 821px) {
+  .hero-title-mark {
+    width: 82px;
+    height: 82px;
+    flex-basis: 82px;
+  }
+
+  .hero-title-text {
+    font-size: clamp(3rem, 6vw, 4.25rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .home-hero .hero-brand-title {
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .hero-title-mark {
+    width: clamp(70px, 20vw, 84px);
+    height: clamp(70px, 20vw, 84px);
+    flex-basis: clamp(70px, 20vw, 84px);
+  }
+
+  .hero-title-mark img {
+    width: calc(100% - 9px);
+    height: calc(100% - 9px);
+    border-radius: 23%;
+  }
+
+  .hero-title-text {
+    font-size: clamp(2.9rem, 14.2vw, 4rem);
+  }
+
+  .hero-title-text small {
+    margin-top: 7px;
+    font-size: 0.49rem;
+    letter-spacing: 0.26em;
+  }
+}
+
+@media (max-width: 380px) {
+  .home-hero .hero-brand-title {
+    gap: 10px;
+  }
+
+  .hero-title-mark {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+  }
+
+  .hero-title-text {
+    font-size: clamp(2.55rem, 14vw, 3.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-header .nav-brand-shine {
+    display: none;
+  }
+
+  .js-motion .home-hero-copy.is-visible .hero-title-mark,
+  .js-motion .home-hero-copy.is-visible .hero-title-mark img,
+  .js-motion .home-hero-copy.is-visible .hero-title-ring,
+  .js-motion .home-hero-copy.is-visible .hero-title-aura,
+  .js-motion .home-hero-copy.is-visible .hero-title-spark,
+  .js-motion .home-hero-copy.is-visible .hero-title-text {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .js-motion .home-hero-copy.is-visible .hero-title-text {
+    color: var(--home-navy);
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
