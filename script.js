@@ -267,28 +267,55 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* -----------------------------
-     11) تریلر: دکمه پخش سینمایی
+     11) تریلر: دکمه پخش سینمایی + جذب ناخودآگاه کاربر
   ----------------------------- */
   const video = document.getElementById("islandVideo");
   const playButton = document.getElementById("playButton");
+  const videoContainer = video ? video.closest(".video-container") : null;
 
   if (video && playButton) {
+    /* پاپ توجه اولیه کمی بعد از لود صفحه */
+    const attentionTimer = setTimeout(() => {
+      playButton.classList.add("attention");
+      setTimeout(() => playButton.classList.remove("attention"), 750);
+    }, 700);
+
+    /* هاله‌ی مغناطیسی: دکمه کمی به سمت نشانگر موس کشیده می‌شود */
+    if (window.matchMedia("(hover: hover)").matches) {
+      playButton.addEventListener("mousemove", (e) => {
+        const rect = playButton.getBoundingClientRect();
+        const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.4;
+        const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.4;
+        playButton.style.transform =
+          "translate(calc(-50% + " + dx + "px), calc(-50% + " + dy + "px)) scale(1.08)";
+      });
+
+      playButton.addEventListener("mouseleave", () => {
+        playButton.style.transform = "";
+      });
+    }
+
     playButton.addEventListener("click", () => {
       video.play().catch(() => {
         /* در صورت محدودیت autoplay، پخش با کنترل‌های خود ویدئو ادامه می‌یابد */
       });
     });
 
+    const setPlayingState = (playing) => {
+      if (videoContainer) videoContainer.classList.toggle("playing", playing);
+    };
+
     video.addEventListener("play", () => {
-      playButton.style.display = "none";
+      clearTimeout(attentionTimer);
+      setPlayingState(true);
     });
 
     video.addEventListener("pause", () => {
-      playButton.style.display = "flex";
+      setPlayingState(false);
     });
 
     video.addEventListener("ended", () => {
-      playButton.style.display = "flex";
+      setPlayingState(false);
     });
   }
 
