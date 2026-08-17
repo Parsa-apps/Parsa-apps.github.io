@@ -23,6 +23,7 @@ const FILES_TO_CACHE = [
   "./script.js",
   "./manifest.json",
   "./assets/logo-sm.png",
+  "./assets/logo.svg",
   "./assets/brand/jazireh-fandoghi-app-icon-192.png",
   "./assets/brand/jazireh-fandoghi-app-icon-512.png",
   "./assets/images/island/jazireh-promo-cover.jpg",

@@ -336,6 +336,7 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
    "assets/brand/jazireh-fandoghi-app-icon-512.png",
    "assets/videos/jazire_fandoqi_promo_portrait.mp4",
    "assets/logo-sm.png",
+   "assets/logo.svg",
    "icons/icon-512.png"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
   });
@@ -357,6 +358,39 @@ console.log("\n=== E. مقاوم‌سازی نمایش محتوا (بدون Inte
     first.querySelector(".faq-question").click();
     return first.classList.contains("active");
   })());
+}
+
+console.log("\n=== F. لوگوی متحرک Parsa-Apps ===\n");
+{
+  const pages = ["index.html", "island.html", "store.html", "about.html", "contact.html", "privacy.html", "kartoniya.html", "brand.html"];
+  pages.forEach((page) => {
+    const { doc, errors } = makeDom(page);
+    const word = doc.querySelector(".logo-animated .logo-word");
+    check(
+      page + ": animated logo in header",
+      !!word && word.querySelectorAll(".ch").length === 10,
+      "letters=" + (word ? word.querySelectorAll(".ch").length : 0)
+    );
+    check(
+      page + ": animated logo in footer",
+      !!doc.querySelector(".main-footer .footer-logo .logo-word")
+    );
+    check(page + ": no runtime errors", errors.length === 0, errors.join(" | "));
+  });
+
+  // ترتیب حروف باید کلمهٔ Parsa-Apps را بسازد
+  const { doc } = makeDom("index.html");
+  const built = [...doc.querySelectorAll(".header .logo-animated .logo-word .ch")].map((el) => el.textContent).join("");
+  check("index.html: letters spell Parsa-Apps", built === "Parsa-Apps", built);
+
+  // صفحهٔ درباره ما — نسخهٔ بزرگ لوگو
+  const { doc: aDoc } = makeDom("about.html");
+  check("about.html: hero logo stage", !!aDoc.querySelector(".about-logo-stage .logo-animated.logo-hero"));
+  check("about.html: hero letters count", aDoc.querySelectorAll(".logo-hero .ch").length === 10);
+
+  // بدون جاوااسکریپت حروف باید قابل مشاهده بمانند (no-js fallback با کلاس .js گیت شده)
+  const { doc: nDoc } = makeDom("index.html", { noObserver: true });
+  check("no-js: logo letters present in DOM", nDoc.querySelectorAll(".header .logo-animated .ch").length === 10);
 }
 
 console.log("\n================================");
