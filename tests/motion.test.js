@@ -165,19 +165,19 @@ console.log("\n=== B. island.html ===\n");
   }
 
   // feature / trust / review reveal
-  check("feature cards hidden pre-reveal", doc.querySelectorAll(".feature-3d-card.js-reveal").length === 4);
+  check("feature cards hidden pre-reveal", doc.querySelectorAll(".feature-3d-card.js-reveal").length === 6);
   check("trust cards hidden pre-reveal", doc.querySelectorAll(".trust-card.js-reveal").length === 4);
   check("review cards hidden pre-reveal", doc.querySelectorAll(".review-card.js-reveal").length === 3);
 
   observed.forEach((o) => o.fireAll(true));
-  check("feature cards revealed", doc.querySelectorAll(".feature-3d-card.show-feature").length === 4);
+  check("feature cards revealed", doc.querySelectorAll(".feature-3d-card.show-feature").length === 6);
   check("trust cards revealed", doc.querySelectorAll(".trust-card.show").length === 4);
   check("review cards revealed", doc.querySelectorAll(".review-card.show-review").length === 3);
   check("js-reveal removed after reveal", doc.querySelectorAll(".feature-3d-card.js-reveal, .trust-card.js-reveal, .review-card.js-reveal").length === 0);
 
   // FAQ accordion
   const faqItems = doc.querySelectorAll(".faq-item");
-  check("5 FAQ items", faqItems.length === 5, "count=" + faqItems.length);
+  check("6 FAQ items", faqItems.length === 6, "count=" + faqItems.length);
   if (faqItems.length >= 2) {
     const first = faqItems[0];
     const btn = first.querySelector(".faq-question");
@@ -192,7 +192,7 @@ console.log("\n=== B. island.html ===\n");
   check("trailer video exists", !!doc.getElementById("islandVideo"));
   check(
     "promo video source points to mp4",
-    !!doc.querySelector('video source[src="assets/videos/jazireh-fandoghi-promo.mp4"]')
+    !!doc.querySelector('video source[src="assets/videos/jazire_fandoqi_promo_portrait.mp4"]')
   );
   check(
     "promo video has matching poster",
@@ -289,7 +289,7 @@ console.log("\n=== C. about / privacy / contact / kartoniya / 404 ===\n");
     check("store.html: hero title", !!doc.querySelector(".store-hero h1") && doc.querySelector(".store-hero h1").textContent.includes("جزیره فندقی"));
     check("store.html: app icon", !!doc.querySelector(".store-app-icon img[src*='jazireh-fandoghi-app-icon']"));
     check("store.html: specs (8 detail cards)", doc.querySelectorAll(".store-spec-box .app-details > div").length === 8, "count=" + doc.querySelectorAll(".store-spec-box .app-details > div").length);
-    check("store.html: changelog versions", doc.querySelectorAll(".changelog-item").length === 2, "count=" + doc.querySelectorAll(".changelog-item").length);
+    check("store.html: changelog versions", doc.querySelectorAll(".changelog-item").length === 3, "count=" + doc.querySelectorAll(".changelog-item").length);
     check("store.html: download coming-soon", !!doc.querySelector(".download-button[data-coming-soon]"));
     check("store.html: report problem mailto", !!doc.querySelector('a[href^="mailto:farshadparsa2019@gmail.com?subject="]'));
     check("store.html: 3 support cards", doc.querySelectorAll(".support-card").length === 3, "count=" + doc.querySelectorAll(".support-card").length);
@@ -324,7 +324,7 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v3"));
+  check("sw: cache name", sw.includes("parsa-apps-v5"));
   check("sw: caches main pages", sw.includes("./island.html"));
   check("sw: network-first for css/js", /request\.destination === "style"[\s\S]*request\.destination === "script"/.test(sw));
   check("sw: video pass-through (no cache)", /request\.destination === "video"/.test(sw));
@@ -333,9 +333,10 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   ["assets/fonts/Vazirmatn-Bold.woff2",
    "assets/images/island/app-screen-1.jpg",
    "assets/images/island/jazireh-promo-cover.jpg",
-   "assets/images/island/mascot.jpg",
-   "assets/videos/jazireh-fandoghi-promo.mp4",
+   "assets/brand/jazireh-fandoghi-app-icon-512.png",
+   "assets/videos/jazire_fandoqi_promo_portrait.mp4",
    "assets/logo-sm.png",
+   "assets/logo.svg",
    "icons/icon-512.png"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
   });
@@ -357,6 +358,39 @@ console.log("\n=== E. مقاوم‌سازی نمایش محتوا (بدون Inte
     first.querySelector(".faq-question").click();
     return first.classList.contains("active");
   })());
+}
+
+console.log("\n=== F. لوگوی متحرک Parsa-Apps ===\n");
+{
+  const pages = ["index.html", "island.html", "store.html", "about.html", "contact.html", "privacy.html", "kartoniya.html", "brand.html"];
+  pages.forEach((page) => {
+    const { doc, errors } = makeDom(page);
+    const word = doc.querySelector(".logo-animated .logo-word");
+    check(
+      page + ": animated logo in header",
+      !!word && word.querySelectorAll(".ch").length === 10,
+      "letters=" + (word ? word.querySelectorAll(".ch").length : 0)
+    );
+    check(
+      page + ": animated logo in footer",
+      !!doc.querySelector(".main-footer .footer-logo .logo-word")
+    );
+    check(page + ": no runtime errors", errors.length === 0, errors.join(" | "));
+  });
+
+  // ترتیب حروف باید کلمهٔ Parsa-Apps را بسازد
+  const { doc } = makeDom("index.html");
+  const built = [...doc.querySelectorAll(".header .logo-animated .logo-word .ch")].map((el) => el.textContent).join("");
+  check("index.html: letters spell Parsa-Apps", built === "Parsa-Apps", built);
+
+  // صفحهٔ درباره ما — نسخهٔ بزرگ لوگو
+  const { doc: aDoc } = makeDom("about.html");
+  check("about.html: hero logo stage", !!aDoc.querySelector(".about-logo-stage .logo-animated.logo-hero"));
+  check("about.html: hero letters count", aDoc.querySelectorAll(".logo-hero .ch").length === 10);
+
+  // بدون جاوااسکریپت حروف باید قابل مشاهده بمانند (no-js fallback با کلاس .js گیت شده)
+  const { doc: nDoc } = makeDom("index.html", { noObserver: true });
+  check("no-js: logo letters present in DOM", nDoc.querySelectorAll(".header .logo-animated .ch").length === 10);
 }
 
 console.log("\n================================");

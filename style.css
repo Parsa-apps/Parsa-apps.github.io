@@ -1103,6 +1103,15 @@ body.island-page .theme-toggle {
   border-radius: 50%;
 }
 
+/* آیکون رسمی اپ داخل دایره هیرو — دقیقاً همان آیکون نصب‌شده روی گوشی */
+.island-character img.app-icon {
+  object-fit: contain;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 7%;
+  box-shadow: 0 14px 34px rgba(120, 70, 0, 0.2);
+}
+
 @keyframes characterFloat {
   0%, 100% { transform: translateY(0) rotate(-3deg); }
   50%      { transform: translateY(-28px) rotate(3deg); }
@@ -3587,5 +3596,162 @@ body.light .field textarea {
   }
   .founder-info {
     min-width: 100%;
+  }
+}
+
+/* ============================================================
+   🅿️ لوگوی متحرک Parsa-Apps — ورود حرف‌به‌حرف
+   ============================================================ */
+
+.logo-animated .logo-mark {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-animated .logo-mark img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  border-radius: 14px;
+  animation: markFloat 5s ease-in-out infinite;
+}
+
+.logo-animated .logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.35;
+}
+
+/* کلمهٔ Parsa-Apps با گرادیان طلایی برند */
+.logo-animated .logo-word {
+  direction: ltr;
+  font-family: "Vazirmatn", "Segoe UI", "Sora", system-ui, sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  background: linear-gradient(100deg, #f9d87a 0%, #f0a12e 28%, #ffd66b 48%, #ef7a1a 72%, #f9d87a 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: wordShimmer 7s linear infinite;
+}
+
+.logo-animated .logo-word .ch {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.logo-animated .logo-sub {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* حالت اولیه: حروف مخفی — فقط وقتی جاوااسکریپت فعال است */
+.js .logo-animated .logo-word .ch { opacity: 0; }
+
+/* ورود حرف‌به‌حرف (با تأخیر پلکانی) */
+.js .logo-animated.played .logo-word .ch {
+  animation: chIn 0.6s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+  animation-delay: calc(140ms + var(--i) * 85ms);
+}
+
+.js .logo-animated.played .logo-word .ch.ch-dash {
+  animation-name: chDashIn;
+  animation-duration: 0.5s;
+}
+
+@keyframes chIn {
+  0%   { opacity: 0; transform: translateY(-18px) rotate(12deg) scale(0.4); filter: blur(8px); }
+  55%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); filter: blur(0); }
+}
+
+@keyframes chDashIn {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.45); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wordShimmer {
+  to { background-position: 220% 0; }
+}
+
+@keyframes markFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-6px) rotate(2deg); }
+}
+
+/* ---- نسخهٔ فوتر ---- */
+.footer-logo { align-items: flex-start; }
+.footer-logo .logo-mark img { width: 40px; height: 40px; border-radius: 12px; }
+.footer-logo .logo-word { font-size: 21px; }
+.footer-logo .logo-sub { color: #cfd8e6; }
+
+/* ---- نسخهٔ بزرگ صفحهٔ درباره ما ---- */
+.about-logo-stage {
+  position: relative;
+  margin: 10px auto 40px;
+  padding: 64px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  border-radius: 34px;
+  background: radial-gradient(ellipse at center, rgba(249, 216, 122, 0.14), transparent 65%);
+  overflow: hidden;
+}
+
+.about-logo-stage .logo-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 40%, rgba(239, 122, 26, 0.2), transparent 60%);
+  filter: blur(12px);
+  animation: haloPulse 4s ease-in-out infinite;
+}
+
+@keyframes haloPulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.97); }
+  50%      { opacity: 1; transform: scale(1.03); }
+}
+
+.logo-animated.logo-hero { flex-direction: column; gap: 18px; }
+.logo-hero .logo-mark img {
+  width: clamp(84px, 16vw, 130px);
+  height: clamp(84px, 16vw, 130px);
+  border-radius: 26px;
+}
+.logo-hero .logo-word { font-size: clamp(40px, 9.5vw, 88px); letter-spacing: 0.02em; }
+.logo-hero .logo-sub { font-size: clamp(15px, 2.6vw, 19px); }
+.about-logo-note { font-size: 14.5px; color: var(--muted); }
+
+/* ---- موبایل ---- */
+@media (max-width: 800px) {
+  .logo-animated .logo-mark img { width: 40px; height: 40px; border-radius: 12px; }
+  .logo-animated .logo-word { font-size: 18.5px; }
+  .footer-logo .logo-word { font-size: 18px; }
+}
+
+/* ---- احترام به کاهش حرکت ---- */
+@media (prefers-reduced-motion: reduce) {
+  .js .logo-animated .logo-word .ch,
+  .js .logo-animated.played .logo-word .ch {
+    opacity: 1;
+    animation: none;
+  }
+  .logo-animated .logo-word,
+  .logo-animated .logo-mark img,
+  .about-logo-stage .logo-halo {
+    animation: none;
   }
 }
