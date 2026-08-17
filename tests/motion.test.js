@@ -165,19 +165,19 @@ console.log("\n=== B. island.html ===\n");
   }
 
   // feature / trust / review reveal
-  check("feature cards hidden pre-reveal", doc.querySelectorAll(".feature-3d-card.js-reveal").length === 4);
+  check("feature cards hidden pre-reveal", doc.querySelectorAll(".feature-3d-card.js-reveal").length === 6);
   check("trust cards hidden pre-reveal", doc.querySelectorAll(".trust-card.js-reveal").length === 4);
   check("review cards hidden pre-reveal", doc.querySelectorAll(".review-card.js-reveal").length === 3);
 
   observed.forEach((o) => o.fireAll(true));
-  check("feature cards revealed", doc.querySelectorAll(".feature-3d-card.show-feature").length === 4);
+  check("feature cards revealed", doc.querySelectorAll(".feature-3d-card.show-feature").length === 6);
   check("trust cards revealed", doc.querySelectorAll(".trust-card.show").length === 4);
   check("review cards revealed", doc.querySelectorAll(".review-card.show-review").length === 3);
   check("js-reveal removed after reveal", doc.querySelectorAll(".feature-3d-card.js-reveal, .trust-card.js-reveal, .review-card.js-reveal").length === 0);
 
   // FAQ accordion
   const faqItems = doc.querySelectorAll(".faq-item");
-  check("5 FAQ items", faqItems.length === 5, "count=" + faqItems.length);
+  check("6 FAQ items", faqItems.length === 6, "count=" + faqItems.length);
   if (faqItems.length >= 2) {
     const first = faqItems[0];
     const btn = first.querySelector(".faq-question");
@@ -192,7 +192,7 @@ console.log("\n=== B. island.html ===\n");
   check("trailer video exists", !!doc.getElementById("islandVideo"));
   check(
     "promo video source points to mp4",
-    !!doc.querySelector('video source[src="assets/videos/jazireh-fandoghi-promo.mp4"]')
+    !!doc.querySelector('video source[src="assets/videos/jazire_fandoqi_promo_portrait.mp4"]')
   );
   check(
     "promo video has matching poster",
@@ -289,7 +289,7 @@ console.log("\n=== C. about / privacy / contact / kartoniya / 404 ===\n");
     check("store.html: hero title", !!doc.querySelector(".store-hero h1") && doc.querySelector(".store-hero h1").textContent.includes("جزیره فندقی"));
     check("store.html: app icon", !!doc.querySelector(".store-app-icon img[src*='jazireh-fandoghi-app-icon']"));
     check("store.html: specs (8 detail cards)", doc.querySelectorAll(".store-spec-box .app-details > div").length === 8, "count=" + doc.querySelectorAll(".store-spec-box .app-details > div").length);
-    check("store.html: changelog versions", doc.querySelectorAll(".changelog-item").length === 2, "count=" + doc.querySelectorAll(".changelog-item").length);
+    check("store.html: changelog versions", doc.querySelectorAll(".changelog-item").length === 3, "count=" + doc.querySelectorAll(".changelog-item").length);
     check("store.html: download coming-soon", !!doc.querySelector(".download-button[data-coming-soon]"));
     check("store.html: report problem mailto", !!doc.querySelector('a[href^="mailto:farshadparsa2019@gmail.com?subject="]'));
     check("store.html: 3 support cards", doc.querySelectorAll(".support-card").length === 3, "count=" + doc.querySelectorAll(".support-card").length);
@@ -324,7 +324,7 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v3"));
+  check("sw: cache name", sw.includes("parsa-apps-v5"));
   check("sw: caches main pages", sw.includes("./island.html"));
   check("sw: network-first for css/js", /request\.destination === "style"[\s\S]*request\.destination === "script"/.test(sw));
   check("sw: video pass-through (no cache)", /request\.destination === "video"/.test(sw));
@@ -333,8 +333,8 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   ["assets/fonts/Vazirmatn-Bold.woff2",
    "assets/images/island/app-screen-1.jpg",
    "assets/images/island/jazireh-promo-cover.jpg",
-   "assets/images/island/mascot.jpg",
-   "assets/videos/jazireh-fandoghi-promo.mp4",
+   "assets/brand/jazireh-fandoghi-app-icon-512.png",
+   "assets/videos/jazire_fandoqi_promo_portrait.mp4",
    "assets/logo-sm.png",
    "icons/icon-512.png"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
