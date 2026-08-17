@@ -1,48 +1,11 @@
 /* ============================================================
-   پارسا اپس — Parsa Apps
+   پارسا اپس — Parsa-Apps
    Motion Engine | بدون هیچ کتابخانه خارجی
    Scroll Reveal / 3D Tilt / Ripple / Parallax / Slider /
-   Phone Wake / FAQ / Theme / PWA / Animated Logo
+   Phone Wake / FAQ / Theme / PWA
    ============================================================ */
 
-/* 🅿️ لوگوی متحرک Parsa-Apps — ورود حرف‌به‌حرف
-   کلاس .js فوراً اضافه می‌شود تا حالت مخفی حروف فقط با JS فعال باشد */
-document.documentElement.classList.add("js");
-
-(function () {
-  const logos = document.querySelectorAll(".logo-animated");
-  if (!logos.length) return;
-
-  const play = (el) => el.classList.add("played");
-
-  /* پخش انیمیشن وقتی لوگو در دید کاربر قرار گرفت */
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            play(entry.target);
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
-    logos.forEach((el) => io.observe(el));
-  } else {
-    logos.forEach(play);
-  }
-
-  /* ری‌پلی ورود حروف با هاور (مثل تایپ دوباره) */
-  logos.forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      el.classList.remove("played");
-      void el.offsetWidth; /* ری‌استارت انیمیشن با reflow */
-      el.classList.add("played");
-    });
-  });
-})();
-
+/* لوگوی رسمی یک GIF مستقل است و برای اجرا به جاوااسکریپت نیاز ندارد. */
 document.addEventListener("DOMContentLoaded", () => {
   "use strict";
 

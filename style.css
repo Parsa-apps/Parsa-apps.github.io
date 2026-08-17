@@ -1,5 +1,5 @@
 /* ============================================================
-   پارسا اپس — Parsa Apps
+   پارسا اپس — Parsa-Apps
    Main Stylesheet | RTL | No External Libraries
    - تم تیره استارتاپی (صفحه اصلی)
    - تم روشن کودکانه جزیره فندقی (island.html)
@@ -3600,23 +3600,45 @@ body.light .field textarea {
 }
 
 /* ============================================================
-   🅿️ لوگوی متحرک Parsa-Apps — ورود حرف‌به‌حرف
+   لوگوی اصلی Parsa-Apps — GIF حرف‌به‌حرف
    ============================================================ */
+
+/* picture یک نسخهٔ ثابت را برای کاربران حساس به حرکت انتخاب می‌کند. */
+.brand-logo-picture,
+.brand-logo-gif {
+  display: block;
+  line-height: 0;
+}
+
+.brand-logo-gif {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #030303;
+}
 
 .logo-animated .logo-mark {
   position: relative;
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  flex: 0 0 74px;
+  width: 74px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(251, 208, 111, 0.28);
+  border-radius: 18px;
+  background: #030303;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24), 0 0 24px rgba(251, 208, 111, 0.09);
 }
 
-.logo-animated .logo-mark img {
-  width: 46px;
-  height: 46px;
+.logo-animated .logo-mark .brand-logo-picture,
+.logo-animated .logo-mark .brand-logo-gif {
+  width: 100%;
+  height: 100%;
+}
+
+.logo-animated .logo-mark .brand-logo-gif {
   object-fit: contain;
-  border-radius: 14px;
-  animation: markFloat 5s ease-in-out infinite;
 }
 
 .logo-animated .logo-text {
@@ -3626,26 +3648,18 @@ body.light .field textarea {
   line-height: 1.35;
 }
 
-/* کلمهٔ Parsa-Apps با گرادیان طلایی برند */
-.logo-animated .logo-word {
+.logo-animated .logo-name {
   direction: ltr;
   font-family: "Vazirmatn", "Segoe UI", "Sora", system-ui, sans-serif;
-  font-size: 23px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 900;
   letter-spacing: 0.015em;
   white-space: nowrap;
-  background: linear-gradient(100deg, #f9d87a 0%, #f0a12e 28%, #ffd66b 48%, #ef7a1a 72%, #f9d87a 100%);
-  background-size: 220% 100%;
+  background: linear-gradient(100deg, #f9d87a, #f0a12e 32%, #ffd66b 52%, #ef7a1a 78%, #f9d87a);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: wordShimmer 7s linear infinite;
-}
-
-.logo-animated .logo-word .ch {
-  display: inline-block;
-  will-change: transform, opacity, filter;
 }
 
 .logo-animated .logo-sub {
@@ -3654,66 +3668,140 @@ body.light .field textarea {
   line-height: 1.4;
 }
 
-/* حالت اولیه: حروف مخفی — فقط وقتی جاوااسکریپت فعال است */
-.js .logo-animated .logo-word .ch { opacity: 0; }
-
-/* ورود حرف‌به‌حرف (با تأخیر پلکانی) */
-.js .logo-animated.played .logo-word .ch {
-  animation: chIn 0.6s cubic-bezier(0.22, 0.9, 0.3, 1) both;
-  animation-delay: calc(140ms + var(--i) * 85ms);
+/* نسخهٔ برجستهٔ لوگو در هیرو */
+.floating-card {
+  width: 330px;
+  height: 330px;
 }
 
-.js .logo-animated.played .logo-word .ch.ch-dash {
-  animation-name: chDashIn;
-  animation-duration: 0.5s;
+.floating-card .logo-shine-wrap,
+.floating-card .brand-logo-picture {
+  width: 252px;
 }
 
-@keyframes chIn {
-  0%   { opacity: 0; transform: translateY(-18px) rotate(12deg) scale(0.4); filter: blur(8px); }
-  55%  { opacity: 1; filter: blur(0); }
-  100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); filter: blur(0); }
+.floating-card .brand-logo-gif {
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.48), 0 0 35px rgba(251, 208, 111, 0.12);
 }
 
-@keyframes chDashIn {
-  0%   { opacity: 0; transform: scale(0); }
-  60%  { opacity: 1; transform: scale(1.45); }
-  100% { opacity: 1; transform: scale(1); }
+/* معرفی شخصی در صفحهٔ اصلی */
+.brand-intro-card {
+  position: relative;
+  max-width: 990px;
+  margin: 56px auto 8px;
+  padding: 34px;
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.35fr);
+  gap: 42px;
+  align-items: center;
+  text-align: right;
+  overflow: hidden;
+  border: 1px solid rgba(251, 208, 111, 0.28);
+  border-radius: 38px;
+  background: linear-gradient(135deg, rgba(251, 208, 111, 0.1), var(--surface) 45%, rgba(43, 179, 160, 0.08));
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
-@keyframes wordShimmer {
-  to { background-position: 220% 0; }
+.brand-intro-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.05), transparent 65%);
 }
 
-@keyframes markFloat {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50%      { transform: translateY(-6px) rotate(2deg); }
+.brand-intro-visual {
+  position: relative;
+  z-index: 1;
 }
 
-/* ---- نسخهٔ فوتر ---- */
+.brand-intro-visual .brand-logo-picture,
+.brand-intro-visual .brand-logo-gif {
+  width: 100%;
+}
+
+.brand-intro-visual .brand-logo-gif {
+  border-radius: 30px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.44);
+}
+
+.brand-intro-glow {
+  position: absolute;
+  inset: 8%;
+  z-index: -1;
+  border-radius: 50%;
+  background: rgba(251, 208, 111, 0.25);
+  filter: blur(38px);
+}
+
+.brand-intro-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.brand-intro-copy h3 {
+  margin: 10px 0 8px;
+  font-size: clamp(25px, 3.3vw, 36px);
+  color: var(--text);
+}
+
+.brand-intro-copy p {
+  max-width: none;
+  margin: 4px 0;
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 2.05;
+}
+
+.brand-intro-copy .founder-role {
+  margin-bottom: 2px;
+}
+
+.brand-intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.brand-intro-actions .btn {
+  padding: 12px 21px;
+}
+
+/* نسخهٔ فوتر */
 .footer-logo { align-items: flex-start; }
-.footer-logo .logo-mark img { width: 40px; height: 40px; border-radius: 12px; }
-.footer-logo .logo-word { font-size: 21px; }
+.footer-logo .logo-mark {
+  flex-basis: 64px;
+  width: 64px;
+  height: 62px;
+  border-radius: 15px;
+}
+.footer-logo .logo-name { font-size: 21px; }
 .footer-logo .logo-sub { color: #cfd8e6; }
 
-/* ---- نسخهٔ بزرگ صفحهٔ درباره ما ---- */
+/* صفحهٔ درباره ما و معرفی بنیان‌گذار */
 .about-logo-stage {
   position: relative;
   margin: 10px auto 40px;
-  padding: 64px 20px;
+  padding: 52px 20px 38px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
   text-align: center;
+  border: 1px solid rgba(251, 208, 111, 0.18);
   border-radius: 34px;
-  background: radial-gradient(ellipse at center, rgba(249, 216, 122, 0.14), transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(249, 216, 122, 0.14), transparent 68%);
   overflow: hidden;
 }
 
 .about-logo-stage .logo-halo {
   position: absolute;
   inset: 0;
-  border-radius: 34px;
   pointer-events: none;
   background: radial-gradient(circle at 50% 40%, rgba(239, 122, 26, 0.2), transparent 60%);
   filter: blur(12px);
@@ -3725,33 +3813,124 @@ body.light .field textarea {
   50%      { opacity: 1; transform: scale(1.03); }
 }
 
-.logo-animated.logo-hero { flex-direction: column; gap: 18px; }
-.logo-hero .logo-mark img {
-  width: clamp(84px, 16vw, 130px);
-  height: clamp(84px, 16vw, 130px);
-  border-radius: 26px;
+.logo-animated.logo-hero {
+  z-index: 1;
+  flex-direction: column;
+  gap: 16px;
 }
-.logo-hero .logo-word { font-size: clamp(40px, 9.5vw, 88px); letter-spacing: 0.02em; }
-.logo-hero .logo-sub { font-size: clamp(15px, 2.6vw, 19px); }
-.about-logo-note { font-size: 14.5px; color: var(--muted); }
 
-/* ---- موبایل ---- */
+.logo-hero .logo-mark {
+  width: clamp(250px, 56vw, 390px);
+  height: auto;
+  aspect-ratio: 640 / 624;
+  flex-basis: auto;
+  border-radius: 34px;
+}
+
+.logo-hero .logo-name { font-size: clamp(30px, 7vw, 54px); }
+.logo-hero .logo-sub { font-size: clamp(14px, 2.6vw, 18px); }
+.about-logo-note {
+  position: relative;
+  z-index: 1;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+
+.founder-avatar .brand-logo-picture {
+  width: 146px;
+}
+
+.founder-avatar .brand-logo-gif {
+  width: 100%;
+  border-radius: 28px;
+}
+
+/* کیت برند */
+.kit-card-featured {
+  grid-column: span 2;
+  border-color: rgba(251, 208, 111, 0.3);
+}
+
+.animated-logo-preview .brand-logo-picture,
+.animated-logo-preview .brand-logo-gif {
+  width: min(100%, 300px);
+}
+
+.animated-logo-preview .brand-logo-gif {
+  border-radius: 24px;
+}
+
+/* 404 */
+.error-brand {
+  display: block;
+  width: 150px;
+  margin: 0 auto 12px;
+}
+
+.error-brand .brand-logo-gif {
+  width: 100%;
+  border-radius: 25px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* موبایل */
 @media (max-width: 800px) {
-  .logo-animated .logo-mark img { width: 40px; height: 40px; border-radius: 12px; }
-  .logo-animated .logo-word { font-size: 18.5px; }
-  .footer-logo .logo-word { font-size: 18px; }
+  .logo-animated .logo-mark {
+    flex-basis: 60px;
+    width: 60px;
+    height: 58px;
+    border-radius: 15px;
+  }
+
+  .logo-animated .logo-name { font-size: 18px; }
+  .logo-animated .logo-sub { font-size: 10.5px; }
+
+  .floating-card {
+    width: min(310px, 84vw);
+    height: min(310px, 84vw);
+  }
+
+  .floating-card .logo-shine-wrap,
+  .floating-card .brand-logo-picture {
+    width: min(238px, 66vw);
+  }
+
+  .brand-intro-card {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+    padding: 26px;
+    gap: 26px;
+    text-align: center;
+  }
+
+  .brand-intro-visual {
+    width: min(285px, 80%);
+    margin-inline: auto;
+  }
+
+  .brand-intro-actions {
+    justify-content: center;
+  }
+
+  .footer-logo .logo-mark {
+    flex-basis: 58px;
+    width: 58px;
+    height: 57px;
+  }
+
+  .kit-card-featured { grid-column: span 1; }
 }
 
-/* ---- احترام به کاهش حرکت ---- */
+@media (max-width: 480px) {
+  .header .logo-text { display: none; }
+  .brand-intro-card { padding: 22px 17px; border-radius: 28px; }
+  .brand-intro-copy .founder-role { font-size: 11.5px; }
+  .brand-intro-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* GIF با picture به پوستر ثابت تبدیل می‌شود؛ حرکت‌های تزئینی نیز متوقف می‌شوند. */
 @media (prefers-reduced-motion: reduce) {
-  .js .logo-animated .logo-word .ch,
-  .js .logo-animated.played .logo-word .ch {
-    opacity: 1;
-    animation: none;
-  }
-  .logo-animated .logo-word,
-  .logo-animated .logo-mark img,
-  .about-logo-stage .logo-halo {
-    animation: none;
-  }
+  .logo-shine-wrap .shine-sweep { display: none; }
+  .about-logo-stage .logo-halo,
+  .brand-intro-glow { animation: none; }
 }

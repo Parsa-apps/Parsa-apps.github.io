@@ -1,15 +1,15 @@
 {
-  "name": "پارسا اپس | جزیره فندقی",
+  "name": "پارسا اپس | Parsa-Apps",
   "short_name": "پارسا اپس",
-  "description": "دنیایی از بازی، آموزش و خلاقیت برای کودکان",
+  "description": "استودیوی ساخت تجربه‌های دیجیتال خلاقانه و هوشمند",
   "lang": "fa",
   "dir": "rtl",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#050816",
-  "theme_color": "#ffb300",
-  "orientation": "portrait",
+  "background_color": "#030303",
+  "theme_color": "#0B1220",
   "icons": [
     {
       "src": "icons/icon-192.png",
