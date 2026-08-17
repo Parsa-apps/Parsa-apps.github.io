@@ -324,8 +324,10 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v5"));
+  check("sw: cache name", sw.includes("parsa-apps-v6"));
   check("sw: caches main pages", sw.includes("./island.html"));
+  check("sw: caches animated brand logo", sw.includes("./assets/brand/parsa-apps-animated-logo.gif"));
+  check("sw: caches static logo fallback", sw.includes("./assets/brand/parsa-apps-animated-logo-poster-512.png"));
   check("sw: network-first for css/js", /request\.destination === "style"[\s\S]*request\.destination === "script"/.test(sw));
   check("sw: video pass-through (no cache)", /request\.destination === "video"/.test(sw));
 
@@ -335,9 +337,17 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
    "assets/images/island/jazireh-promo-cover.jpg",
    "assets/brand/jazireh-fandoghi-app-icon-512.png",
    "assets/videos/jazire_fandoqi_promo_portrait.mp4",
-   "assets/logo-sm.png",
-   "assets/logo.svg",
-   "icons/icon-512.png"].forEach((f) => {
+   "assets/brand/parsa-apps-animated-logo.gif",
+   "assets/brand/parsa-apps-animated-logo-poster.png",
+   "assets/brand/parsa-apps-animated-logo-poster-192.png",
+   "assets/brand/parsa-apps-animated-logo-poster-512.png",
+   "icons/icon-192.png",
+   "icons/icon-512.png",
+   "assets/icons/favicon-16.png",
+   "assets/icons/favicon-32.png",
+   "assets/icons/icon-192.png",
+   "assets/icons/icon-512.png",
+   "favicon.ico"].forEach((f) => {
     check("exists: " + f, fs.existsSync(path.join(ROOT, f)));
   });
 }
@@ -360,37 +370,48 @@ console.log("\n=== E. مقاوم‌سازی نمایش محتوا (بدون Inte
   })());
 }
 
-console.log("\n=== F. لوگوی متحرک Parsa-Apps ===\n");
+console.log("\n=== F. لوگوی متحرک GIF — Parsa-Apps ===\n");
 {
   const pages = ["index.html", "island.html", "store.html", "about.html", "contact.html", "privacy.html", "kartoniya.html", "brand.html"];
+  const gifPath = "assets/brand/parsa-apps-animated-logo.gif";
+  const posterPath = "assets/brand/parsa-apps-animated-logo-poster-512.png";
+
   pages.forEach((page) => {
     const { doc, errors } = makeDom(page);
-    const word = doc.querySelector(".logo-animated .logo-word");
-    check(
-      page + ": animated logo in header",
-      !!word && word.querySelectorAll(".ch").length === 10,
-      "letters=" + (word ? word.querySelectorAll(".ch").length : 0)
-    );
-    check(
-      page + ": animated logo in footer",
-      !!doc.querySelector(".main-footer .footer-logo .logo-word")
-    );
+    const headerLogo = doc.querySelector(`.header img.brand-logo-gif[src="${gifPath}"]`);
+    const footerLogo = doc.querySelector(`.main-footer img.brand-logo-gif[src="${gifPath}"]`);
+    check(page + ": GIF logo in header", !!headerLogo);
+    check(page + ": GIF logo in footer", !!footerLogo);
+    check(page + ": reduced-motion poster source", !!doc.querySelector('.brand-logo-picture source[media*="prefers-reduced-motion"]'));
+    check(page + ": old HTML letter animation removed", doc.querySelectorAll(".logo-word .ch").length === 0);
     check(page + ": no runtime errors", errors.length === 0, errors.join(" | "));
   });
 
-  // ترتیب حروف باید کلمهٔ Parsa-Apps را بسازد
   const { doc } = makeDom("index.html");
-  const built = [...doc.querySelectorAll(".header .logo-animated .logo-word .ch")].map((el) => el.textContent).join("");
-  check("index.html: letters spell Parsa-Apps", built === "Parsa-Apps", built);
+  check("index.html: exact static brand spelling", doc.querySelector(".header .logo-name").textContent === "Parsa-Apps");
+  check("index.html: large GIF in hero", !!doc.querySelector(`.hero-logo img[src="${gifPath}"]`));
+  check("index.html: GIF in personal introduction", !!doc.querySelector(`.brand-intro-card img[src="${gifPath}"]`));
+  check("index.html: founder introduction", doc.querySelector(".brand-intro-card").textContent.includes("فرشاد پارسا"));
 
-  // صفحهٔ درباره ما — نسخهٔ بزرگ لوگو
   const { doc: aDoc } = makeDom("about.html");
-  check("about.html: hero logo stage", !!aDoc.querySelector(".about-logo-stage .logo-animated.logo-hero"));
-  check("about.html: hero letters count", aDoc.querySelectorAll(".logo-hero .ch").length === 10);
+  check("about.html: large GIF identity stage", !!aDoc.querySelector(`.about-logo-stage img[src="${gifPath}"]`));
+  check("about.html: GIF in founder introduction", !!aDoc.querySelector(`.founder-card img[src="${gifPath}"]`));
 
-  // بدون جاوااسکریپت حروف باید قابل مشاهده بمانند (no-js fallback با کلاس .js گیت شده)
-  const { doc: nDoc } = makeDom("index.html", { noObserver: true });
-  check("no-js: logo letters present in DOM", nDoc.querySelectorAll(".header .logo-animated .ch").length === 10);
+  const html404 = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
+  const doc404 = new JSDOM(html404).window.document;
+  check("404.html: branded GIF", !!doc404.querySelector(`.error-brand img[src="${gifPath}"]`));
+
+  const gif = fs.readFileSync(path.join(ROOT, gifPath));
+  check("brand asset: valid GIF signature", gif.subarray(0, 6).toString("ascii") === "GIF89a");
+  check("brand asset: compact web size", gif.length < 300 * 1024, "bytes=" + gif.length);
+
+  const generator = fs.readFileSync(path.join(ROOT, "tools/generate_animated_logo.py"), "utf8");
+  check("generator: exact Parsa-Apps word", generator.includes('WORD = "Parsa-Apps"'));
+  check("generator: letters start beyond right edge", generator.includes("start_x = width + 26"));
+  check("generator: writes GIF output", generator.includes("parsa-apps-animated-logo.gif"));
+
+  const poster = fs.readFileSync(path.join(ROOT, posterPath));
+  check("poster fallback: PNG signature", poster.subarray(1, 4).toString("ascii") === "PNG");
 }
 
 console.log("\n================================");

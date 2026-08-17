@@ -1,32 +1,27 @@
 {
-  "name": "پارسا اپس",
+  "name": "پارسا اپس | Parsa-Apps",
   "short_name": "پارسا اپس",
-  "description": "سازنده اپلیکیشن‌های خلاقانه و هوشمند در حوزه آموزش، سرگرمی و فناوری",
-  "id": "/",
-  "start_url": "/",
+  "description": "استودیوی ساخت تجربه‌های دیجیتال خلاقانه و هوشمند",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0B1220",
+  "background_color": "#030303",
   "theme_color": "#0B1220",
   "lang": "fa",
   "dir": "rtl",
   "icons": [
     {
-      "src": "assets/brand/parsa-apps-gold-192.png",
+      "src": "assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "assets/brand/parsa-apps-gold-512.png",
+      "src": "assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/brand/parsa-apps-gold-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }

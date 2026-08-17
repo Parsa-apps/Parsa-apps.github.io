@@ -1,13 +1,13 @@
 /* ============================================================
    پارسا اپس — Service Worker
-   نسخه‌ی کش: v5
+   نسخه‌ی کش: v6
    استراتژی:
    - صفحات (ناوبری): شبکه‌اول → کش → 404
    - HTML / CSS / JS: شبکه‌اول → کش (همیشه تازه؛ آفلاین از کش)
    - تصاویر / فونت / آیکون: کش‌اول + به‌روزرسانی پس‌زمینه
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v5";
+const CACHE_NAME = "parsa-apps-v6";
 
 const FILES_TO_CACHE = [
   "./",
@@ -18,12 +18,21 @@ const FILES_TO_CACHE = [
   "./privacy.html",
   "./contact.html",
   "./kartoniya.html",
+  "./brand.html",
   "./404.html",
   "./style.css",
   "./script.js",
   "./manifest.json",
-  "./assets/logo-sm.png",
-  "./assets/logo.svg",
+  "./site.webmanifest",
+  "./favicon.ico",
+  "./assets/brand/parsa-apps-animated-logo.gif",
+  "./assets/brand/parsa-apps-animated-logo-poster.png",
+  "./assets/brand/parsa-apps-animated-logo-poster-192.png",
+  "./assets/brand/parsa-apps-animated-logo-poster-512.png",
+  "./assets/icons/favicon-16.png",
+  "./assets/icons/favicon-32.png",
+  "./assets/icons/icon-192.png",
+  "./assets/icons/icon-512.png",
   "./assets/brand/jazireh-fandoghi-app-icon-192.png",
   "./assets/brand/jazireh-fandoghi-app-icon-512.png",
   "./assets/images/island/jazireh-promo-cover.jpg",
