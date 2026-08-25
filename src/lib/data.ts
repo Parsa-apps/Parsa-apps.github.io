@@ -71,7 +71,7 @@ export const apps: StudioApp[] = [
       "آموزش مفاهیم پایه پیش از مدرسه",
       "یادگیری غیرمستقیم از طریق بازی",
     ],
-    technology: ["Flutter", "Dart", "Firebase", "Android", "UI/UX", "AI-assisted"],
+    technology: ["Flutter", "Dart", "Firebase", "Android", "UI/UX"],
     status: "development",
     category: "آموزشی",
     ageRange: "۳ تا ۹ سال",
@@ -271,7 +271,7 @@ export const skills = [
   { name: "Java", year: "Good", icon: "☕", level: 78 },
   { name: "Firebase", year: "Good", icon: "🔥", level: 80 },
   { name: "UI/UX Design", year: "Strong", icon: "🎨", level: 90 },
-  { name: "Artificial Intelligence", year: "Good", icon: "🧠", level: 76 },
+  { name: "Git & GitHub", year: "Good", icon: "🔧", level: 80 },
 ];
 
 export const timeline = [

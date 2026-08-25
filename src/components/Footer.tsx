@@ -25,7 +25,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-sm leading-8 text-white/55">
-              Building the future of mobile experiences. استودیویی که با مهندسی دقیق، طراحی مدرن و هوش مصنوعی،
+              Building the future of mobile experiences. استودیویی که با مهندسی دقیق و طراحی مدرن،
               محصولات دیجیتال نسل جدید را می‌سازد.
             </p>
             <div className="mt-6 flex items-center gap-3">
@@ -68,7 +68,7 @@ export default function Footer() {
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row">
           <p>© ۱۴۰۵ پارسا اپس | تمامی حقوق محفوظ است</p>
           <p className="flex items-center gap-2">
-            ساخته‌شده با <span className="text-neon-pink">♥</span> و هوش مصنوعی
+            ساخته‌شده با <span className="text-neon-pink">♥</span> توسط تیم پارسا اپس
           </p>
         </div>
       </div>

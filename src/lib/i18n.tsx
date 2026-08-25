@@ -19,11 +19,11 @@ const dict: Dict = {
 
   "hero.kicker": { fa: "استودیو نرم‌افزار پرمیوم", en: "Premium Software Studio", ar: "استوديو برمجيات فاخر" },
   "hero.title.1": { fa: "ساخت آینده تجربه‌های موبایل", en: "Building the Future of Mobile", ar: "بناء مستقبل تطبيقات الجوال" },
-  "hero.title.2": { fa: "با خلاقیت و هوش مصنوعی", en: "Experiences With AI", ar: "بالإبداع والذكاء الاصطناعي" },
+  "hero.title.2": { fa: "با خلاقیت و مهندسی دقیق", en: "With Creativity & Precision", ar: "بالإبداع والهندسة الدقيقة" },
   "hero.sub": {
-    fa: "توسعه حرفه‌ای اپلیکیشن‌های اندروید و فلاتر، قدرت‌گرفته از فناوری مدرن و هوش مصنوعی.",
-    en: "Professional Android and Flutter development powered by modern technology and artificial intelligence.",
-    ar: "تطوير احترافي لتطبيقات أندرويد وفلوتن مدعوم بأحدث التقنيات والذكاء الاصطناعي.",
+    fa: "توسعه حرفه‌ای اپلیکیشن‌های اندروید و فلاتر، قدرت‌گرفته از مهندسی دقیق و طراحی مدرن.",
+    en: "Professional Android and Flutter development powered by modern technology and clean engineering.",
+    ar: "تطوير احترافي لتطبيقات أندرويد وفلوتن مدعوم بأحدث التقنيات والهندسة الدقيقة.",
   },
   "hero.cta.primary": { fa: "اکتشاف اپلیکیشن‌ها", en: "Explore Applications", ar: "استكشاف التطبيقات" },
   "hero.cta.secondary": { fa: "ارتباط با توسعه‌دهنده", en: "Contact Developer", ar: "تواصل مع المطور" },
