@@ -91,8 +91,18 @@ npm run preview    # پیش‌نمایش بیلد
 ## 🌐 استقرار (GitHub Pages)
 
 بیلد خروجی را در `dist/` تولید می‌کند و فایل `404.html` برای مسیریابی SPA
-به‌صورت خودکار ساخته می‌شود. برای انتشار، خروجی `dist/` را روی GitHub Pages
-قرار دهید (یا از workflow پیشنهادی `.github/workflows/deploy.yml` استفاده کنید).
+به‌صورت خودکار ساخته می‌شود.
+
+Workflow پیشنهادی استقرار خودکار در فایل
+[`contrib/github-pages.deploy.yml`](contrib/github-pages.deploy.yml) قرار دارد.
+برای فعال‌سازی:
+
+1. در تنظیمات مخزن، **Pages → Source** را روی **GitHub Actions** قرار دهید.
+2. فایل `contrib/github-pages.deploy.yml` را به `.github/workflows/deploy.yml` منتقل کنید
+   (این کار نیاز به اجازه `workflows` روی اکانت GitHub دارد) و آن را روی `main` بفرستید.
+3. پس از ادغام، سایت به‌صورت خودکار از خروجی `dist/` منتشر می‌شود.
+
+> تا فعال شدن workflow، می‌توانید خروجی `dist/` را به‌صورت دستی در `main` انتشار دهید.
 
 ## 📞 ارتباط
 
