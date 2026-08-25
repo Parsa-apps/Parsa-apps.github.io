@@ -3866,13 +3866,6 @@ body.light .field textarea {
 
 .logo-hero .logo-name { font-size: clamp(30px, 7vw, 54px); }
 .logo-hero .logo-sub { font-size: clamp(14px, 2.6vw, 18px); }
-.about-logo-note {
-  position: relative;
-  z-index: 1;
-  font-size: 14.5px;
-  color: var(--muted);
-}
-
 /* سینمایی ورود، جاسازی‌شده در جایگاه لوگوی صفحه درباره ما — بدون پرده و بدون قفل اسکرول */
 .about-intro {
   position: relative;
