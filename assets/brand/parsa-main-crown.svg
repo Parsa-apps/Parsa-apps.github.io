@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img" aria-label="تاج طلایی پارسا اپس">
+  <defs>
+    <linearGradient id="goldMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF8DE"/>
+      <stop offset="0.22" stop-color="#FBE193"/>
+      <stop offset="0.45" stop-color="#F2C14E"/>
+      <stop offset="0.66" stop-color="#D89A25"/>
+      <stop offset="0.85" stop-color="#A76E13"/>
+      <stop offset="1" stop-color="#7A4E0A"/>
+    </linearGradient>
+    <linearGradient id="goldBand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF3C9"/>
+      <stop offset="0.35" stop-color="#F5C857"/>
+      <stop offset="0.7" stop-color="#C88A1D"/>
+      <stop offset="1" stop-color="#8A5A10"/>
+    </linearGradient>
+    <linearGradient id="goldSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#FFFBE8" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="velvet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#93173C"/>
+      <stop offset="0.6" stop-color="#6E1029"/>
+      <stop offset="1" stop-color="#470A1E"/>
+    </linearGradient>
+    <radialGradient id="pearl" cx="0.35" cy="0.3" r="0.95">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFF3D6"/>
+      <stop offset="0.8" stop-color="#EBC57C"/>
+      <stop offset="1" stop-color="#B9862C"/>
+    </radialGradient>
+    <radialGradient id="ruby" cx="0.35" cy="0.3" r="0.95">
+      <stop offset="0" stop-color="#FFB3BE"/>
+      <stop offset="0.35" stop-color="#F5486A"/>
+      <stop offset="0.75" stop-color="#B01236"/>
+      <stop offset="1" stop-color="#6E0A24"/>
+    </radialGradient>
+    <radialGradient id="emerald" cx="0.35" cy="0.3" r="0.95">
+      <stop offset="0" stop-color="#C4FFE0"/>
+      <stop offset="0.35" stop-color="#3EDC8C"/>
+      <stop offset="0.75" stop-color="#128F52"/>
+      <stop offset="1" stop-color="#0A5C34"/>
+    </radialGradient>
+    <radialGradient id="sapphire" cx="0.35" cy="0.3" r="0.95">
+      <stop offset="0" stop-color="#C4E7FF"/>
+      <stop offset="0.35" stop-color="#4AA8F5"/>
+      <stop offset="0.75" stop-color="#1465BE"/>
+      <stop offset="1" stop-color="#0A3C80"/>
+    </radialGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#F9C450" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#softGlow)">
+    <!-- کلاه مخملی پشت پایه‌ها -->
+    <path d="M 78 212 C 130 118 220 82 320 82 C 420 82 510 118 562 212 Z" fill="url(#velvet)" opacity="0.95"/>
+
+    <!-- پایه‌های تاج -->
+    <path d="M 52 214
+             C 58 172 72 132 92 102
+             C 108 132 124 158 146 176
+             C 162 138 178 96 196 62
+             C 214 104 234 152 258 182
+             C 278 128 298 66 320 24
+             C 342 66 362 128 382 182
+             C 406 152 426 104 444 62
+             C 462 96 478 138 494 176
+             C 516 158 532 132 548 102
+             C 568 132 582 172 588 214
+             Z"
+          fill="url(#goldMain)" stroke="#6B4408" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- برق فلز روی پایه‌ها -->
+    <path d="M 310 46 C 302 86 296 122 292 156" fill="none" stroke="#FFFDF0" stroke-opacity="0.5" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 190 80 C 184 110 178 136 172 158" fill="none" stroke="#FFFDF0" stroke-opacity="0.38" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 450 80 C 456 110 462 136 468 158" fill="none" stroke="#FFFDF0" stroke-opacity="0.38" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 88 116 C 82 140 76 162 72 184" fill="none" stroke="#FFFDF0" stroke-opacity="0.3" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M 552 116 C 558 140 564 162 568 184" fill="none" stroke="#FFFDF0" stroke-opacity="0.3" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- گوی‌های مروارید سر پایه‌ها -->
+    <g stroke="#8A5A10" stroke-width="2">
+      <circle cx="92" cy="98" r="11" fill="url(#pearl)"/>
+      <circle cx="196" cy="58" r="13" fill="url(#pearl)"/>
+      <circle cx="320" cy="20" r="16" fill="url(#pearl)"/>
+      <circle cx="444" cy="58" r="13" fill="url(#pearl)"/>
+      <circle cx="548" cy="98" r="11" fill="url(#pearl)"/>
+    </g>
+    <g fill="#FFFFFF" opacity="0.85">
+      <circle cx="88" cy="94" r="3.2"/>
+      <circle cx="191" cy="53" r="3.8"/>
+      <circle cx="314" cy="14" r="4.6"/>
+      <circle cx="439" cy="53" r="3.8"/>
+      <circle cx="544" cy="94" r="3.2"/>
+    </g>
+
+    <!-- نوار اصلی تاج -->
+    <rect x="40" y="206" width="560" height="60" rx="28" fill="url(#goldBand)" stroke="#6B4408" stroke-width="3"/>
+    <rect x="54" y="212" width="532" height="12" rx="6" fill="url(#goldSheen)" opacity="0.85"/>
+    <rect x="48" y="246" width="544" height="12" rx="6" fill="#5C3A08" opacity="0.35"/>
+
+    <!-- جواهرهای نوار -->
+    <ellipse cx="320" cy="236" rx="20" ry="16" fill="url(#ruby)" stroke="#FFE9AD" stroke-width="2.5"/>
+    <circle cx="228" cy="236" r="12" fill="url(#emerald)" stroke="#FFE9AD" stroke-width="2"/>
+    <circle cx="412" cy="236" r="12" fill="url(#emerald)" stroke="#FFE9AD" stroke-width="2"/>
+    <circle cx="140" cy="236" r="10" fill="url(#sapphire)" stroke="#FFE9AD" stroke-width="2"/>
+    <circle cx="500" cy="236" r="10" fill="url(#sapphire)" stroke="#FFE9AD" stroke-width="2"/>
+    <g fill="url(#pearl)">
+      <circle cx="184" cy="236" r="5"/>
+      <circle cx="274" cy="236" r="5.5"/>
+      <circle cx="366" cy="236" r="5.5"/>
+      <circle cx="456" cy="236" r="5"/>
+    </g>
+    <g fill="#FFFFFF" opacity="0.9">
+      <circle cx="313" cy="229" r="4.5"/>
+      <circle cx="224" cy="231" r="3"/>
+      <circle cx="408" cy="231" r="3"/>
+      <circle cx="137" cy="232" r="2.6"/>
+      <circle cx="497" cy="232" r="2.6"/>
+    </g>
+  </g>
+</svg>

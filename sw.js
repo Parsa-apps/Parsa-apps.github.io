@@ -1,13 +1,13 @@
 /* ============================================================
    پارسا اپس — Service Worker
-   نسخه‌ی کش: v7
+   نسخه‌ی کش: v9
    استراتژی:
    - صفحات (ناوبری): شبکه‌اول → کش → 404
    - HTML / CSS / JS: شبکه‌اول → کش (همیشه تازه؛ آفلاین از کش)
    - تصاویر / فونت / آیکون: کش‌اول + به‌روزرسانی پس‌زمینه
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v8";
+const CACHE_NAME = "parsa-apps-v9";
 
 const FILES_TO_CACHE = [
   "./",
@@ -29,7 +29,7 @@ const FILES_TO_CACHE = [
   "./assets/brand/parsa-main-logo.jpg",
   "./assets/brand/parsa-main-mark.jpg",
   "./assets/brand/parsa-main-logo-transparent.png",
-  "./assets/brand/parsa-main-crown.png",
+  "./assets/brand/parsa-main-crown.svg",
   "./assets/brand/parsa-apps-animated-logo.gif",
   "./assets/brand/parsa-apps-animated-logo-poster.png",
   "./assets/brand/parsa-apps-animated-logo-poster-192.png",
