@@ -417,8 +417,14 @@ console.log("\n=== F. لوگوی اصلی جدید + سینمایی ورود —
   check("index.html: intro image preloaded", !!doc.querySelector(`link[rel="preload"][href="${introPath}"]`));
 
   const { doc: aDoc } = makeDom("about.html");
-  check("about.html: large mark identity stage", !!aDoc.querySelector(`.about-logo-stage img.logo-main-mark[src="${markPath}"]`));
+  check("about.html: cinematic main logo stage", !!aDoc.querySelector(`.about-logo-stage img.about-intro-logo[src="${introPath}"]`));
+  check("about.html: page intro overlay present", !!aDoc.getElementById("intro"));
+  check("about.html: intro engine linked", !!aDoc.querySelector('script[src="intro.js"]'));
+  check("about.html: js marker for intro gating", !!aDoc.querySelector("head script"));
+  check("about.html: looping logo lives in about slot", !!aDoc.getElementById("about-intro"));
+  check("about.html: looping crown + pieces present", aDoc.querySelectorAll("#about-intro .about-intro-piece").length === 5 && !!aDoc.querySelector("#about-intro .about-intro-crown"));
   check("about.html: mark in founder introduction", !!aDoc.querySelector(`.founder-card img.logo-main-mark[src="${markPath}"]`));
+  check("about.html: waits for page load before looping logo", !aDoc.getElementById("about-intro").classList.contains("is-playing"));
 
   const html404 = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
   const doc404 = new JSDOM(html404).window.document;
@@ -431,6 +437,8 @@ console.log("\n=== F. لوگوی اصلی جدید + سینمایی ورود —
   check("css: sheen masked by the logo itself", /(?:-webkit-)?mask:\s*url\("assets\/brand\/parsa-main-logo-transparent\.png"\)/.test(css));
   check("css: reduced-motion intro variant", css.includes("introLogoSimple"));
   check("css: hero/header revealed after intro", css.includes("body.is-loaded .hero"));
+  check("css: about-page shares soft load with hero/header", css.includes("body.is-loaded .about-page"));
+  check("css: about-page looping intro in logo slot", css.includes(".about-intro.is-playing") && css.includes(".about-intro.is-exit"));
 
   /* ایمنی موتور ورود */
   const introJs = fs.readFileSync(path.join(ROOT, "intro.js"), "utf8");

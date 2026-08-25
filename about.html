@@ -3,6 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    document.documentElement.classList.add("js");
+    /* بیمه‌ی نهایی: اگر intro.js به هر دلیل اجرا نشود، پرده‌ی ورود
+       هرگز روی محتوا نمی‌ماند (سقف سختِ مستقل از جاوااسکریپت موتور) */
+    setTimeout(function () {
+      if (document.body && !document.body.classList.contains("is-loaded")) {
+        document.body.classList.add("is-loaded");
+        document.body.classList.remove("intro-lock");
+        var introEl = document.getElementById("intro");
+        if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl);
+      }
+    }, 10000);
+  </script>
   <title>درباره ما | پارسا اپس</title>
   <meta name="description" content="درباره پارسا اپس — استودیوی خلاق طراحی و توسعه اپلیکیشن‌های موبایل به مدیریت فرشاد پارسا، برنامه‌نویس و مدیر ارشد؛ ساخت تجربه‌های دیجیتال زیبا، کاربردی و امن.">
   <meta name="theme-color" content="#050816">
@@ -16,10 +29,44 @@
   <link rel="preload" href="assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
+  <link rel="preload" href="assets/brand/parsa-main-logo-transparent.png" as="image" type="image/png" fetchpriority="high">
+  <link rel="preload" href="assets/brand/parsa-main-crown.png" as="image" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+  <!-- سینمایی ورود — همان لود نرم صفحه اصلی؛ پس از خروج، صفحه درباره ما کامل دیده می‌شود -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <canvas class="intro-dust" aria-hidden="true"></canvas>
+    <div class="intro-stage">
+      <div class="intro-float">
+        <span class="intro-bloom" aria-hidden="true"></span>
+        <span class="intro-orbit" aria-hidden="true"></span>
+        <span class="intro-orbit o2" aria-hidden="true"></span>
+        <div class="intro-logo-box">
+          <span class="intro-piece pc1" aria-hidden="true"></span>
+          <span class="intro-piece pc2" aria-hidden="true"></span>
+          <span class="intro-piece pc3" aria-hidden="true"></span>
+          <span class="intro-piece pc4" aria-hidden="true"></span>
+          <span class="intro-piece pc5" aria-hidden="true"></span>
+          <img class="intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="پارسا اپس" width="800" height="838">
+          <span class="intro-halo" aria-hidden="true"></span>
+          <span class="intro-burst" aria-hidden="true"></span>
+          <img class="intro-crown" src="assets/brand/parsa-main-crown.png" alt="تاج طلایی" aria-hidden="true">
+        </div>
+        <span class="intro-star st1" aria-hidden="true">✦</span>
+        <span class="intro-star st2" aria-hidden="true">✦</span>
+        <span class="intro-star st3" aria-hidden="true">✦</span>
+        <span class="intro-star st4" aria-hidden="true">✦</span>
+      </div>
+      <p class="intro-tagline">استودیو خلاق محصول دیجیتال</p>
+      <div class="intro-meter" aria-hidden="true">
+        <span class="intro-meter-fill"></span>
+        <span class="intro-meter-dot"></span>
+      </div>
+    </div>
+  </div>
 
   <div class="background-effects" aria-hidden="true">
     <span></span><span></span><span></span><span></span>
@@ -60,19 +107,33 @@
   <main>
     <section class="about-page">
       <h1>درباره پارسا اپس</h1>
-      <!-- لوگوی متحرک Parsa-Apps -->
+      <!-- لوگوی اصلی با انیمیشن سینمایی ورود — فقط جایگزین لوگوی همین بخش -->
       <div class="about-logo-stage">
-        <span class="logo-halo" aria-hidden="true"></span>
-        <a class="logo-box logo-animated logo-hero" href="index.html" aria-label="پارسا اپس | Parsa-Apps">
-          <span class="logo-mark">
-            <img class="logo-main-mark" src="assets/brand/parsa-main-mark.jpg" alt="لوگوی پارسا اپس" width="512" height="512" loading="eager" fetchpriority="high">
-          </span>
-          <span class="logo-text">
-            <span class="logo-name" dir="ltr">Parsa-Apps</span>
-            <span class="logo-sub">پارسا اپس — استودیوی خلاق محصول دیجیتال</span>
-          </span>
-        </a>
-        <p class="about-logo-note">لوگوی رسمی پارسا اپس — هر حرف از سمت راست وارد می‌شود تا نام Parsa-Apps کامل شود ✨</p>
+        <div class="about-intro" id="about-intro">
+          <div class="about-intro-stage">
+            <div class="about-intro-float">
+              <span class="about-intro-bloom" aria-hidden="true"></span>
+              <span class="about-intro-orbit" aria-hidden="true"></span>
+              <span class="about-intro-orbit o2" aria-hidden="true"></span>
+              <div class="about-intro-logo-box">
+                <span class="about-intro-piece pc1" aria-hidden="true"></span>
+                <span class="about-intro-piece pc2" aria-hidden="true"></span>
+                <span class="about-intro-piece pc3" aria-hidden="true"></span>
+                <span class="about-intro-piece pc4" aria-hidden="true"></span>
+                <span class="about-intro-piece pc5" aria-hidden="true"></span>
+                <img class="about-intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="لوگوی پارسا اپس" width="800" height="838" loading="eager" fetchpriority="high">
+                <span class="about-intro-halo" aria-hidden="true"></span>
+                <span class="about-intro-burst" aria-hidden="true"></span>
+                <img class="about-intro-crown" src="assets/brand/parsa-main-crown.png" alt="" aria-hidden="true">
+              </div>
+              <span class="about-intro-star st1" aria-hidden="true">✦</span>
+              <span class="about-intro-star st2" aria-hidden="true">✦</span>
+              <span class="about-intro-star st3" aria-hidden="true">✦</span>
+              <span class="about-intro-star st4" aria-hidden="true">✦</span>
+            </div>
+          </div>
+        </div>
+        <p class="about-logo-note">لوگوی رسمی پارسا اپس — مونتاژ قطعه‌به‌قطعه، هاله‌ی طلایی و فرود تاج؛ این سکانس تکرار می‌شود ✨</p>
       </div>
 
       <p class="lead">
@@ -270,5 +331,6 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script src="script.js"></script>
+  <script src="intro.js"></script>
 </body>
 </html>
