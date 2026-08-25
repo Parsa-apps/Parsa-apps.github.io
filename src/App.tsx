@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import SiteLayout from "@/layouts/SiteLayout";
 import Preloader from "@/components/Preloader";
@@ -15,10 +15,16 @@ const NotFound = lazy(() => import("@/pages/NotFound"));
 export default function App() {
   const [loading, setLoading] = useState(true);
 
+  // Absolute hard cap: even if the preloader somehow never calls onFinish,
+  // the loading overlay is dropped after 4.5s so content is always visible.
+  useEffect(() => {
+    const t = window.setTimeout(() => setLoading(false), 4500);
+    return () => window.clearTimeout(t);
+  }, []);
+
   return (
-    <>
+    <ErrorBoundary>
       {loading && <Preloader onFinish={() => setLoading(false)} />}
-      <ErrorBoundary>
       <Suspense
         fallback={
           <div className="grid min-h-screen place-items-center bg-[var(--bg)]">
@@ -41,7 +47,6 @@ export default function App() {
           </Route>
         </Routes>
       </Suspense>
-      </ErrorBoundary>
-    </>
+    </ErrorBoundary>
   );
 }

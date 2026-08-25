@@ -1,28 +1,57 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PARTICLES = Array.from({ length: 26 });
+
+/** Hard ceiling for the whole intro: the preloader must NEVER outlive this. */
+const FORCE_FINISH_MS = 3200;
 
 export default function Preloader({ onFinish }: { onFinish: () => void }) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
 
+  // Keep the latest callback in a ref: the animation must not depend on the
+  // identity of `onFinish`. An unstable prop used to re-run the effect,
+  // resetting progress forever and freezing the site on a black screen.
+  const finishRef = useRef(onFinish);
+  finishRef.current = onFinish;
+  const finishedRef = useRef(false);
+
   useEffect(() => {
+    if (finishedRef.current) return;
+
     let current = 0;
+    let guardTimeout = 0;
+
+    const finish = () => {
+      if (finishedRef.current) return;
+      finishedRef.current = true;
+      window.clearInterval(id);
+      window.clearTimeout(guardTimeout);
+      setProgress(100);
+      setDone(true);
+      window.setTimeout(() => finishRef.current(), 650);
+    };
+
     const id = window.setInterval(() => {
       current += Math.random() * 9 + 3;
       if (current >= 100) {
-        current = 100;
-        window.clearInterval(id);
-        window.setTimeout(() => {
-          setDone(true);
-          window.setTimeout(onFinish, 650);
-        }, 350);
+        finish();
+      } else {
+        setProgress(Math.round(current));
       }
-      setProgress(Math.min(100, Math.round(current)));
     }, 90);
-    return () => window.clearInterval(id);
-  }, [onFinish]);
+
+    // Worst case (throttled background tab, slow device, RNG hiccup):
+    // force-close after FORCE_FINISH_MS no matter what.
+    guardTimeout = window.setTimeout(finish, FORCE_FINISH_MS);
+
+    return () => {
+      window.clearInterval(id);
+      window.clearTimeout(guardTimeout);
+    };
+    // Empty deps on purpose: run exactly once for the lifetime of the intro.
+  }, []);
 
   const particles = useMemo(
     () =>
