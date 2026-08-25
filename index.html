@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("js");</script>
   <title>پارسا اپس | استودیو ساخت اپلیکیشن‌های خلاقانه</title>
   <meta name="description" content="پارسا اپس، استودیو ساخت اپلیکیشن‌های خلاقانه و تجربه‌های دیجیتال هوشمند برای نسل آینده. سازنده جزیره فندقی.">
   <meta name="theme-color" content="#050816">
@@ -24,17 +25,49 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="پارسا اپس | ساخت تجربه‌های دیجیتال خلاقانه">
   <meta property="og:description" content="استودیو ساخت اپلیکیشن‌های خلاقانه و هوشمند — سازنده جزیره فندقی">
-  <meta property="og:image" content="https://parsa-apps.github.io/assets/brand/parsa-apps-animated-logo-poster.png">
+  <meta property="og:image" content="https://parsa-apps.github.io/assets/brand/parsa-main-logo.jpg">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:alt" content="نشان طلایی Parsa-Apps">
   <meta property="og:url" content="https://parsa-apps.github.io/">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="preload" href="assets/brand/parsa-apps-animated-logo.gif" as="image" type="image/gif" fetchpriority="high">
+  <link rel="preload" href="assets/brand/parsa-main-logo-transparent.png" as="image" type="image/png" fetchpriority="high">
+  <link rel="preload" href="assets/brand/parsa-main-mark.jpg" as="image" type="image/jpeg" fetchpriority="high">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       سینمایی ورود — اولین چیزی که چشم بیننده می‌بیند
+       لوگوی اصلی طلایی: متمرکز شدن، درخشش، مدار نور،
+       ذرات طلایی، خط پیشرفت و خروج لنسی
+       (بدون جاوااسکریپت نمایش داده نمی‌شود؛ با prefers-reduced-motion
+       به نسخه‌ی ساده و سریع تبدیل می‌شود)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <canvas class="intro-dust" aria-hidden="true"></canvas>
+    <div class="intro-stage">
+      <div class="intro-float">
+        <span class="intro-bloom" aria-hidden="true"></span>
+        <span class="intro-orbit" aria-hidden="true"></span>
+        <span class="intro-orbit o2" aria-hidden="true"></span>
+        <div class="intro-logo-box">
+          <img class="intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="" width="800" height="780">
+          <span class="intro-sheen" aria-hidden="true"></span>
+        </div>
+        <span class="intro-star st1" aria-hidden="true">✦</span>
+        <span class="intro-star st2" aria-hidden="true">✦</span>
+        <span class="intro-star st3" aria-hidden="true">✦</span>
+        <span class="intro-star st4" aria-hidden="true">✦</span>
+      </div>
+      <p class="intro-tagline">استودیو خلاق محصول دیجیتال</p>
+      <div class="intro-meter" aria-hidden="true">
+        <span class="intro-meter-fill"></span>
+        <span class="intro-meter-dot"></span>
+      </div>
+    </div>
+  </div>
 
   <!-- هاله‌های نور پس‌زمینه -->
   <div class="background-effects" aria-hidden="true">
@@ -45,7 +78,7 @@
   <header class="header">
     <a class="logo-box logo-animated" href="index.html" aria-label="پارسا اپس | Parsa-Apps">
       <span class="logo-mark">
-        <picture class="brand-logo-picture"><source media="(prefers-reduced-motion: reduce)" srcset="assets/brand/parsa-apps-animated-logo-poster-192.png 192w, assets/brand/parsa-apps-animated-logo-poster-512.png 512w, assets/brand/parsa-apps-animated-logo-poster.png 909w"><img class="brand-logo-gif" src="assets/brand/parsa-apps-animated-logo.gif" alt="آیکون پارسا اپس" width="46" height="46"></picture>
+        <img class="logo-main-mark" src="assets/brand/parsa-main-mark.jpg" alt="لوگوی پارسا اپس" width="512" height="512" loading="eager" fetchpriority="high">
       </span>
       <span class="logo-text">
         <span class="logo-name" dir="ltr">Parsa-Apps</span>
@@ -113,7 +146,7 @@
           <span class="sparkle s2" aria-hidden="true">✦</span>
           <span class="sparkle s3" aria-hidden="true">✦</span>
           <span class="logo-shine-wrap">
-            <picture class="brand-logo-picture"><source media="(prefers-reduced-motion: reduce)" srcset="assets/brand/parsa-apps-animated-logo-poster-192.png 192w, assets/brand/parsa-apps-animated-logo-poster-512.png 512w, assets/brand/parsa-apps-animated-logo-poster.png 909w"><img class="brand-logo-gif" src="assets/brand/parsa-apps-animated-logo.gif" alt="لوگوی متحرک طلایی پارسا اپس؛ حروف Parsa-Apps از راست وارد می‌شوند" width="640" height="624" fetchpriority="high"></picture>
+            <img class="logo-main-hero" src="assets/brand/parsa-main-logo.jpg" alt="لوگوی طلایی پارسا اپس" width="909" height="886" fetchpriority="high">
             <span class="shine-sweep" aria-hidden="true"></span>
           </span>
         </div>
@@ -133,7 +166,7 @@
       <div class="brand-intro-card">
         <div class="brand-intro-visual">
           <span class="brand-intro-glow" aria-hidden="true"></span>
-          <picture class="brand-logo-picture"><source media="(prefers-reduced-motion: reduce)" srcset="assets/brand/parsa-apps-animated-logo-poster-192.png 192w, assets/brand/parsa-apps-animated-logo-poster-512.png 512w, assets/brand/parsa-apps-animated-logo-poster.png 909w"><img class="brand-logo-gif" src="assets/brand/parsa-apps-animated-logo.gif" alt="نشان متحرک Parsa-Apps" width="640" height="624" loading="lazy"></picture>
+          <img class="logo-main" src="assets/brand/parsa-main-logo.jpg" alt="لوگوی طلایی پارسا اپس" width="909" height="886" loading="lazy">
         </div>
         <div class="brand-intro-copy">
           <span class="founder-role">👨‍💻 بنیان‌گذار و برنامه‌نویس ارشد</span>
@@ -144,8 +177,9 @@
             با دقت و مسئولیت مستقیم دنبال می‌کنم.
           </p>
           <p>
-            این نشان طلایی، امضای پارسا اپس است؛ حروف آن یکی‌یکی از راست وارد می‌شوند
-            تا نام <bdi dir="ltr">Parsa-Apps</bdi> کامل شود.
+            این نشان طلایی، امضای پارسا اپس است؛ همان لوگویی که با نورپردازی
+            سینمایی و حلقه‌های نور، اولین چیزی است که هنگام ورود به سایت شما را
+            به استقبال می‌گیرد.
           </p>
           <div class="brand-intro-actions">
             <a href="about.html" class="btn primary">آشنایی بیشتر با من</a>
@@ -293,7 +327,7 @@
       <div class="footer-brand">
         <a class="logo-box logo-animated footer-logo" href="index.html" aria-label="پارسا اپس | Parsa-Apps">
           <span class="logo-mark">
-            <picture class="brand-logo-picture"><source media="(prefers-reduced-motion: reduce)" srcset="assets/brand/parsa-apps-animated-logo-poster-192.png 192w, assets/brand/parsa-apps-animated-logo-poster-512.png 512w, assets/brand/parsa-apps-animated-logo-poster.png 909w"><img class="brand-logo-gif" src="assets/brand/parsa-apps-animated-logo.gif" alt="آیکون پارسا اپس" width="40" height="40"></picture>
+            <img class="logo-main-mark" src="assets/brand/parsa-main-mark.jpg" alt="لوگوی پارسا اپس" width="512" height="512" loading="lazy">
           </span>
           <span class="logo-text">
             <span class="logo-name" dir="ltr">Parsa-Apps</span>
@@ -335,5 +369,6 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script src="script.js"></script>
+  <script src="intro.js"></script>
 </body>
 </html>
