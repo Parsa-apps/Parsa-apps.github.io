@@ -6,7 +6,7 @@
      background refresh so updates arrive on the next visit.
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v2";
+const CACHE_NAME = "parsa-apps-v3"; // bumped: purge caches left over from the raw-source deploys
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {

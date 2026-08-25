@@ -12,6 +12,10 @@ const notFound = resolve(dist, "404.html");
 try {
   copyFileSync(indexHtml, notFound);
 
+  // Disable Jekyll processing on GitHub Pages so hashed asset files that
+  // contain underscores are served verbatim.
+  writeFileSync(resolve(dist, ".nojekyll"), "");
+
   // Inject a tiny script that tells the router to render the 404 page when
   // the URL path is not a real route. The app reads this flag on boot.
   const html = readFileSync(notFound, "utf8");

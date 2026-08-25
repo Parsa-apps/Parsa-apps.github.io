@@ -1,6 +1,19 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+/** Cheap up-front probe: does this environment give us a WebGL context at all? */
+function webglSupported(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      typeof window.WebGLRenderingContext !== "undefined" &&
+      (canvas.getContext("webgl2") || canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    );
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Lightweight full-page WebGL scene: a slowly drifting star field with a
  * translucent wireframe ring for a subtle premium "orbit" feel.
@@ -10,14 +23,22 @@ export default function WebGLBackground() {
 
   useEffect(() => {
     const mount = mountRef.current;
-    if (!mount) return;
+    // Skip silently (no crash, no black screen) when WebGL is unavailable —
+    // e.g. software-rendering VMs, blocked GPUs, or hardened browsers.
+    if (!mount || !webglSupported()) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, mount.clientWidth / mount.clientHeight, 0.1, 600);
     camera.position.z = 42;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    } catch {
+      // Context creation can still fail after the support probe — degrade quietly.
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
