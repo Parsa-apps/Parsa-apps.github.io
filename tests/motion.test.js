@@ -324,7 +324,7 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v6"));
+  check("sw: cache name", sw.includes("parsa-apps-v7"));
   check("sw: caches main pages", sw.includes("./island.html"));
   check("sw: caches animated brand logo", sw.includes("./assets/brand/parsa-apps-animated-logo.gif"));
   check("sw: caches static logo fallback", sw.includes("./assets/brand/parsa-apps-animated-logo-poster-512.png"));
@@ -370,36 +370,78 @@ console.log("\n=== E. مقاوم‌سازی نمایش محتوا (بدون Inte
   })());
 }
 
-console.log("\n=== F. لوگوی متحرک GIF — Parsa-Apps ===\n");
+console.log("\n=== F. لوگوی اصلی جدید + سینمایی ورود — Parsa-Apps ===\n");
 {
-  const pages = ["index.html", "island.html", "store.html", "about.html", "contact.html", "privacy.html", "kartoniya.html", "brand.html"];
   const gifPath = "assets/brand/parsa-apps-animated-logo.gif";
   const posterPath = "assets/brand/parsa-apps-animated-logo-poster-512.png";
+  const markPath = "assets/brand/parsa-main-mark.jpg";
+  const fullPath = "assets/brand/parsa-main-logo.jpg";
+  const introPath = "assets/brand/parsa-main-logo-transparent.png";
+
+  /* لوگوی اصلی جدید: نشان مونوگرام در هدر و فوتر همه‌ی صفحات */
+  const pages = ["index.html", "island.html", "store.html", "about.html", "contact.html", "privacy.html", "kartoniya.html"];
 
   pages.forEach((page) => {
     const { doc, errors } = makeDom(page);
-    const headerLogo = doc.querySelector(`.header img.brand-logo-gif[src="${gifPath}"]`);
-    const footerLogo = doc.querySelector(`.main-footer img.brand-logo-gif[src="${gifPath}"]`);
-    check(page + ": GIF logo in header", !!headerLogo);
-    check(page + ": GIF logo in footer", !!footerLogo);
-    check(page + ": reduced-motion poster source", !!doc.querySelector('.brand-logo-picture source[media*="prefers-reduced-motion"]'));
+    check(page + ": main logo mark in header", !!doc.querySelector(`.header .logo-mark img.logo-main-mark[src="${markPath}"]`));
+    check(page + ": main logo mark in footer", !!doc.querySelector(`.main-footer .logo-mark img.logo-main-mark[src="${markPath}"]`));
+    check(page + ": old GIF header markup removed", !doc.querySelector(".header .brand-logo-picture"));
     check(page + ": old HTML letter animation removed", doc.querySelectorAll(".logo-word .ch").length === 0);
     check(page + ": no runtime errors", errors.length === 0, errors.join(" | "));
   });
 
+  /* صفحه‌ی کیت برند هنوز GIF متحرک قدیمی را مستند می‌کند */
+  {
+    const { doc, errors } = makeDom("brand.html");
+    check("brand.html: GIF logo in header", !!doc.querySelector(`.header img.brand-logo-gif[src="${gifPath}"]`));
+    check("brand.html: GIF logo in footer", !!doc.querySelector(`.main-footer img.brand-logo-gif[src="${gifPath}"]`));
+    check("brand.html: reduced-motion poster source", !!doc.querySelector('.brand-logo-picture source[media*="prefers-reduced-motion"]'));
+    check("brand.html: no runtime errors", errors.length === 0, errors.join(" | "));
+  }
+
   const { doc } = makeDom("index.html");
   check("index.html: exact static brand spelling", doc.querySelector(".header .logo-name").textContent === "Parsa-Apps");
-  check("index.html: large GIF in hero", !!doc.querySelector(`.hero-logo img[src="${gifPath}"]`));
-  check("index.html: GIF in personal introduction", !!doc.querySelector(`.brand-intro-card img[src="${gifPath}"]`));
+  check("index.html: main logo image in hero", !!doc.querySelector(`.hero-logo img.logo-main-hero[src="${fullPath}"]`));
+  check("index.html: main logo image in personal introduction", !!doc.querySelector(`.brand-intro-card img.logo-main[src="${fullPath}"]`));
   check("index.html: founder introduction", doc.querySelector(".brand-intro-card").textContent.includes("فرشاد پارسا"));
 
+  /* سینمایی ورود: اولین چیزی که بیننده می‌بیند */
+  check("index.html: intro cinematic present", !!doc.getElementById("intro"));
+  check("index.html: intro transparent logo", !!doc.querySelector(`#intro img.intro-logo[src="${introPath}"]`));
+  check("index.html: intro orbits (2)", doc.querySelectorAll("#intro .intro-orbit").length === 2);
+  check("index.html: intro dust canvas", !!doc.querySelector("#intro canvas.intro-dust"));
+  check("index.html: intro meter + dot", !!doc.querySelector("#intro .intro-meter .intro-meter-fill") && !!doc.querySelector("#intro .intro-meter .intro-meter-dot"));
+  check("index.html: intro tagline", !!doc.querySelector("#intro .intro-tagline"));
+  check("index.html: intro engine linked", !!doc.querySelector('script[src="intro.js"]'));
+  check("index.html: js marker for intro gating", !!doc.querySelector("head script"));
+  check("index.html: intro image preloaded", !!doc.querySelector(`link[rel="preload"][href="${introPath}"]`));
+
   const { doc: aDoc } = makeDom("about.html");
-  check("about.html: large GIF identity stage", !!aDoc.querySelector(`.about-logo-stage img[src="${gifPath}"]`));
-  check("about.html: GIF in founder introduction", !!aDoc.querySelector(`.founder-card img[src="${gifPath}"]`));
+  check("about.html: large mark identity stage", !!aDoc.querySelector(`.about-logo-stage img.logo-main-mark[src="${markPath}"]`));
+  check("about.html: mark in founder introduction", !!aDoc.querySelector(`.founder-card img.logo-main-mark[src="${markPath}"]`));
 
   const html404 = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
   const doc404 = new JSDOM(html404).window.document;
-  check("404.html: branded GIF", !!doc404.querySelector(`.error-brand img[src="${gifPath}"]`));
+  check("404.html: branded main logo mark", !!doc404.querySelector(`.error-brand img.logo-main-mark[src="${markPath}"]`));
+
+  /* استایل سینمایی ورود */
+  const css = fs.readFileSync(path.join(ROOT, "style.css"), "utf8");
+  check("css: intro hidden without JS", /\.intro\s*\{[^}]*display:\s*none;/.test(css));
+  check("css: intro cinematic keyframes", css.includes("@keyframes introLens") && css.includes("@keyframes introLogoIn") && css.includes("@keyframes introOrbitSpin"));
+  check("css: sheen masked by the logo itself", /(?:-webkit-)?mask:\s*url\("assets\/brand\/parsa-main-logo-transparent\.png"\)/.test(css));
+  check("css: reduced-motion intro variant", css.includes("introLogoSimple"));
+  check("css: hero/header revealed after intro", css.includes("body.is-loaded .hero"));
+
+  /* ایمنی موتور ورود */
+  const introJs = fs.readFileSync(path.join(ROOT, "intro.js"), "utf8");
+  check("intro.js: hard exit cap (never stuck)", /setTimeout\(finish, MAX\)/.test(introJs));
+  check("intro.js: skip on first interaction", introJs.includes("pointerdown") && introJs.includes("keydown"));
+  check("intro.js: reduced motion support", introJs.includes("prefers-reduced-motion"));
+  check("intro.js: removes intro node after exit", introJs.includes("removeChild(intro)"));
+  check("intro.js: runs only where #intro exists", introJs.includes('getElementById("intro")'));
+
+  const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+  check("sw: caches main logo assets", sw.includes("parsa-main-logo.jpg") && sw.includes("parsa-main-mark.jpg") && sw.includes("parsa-main-logo-transparent.png"));
 
   const gif = fs.readFileSync(path.join(ROOT, gifPath));
   check("brand asset: valid GIF signature", gif.subarray(0, 6).toString("ascii") === "GIF89a");
@@ -412,6 +454,15 @@ console.log("\n=== F. لوگوی متحرک GIF — Parsa-Apps ===\n");
 
   const poster = fs.readFileSync(path.join(ROOT, posterPath));
   check("poster fallback: PNG signature", poster.subarray(1, 4).toString("ascii") === "PNG");
+
+  /* دارایی‌های لوگوی اصلی */
+  const markBuf = fs.readFileSync(path.join(ROOT, "assets/brand/parsa-main-mark.jpg"));
+  check("main mark: valid JPEG signature", markBuf[0] === 0xff && markBuf[1] === 0xd8);
+  check("main mark: compact for header use", markBuf.length < 150 * 1024, "bytes=" + markBuf.length);
+  const introBuf = fs.readFileSync(path.join(ROOT, "assets/brand/parsa-main-logo-transparent.png"));
+  check("intro logo: valid PNG signature", introBuf.subarray(1, 4).toString("ascii") === "PNG");
+  const fullBuf = fs.readFileSync(path.join(ROOT, "assets/brand/parsa-main-logo.jpg"));
+  check("main logo: valid JPEG signature", fullBuf[0] === 0xff && fullBuf[1] === 0xd8);
 }
 
 console.log("\n================================");
