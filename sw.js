@@ -7,7 +7,7 @@
    - تصاویر / فونت / آیکون: کش‌اول + به‌روزرسانی پس‌زمینه
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v7";
+const CACHE_NAME = "parsa-apps-v8";
 
 const FILES_TO_CACHE = [
   "./",

@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>document.documentElement.classList.add("js");</script>
+  <script>
+    document.documentElement.classList.add("js");
+    /* بیمه‌ی نهایی: اگر intro.js به هر دلیل اجرا نشود، پرده‌ی ورود
+       هرگز روی محتوا نمی‌ماند (سقف سختِ مستقل از جاوااسکریپت موتور) */
+    setTimeout(function () {
+      if (document.body && !document.body.classList.contains("is-loaded")) {
+        document.body.classList.add("is-loaded");
+        document.body.classList.remove("intro-lock");
+        var introEl = document.getElementById("intro");
+        if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl);
+      }
+    }, 10000);
+  </script>
   <title>پارسا اپس | استودیو ساخت اپلیکیشن‌های خلاقانه</title>
   <meta name="description" content="پارسا اپس، استودیو ساخت اپلیکیشن‌های خلاقانه و تجربه‌های دیجیتال هوشمند برای نسل آینده. سازنده جزیره فندقی.">
   <meta name="theme-color" content="#050816">
@@ -26,7 +38,7 @@
   <meta property="og:title" content="پارسا اپس | ساخت تجربه‌های دیجیتال خلاقانه">
   <meta property="og:description" content="استودیو ساخت اپلیکیشن‌های خلاقانه و هوشمند — سازنده جزیره فندقی">
   <meta property="og:image" content="https://parsa-apps.github.io/assets/brand/parsa-main-logo.jpg">
-  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:alt" content="نشان طلایی Parsa-Apps">
   <meta property="og:url" content="https://parsa-apps.github.io/">
   <meta name="twitter:card" content="summary_large_image">
@@ -53,8 +65,18 @@
         <span class="intro-orbit" aria-hidden="true"></span>
         <span class="intro-orbit o2" aria-hidden="true"></span>
         <div class="intro-logo-box">
-          <img class="intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="" width="800" height="780">
-          <span class="intro-sheen" aria-hidden="true"></span>
+          <!-- تکه‌های لوگو: مونتاژ قطعه‌به‌قطعه (همه از یک تصویر با برش‌های مکمل) -->
+          <span class="intro-piece pc1" aria-hidden="true"></span>
+          <span class="intro-piece pc2" aria-hidden="true"></span>
+          <span class="intro-piece pc3" aria-hidden="true"></span>
+          <span class="intro-piece pc4" aria-hidden="true"></span>
+          <span class="intro-piece pc5" aria-hidden="true"></span>
+          <span class="intro-piece pc6" aria-hidden="true"></span>
+          <img class="intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="" width="800" height="870">
+          <!-- هاله‌ی طلایی چرخان + فرود تاج پادشاهی -->
+          <span class="intro-halo" aria-hidden="true"></span>
+          <span class="intro-burst" aria-hidden="true"></span>
+          <img class="intro-crown" src="assets/crown.svg" alt="" aria-hidden="true">
         </div>
         <span class="intro-star st1" aria-hidden="true">✦</span>
         <span class="intro-star st2" aria-hidden="true">✦</span>
@@ -146,7 +168,7 @@
           <span class="sparkle s2" aria-hidden="true">✦</span>
           <span class="sparkle s3" aria-hidden="true">✦</span>
           <span class="logo-shine-wrap">
-            <img class="logo-main-hero" src="assets/brand/parsa-main-logo.jpg" alt="لوگوی طلایی پارسا اپس" width="909" height="886" fetchpriority="high">
+            <img class="logo-main-hero" src="assets/brand/parsa-main-logo.jpg" alt="لوگوی پارسا اپس" width="900" height="900" fetchpriority="high">
             <span class="shine-sweep" aria-hidden="true"></span>
           </span>
         </div>
@@ -166,7 +188,7 @@
       <div class="brand-intro-card">
         <div class="brand-intro-visual">
           <span class="brand-intro-glow" aria-hidden="true"></span>
-          <img class="logo-main" src="assets/brand/parsa-main-logo.jpg" alt="لوگوی طلایی پارسا اپس" width="909" height="886" loading="lazy">
+          <img class="logo-main" src="assets/brand/parsa-main-logo.jpg" alt="لوگوی پارسا اپس" width="900" height="900" loading="lazy">
         </div>
         <div class="brand-intro-copy">
           <span class="founder-role">👨‍💻 بنیان‌گذار و برنامه‌نویس ارشد</span>

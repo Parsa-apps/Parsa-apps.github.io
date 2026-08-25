@@ -337,7 +337,21 @@ body.light .header.scrolled {
 .logo-shine-wrap {
   position: relative;
   display: block;
+  /* فیکس پرش RTL موبایل: نوار برق (shine-sweep) نباید از کادر لوگو بیرون بزند؛
+     بیرون‌زدنش هر ۴٫۲ ثانیه scrollWidth سند را در RTL جابه‌جا می‌کرد و
+     کل صفحه یک بار به راست پرش می‌کرد و برمی‌گشت. */
+  overflow: hidden;
 }
+
+/* مرورگرهای جدید: فقط برش افقی، تا هاله‌ی عمودی بالای/پایین لوگو
+   دقیقاً مثل قبل بماند (رفتار دسکتاپ دست‌نخورده) */
+@supports (overflow-x: clip) {
+  .logo-shine-wrap {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+}
+
 
 .logo-shine-wrap .shine-sweep {
   position: absolute;
@@ -4030,6 +4044,16 @@ body.light .field textarea {
   overflow: hidden;
 }
 
+/* ---- انتظار برای فایل لوگو (شبکه‌های کند) ----
+   تا وقتی PNG لوگو نرسیده، تایم‌لاین صحنه متوقف می‌ماند تا کاربر
+   فقط هاله و مدار را بی‌صاحب نبیند؛ با رسیدن لوگو (یا سقف ۲٫۵ ثانیه)
+   کل صحنه با هم و هماهنگ شروع می‌شود. */
+.js .intro--waiting:not(.intro--exit) .intro-stage,
+.js .intro--waiting:not(.intro--exit) .intro-stage * {
+  animation-play-state: paused !important;
+}
+
+
 /* ---- ذرات طلایی (canvas) ---- */
 .js .intro-dust {
   position: absolute;
@@ -4107,8 +4131,8 @@ body.light .field textarea {
   mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 1px));
   filter: drop-shadow(0 0 6px rgba(249, 200, 90, 0.8));
   animation:
-    introOrbitIn 1.1s ease 0.95s forwards,
-    introOrbitSpin 6.5s linear 0.95s infinite;
+    introOrbitIn 1.1s ease 2.2s forwards,
+    introOrbitSpin 6.5s linear 2.2s infinite;
   pointer-events: none;
 }
 
@@ -4125,29 +4149,75 @@ body.light .field textarea {
   );
   filter: drop-shadow(0 0 4px rgba(249, 200, 90, 0.6));
   animation:
-    introOrbitIn 1.1s ease 1.2s forwards,
-    introOrbitSpinRev 9s linear 1.2s infinite;
+    introOrbitIn 1.1s ease 2.35s forwards,
+    introOrbitSpinRev 9s linear 2.35s infinite;
 }
 
-/* لوگو: متمرکز شدن سینمایی (focus-pull) + درخشش دائمی */
+/* لوگو: مونتاژ قطعه‌به‌قطعه — هر تکه از یک جهت با بلور و درخشش می‌آید
+   و روی جای خود «قفل» می‌شود؛ در انتها لوگوی کامل بدون درز جانشین می‌شود */
 .js .intro-logo-box {
   position: relative;
   line-height: 0;
-  opacity: 0;
-  transform: scale(1.16);
-  filter: blur(18px) brightness(0.55);
-  animation:
-    introLogoIn 1.25s cubic-bezier(0.19, 1, 0.22, 1) 0.12s forwards,
-    introLogoGlow 3.6s ease-in-out 1.9s infinite;
+  animation: introLogoGlow 3.6s ease-in-out 2.3s infinite;
 }
 
+.js .intro-piece {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: url("assets/brand/parsa-main-logo-transparent.png") center / 100% 100% no-repeat;
+  opacity: 0;
+  transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.14);
+  filter: blur(12px) brightness(1.7);
+  animation: introPieceIn 0.95s cubic-bezier(0.18, 0.9, 0.24, 1.12) var(--d) forwards;
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+}
+
+.js .intro-piece.pc1 {
+  clip-path: polygon(0 0, 55% 0, 40% 55%, 0 62%);
+  --dx: -132%; --dy: -26%; --rot: -14deg; --d: 0.2s;
+}
+
+.js .intro-piece.pc2 {
+  clip-path: polygon(55% 0, 100% 0, 100% 58%, 40% 55%);
+  --dx: 132%; --dy: -30%; --rot: 12deg; --d: 0.38s;
+}
+
+.js .intro-piece.pc3 {
+  clip-path: polygon(0 62%, 40% 55%, 46% 76%, 0 76%);
+  --dx: -142%; --dy: 20%; --rot: 10deg; --d: 0.56s;
+}
+
+.js .intro-piece.pc4 {
+  clip-path: polygon(40% 55%, 100% 58%, 100% 76%, 46% 76%);
+  --dx: 142%; --dy: 24%; --rot: -9deg; --d: 0.74s;
+}
+
+.js .intro-piece.pc5 {
+  clip-path: polygon(0 76%, 100% 76%, 100% 92%, 0 92%);
+  --dx: 0%; --dy: 175%; --rot: 0deg; --d: 0.98s;
+}
+
+.js .intro-piece.pc6 {
+  clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 100%);
+  --dx: 0%; --dy: 235%; --rot: 0deg; --d: 1.14s;
+}
+
+/* لوگوی کامل: بعد از نشستن تکه‌ها، بدون درز جانشین می‌شود */
 .js .intro-logo {
+  position: relative;
+  z-index: 2;
   display: block;
   width: 100%;
   height: auto;
+  opacity: 0;
+  animation: introLogoSolidify 0.5s ease 2.2s forwards;
 }
 
-/* برق نور که دقیقاً از روی شکل لوگو می‌گذرد (mask = خود لوگو) */
+/* برق نور روی لوگو (mask = خود لوگو): در تایم‌لاین مونتاژ استفاده نمی‌شود
+   — فینال با هاله‌ی چرخان، فلاش تاج و درخشش لوگو انجام می‌شود — اما
+   قاعده و ماسک برای سازگاری آینده نگه داشته شده است. */
 .js .intro-sheen {
   position: absolute;
   inset: 0;
@@ -4164,7 +4234,70 @@ body.light .field textarea {
   mix-blend-mode: screen;
   transform: translateX(-130%) skewX(-16deg);
   opacity: 0;
-  animation: introSheen 1.5s cubic-bezier(0.4, 0, 0.2, 1) 1.25s 2;
+  pointer-events: none;
+}
+
+/* هاله‌ی طلایی چرخان دور لوگوی کامل (فینال مونتاژ) */
+.js .intro-halo {
+  position: absolute;
+  inset: -9%;
+  z-index: 2;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 214, 120, 0.07) 58deg,
+    rgba(255, 226, 150, 0.55) 98deg,
+    rgba(255, 246, 220, 0.98) 118deg,
+    rgba(255, 214, 120, 0.07) 178deg,
+    transparent 240deg,
+    transparent 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6.5px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 6.5px), #000 calc(100% - 2px));
+  filter: drop-shadow(0 0 13px rgba(249, 200, 90, 0.8));
+  opacity: 0;
+  animation:
+    introFadeIn 0.9s ease 2.25s forwards,
+    introHaloSpin 7s linear 2.25s infinite;
+  pointer-events: none;
+}
+
+/* تاج پادشاهی: از بالا فرود می‌آید، روی «سر» لوگو می‌نشیند و می‌درخشد */
+.js .intro-crown {
+  position: absolute;
+  z-index: 5;
+  top: 1%;
+  left: 50%;
+  width: 33%;
+  margin-left: -16.5%;
+  opacity: 0;
+  transform: translateY(-190%) rotate(-16deg) scale(1.3);
+  filter: blur(5px) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
+  animation:
+    introCrownDrop 1.05s cubic-bezier(0.32, 1.16, 0.4, 1) 2.9s forwards,
+    introCrownGlow 2.8s ease-in-out 4.05s infinite;
+  pointer-events: none;
+}
+
+/* فلاش طلایی لحظه‌ی نشستن تاج */
+.js .intro-burst {
+  position: absolute;
+  z-index: 4;
+  top: -14%;
+  left: 50%;
+  width: 44%;
+  aspect-ratio: 1;
+  margin-left: -22%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 240, 200, 0.95) 0%,
+    rgba(255, 214, 120, 0.5) 30%,
+    transparent 62%
+  );
+  opacity: 0;
+  animation: introBurst 0.85s cubic-bezier(0.16, 0.84, 0.34, 1) 3.5s forwards;
   pointer-events: none;
 }
 
@@ -4183,10 +4316,10 @@ body.light .field textarea {
   pointer-events: none;
 }
 
-.js .intro-star.st1 { top: 6%; right: 9%; font-size: 15px; animation-delay: 1.5s, 2.9s; }
-.js .intro-star.st2 { top: 24%; left: 1%; font-size: 11px; animation-delay: 1.75s, 3.4s; }
-.js .intro-star.st3 { bottom: 16%; right: -1%; font-size: 12px; animation-delay: 2s, 3.9s; }
-.js .intro-star.st4 { bottom: 3%; left: 14%; font-size: 17px; animation-delay: 2.2s, 4.3s; }
+.js .intro-star.st1 { top: 6%; right: 9%; font-size: 15px; animation-delay: 2.3s, 3.7s; }
+.js .intro-star.st2 { top: 24%; left: 1%; font-size: 11px; animation-delay: 2.5s, 4.1s; }
+.js .intro-star.st3 { bottom: 16%; right: -1%; font-size: 12px; animation-delay: 2.7s, 4.4s; }
+.js .intro-star.st4 { bottom: 3%; left: 14%; font-size: 17px; animation-delay: 2.9s, 4.7s; }
 
 /* شعار کوتاه زیر لوگو */
 .js .intro-tagline {
@@ -4198,7 +4331,7 @@ body.light .field textarea {
   text-shadow: 0 0 18px rgba(249, 196, 80, 0.35);
   opacity: 0;
   transform: translateY(12px);
-  animation: introTagline 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.95s forwards;
+  animation: introTagline 0.9s cubic-bezier(0.22, 1, 0.36, 1) 3.4s forwards;
 }
 
 /* خط پیشرفت طلایی + نقطه‌ی درخشان نوک آن */
@@ -4308,6 +4441,68 @@ body.light .field textarea {
   }
 }
 
+/* جانشینی لوگوی کامل پس از مونتاژ تکه‌ها (حذف درزهای برخورد) */
+@keyframes introLogoSolidify {
+  to { opacity: 1; }
+}
+
+/* ورود هر تکه: از بیرون با بلور و درخشش، قفل‌شدن روی جای خود */
+@keyframes introPieceIn {
+  0% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.14);
+    filter: blur(12px) brightness(1.7);
+  }
+  55% { opacity: 1; }
+  72% { filter: blur(0) brightness(1.3); }
+  84% { transform: translate(0, 0) rotate(0deg) scale(0.986); }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    filter: blur(0) brightness(1);
+  }
+}
+
+/* چرخش هاله‌ی طلایی */
+@keyframes introHaloSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* فرود تاج: پایین می‌آید، ریباند نرم، می‌نشیند */
+@keyframes introCrownDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-190%) rotate(-16deg) scale(1.3);
+    filter: blur(5px) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
+  }
+  28% { opacity: 1; filter: blur(0) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45)); }
+  58% { transform: translateY(-18%) rotate(4deg) scale(1); }
+  74% { transform: translateY(-34%) rotate(-2deg) scale(1.03); }
+  100% {
+    opacity: 1;
+    transform: translateY(-26%) rotate(0deg) scale(1);
+    filter: blur(0) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.42));
+  }
+}
+
+/* درخشش آرام تاج پس از نشستن */
+@keyframes introCrownGlow {
+  0%, 100% {
+    filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 9px rgba(249, 196, 80, 0.25));
+  }
+  50% {
+    filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 24px rgba(255, 214, 120, 0.65));
+  }
+}
+
+/* فلاش لحظه‌ی نشستن تاج */
+@keyframes introBurst {
+  0%   { opacity: 0; transform: scale(0.3); }
+  22%  { opacity: 0.95; }
+  100% { opacity: 0; transform: scale(1.75); }
+}
+
 @keyframes introLogoGlow {
   0%, 100% {
     filter: blur(0) brightness(1) drop-shadow(0 0 16px rgba(249, 196, 80, 0.22));
@@ -4401,7 +4596,11 @@ body.light .field textarea {
   .js .intro-orbit,
   .js .intro-sheen,
   .js .intro-star,
-  .js .intro-bloom {
+  .js .intro-bloom,
+  .js .intro-piece,
+  .js .intro-crown,
+  .js .intro-halo,
+  .js .intro-burst {
     display: none;
   }
 
@@ -4409,9 +4608,7 @@ body.light .field textarea {
     animation: none;
   }
 
-  .js .intro-logo-box {
-    transform: none;
-    filter: blur(0) brightness(1);
+  .js .intro-logo {
     animation: introLogoSimple 0.5s ease 0.05s forwards;
   }
 
