@@ -44,6 +44,7 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preload" href="assets/brand/parsa-main-logo-transparent.png" as="image" type="image/png" fetchpriority="high">
+  <link rel="preload" href="assets/brand/parsa-main-crown.png" as="image" type="image/png" fetchpriority="high">
   <link rel="preload" href="assets/brand/parsa-main-mark.jpg" as="image" type="image/jpeg" fetchpriority="high">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -52,10 +53,8 @@
 
   <!-- ═══════════════════════════════════════════════════════════
        سینمایی ورود — اولین چیزی که چشم بیننده می‌بیند
-       لوگوی اصلی طلایی: متمرکز شدن، درخشش، مدار نور،
-       ذرات طلایی، خط پیشرفت و خروج لنسی
-       (بدون جاوااسکریپت نمایش داده نمی‌شود؛ با prefers-reduced-motion
-       به نسخه‌ی ساده و سریع تبدیل می‌شود)
+       لوگوی رسمی جدید: مونتاژ تکه‌ها، ظهور هاله‌ی طلایی،
+       فرود تاج طلایی پادشاهی روی سر لوگو و خروج نرم
        ═══════════════════════════════════════════════════════════ -->
   <div class="intro" id="intro" aria-hidden="true">
     <canvas class="intro-dust" aria-hidden="true"></canvas>
@@ -65,18 +64,19 @@
         <span class="intro-orbit" aria-hidden="true"></span>
         <span class="intro-orbit o2" aria-hidden="true"></span>
         <div class="intro-logo-box">
-          <!-- تکه‌های لوگو: مونتاژ قطعه‌به‌قطعه (همه از یک تصویر با برش‌های مکمل) -->
+          <!-- تکه‌های بدنه‌ی لوگو: مونتاژ قطعه‌به‌قطعه تا کامل شدن -->
           <span class="intro-piece pc1" aria-hidden="true"></span>
           <span class="intro-piece pc2" aria-hidden="true"></span>
           <span class="intro-piece pc3" aria-hidden="true"></span>
           <span class="intro-piece pc4" aria-hidden="true"></span>
           <span class="intro-piece pc5" aria-hidden="true"></span>
-          <span class="intro-piece pc6" aria-hidden="true"></span>
-          <img class="intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="" width="800" height="870">
-          <!-- هاله‌ی طلایی چرخان + فرود تاج پادشاهی -->
+          <!-- لوگوی کامل رسمی -->
+          <img class="intro-logo" src="assets/brand/parsa-main-logo-transparent.png" alt="پارسا اپس" width="800" height="838">
+          <!-- هاله‌ی طلایی دور لوگو پس از تکمیل -->
           <span class="intro-halo" aria-hidden="true"></span>
           <span class="intro-burst" aria-hidden="true"></span>
-          <img class="intro-crown" src="assets/crown.svg" alt="" aria-hidden="true">
+          <!-- فرود تاج طلایی پادشاهی روی سر لوگو -->
+          <img class="intro-crown" src="assets/brand/parsa-main-crown.png" alt="تاج طلایی" aria-hidden="true">
         </div>
         <span class="intro-star st1" aria-hidden="true">✦</span>
         <span class="intro-star st2" aria-hidden="true">✦</span>
@@ -163,7 +163,7 @@
       <div class="hero-logo">
         <div class="floating-card">
           <span class="ring" aria-hidden="true"></span>
-          <img class="crown-hero" src="assets/crown.svg" alt="تاج طلایی پارسا اپس" aria-hidden="true">
+          <img class="crown-hero" src="assets/brand/parsa-main-crown.png" alt="تاج طلایی پارسا اپس" aria-hidden="true">
           <span class="sparkle s1" aria-hidden="true">✦</span>
           <span class="sparkle s2" aria-hidden="true">✦</span>
           <span class="sparkle s3" aria-hidden="true">✦</span>

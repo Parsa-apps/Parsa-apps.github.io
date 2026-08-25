@@ -29,6 +29,7 @@ const FILES_TO_CACHE = [
   "./assets/brand/parsa-main-logo.jpg",
   "./assets/brand/parsa-main-mark.jpg",
   "./assets/brand/parsa-main-logo-transparent.png",
+  "./assets/brand/parsa-main-crown.png",
   "./assets/brand/parsa-apps-animated-logo.gif",
   "./assets/brand/parsa-apps-animated-logo-poster.png",
   "./assets/brand/parsa-apps-animated-logo-poster-192.png",

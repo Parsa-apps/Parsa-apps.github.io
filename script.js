@@ -449,4 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
      17) لود نرم صفحه
   ----------------------------- */
   document.body.classList.add("loaded");
+  if (!document.getElementById("intro")) {
+    document.body.classList.add("is-loaded");
+  }
 });
