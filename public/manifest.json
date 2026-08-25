@@ -1,0 +1,25 @@
+{
+  "name": "پارسا اپس | Parsa Apps Studio",
+  "short_name": "Parsa Apps",
+  "description": "Building the future of mobile experiences. استودیوی ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر.",
+  "lang": "fa",
+  "dir": "rtl",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#05060e",
+  "theme_color": "#05060e",
+  "categories": ["productivity", "education", "entertainment"],
+  "icons": [
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/brand/parsa-apps-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "پارسا استور", "url": "/store", "description": "مشاهده همه اپلیکیشن‌های پارسا اپس" },
+    { "name": "جزیره فندقی", "url": "/apps/fandoghi", "description": "دنیای یادگیری و بازی کودکان" }
+  ]
+}

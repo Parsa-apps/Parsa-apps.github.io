@@ -1,50 +1,103 @@
-# پارسا اپس
+# پارسا اپس | Parsa Apps Studio
 
-وب‌سایت رسمی استودیوی [Parsa-Apps](https://parsa-apps.github.io/) — ساخت تجربه‌های دیجیتال خلاقانه.
+> Building the future of mobile experiences — استودیوی نرم‌افزار پرمیوم فرشاد پارسا.
 
-## صفحات
+وب‌سایت رسمی [Parsa Apps](https://parsa-apps.github.io/) که از یک صفحه استاتیک ساده به یک **استودیوی برند دیجیتال پرمیوم** بازسازی شده است.
 
-| صفحه | فایل |
+---
+
+## ✨ چه چیزی ساخته شد
+
+- 🎬 **تجربه ورود سینمایی** با انیمیشن لوگو، حلقه‌های مداری و ذرات نور
+- 🌌 **هیروی سه‌بعدی** با گوشی موکاپ، عناصر شناور و پس‌زمینه WebGL (Three.js)
+- 📱 **پارسا استور** — میکرواستور رسمی همه اپلیکیشن‌ها با فیلتر و کارت‌های تعاملی
+- 🏝️ **صفحه محصول اختصاصی برای هر اپ** (جزیره فندقی، کارتونیا و پروژه‌های آینده)
+- 🧠 **آزمایشگاه هوش مصنوعی** با فلوچارت توسعه و انیمیشن شبکه عصبی
+- 👨‍💻 **پروفایل توسعه‌دهنده** فرشاد پارسا با تاج طلایی و تایم‌لاین
+- 🧩 **مهارت‌ها، پروژه‌ها، تماس و حریم خصوصی** با انیمیشن‌های مدرن
+- 🌍 **معماری چندزبانه** (فارسی اصلی RTL + آماده انگلیسی/عربی)
+- 📲 **PWA** با Service Worker برای نصب و کارکرد آفلاین
+- ⚡ **بهینه برای موبایل، SEO و دسترسی**
+
+## 🧱 تکنولوژی
+
+| لایه | فناوری |
 | --- | --- |
-| خانه (تم تیره استارتاپی) | `index.html` |
-| جزیره فندقی — لندینگ اپ کودک | `island.html` |
-| استور جزیره فندقی — نسخه‌ها، تغییرات و دانلود | `store.html` |
-| کارتونیا — اپ تماشای کارتون | `kartoniya.html` |
-| درباره ما | `about.html` |
-| تماس با ما | `contact.html` |
-| کیت برند | `brand.html` |
-| حریم خصوصی | `privacy.html` |
-| صفحه ۴۰۴ | `404.html` |
+| فریم‌ورک | React 18 + TypeScript |
+| بیلد | Vite |
+| استایل | Tailwind CSS + Glassmorphism |
+| انیمیشن | Framer Motion + GSAP + Three.js / WebGL |
+| مسیریابی | React Router (SPA) |
+| PWA | Web App Manifest + Service Worker |
+| فونت | Vazirmatn (self-hosted) |
 
-## فایل‌های اصلی
-
-- `style.css` — تمام طراحی، انیمیشن‌ها و تم‌های دارک/لایت (بدون کتابخانه خارجی)
-- `script.js` — موتور تعاملات: اسکرول ریویل، 3D Tilt، Ripple، پارالکس، اسلایدشو گوشی، FAQ، تم
-- `manifest.json` + `sw.js` — نصب PWA و کش آفلاین
-- `assets/fonts/` — فونت وزیرمتن self-host شده
-- `assets/images/island/` — اسکرین‌شات‌های موکاپ گوشی و کاور تریلر
-
-## تست
+## 🚀 اجرای محلی
 
 ```bash
-npm install --no-save jsdom   # فقط بار اول
-node tests/motion.test.js
+npm install
+npm run dev        # توسعه
+npm run build      # بیلد نهایی در dist/
+npm run preview    # پیش‌نمایش بیلد
 ```
 
-## ساختار دارایی‌ها
+## 📁 ساختار پروژه
 
 ```
-assets/
-├── fonts/          ← وزیرمتن (woff2)
-├── brand/          ← لوگوها و کاورهای شبکه اجتماعی
-├── images/
-│   └── island/     ← اسکرین‌های اپ + کاور ویدئوی معرفی + ماسکوت
-└── videos/         ← ویدئوی معرفی جزیره فندقی
-icons/              ← آیکون‌های PWA
+├── index.html                 # ورودی Vite + متا/SEO/PWA
+├── src/
+│   ├── main.tsx               # بوت‌استرپ + Service Worker
+│   ├── App.tsx                # روتر + لودینگ سینمایی
+│   ├── index.css              # Tailwind + طراحی پایه
+│   ├── lib/
+│   │   ├── data.ts            # ✅ افزودن اپ جدید اینجا
+│   │   └── i18n.tsx           # چندزبانگی
+│   ├── components/            # Navbar, Footer, UI, Apps, WebGL, Cursor
+│   ├── layouts/SiteLayout.tsx
+│   └── pages/                 # Home, Store, AppDetail, About, Contact, Privacy, 404
+├── public/                    # اسیت‌ها، فونت‌ها، manifest، sw.js، sitemap
+└── scripts/post-build.mjs     # ساخت 404.html برای SPA روی GitHub Pages
 ```
 
-## نکته
+## ➕ افزودن اپلیکیشن جدید
 
-ویدئوی معرفی «جزیره فندقی» از مسیر
-`assets/videos/jazireh-fandoghi-promo.mp4` در صفحه محصول پخش می‌شود.
-دکمه دانلود اپ تا انتشار رسمی، اعلان «به‌زودی» نمایش می‌دهد.
+فقط یک آیتم به آرایه `apps` در `src/lib/data.ts` اضافه کنید. صفحه محصول، استور،
+پروژه‌ها و دانلود به‌صورت خودکار ساخته می‌شوند:
+
+```ts
+{
+  slug: "my-app",
+  name: "اسم برنامه",
+  nameEn: "My App",
+  tagline: "...",
+  description: "...",
+  longDescription: "...",
+  icon: "/assets/my-app-icon.png",
+  cover: "/assets/my-app-cover.jpg",
+  screenshots: ["/assets/s1.jpg"],
+  features: ["..."],
+  educationalBenefits: ["..."],
+  technology: ["Flutter", "Dart"],
+  status: "development",        // یا "released"
+  category: "آموزشی",
+  ageRange: "۳ تا ۸ سال",
+  size: "52 MB",
+  version: "1.0.0",
+  updated: "به‌زودی",
+  androidMin: "Android 8+",
+  palette: { from: "#4fd8eb", to: "#ffb347", accent: "#7ef2ff" },
+}
+```
+
+## 🌐 استقرار (GitHub Pages)
+
+بیلد خروجی را در `dist/` تولید می‌کند و فایل `404.html` برای مسیریابی SPA
+به‌صورت خودکار ساخته می‌شود. برای انتشار، خروجی `dist/` را روی GitHub Pages
+قرار دهید (یا از workflow پیشنهادی `.github/workflows/deploy.yml` استفاده کنید).
+
+## 📞 ارتباط
+
+- ایمیل: `farshadparsa2019@gmail.com`
+- تلگرام: [@Parsaappsadmin](https://t.me/Parsaappsadmin)
+- اینستاگرام: [@parsa.apps](https://instagram.com/parsa.apps)
+
+**© ۱۴۰۵ پارسا اپس | تمامی حقوق محفوظ است**
