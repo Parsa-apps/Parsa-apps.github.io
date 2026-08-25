@@ -8,10 +8,10 @@ import { AppIcon, PhoneMockup, StatusBadge, StoreCard } from "@/components/apps"
 const teaserApps = apps.slice(0, 4);
 const featured = apps.find((a) => a.slug === "fandoghi")!;
 
-const aiSteps = [
-  { n: "01", icon: "🧠", title: "تحلیل هوشمند", text: "استفاده از هوش مصنوعی برای تحلیل نیاز کاربر و ساختاردهی دقیق محصول." },
+const processSteps = [
+  { n: "01", icon: "🎯", title: "تحلیل دقیق", text: "تحلیل عمیق نیاز کاربر و ساختاردهی دقیق محصول پیش از شروع توسعه." },
   { n: "02", icon: "🎨", title: "طراحی داده‌محور", text: "تجربه کاربری مدرن و راست‌چین فارسی بر پایه داده و الگوهای روز دنیا." },
-  { n: "03", icon: "⚙️", title: "توسعه با دستیار AI", text: "کدنویسی سریع‌تر و تمیزتر با بازبینی خودکار و تست هوشمند کد." },
+  { n: "03", icon: "⚙️", title: "مهندسی تمیز", text: "کدنویسی سریع‌تر و تمیزتر با بازبینی دقیق و تست خودکار کد." },
   { n: "04", icon: "🚀", title: "انتشار و بهبود", text: "پایش کاربران و به‌روزرسانی منظم برای تجربه‌ای همیشه بهتر." },
 ];
 
@@ -19,7 +19,7 @@ const values = [
   { icon: "💡", title: "خلاقیت", text: "ایده‌های نو برای دنیای دیجیتال" },
   { icon: "⚙️", title: "مهندسی دقیق", text: "کدنویسی تمیز، تست و استانداردهای کیفیت" },
   { icon: "🎨", title: "طراحی", text: "ساخت تجربه‌های زیبا و کاربردی" },
-  { icon: "🤖", title: "هوش مصنوعی", text: "توسعه هوشمند و آینده‌نگر" },
+  { icon: "🚀", title: "نوآوری", text: "به‌کارگیری فناوری‌های روز دنیا" },
 ];
 
 export default function Home() {
@@ -111,7 +111,7 @@ export default function Home() {
               </motion.div>
               <motion.div className="absolute bottom-20 -left-2 hidden sm:block" animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }}>
                 <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass">
-                  <span className="text-neon-violet">🧠</span> AI-assisted
+                  <span className="text-neon-violet">🎯</span> Clean Code
                 </div>
               </motion.div>
             </div>
@@ -121,7 +121,7 @@ export default function Home() {
 
       {/* ===================== MARQUEE ===================== */}
       <section className="relative py-8">
-        <Marquee items={["Flutter", "Dart", "Kotlin", "Android", "Java", "Firebase", "UI/UX", "Artificial Intelligence", "Material 3", "Mobile Games"]} />
+        <Marquee items={["Flutter", "Dart", "Kotlin", "Android", "Java", "Firebase", "UI/UX", "Material 3", "Mobile Games", "Clean Code"]} />
       </section>
 
       {/* ===================== STUDIO STATEMENT ===================== */}
@@ -134,7 +134,7 @@ export default function Home() {
             </h2>
             <p className="mt-5 max-w-xl leading-8 text-white/60">
               ما فقط برنامه نمی‌سازیم؛ تجربه‌های دیجیتال باکیفیت خلق می‌کنیم. از مهندسی دقیق و طراحی مدرن
-              تا هوش مصنوعی و استانداردهای روز دنیا، هر محصول نشانه‌ای از تعهد ما به کیفیت است.
+              تا استانداردهای روز دنیا، هر محصول نشانه‌ای از تعهد ما به کیفیت است.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/about" className="btn btn-ghost">درباره فرشاد پارسا</Link>
@@ -221,17 +221,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===================== AI LAB ===================== */}
+      {/* ===================== DEVELOPMENT PROCESS ===================== */}
       <section className="section-shell relative">
         <div className="pointer-events-none absolute inset-0 grid-bg" />
         <div className="container-px">
           <SectionHeader
-            eyebrow="⚡ آزمایشگاه هوش مصنوعی"
-            title={<>Powerd by <span className="text-gradient">Artificial Intelligence</span></>}
-            subtitle="در پارسا اپس، هوش مصنوعی فقط یک شعار نیست؛ بخشی از جریان واقعی ساخت محصول است."
+            eyebrow="⚡ فرآیند توسعه محصول"
+            title={<>از ایده تا انتشار، <span className="text-gradient">قدم به قدم</span></>}
+            subtitle="در پارسا اپس، هر محصول از تحلیل نیاز تا انتشار و بهبود، در یک مسیر مهندسی‌شده و دقیق ساخته می‌شود."
           />
 
-          {/* neural visual */}
+          {/* process visual */}
           <Reveal delay={0.1} className="mt-12">
             <div className="card relative overflow-hidden p-6 sm:p-10">
               <div className="absolute inset-0 opacity-30">
@@ -245,7 +245,7 @@ export default function Home() {
                 </svg>
               </div>
               <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-                {aiSteps.map((s, i) => (
+                {processSteps.map((s, i) => (
                   <Reveal key={s.n} delay={i * 0.08}>
                     <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-neon-violet/40 hover:bg-white/[0.06]">
                       <div className="flex items-center justify-between">
@@ -279,11 +279,11 @@ export default function Home() {
               />
             </h2>
             <p className="mt-4 text-white/65">
-              بنیان‌گذار و برنامه‌نویس ارشد پارسا اپس — توسعه‌دهنده اندروید و فلاتر، طراح UI/UX و توسعه‌دهنده
-              هوش‌مصنوعی‌محور. هر خط کد با تست، بازبینی و عشق به جزئیات نوشته می‌شود.
+              بنیان‌گذار و برنامه‌نویس ارشد پارسا اپس — توسعه‌دهنده اندروید و فلاتر و طراح UI/UX.
+              هر خط کد با تست، بازبینی و عشق به جزئیات نوشته می‌شود.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {["Android Developer", "Flutter Developer", "UI/UX Designer", "AI Assisted Developer"].map((r) => (
+              {["Android Developer", "Flutter Developer", "UI/UX Designer", "Software Architect"].map((r) => (
                 <span key={r} className="chip" dir="ltr">{r}</span>
               ))}
             </div>

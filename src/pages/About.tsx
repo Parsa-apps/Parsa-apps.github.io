@@ -7,7 +7,7 @@ const roles = [
   { icon: "🤖", title: "Android Developer", text: "توسعه اپلیکیشن‌های اندرویدی سبک، سریع و بهینه." },
   { icon: "💠", title: "Flutter Developer", text: "تجربه‌های یکپارچه و مدرن با فلاتر و دارت." },
   { icon: "🎨", title: "UI/UX Designer", text: "طراحی رابط و تجربه کاربری فارسی و راست‌چین." },
-  { icon: "🧠", title: "AI Assisted Developer", text: "توسعه هوشمند و سریع‌تر با کمک هوش مصنوعی." },
+  { icon: "🏗️", title: "Software Architect", text: "طراحی معماری دقیق و مقیاس‌پذیر برای محصولات پایدار." },
 ];
 
 export default function About() {
@@ -49,7 +49,7 @@ export default function About() {
         </div>
       </section>
 
-      <Marquee items={["Android", "Flutter", "Kotlin", "Java", "Dart", "Firebase", "UI/UX", "AI", "Material 3", "RTL Persian UX"]} className="py-4" />
+      <Marquee items={["Android", "Flutter", "Kotlin", "Java", "Dart", "Firebase", "UI/UX", "Material 3", "RTL Persian UX", "Clean Code"]} className="py-4" />
 
       {/* mission */}
       <section className="section-shell">

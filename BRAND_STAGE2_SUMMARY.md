@@ -19,7 +19,7 @@
 **فایل‌های تحویل:**
 - `assets/logo.svg` — وکتور آیکون اصلی (جدید) — استفاده در هدر سایت
 - `assets/brand/parsa-apps-icon.svg` — وکتور تمیز آیکون
-- `assets/logo.png` (512) — رستر اصلی سایت (از AI)
+- `assets/logo.png` (512) — رستر اصلی سایت
 - `assets/brand/parsa-apps-icon-1024.png` — سورس 1024 اصلی
 - `assets/brand/parsa-apps-icon-512.png` / 192 / 180 — سایزهای استاندارد
 - `assets/brand/parsa-apps-logo-horizontal.svg` — افقی با متن فارسی روشن
