@@ -452,4 +452,76 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("intro")) {
     document.body.classList.add("is-loaded");
   }
+
+  /* -----------------------------
+     18) لوگوی صفحه درباره ما:
+         همان سکانس سینمایی ورود، فقط در جایگاه لوگو،
+         بدون قفل اسکرول، با تکرار نرم
+  ----------------------------- */
+  (function loopAboutIntro() {
+    var root = document.getElementById("about-intro");
+    if (!root) return;
+
+    var reduced = false;
+    try {
+      reduced =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (e) {
+      reduced = false;
+    }
+
+    if (reduced) {
+      root.classList.add("is-static");
+      return;
+    }
+
+    var HOLD_MS = 5800;
+    var EXIT_MS = 900;
+    var timer = 0;
+
+    function restart() {
+      root.classList.remove("is-exit");
+      root.classList.remove("is-playing");
+      void root.offsetWidth;
+      root.classList.add("is-playing");
+    }
+
+    function cycle() {
+      if (document.hidden) {
+        timer = window.setTimeout(cycle, 800);
+        return;
+      }
+      restart();
+      timer = window.setTimeout(function () {
+        root.classList.add("is-exit");
+        timer = window.setTimeout(cycle, EXIT_MS);
+      }, HOLD_MS);
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      window.clearTimeout(timer);
+      if (!document.hidden) cycle();
+    });
+
+    /* تا پایان لود نرم صفحه (پرده ورود) صبر می‌کند تا ساختار انیمیشن سایت به‌هم نریزد */
+    function startWhenPageReady() {
+      if (document.getElementById("intro") && !document.body.classList.contains("is-loaded")) {
+        if (typeof MutationObserver === "function") {
+          var mo = new MutationObserver(function () {
+            if (!document.body.classList.contains("is-loaded")) return;
+            mo.disconnect();
+            cycle();
+          });
+          mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+        } else {
+          timer = window.setTimeout(startWhenPageReady, 200);
+        }
+        return;
+      }
+      cycle();
+    }
+
+    startWhenPageReady();
+  })();
 });
