@@ -324,7 +324,7 @@ console.log("\n=== D. سلامتی فایل‌ها ===\n");
   check("manifest: icons", manifest.icons.length === 2);
 
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-  check("sw: cache name", sw.includes("parsa-apps-v7"));
+  check("sw: cache name", sw.includes("parsa-apps-v8"));
   check("sw: caches main pages", sw.includes("./island.html"));
   check("sw: caches animated brand logo", sw.includes("./assets/brand/parsa-apps-animated-logo.gif"));
   check("sw: caches static logo fallback", sw.includes("./assets/brand/parsa-apps-animated-logo-poster-512.png"));
