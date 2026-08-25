@@ -57,11 +57,11 @@ band = mask & (alpha > 8) & (alpha < 252)
 scale = 255.0 / np.maximum(alpha, 8.0)
 for c in range(3):
     soft[:, :, c] = np.where(band, np.minimum(255.0, a[:, :, c] * scale), a[:, :, c])
-alpha[alpha < 9] = 0  # دود بسیار ضعیف حذف شود
+alpha[alpha < 12] = 0  # دود بسیار ضعیف حذف شود
 
 # ---------- ۳) نرم‌سازی آلفا: فشرده‌ی گامایی هاله‌ی کم‌رمق + پرِ لبه‌ی بوم
 # (تا لبه‌ی مربع برش، هیچ‌گاه به‌صورت خط/کادر دیده نشود)
-alpha = (alpha / 255.0) ** 1.25 * 255.0
+alpha = (alpha / 255.0) ** 1.55 * 255.0
 Hh, Ww = alpha.shape
 F = 0.06  # ضخامت پرِ لبه
 yy = np.arange(Hh)[:, None]

@@ -102,8 +102,11 @@ def build_ico(images, path):
 
 print("== خروجی‌ها ==")
 
-# ۱) لوگوی شفاف اصلی (اینترو + ماسک برق) — ۸۰۰ پیکسل
-png_opt(master.resize((800, 800), Image.LANCZOS), f"{ROOT}/assets/brand/parsa-main-logo-transparent.png")
+# ۱) لوگوی شفاف اصلی (اینترو + ماسک برق) — عرض ۸۰۰ با نسبت واقعی
+_w, _h = master.size
+_tw = 800
+_th = round(_h * _tw / _w)
+png_opt(master.resize((_tw, _th), Image.LANCZOS), f"{ROOT}/assets/brand/parsa-main-logo-transparent.png")
 
 # ۲) نشان هدر/فوتر/درباره‌ما (JPG — محدودیت تست: <۱۵۰KB)
 jpg_dark(emblem, 512, f"{ROOT}/assets/brand/parsa-main-mark.jpg")

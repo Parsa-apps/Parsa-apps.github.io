@@ -177,8 +177,8 @@
       engineStarted = true;
       t0 = now();
 
-      var MIN = reduced ? 1000 : 3050;
-      var MAX = reduced ? 1700 : 6500;
+      var MIN = reduced ? 1000 : 4450;
+      var MAX = reduced ? 1700 : 7600;
 
       /* ۱) سقف سخت: اول از همه ثبت می‌شود تا محتوا هرگز گیر نکند */
       setTimeout(finish, MAX);
