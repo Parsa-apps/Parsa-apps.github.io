@@ -337,7 +337,21 @@ body.light .header.scrolled {
 .logo-shine-wrap {
   position: relative;
   display: block;
+  /* فیکس پرش RTL موبایل: نوار برق (shine-sweep) نباید از کادر لوگو بیرون بزند؛
+     بیرون‌زدنش هر ۴٫۲ ثانیه scrollWidth سند را در RTL جابه‌جا می‌کرد و
+     کل صفحه یک بار به راست پرش می‌کرد و برمی‌گشت. */
+  overflow: hidden;
 }
+
+/* مرورگرهای جدید: فقط برش افقی، تا هاله‌ی عمودی بالای/پایین لوگو
+   دقیقاً مثل قبل بماند (رفتار دسکتاپ دست‌نخورده) */
+@supports (overflow-x: clip) {
+  .logo-shine-wrap {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+}
+
 
 .logo-shine-wrap .shine-sweep {
   position: absolute;
@@ -4030,6 +4044,16 @@ body.light .field textarea {
   overflow: hidden;
 }
 
+/* ---- انتظار برای فایل لوگو (شبکه‌های کند) ----
+   تا وقتی PNG لوگو نرسیده، تایم‌لاین صحنه متوقف می‌ماند تا کاربر
+   فقط هاله و مدار را بی‌صاحب نبیند؛ با رسیدن لوگو (یا سقف ۲٫۵ ثانیه)
+   کل صحنه با هم و هماهنگ شروع می‌شود. */
+.js .intro--waiting:not(.intro--exit) .intro-stage,
+.js .intro--waiting:not(.intro--exit) .intro-stage * {
+  animation-play-state: paused !important;
+}
+
+
 /* ---- ذرات طلایی (canvas) ---- */
 .js .intro-dust {
   position: absolute;
@@ -4133,6 +4157,8 @@ body.light .field textarea {
 .js .intro-logo-box {
   position: relative;
   line-height: 0;
+  overflow: hidden; /* برق نور (sheen) فقط داخل کادر لوگو دیده شود؛ وگرنه
+                       نسخه‌ی ماسک‌شده‌اش هنگام حرکت، لبه‌ی صفحه ظاهر می‌شد */
   opacity: 0;
   transform: scale(1.16);
   filter: blur(18px) brightness(0.55);

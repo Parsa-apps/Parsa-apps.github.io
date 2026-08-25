@@ -7,6 +7,8 @@
    نکات فنی:
    - فقط صفحه‌ای که حاوی #intro باشد (حالت‌های پنهان اولیه
      در CSS داخل scope .js قرار دارند؛ بدون JS صفحه دست‌نخورده است).
+   - گیت لوگو: روی شبکه‌ی کند، شروع صحنه تا رسیدن PNG لوگو (سقف ۲٫۵
+     ثانیه) نگه داشته می‌شود تا لوگو همیشه سرِ وقت ظاهر شود.
    - خروج: max(حداقل زمان، لود کامل صفحه) + سقف سخت زمانی.
      سقف سخت «اول از همه» ثبت می‌شود تا حتی اگر خطایی رخ دهد،
      محتوا هرگز پشت پردهی ورود گیر نکند.
@@ -113,19 +115,36 @@
       reduced = false;
     }
     var exited = false;
+    var dust = null;
     var t0 = 0;
+
+    /* قفل اسکرول از همان ابتدا (حتی در حالت انتظار برای لوگو) */
     try {
-      t0 = window.performance ? performance.now() : Date.now();
-    } catch (e) {
-      t0 = Date.now();
+      body.classList.add("intro-lock");
+    } catch (e) {}
+
+    /* ذرات طلایی: از همان ابتدا روشن می‌شوند تا حتی در کسری از ثانیه
+       که صحنه برای رسیدن لوگو نگه داشته شده، صفحه «مرده» نباشد */
+    if (!reduced) {
+      try {
+        var dustCanvas = intro.querySelector(".intro-dust");
+        var dustCtx = dustCanvas && dustCanvas.getContext ? dustCanvas.getContext("2d") : null;
+        if (dustCtx && typeof dustCtx.clearRect === "function") dust = startDust(dustCtx, dustCanvas);
+      } catch (e) {
+        dust = null;
+      }
+    }
+
+    function now() {
+      try {
+        return window.performance ? performance.now() : Date.now();
+      } catch (e) {
+        return Date.now();
+      }
     }
 
     function elapsed() {
-      try {
-        return (window.performance ? performance.now() : Date.now()) - t0;
-      } catch (e) {
-        return Date.now() - t0;
-      }
+      return now() - t0;
     }
 
     function finish() {
@@ -136,6 +155,7 @@
       } catch (e) {}
       try {
         intro.classList.add("intro--exit");
+        intro.classList.remove("intro--waiting");
         body.classList.remove("intro-lock");
         body.classList.add("is-loaded"); /* ورود نرم هیرو و هدر */
       } catch (e) {
@@ -148,39 +168,54 @@
       }, 1250);
     }
 
-    var MIN = reduced ? 1000 : 3050;
-    var MAX = reduced ? 1700 : 6500;
+    /* ---------- موتور صحنه: ساعت، سقف سخت، قفل اسکرول و ذرات.
+       فقط بعد از گیت لوگو (یا سقف انتظار) راه می‌افتد تا روی شبکه‌ی
+       کند، لوگو همیشه سرِ وقت و هماهنگ با صحنه ظاهر شود ---------- */
+    var engineStarted = false;
+    function startEngine() {
+      if (engineStarted) return;
+      engineStarted = true;
+      t0 = now();
 
-    /* ۱) سقف سخت: اول از همه ثبت می‌شود تا محتوا هرگز گیر نکند */
-    setTimeout(finish, MAX);
+      var MIN = reduced ? 1000 : 3050;
+      var MAX = reduced ? 1700 : 6500;
 
-    function tryFinish() {
-      if (exited) return;
-      if (document.readyState === "complete" && elapsed() >= MIN) finish();
-    }
+      /* ۱) سقف سخت: اول از همه ثبت می‌شود تا محتوا هرگز گیر نکند */
+      setTimeout(finish, MAX);
 
-    tryFinish();
-    window.addEventListener("load", tryFinish, { once: true });
-    setTimeout(tryFinish, MIN);
-
-    /* ۲) قفل اسکرول در طول نمایش */
-    try {
-      body.classList.add("intro-lock");
-    } catch (e) {}
-
-    /* ۳) ذرات: فقط وقتی canvas واقعاً getContext را بدهد */
-    var dust = null;
-    if (!reduced) {
-      try {
-        var canvas = intro.querySelector(".intro-dust");
-        var ctx = canvas && canvas.getContext ? canvas.getContext("2d") : null;
-        if (ctx && typeof ctx.clearRect === "function") dust = startDust(ctx, canvas);
-      } catch (e) {
-        dust = null;
+      function tryFinish() {
+        if (exited) return;
+        if (document.readyState === "complete" && elapsed() >= MIN) finish();
       }
+
+      tryFinish();
+      window.addEventListener("load", tryFinish, { once: true });
+      setTimeout(tryFinish, MIN);
     }
 
-    /* ۴) شتاب‌دهی کاربر: اولین تعامل → خروج فوری */
+    /* ۴) گیت لوگو: اگر PNG لوگو هنوز نرسیده، صحنه نگه داشته می‌شود
+       (کلاس intro--waiting انیمیشن‌ها را paused می‌کند)؛ با رسیدن تصویر
+       — یا سقف سخت ۲٫۵ ثانیه‌ای — کل صحنه هماهنگ شروع می‌شود */
+    var logoImg = null;
+    try {
+      logoImg = intro.querySelector(".intro-logo");
+    } catch (e) {
+      logoImg = null;
+    }
+    var needsWait = !reduced && !!logoImg && !logoImg.complete;
+    var begun = false;
+
+    function begin() {
+      if (begun) return;
+      begun = true;
+      try {
+        intro.classList.remove("intro--waiting");
+      } catch (e) {}
+      startEngine();
+    }
+
+    /* ۵) شتاب‌دهی کاربر: اولین تعامل → خروج فوری
+       (هم در حالت انتظار و هم در حالت پخش فعال است) */
     ["pointerdown", "keydown", "touchstart"].forEach(function (ev) {
       try {
         intro.addEventListener(ev, finish, { once: true, passive: true });
@@ -190,6 +225,22 @@
         } catch (e2) {}
       }
     });
+
+    if (needsWait) {
+      try {
+        intro.classList.add("intro--waiting");
+      } catch (e) {}
+      try {
+        logoImg.addEventListener("load", begin, { once: true });
+        logoImg.addEventListener("error", begin, { once: true });
+      } catch (e) {
+        begin();
+      }
+      /* حتی اگر تصویر معطل بماند، صحنه حداکثر ۲٫۵ ثانیه بعد شروع می‌شود */
+      setTimeout(begin, 2500);
+    } else {
+      begin();
+    }
   }
 
   if (document.readyState === "loading") {

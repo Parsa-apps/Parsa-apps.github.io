@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>document.documentElement.classList.add("js");</script>
+  <script>
+    document.documentElement.classList.add("js");
+    /* بیمه‌ی نهایی: اگر intro.js به هر دلیل اجرا نشود، پرده‌ی ورود
+       هرگز روی محتوا نمی‌ماند (سقف سختِ مستقل از جاوااسکریپت موتور) */
+    setTimeout(function () {
+      if (document.body && !document.body.classList.contains("is-loaded")) {
+        document.body.classList.add("is-loaded");
+        document.body.classList.remove("intro-lock");
+        var introEl = document.getElementById("intro");
+        if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl);
+      }
+    }, 10000);
+  </script>
   <title>پارسا اپس | استودیو ساخت اپلیکیشن‌های خلاقانه</title>
   <meta name="description" content="پارسا اپس، استودیو ساخت اپلیکیشن‌های خلاقانه و تجربه‌های دیجیتال هوشمند برای نسل آینده. سازنده جزیره فندقی.">
   <meta name="theme-color" content="#050816">
