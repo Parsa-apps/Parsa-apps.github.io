@@ -653,7 +653,8 @@
     .nav-links{display:none;gap:28px;align-items:center}
     @media(min-width:900px){.nav-links{display:flex}}
     .nav-links a{font-size:.875rem;font-weight:600;color:var(--muted);transition:color .3s;position:relative}
-    .nav-links a:hover{color:#fff}
+    .nav-links a{transform-style:preserve-3d;transition:color .3s,transform .3s var(--ease),text-shadow .3s}
+    .nav-links a:hover{color:#fff;transform:translateY(-3px) rotateX(12deg);text-shadow:0 8px 18px rgba(0,198,255,.45)}
     .nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;left:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:2px;transform:scaleX(0);transition:transform .3s var(--ease)}
     .nav-links a:hover::after{transform:scaleX(1)}
     .nav-cta{padding:9px 20px;border-radius:99px;font-size:.82rem;font-weight:800;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;transition:all .3s var(--ease);box-shadow:0 8px 30px -8px rgba(124,92,255,.5);white-space:nowrap}
@@ -728,7 +729,23 @@
       transition:all .3s var(--ease);
     }
     .mobile-close:hover{background:rgba(255,255,255,.10);transform:rotate(90deg)}
-    .mobile-links{display:flex;flex-direction:column;gap:6px}
+    .mobile-links{display:flex;flex-direction:column;gap:10px;perspective:1100px;transform-style:preserve-3d}
+    .mobile-links a{transform-style:preserve-3d;will-change:transform;box-shadow:0 10px 24px -18px rgba(0,0,0,.9),inset 0 1px rgba(255,255,255,.08)}
+    .mobile-links a::after{content:'';position:absolute;inset:1px;border-radius:15px;border:1px solid rgba(0,214,255,.16);opacity:0;transform:translateZ(12px);transition:opacity .35s;pointer-events:none}
+    .mobile-links a:hover::after,.mobile-links a:focus-visible::after{opacity:1}
+    .mobile-links a:active{transform:translateZ(8px) rotateX(5deg) scale(.97)!important}
+    .mobile-links a:nth-child(odd){transform:translateX(20px) rotateY(-18deg);transform-origin:right center}
+    .mobile-links a:nth-child(even){transform:translateX(20px) rotateY(18deg);transform-origin:left center}
+    #mobileMenu.open .mobile-links a:nth-child(odd){transform:none}
+    #mobileMenu.open .mobile-links a:nth-child(even){transform:none}
+    #mobileMenu.open .mobile-links a:nth-child(1){transition-delay:.06s;transform:translateZ(0) rotateY(-8deg)}
+    #mobileMenu.open .mobile-links a:nth-child(2){transition-delay:.12s;transform:translateZ(16px) rotateY(7deg)}
+    #mobileMenu.open .mobile-links a:nth-child(3){transition-delay:.18s;transform:translateZ(0) rotateY(-6deg)}
+    #mobileMenu.open .mobile-links a:nth-child(4){transition-delay:.24s;transform:translateZ(14px) rotateY(6deg)}
+    #mobileMenu.open .mobile-links a:nth-child(5){transition-delay:.30s;transform:translateZ(0) rotateY(-5deg)}
+    #mobileMenu.open .mobile-links a:nth-child(6){transition-delay:.36s;transform:translateZ(12px) rotateY(5deg)}
+    #mobileMenu.open .mobile-links a:hover,#mobileMenu.open .mobile-links a:focus-visible{transform:translate3d(-8px,-3px,28px) rotateY(0) rotateX(-2deg)!important;box-shadow:0 18px 32px -18px rgba(0,198,255,.65),inset 0 1px rgba(255,255,255,.2)}
+    @media(prefers-reduced-motion:reduce){.mobile-links a,#mobileMenu.open .mobile-links a{transform:none!important;transition:none!important}}
     .mobile-links a{
       position:relative;display:flex;align-items:center;justify-content:space-between;
       padding:14px 16px;border-radius:16px;
@@ -1202,7 +1219,7 @@
   <!-- Navigation -->
   <nav id="mainNav" aria-label="ناوبری اصلی" data-i18n-aria="nav.ariaLabel">
     <div class="container nav-inner">
-      <a href="#hero" class="nav-logo" aria-label="Parsa Apps - صفحه اصلی" data-i18n-aria="nav.logoLabel">
+      <a href="/" class="nav-logo" aria-label="Parsa Apps - صفحه اصلی" data-i18n-aria="nav.logoLabel">
         <img src="/assets/logo.png" alt="Parsa Apps" width="42" height="42" />
         <span>Parsa Apps</span>
       </a>
@@ -1270,12 +1287,12 @@
           <span class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">استودیو نرم‌افزار پرمیوم</span></span>
         </div>
         <h1 class="hero-title">
-          <span data-i18n="hero.title1">ساخت آینده‌ی</span>
+          <span data-i18n="hero.title1">ساخت تجربه‌های دیجیتال آینده</span>
           <br/>
-          <span class="gradient-text" data-i18n="hero.title2">تجربه‌های موبایل</span>
+          <span class="gradient-text" data-i18n="hero.title2">با پارسا اپس</span>
         </h1>
         <p class="hero-sub" data-i18n="hero.sub">
-          پارسا اپس، استودیوی توسعه نرم‌افزار حرفه‌ای — ساخت اپلیکیشن‌های اندروید و فلاتر با مهندسی دقیق، طراحی مدرن و کیفیت جهانی.
+          پارسا اپس یک گروه خلاق و مستقل برای طراحی سایت، ساخت اپلیکیشن اندروید و توسعه محصولات دیجیتال است؛ از ایده‌پردازی و طراحی رابط کاربری تا کدنویسی، انتشار و پشتیبانی، همه‌چیز با مهندسی دقیق و تمرکز روی تجربه واقعی کاربر انجام می‌شود.
         </p>
         <div class="hero-btns">
           <a href="#apps" class="btn btn-primary" data-i18n="hero.cta1">
@@ -1379,7 +1396,7 @@
       <div class="section-header reveal">
         <span class="eyebrow"><span class="dot"></span> محصول شاخص</span>
         <h2>جزیره فندقی — <span class="gradient-text">دنیای یادگیری کودکان</span></h2>
-        <p>اپلیکیشن آموزشی و سرگرمی برای کودکان با طراحی حرفه‌ای و محتوای غنی</p>
+        <p>محصولات دیجیتال پارسا اپس؛ از اپلیکیشن‌های آموزشی کودک تا وب‌سایت‌ها و ابزارهای هوشمند با طراحی حرفه‌ای، عملکرد سریع و تجربه‌ای قابل اعتماد.</p>
       </div>
       <div class="flagship-card reveal-scale">
         <div class="flagship-phone">
@@ -1424,7 +1441,7 @@
       <div class="section-header reveal">
         <span class="eyebrow"><span class="dot"></span> فرآیند توسعه</span>
         <h2>از ایده تا <span class="gradient-text">محصول نهایی</span></h2>
-        <p>چهار مرحله کلیدی برای ساخت اپلیکیشن‌های حرفه‌ای</p>
+        <p>یک مسیر شفاف و قابل پیگیری برای تبدیل ایده به محصولی که واقعاً استفاده می‌شود</p>
       </div>
       <div class="process-grid">
         <div class="process-step reveal" style="transition-delay:.1s">
@@ -1499,8 +1516,8 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow"><span class="dot"></span> مهارت‌ها</span>
-        <h2>تکنولوژی‌ها و <span class="gradient-text">تخصص‌ها</span></h2>
-        <p>ابزارها و فناوری‌هایی که برای ساخت محصولات حرفه‌ای استفاده می‌کنیم</p>
+        <h2>مهارت‌ها و <span class="gradient-text">ابزارهای ما</span></h2>
+        <p>از طراحی رابط کاربری تا معماری نرم‌افزار؛ مهارت‌هایی که کیفیت محصولات پارسا اپس را می‌سازند.</p>
       </div>
       <div class="grid-4 stagger-children" id="skillsGrid">
         <div class="glass-card" data-spotlight><span class="icon">📱</span><h3 dir="ltr">Flutter</h3><p>فریمورک کراس‌پلتفرم</p><div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div></div>
@@ -1511,6 +1528,10 @@
         <div class="glass-card" data-spotlight><span class="icon">☕</span><h3 dir="ltr">Java</h3><p>زبان برنامه‌نویسی</p><div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div></div>
         <div class="glass-card" data-spotlight><span class="icon">🧩</span><h3 dir="ltr">Material 3</h3><p>سیستم طراحی</p><div class="skill-bar"><div class="skill-fill" style="--w:93%"></div></div></div>
         <div class="glass-card" data-spotlight><span class="icon">🎮</span><h3 dir="ltr">Flame Engine</h3><p>بازی‌سازی موبایل</p><div class="skill-bar"><div class="skill-fill" style="--w:78%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🌐</span><h3 dir="ltr">Web Design</h3><p>طراحی سایت مدرن و واکنش‌گرا</p><div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🧱</span><h3 dir="ltr">Clean Architecture</h3><p>معماری مقیاس‌پذیر و قابل نگهداری</p><div class="skill-bar"><div class="skill-fill" style="--w:86%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🔌</span><h3 dir="ltr">API & Firebase</h3><p>اتصال امن به سرویس‌ها و داده‌ها</p><div class="skill-bar"><div class="skill-fill" style="--w:84%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🧪</span><h3 dir="ltr">Testing & QA</h3><p>تست، بهینه‌سازی و کنترل کیفیت</p><div class="skill-bar"><div class="skill-fill" style="--w:80%"></div></div></div>
       </div>
     </div>
   </section>
@@ -1636,6 +1657,11 @@
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){var k=el.dataset.i18nPlaceholder;var txt=tt(k,lang);if(txt)el.placeholder=txt});
       // Translate aria-label
       document.querySelectorAll('[data-i18n-aria]').forEach(function(el){var k=el.dataset.i18nAria;var txt=tt(k,lang);if(txt)el.setAttribute('aria-label',txt)});
+      // Translate the legacy landing-page copy too (not only the small data-i18n labels).
+      var legacy={
+        'استودیو نرم‌افزار پرمیوم':['Premium Software Studio','استوديو برمجيات فاخر'],'درباره ما':['About us','من نحن'],'اپلیکیشن‌ها':['Apps','التطبيقات'],'فرآیند':['Process','العملية'],'فرآیند توسعه':['Development process','عملية التطوير'],'مهارت‌ها':['Skills','المهارات'],'پروژه‌ها':['Projects','المشاريع'],'توسعه‌دهنده':['Developer','المطور'],'تماس با ما':['Contact us','اتصل بنا'],'تماس':['Contact','اتصال'],'محصول شاخص':['Featured product','المنتج المميز'],'تکنولوژی‌ها و':['Technologies and','التقنيات و'],'تخصص‌ها':['expertise','الخبرات'],'مجموعه':['Collection of','مجموعة'],'آماده ساخت پروژه بعدی هستید؟':['Ready to build your next project?','هل أنت مستعد لبناء مشروعك القادم؟'],'مشاهده محصولات':['View products','عرض المنتجات'],'بیشتر بدانید':['Learn more','اعرف المزيد'],'ساخته شده با ❤️ توسط فرشاد پارسا':['Made with ❤️ by Farshad Parsa','صُنع بـ ❤️ بواسطة فرشاد بارسا'],'در حال توسعه':['In development','قيد التطوير'],'به‌زودی':['Coming soon','قريباً'],'منتشر شده':['Published','منشور'],'جزیره فندقی':['Fandoghi Island','جزيرة فندقي'],'کارتونیا':['Cartoonia','كارتونيا'],'پروژه‌های آینده':['Future projects','المشاريع القادمة'],'شروع مسیر':['The beginning','بداية الطريق'],'کشف فلاتر':['Discovering Flutter','اكتشاف Flutter'],'تأسیس استودیو':['Studio founding','تأسيس الاستوديو'],'رشد و گسترش':['Growth and expansion','النمو والتوسع'],'اسکرول کنید':['Scroll down','مرر للأسفل']
+      };
+      document.querySelectorAll('body *').forEach(function(el){if(el.children.length)return;var original=el.getAttribute('data-legacy-fa')||el.textContent.trim();if(!original)return;el.setAttribute('data-legacy-fa',original);var hit=legacy[original];if(hit)el.textContent=lang==='fa'?original:(lang==='en'?hit[0]:hit[1]);});
     }
     var currentLang=getSavedLang();applyLang(currentLang);
     document.querySelectorAll('.lang-btn').forEach(function(btn){
