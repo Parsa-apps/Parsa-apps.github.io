@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getApp, CONTACT } from "@/lib/data";
-import { MediaReveal, Reveal, SectionHeader } from "@/components/ui";
+import { Reveal, SectionHeader } from "@/components/ui";
 import { AppIcon, FeatureItem, PhoneMockup, StatusBadge } from "@/components/apps";
 import NotFound from "./NotFound";
 
@@ -10,10 +10,12 @@ export default function AppDetail() {
   const { slug } = useParams();
   const app = getApp(slug ?? "");
   const [notified, setNotified] = useState(false);
+  const [selectedShot, setSelectedShot] = useState<string | null>(null);
 
   if (!app) return <NotFound />;
 
   const isReleased = app.status === "released";
+  const isDev = app.status === "development";
 
   const handleDownload = () => {
     if (!isReleased) {
@@ -43,26 +45,34 @@ export default function AppDetail() {
                 <AppIcon app={app} size={104} />
                 <div>
                   <div className="mb-2"><StatusBadge status={app.status} /></div>
-                  <h1 className="text-3xl font-black text-white sm:text-4xl">{app.name}</h1>
+                  <h1 className="text-3xl font-black text-white sm:text-4xl" style={{ fontFamily: "Vazirmatn", fontWeight: 900 }}>{app.name}</h1>
                   <p className="mt-1 text-sm text-white/45" dir="ltr">{app.nameEn}</p>
                 </div>
               </div>
 
-              <p className="mt-7 text-lg font-bold leading-8 text-white">{app.tagline}</p>
-              <p className="mt-3 leading-8 text-white/60">{app.longDescription}</p>
+              <p className="mt-7 text-lg font-bold leading-8 text-white" style={{ fontFamily: "Vazirmatn" }}>{app.tagline}</p>
+              <p className="mt-3 leading-8 text-white/60" style={{ fontFamily: "Vazirmatn" }}>{app.longDescription}</p>
 
               <div className="mt-6 grid max-w-lg grid-cols-2 gap-3 sm:grid-cols-4">
                 {[
-                  { l: "نسخه", v: app.version },
-                  { l: "حجم", v: app.size },
+                  { l: "نسخه", v: app.version, hint: isDev ? "نسخه آزمایشی داخلی" : undefined },
+                  { l: "حجم", v: app.size, hint: isDev ? "پس از انتشار مشخص می‌شود" : undefined },
                   { l: "اندروید", v: app.androidMin },
                   { l: "دسته", v: app.category },
                 ].map((d) => (
-                  <div key={d.l} className="glass rounded-2xl p-3 text-center">
-                    <p className="text-[11px] text-white/45">{d.l}</p>
-                    <p className="mt-1 text-sm font-black text-white">{d.v}</p>
+                  <div key={d.l} className="glass rounded-2xl p-3 text-center transition-all duration-300 hover:border-white/20">
+                    <p className="text-[11px] text-white/45" style={{ fontFamily: "Vazirmatn" }}>{d.l}</p>
+                    <p className="mt-1 text-sm font-black text-white" style={{ fontFamily: "Vazirmatn", fontWeight: 800 }}>{d.v}</p>
+                    {d.hint && <p className="mt-1 text-[10px] text-white/35">{d.hint}</p>}
                   </div>
                 ))}
+              </div>
+
+              <div className="mt-4 flex items-center gap-2 text-xs text-white/40">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                <span style={{ fontFamily: "Vazirmatn" }}>
+                  {isDev ? "این محصول در حال توسعه فعال است — اطلاعات حجم و نسخه پس از انتشار نهایی به‌روزرسانی می‌شود." : `آخرین به‌روزرسانی: ${app.updated}`}
+                </span>
               </div>
 
               <div className="relative mt-8 flex flex-wrap items-center gap-4">
@@ -82,12 +92,9 @@ export default function AppDetail() {
               ) : (
                 <div className="relative">
                   <div className="absolute inset-0 -z-10 rounded-full blur-[100px]" style={{ background: app.palette.from }} />
-                  <MediaReveal
-                    src={app.cover}
-                    alt={app.name}
-                    className="aspect-[4/5] w-72 rounded-[2rem] shadow-2xl sm:w-80"
-                    imgClassName="rounded-[2rem]"
-                  />
+                  <div className="aspect-[4/5] w-72 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-white/10 sm:w-80">
+                    <img src={app.cover} alt={app.name} className="h-full w-full object-cover" loading="eager" />
+                  </div>
                 </div>
               )}
             </Reveal>
@@ -109,7 +116,7 @@ export default function AppDetail() {
         </div>
       </section>
 
-      {/* screenshots gallery */}
+      {/* screenshots gallery — FIXED: robust, no clipPath that hides on mobile */}
       {app.screenshots.length > 0 && (
         <section className="section-shell">
           <div className="container-px">
@@ -120,18 +127,60 @@ export default function AppDetail() {
             />
             <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {app.screenshots.map((src, i) => (
-                <Reveal key={src} delay={i * 0.06}>
-                  <MediaReveal
-                    src={src}
-                    alt={`${app.name} اسکرین‌شات ${i + 1}`}
-                    className="aspect-[9/16] w-full rounded-3xl ring-1 ring-white/10 shadow-lg"
-                    imgClassName="rounded-3xl"
-                  />
+                <Reveal key={src} delay={i * 0.05}>
+                  <button
+                    onClick={() => setSelectedShot(src)}
+                    className="group relative block w-full overflow-hidden rounded-3xl bg-[#0e1020] ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:ring-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                    style={{ aspectRatio: "9/16" }}
+                  >
+                    {/* subtle gradient placeholder while image loads */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-cyan-500/10" />
+                    <img
+                      src={src}
+                      alt={`${app.name} اسکرین‌شات ${i + 1}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="relative h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      onError={(e) => {
+                        const img = e.target as HTMLImageElement;
+                        img.style.display = "none";
+                        const parent = img.parentElement;
+                        if (parent) {
+                          parent.innerHTML = '<div class="grid h-full w-full place-items-center p-4 text-center text-xs text-white/30">تصویر در دسترس نیست</div>';
+                        }
+                      }}
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                    <span className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold text-white/70 backdrop-blur">
+                      {i + 1} / {app.screenshots.length}
+                    </span>
+                  </button>
                 </Reveal>
               ))}
             </div>
+            <p className="mt-6 text-center text-xs text-white/30" style={{ fontFamily: "Vazirmatn" }}>
+              برای مشاهده بزرگ‌تر روی هر اسکرین‌شات ضربه بزنید
+            </p>
           </div>
         </section>
+      )}
+
+      {/* lightbox */}
+      {selectedShot && (
+        <div className="fixed inset-0 z-[100] grid place-items-center bg-black/85 p-4 backdrop-blur-md" onClick={() => setSelectedShot(null)}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.92 }}
+            className="relative max-h-[90vh] w-full max-w-sm overflow-hidden rounded-3xl bg-[#0e1020] shadow-2xl ring-1 ring-white/20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img src={selectedShot} alt="اسکرین‌شات بزرگ" className="h-full w-full object-contain" />
+            <button onClick={() => setSelectedShot(null)} className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-black/60 text-white backdrop-blur hover:bg-black/80">
+              ✕
+            </button>
+          </motion.div>
+        </div>
       )}
 
       {/* benefits */}
@@ -141,8 +190,8 @@ export default function AppDetail() {
             <div className="card grid gap-8 p-8 sm:p-10 lg:grid-cols-2 lg:items-center">
               <div>
                 <span className="eyebrow">🌱 مزایای آموزشی</span>
-                <h2 className="mt-5 text-3xl font-black">بیش از یک بازی؛ یک مسیر یادگیری</h2>
-                <p className="mt-4 leading-8 text-white/60">
+                <h2 className="mt-5 text-3xl font-black" style={{ fontFamily: "Vazirmatn", fontWeight: 900 }}>بیش از یک بازی؛ یک مسیر یادگیری</h2>
+                <p className="mt-4 leading-8 text-white/60" style={{ fontFamily: "Vazirmatn" }}>
                   طراحی‌شده با درک عمیق از رشد کودک تا یادگیری با بازی، طبیعی و لذت‌بخش باشد.
                 </p>
               </div>
@@ -157,7 +206,7 @@ export default function AppDetail() {
                     >
                       ✓
                     </motion.span>
-                    <p className="font-bold text-white">{b}</p>
+                    <p className="font-bold text-white" style={{ fontFamily: "Vazirmatn" }}>{b}</p>
                   </div>
                 ))}
               </div>
@@ -199,9 +248,9 @@ export default function AppDetail() {
                         <span className="grid h-8 w-8 place-items-center rounded-xl bg-neon-cyan/20 text-xs font-black text-neon-cyan">
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <h3 className="text-lg font-black text-white">{v.title}</h3>
+                        <h3 className="text-lg font-black text-white" style={{ fontFamily: "Vazirmatn" }}>{v.title}</h3>
                       </div>
-                      {v.subtitle && <p className="text-xs text-white/50">{v.subtitle}</p>}
+                      {v.subtitle && <p className="text-xs text-white/50" style={{ fontFamily: "Vazirmatn" }}>{v.subtitle}</p>}
                     </div>
                     <div className="overflow-hidden rounded-2xl bg-black/80 shadow-2xl ring-1 ring-white/10">
                       <video
@@ -234,8 +283,8 @@ export default function AppDetail() {
               />
               <div className="relative">
                 <AppIcon app={app} size={88} />
-                <h2 className="mt-6 text-2xl font-black sm:text-3xl">{app.name} را دانلود کنید</h2>
-                <p className="mx-auto mt-3 max-w-xl leading-8 text-white/60">
+                <h2 className="mt-6 text-2xl font-black sm:text-3xl" style={{ fontFamily: "Vazirmatn", fontWeight: 900 }}>{app.name} را دانلود کنید</h2>
+                <p className="mx-auto mt-3 max-w-xl leading-8 text-white/60" style={{ fontFamily: "Vazirmatn" }}>
                   {isReleased
                     ? "نسخه نهایی برنامه را مستقیماً نصب کنید."
                     : "این محصول در حال توسعه است؛ پس از انتشار رسمی، لینک دانلود اینجا قرار می‌گیرد."}
@@ -262,6 +311,7 @@ function AnimatePresenceToast({ show }: { show: boolean }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-full border border-neon-gold/40 bg-neon-gold/10 px-4 py-2 text-sm font-bold text-neon-gold"
+      style={{ fontFamily: "Vazirmatn" }}
     >
       🌰 به‌زودی منتشر می‌شود!
     </motion.span>

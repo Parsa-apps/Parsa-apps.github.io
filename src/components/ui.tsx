@@ -100,26 +100,30 @@ export function AnimatedText({
   once = true,
 }: AnimatedTextProps) {
   const reduced = prefersReduced();
-  const units = mode === "words" ? text.split(" ") : Array.from(text);
+  // Persian/Arabic chars should never be split char-by-char — it breaks joining (حروف به هم نچسبیده)
+  const hasPersian = /[\u0600-\u06FF]/.test(text);
+  const effectiveMode = hasPersian && mode === "chars" ? "words" : mode;
+  const units = effectiveMode === "words" ? text.split(" ") : Array.from(text);
   const MotionTag = motion[Tag as "span"];
 
   return (
-    <MotionTag className={className} aria-label={text}>
+    <MotionTag className={className} aria-label={text} style={hasPersian ? { fontFamily: "Vazirmatn, system-ui, sans-serif", fontWeight: 900 } : undefined}>
       {units.map((unit, i) => {
-        const node: React.ReactNode = mode === "words" ? unit : unit;
+        const node: React.ReactNode = effectiveMode === "words" ? unit : unit;
         return (
           <Fragment key={`${unit}-${i}`}>
-            <span className="word-mask">
+            <span className="word-mask" style={hasPersian ? { paddingBottom: "0.18em", marginBottom: "-0.18em" } : undefined}>
               <motion.span
                 initial={reduced ? false : { opacity: 0, y: "0.9em", filter: "blur(6px)" }}
                 whileInView={{ opacity: 1, y: "0em", filter: "blur(0px)" }}
                 viewport={{ once, margin: "-60px" }}
                 transition={{ duration: 0.65, delay: delay + i * stagger, ease: EASE }}
+                style={hasPersian ? { fontFamily: "Vazirmatn, system-ui, sans-serif", fontWeight: 900 } : undefined}
               >
                 {node}
               </motion.span>
             </span>
-            {mode === "words" && i < units.length - 1 ? " " : null}
+            {effectiveMode === "words" && i < units.length - 1 ? " " : null}
           </Fragment>
         );
       })}
@@ -389,25 +393,51 @@ export function MediaReveal({
   loading?: "lazy" | "eager";
 }) {
   const [failed, setFailed] = useState(false);
-  return (
-    <div className={`media-reveal ${className}`}>
-      {!failed ? (
-        <motion.img
+  const [forceShow, setForceShow] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setForceShow(true), 1600);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (failed) {
+    return (
+      <div className={`grid place-items-center bg-white/[0.04] text-white/30 ${className}`}>
+        تصویر در دسترس نیست
+      </div>
+    );
+  }
+
+  if (forceShow || prefersReduced()) {
+    return (
+      <div className={`${className} overflow-hidden`}>
+        <img
           src={src}
           alt={alt}
           loading={loading}
           decoding="async"
-          initial={prefersReduced() ? false : { clipPath: "inset(0 0 100% 0)", transform: "scale(1.2)" }}
-          whileInView={{ clipPath: "inset(0 0 0% 0)", transform: "scale(1.04)" }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 1.05, ease: EASE }}
-          whileHover={{ transform: "scale(1.08)" }}
           className={`h-full w-full object-cover ${imgClassName}`}
           onError={() => setFailed(true)}
         />
-      ) : (
-        <div className="grid h-full w-full place-items-center bg-white/5 text-white/30">تصویر در دسترس نیست</div>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`media-reveal ${className}`}>
+      <motion.img
+        src={src}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+        initial={{ clipPath: "inset(0 0 100% 0)", transform: "scale(1.2)" }}
+        whileInView={{ clipPath: "inset(0 0 0% 0)", transform: "scale(1.04)" }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 1.05, ease: EASE }}
+        whileHover={{ transform: "scale(1.08)" }}
+        className={`h-full w-full object-cover ${imgClassName}`}
+        onError={() => setFailed(true)}
+      />
     </div>
   );
 }
