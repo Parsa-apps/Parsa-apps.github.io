@@ -1,5 +1,12 @@
 export type AppStatus = "released" | "beta" | "development";
 
+export interface AppVideo {
+  title: string;
+  subtitle?: string;
+  src: string;
+  poster?: string;
+}
+
 export interface StudioApp {
   slug: string;
   name: string;
@@ -21,6 +28,7 @@ export interface StudioApp {
   updated: string;
   androidMin: string;
   video?: string;
+  videos?: AppVideo[];
   palette: {
     from: string;
     to: string;
@@ -34,7 +42,6 @@ export const CONTACT = {
   telegramHandle: "@Parsaappsadmin",
   instagram: "https://instagram.com/parsa.apps",
   instagramHandle: "@parsa.apps",
-  github: "https://github.com/Parsa-apps",
 };
 
 export const apps: StudioApp[] = [
@@ -50,10 +57,14 @@ export const apps: StudioApp[] = [
     icon: "/assets/brand/jazireh-fandoghi-app-icon-512.png",
     cover: "/assets/images/island/jazireh-promo-cover.jpg",
     screenshots: [
-      "/assets/images/island/app-screen-1.jpg",
-      "/assets/images/island/app-screen-2.jpg",
-      "/assets/images/island/app-screen-3.jpg",
-      "/assets/images/island/app-screen-4.jpg",
+      "/assets/screenshots/1_home.png",
+      "/assets/screenshots/2_learning.png",
+      "/assets/screenshots/3_games.png",
+      "/assets/screenshots/4_stories.png",
+      "/assets/screenshots/5_progress.png",
+      "/assets/screenshots/6_missions.png",
+      "/assets/screenshots/7_profile.png",
+      "/assets/screenshots/8_safe.png",
     ],
     features: [
       "آموزش حروف الفبای فارسی",
@@ -80,6 +91,20 @@ export const apps: StudioApp[] = [
     updated: "مرداد ۱۴۰۵",
     androidMin: "Android 8+",
     video: "/assets/videos/jazire_fandoqi_promo_portrait.mp4",
+    videos: [
+      {
+        title: "تیزر رسمی معرفی جزیره فندقی",
+        subtitle: "آشنایی با دنیای شاد و آموزشی جزیره فندقی",
+        src: "/assets/videos/jazire_fandoqi_promo_portrait.mp4",
+        poster: "/assets/images/island/jazireh-promo-cover.jpg",
+      },
+      {
+        title: "بررسی جامع و ویدیوی عملکرد اپلیکیشن جزیره فندقی",
+        subtitle: "مشاهده کامل بخش‌های بازی، آموزش الفبا و اعداد، قصه‌ها و امکانات محیط برنامه",
+        src: "/assets/videos/VideoCompress_%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C_%D8%A7%D9%BE%D9%84%DB%8C%DA%A9%DB%8C%D8%B4%D9%86_%D8%AC%D8%B2%DB%8C%D8%B1%D9%87_%D9%81%D9%86%D8%AF%D9%82%DB%8C.mp4",
+        poster: "/assets/screenshots/1_home.png",
+      },
+    ],
     palette: { from: "#4fd8eb", to: "#ffb347", accent: "#7ef2ff" },
   },
   {
@@ -271,7 +296,7 @@ export const skills = [
   { name: "Java", year: "Good", icon: "☕", level: 78 },
   { name: "Firebase", year: "Good", icon: "🔥", level: 80 },
   { name: "UI/UX Design", year: "Strong", icon: "🎨", level: 90 },
-  { name: "Git & GitHub", year: "Good", icon: "🔧", level: 80 },
+  { name: "Git & Version Control", year: "Good", icon: "🔧", level: 80 },
 ];
 
 export const timeline = [

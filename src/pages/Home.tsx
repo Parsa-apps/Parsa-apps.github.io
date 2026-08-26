@@ -90,11 +90,11 @@ export default function Home() {
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.img
-                src="/assets/brand/parsa-main-crown.svg"
-                alt=""
-                width={150}
-                height={70}
-                className="relative z-10 -mb-8 w-32 drop-shadow-[0_6px_20px_rgba(245,200,87,0.5)] animate-float"
+                src="/assets/logo.png"
+                alt="Parsa Apps"
+                width={100}
+                height={100}
+                className="relative z-10 -mb-6 w-24 sm:w-28 drop-shadow-[0_8px_30px_rgba(0,198,255,0.45)] animate-float object-contain"
               />
               <PhoneMockup screenshots={fandoghi.screenshots} />
 
@@ -270,12 +270,12 @@ export default function Home() {
             <span className="eyebrow">👨‍💻 توسعه‌دهنده</span>
             <h2 className="mt-5 flex items-center gap-3 text-3xl font-black sm:text-4xl">
               <span>فرشاد پارسا</span>
-              <motion.img
-                src="/assets/brand/parsa-main-crown.svg"
-                alt="تاج طلایی"
-                width={52}
-                height={25}
-                className="inline-block drop-shadow-[0_0_16px_rgba(245,200,87,0.7)] animate-float"
+              <img
+                src="/assets/logo.png"
+                alt="پارسا اپس"
+                width={36}
+                height={36}
+                className="inline-block object-contain drop-shadow-[0_0_12px_rgba(0,198,255,0.45)]"
               />
             </h2>
             <p className="mt-4 text-white/65">
@@ -389,11 +389,11 @@ export default function Home() {
             <div className="card relative overflow-hidden p-8 text-center sm:p-14">
               <div className="absolute inset-0 grid-bg" />
               <motion.img
-                src="/assets/brand/parsa-main-crown.svg"
-                alt=""
-                width={110}
-                height={52}
-                className="relative mx-auto mb-6 animate-float"
+                src="/assets/logo.png"
+                alt="Parsa Apps"
+                width={96}
+                height={96}
+                className="relative mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0,198,255,0.45)] animate-float object-contain"
               />
               <h2 className="relative text-3xl font-black sm:text-4xl">
                 آیا ایده‌ای برای محصول بعدی دارید؟

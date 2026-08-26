@@ -29,7 +29,7 @@ export default function App() {
         fallback={
           <div className="grid min-h-screen place-items-center bg-[var(--bg)]">
             <div className="flex flex-col items-center gap-4">
-              <img src="/assets/logo.svg" alt="" width={72} height={72} className="animate-pulse" />
+              <img src="/assets/logo.png" alt="Parsa Apps" width={72} height={72} className="animate-pulse object-contain drop-shadow-[0_0_20px_rgba(0,198,255,0.4)]" />
               <p className="text-sm text-white/60">در حال بارگذاری…</p>
             </div>
           </div>

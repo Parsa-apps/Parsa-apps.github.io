@@ -99,7 +99,11 @@ export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
 
   return (
     <div className="relative mx-auto w-[280px] sm:w-[300px]" style={{ filter: `drop-shadow(0 40px 80px rgba(0,0,0,0.55))` }}>
-      <div className="relative aspect-[9/19] overflow-hidden rounded-[2.8rem] border-[6px] border-[#0b0e1c] bg-black shadow-[0_0_0_1px_rgba(255,255,255,0.08),inset_0_0_30px_rgba(0,0,0,0.6)]">
+      <div
+        className="relative aspect-[9/19] cursor-pointer overflow-hidden rounded-[2.8rem] border-[6px] border-[#0b0e1c] bg-black shadow-[0_0_0_1px_rgba(255,255,255,0.08),inset_0_0_30px_rgba(0,0,0,0.6)]"
+        onClick={() => setActive((prev) => (prev + 1) % screenshots.length)}
+        title="کلیک برای مشاهده تصویر بعدی"
+      >
         {/* status bar / island */}
         <div className="absolute left-1/2 top-2.5 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black/90 ring-1 ring-white/10" />
         <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-black/70 to-transparent" />
@@ -116,7 +120,7 @@ export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
-      <div className="mt-5 flex items-center justify-center gap-2">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
         {screenshots.map((_, i) => (
           <button
             key={i}
@@ -124,7 +128,7 @@ export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
             onClick={() => setActive(i)}
             className="h-1.5 rounded-full transition-all duration-400"
             style={{
-              width: i === active ? 30 : 8,
+              width: i === active ? 24 : 6,
               background: i === active ? "linear-gradient(90deg,#7c5cff,#00c6ff)" : "rgba(255,255,255,0.25)",
             }}
           />

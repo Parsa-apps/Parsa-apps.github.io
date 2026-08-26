@@ -10,11 +10,11 @@ export default function NotFound() {
 
       <Reveal className="relative text-center">
         <motion.img
-          src="/assets/brand/parsa-main-crown.svg"
-          alt=""
-          width={120}
-          height={57}
-          className="mx-auto mb-4 animate-float"
+          src="/assets/logo.png"
+          alt="Parsa Apps"
+          width={100}
+          height={100}
+          className="mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0,198,255,0.45)] animate-float object-contain"
         />
         <h1 className="text-[7rem] font-black leading-none text-gradient sm:text-[10rem]">404</h1>
         <h2 className="mt-4 text-2xl font-black text-white sm:text-3xl">اوه! این صفحه پیدا نشد</h2>
