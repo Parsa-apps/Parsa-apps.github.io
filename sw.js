@@ -7,7 +7,7 @@
    - If chunk 404s, delete old cache and force network
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v4"; // bumped: fix black screen from stale chunk 404s
+const CACHE_NAME = "parsa-apps-v5"; // bumped: full en/ar translation of the site
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {

@@ -87,6 +87,18 @@
   <body>
     <div id="root"></div>
     <script>
+      // Apply saved language before first paint (set by the language switcher)
+      (function () {
+        try {
+          var l = localStorage.getItem("parsa_lang");
+          if (l === "en" || l === "ar" || l === "fa") {
+            document.documentElement.lang = l;
+            document.documentElement.dir = l === "en" ? "ltr" : "rtl";
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script>
       // Robust boot guards: multiple layers to prevent permanent black screen
       (function () {
         var BOOT_MSG =
