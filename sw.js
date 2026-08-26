@@ -7,7 +7,7 @@
    - If chunk 404s, delete old cache and force network
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v9"; // cache-bust: cinematic intro assets
+const CACHE_NAME = "parsa-apps-v10"; // cache-bust: mobile menu fix (nav overlap + full-row click)
 const APP_SHELL = [
   "./",
   "./index.html",

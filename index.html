@@ -643,8 +643,9 @@
     }
 
     /* ===== NAVIGATION ===== */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:all .5s var(--ease);padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:12px}
-    nav.scrolled{background:rgba(5,6,14,.86);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);border-bottom:1px solid var(--line);box-shadow:0 10px 40px -20px rgba(0,0,0,.6)}
+    /* NOTE: scoped to #mainNav so the mobile drawer's <nav class="mobile-links"> stays in normal flow */
+    #mainNav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:all .5s var(--ease);padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:12px}
+    #mainNav.scrolled{background:rgba(5,6,14,.86);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);border-bottom:1px solid var(--line);box-shadow:0 10px 40px -20px rgba(0,0,0,.6)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .nav-logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
     .nav-logo img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(0,198,255,.4))}
@@ -733,18 +734,20 @@
     .mobile-links a{transform-style:preserve-3d;will-change:transform;box-shadow:0 10px 24px -18px rgba(0,0,0,.9),inset 0 1px rgba(255,255,255,.08)}
     .mobile-links a::after{content:'';position:absolute;inset:1px;border-radius:15px;border:1px solid rgba(0,214,255,.16);opacity:0;transform:translateZ(12px);transition:opacity .35s;pointer-events:none}
     .mobile-links a:hover::after,.mobile-links a:focus-visible::after{opacity:1}
-    .mobile-links a:active{transform:translateZ(8px) rotateX(5deg) scale(.97)!important}
-    .mobile-links a:nth-child(odd){transform:translateX(20px) rotateY(-18deg);transform-origin:right center}
-    .mobile-links a:nth-child(even){transform:translateX(20px) rotateY(18deg);transform-origin:left center}
-    #mobileMenu.open .mobile-links a:nth-child(odd){transform:none}
-    #mobileMenu.open .mobile-links a:nth-child(even){transform:none}
-    #mobileMenu.open .mobile-links a:nth-child(1){transition-delay:.06s;transform:translateZ(0) rotateY(-8deg)}
-    #mobileMenu.open .mobile-links a:nth-child(2){transition-delay:.12s;transform:translateZ(16px) rotateY(7deg)}
-    #mobileMenu.open .mobile-links a:nth-child(3){transition-delay:.18s;transform:translateZ(0) rotateY(-6deg)}
-    #mobileMenu.open .mobile-links a:nth-child(4){transition-delay:.24s;transform:translateZ(14px) rotateY(6deg)}
-    #mobileMenu.open .mobile-links a:nth-child(5){transition-delay:.30s;transform:translateZ(0) rotateY(-5deg)}
-    #mobileMenu.open .mobile-links a:nth-child(6){transition-delay:.36s;transform:translateZ(12px) rotateY(5deg)}
-    #mobileMenu.open .mobile-links a:hover,#mobileMenu.open .mobile-links a:focus-visible{transform:translate3d(-8px,-3px,28px) rotateY(0) rotateX(-2deg)!important;box-shadow:0 18px 32px -18px rgba(0,198,255,.65),inset 0 1px rgba(255,255,255,.2)}
+    /* Entrance pose (menu closed): cards wait tilted off-screen, then animate to perfectly flat */
+    #mobileMenu .mobile-links a:nth-child(odd){transform:translateX(24px) rotateY(-14deg);transform-origin:right center}
+    #mobileMenu .mobile-links a:nth-child(even){transform:translateX(24px) rotateY(14deg);transform-origin:left center}
+    /* Open pose: every link rests completely FLAT (no 3D transform) so the entire row is one solid click target */
+    #mobileMenu.open .mobile-links a{transform:none}
+    #mobileMenu.open .mobile-links a:nth-child(1){transition-delay:.06s}
+    #mobileMenu.open .mobile-links a:nth-child(2){transition-delay:.12s}
+    #mobileMenu.open .mobile-links a:nth-child(3){transition-delay:.18s}
+    #mobileMenu.open .mobile-links a:nth-child(4){transition-delay:.24s}
+    #mobileMenu.open .mobile-links a:nth-child(5){transition-delay:.30s}
+    #mobileMenu.open .mobile-links a:nth-child(6){transition-delay:.36s}
+    /* Hover/press stay 2D-only so the button never shifts away from the pointer mid-click */
+    #mobileMenu.open .mobile-links a:hover,#mobileMenu.open .mobile-links a:focus-visible{transform:translateX(-4px);box-shadow:0 18px 32px -18px rgba(0,198,255,.65),inset 0 1px rgba(255,255,255,.2)}
+    #mobileMenu.open .mobile-links a:active{transform:scale(.97)}
     @media(prefers-reduced-motion:reduce){.mobile-links a,#mobileMenu.open .mobile-links a{transform:none!important;transition:none!important}}
     .mobile-links a{
       position:relative;display:flex;align-items:center;justify-content:space-between;
