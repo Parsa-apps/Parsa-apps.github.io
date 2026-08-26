@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-label="تاج طلایی پرمیوم پارسا اپس">
+  <title>Parsa Apps — Premium Gold Crown</title>
+  <defs>
+    <!-- polished gold body -->
+    <linearGradient id="icGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#FFFDF3"/>
+      <stop offset="0.13" stop-color="#FFEFB9"/>
+      <stop offset="0.34" stop-color="#F9D470"/>
+      <stop offset="0.56" stop-color="#EDB63F"/>
+      <stop offset="0.75" stop-color="#C98A1D"/>
+      <stop offset="0.90" stop-color="#9E6810"/>
+      <stop offset="1"    stop-color="#7C4F0A"/>
+    </linearGradient>
+    <linearGradient id="icBand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#FFF7DA"/>
+      <stop offset="0.28" stop-color="#F7D278"/>
+      <stop offset="0.62" stop-color="#DFA331"/>
+      <stop offset="0.86" stop-color="#A87014"/>
+      <stop offset="1"    stop-color="#83540C"/>
+    </linearGradient>
+    <linearGradient id="icSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"    stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="#FFFDF0" stop-opacity="0.85"/>
+      <stop offset="0.58" stop-color="#FFFDF0" stop-opacity="0.85"/>
+      <stop offset="1"    stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="icPearl" cx="0.34" cy="0.28" r="0.9">
+      <stop offset="0"    stop-color="#FFFFFF"/>
+      <stop offset="0.42" stop-color="#FFF6DC"/>
+      <stop offset="0.78" stop-color="#F0CE84"/>
+      <stop offset="1"    stop-color="#B98A2C"/>
+    </radialGradient>
+    <!-- gems tuned to the brand: cyan-blue + tech green -->
+    <radialGradient id="icSapphire" cx="0.34" cy="0.28" r="0.92">
+      <stop offset="0"    stop-color="#DFF4FF"/>
+      <stop offset="0.34" stop-color="#4FC3FF"/>
+      <stop offset="0.72" stop-color="#0A78D8"/>
+      <stop offset="1"    stop-color="#053E80"/>
+    </radialGradient>
+    <radialGradient id="icEmerald" cx="0.34" cy="0.28" r="0.92">
+      <stop offset="0"    stop-color="#D8FFEE"/>
+      <stop offset="0.34" stop-color="#48EDA8"/>
+      <stop offset="0.72" stop-color="#0DA765"/>
+      <stop offset="1"    stop-color="#055C38"/>
+    </radialGradient>
+    <radialGradient id="icDiamond" cx="0.36" cy="0.26" r="0.92">
+      <stop offset="0"    stop-color="#FFFFFF"/>
+      <stop offset="0.38" stop-color="#E8FAFF"/>
+      <stop offset="0.72" stop-color="#9FE2FF"/>
+      <stop offset="1"    stop-color="#3FA6E0"/>
+    </radialGradient>
+    <filter id="icGlow" x="-35%" y="-45%" width="170%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#FFC451" flood-opacity="0.55"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#3A2405" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#icGlow)">
+    <!-- crown body: five elegant concave peaks -->
+    <path d="M 64 214
+             Q 78 150 100 96
+             Q 124 150 156 172
+             Q 188 122 210 56
+             Q 234 124 266 172
+             Q 294 112 320 22
+             Q 346 112 374 172
+             Q 406 124 430 56
+             Q 452 122 484 172
+             Q 516 150 540 96
+             Q 562 150 576 214 Z"
+          fill="url(#icGold)" stroke="#6E4708" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- inner facet shading gives the metal real volume -->
+    <g opacity="0.55">
+      <path d="M 320 34 L 305 168 L 336 168 Z" fill="#8A5C10" opacity="0.42"/>
+      <path d="M 210 66 L 199 170 L 223 170 Z" fill="#8A5C10" opacity="0.34"/>
+      <path d="M 430 66 L 418 170 L 442 170 Z" fill="#8A5C10" opacity="0.34"/>
+      <path d="M 100 104 L 92 176 L 112 176 Z" fill="#8A5C10" opacity="0.28"/>
+      <path d="M 540 104 L 530 176 L 550 176 Z" fill="#8A5C10" opacity="0.28"/>
+    </g>
+    <!-- specular streaks -->
+    <g fill="none" stroke="#FFFEF4" stroke-linecap="round">
+      <path d="M 314 44 C 306 88 300 128 297 160" stroke-width="5" stroke-opacity="0.62"/>
+      <path d="M 205 76 C 199 108 194 138 191 162" stroke-width="4" stroke-opacity="0.46"/>
+      <path d="M 436 76 C 442 108 447 138 450 162" stroke-width="4" stroke-opacity="0.46"/>
+      <path d="M  96 112 C  91 138  87 158  85 176" stroke-width="3.4" stroke-opacity="0.36"/>
+      <path d="M 545 112 C 550 138 554 158 556 176" stroke-width="3.4" stroke-opacity="0.36"/>
+    </g>
+
+    <!-- pearls crowning each peak -->
+    <g stroke="#8A5A10" stroke-width="2">
+      <circle cx="100" cy="92"  r="12" fill="url(#icPearl)"/>
+      <circle cx="210" cy="52"  r="14" fill="url(#icPearl)"/>
+      <circle cx="320" cy="18"  r="17" fill="url(#icPearl)"/>
+      <circle cx="430" cy="52"  r="14" fill="url(#icPearl)"/>
+      <circle cx="540" cy="92"  r="12" fill="url(#icPearl)"/>
+    </g>
+    <g fill="#FFFFFF" opacity="0.9">
+      <circle cx="96"  cy="88"  r="3.4"/>
+      <circle cx="205" cy="47"  r="4"/>
+      <circle cx="314" cy="12"  r="5"/>
+      <circle cx="425" cy="47"  r="4"/>
+      <circle cx="536" cy="88"  r="3.4"/>
+    </g>
+
+    <!-- base band -->
+    <rect x="56" y="206" width="528" height="62" rx="27" fill="url(#icBand)" stroke="#6E4708" stroke-width="3"/>
+    <rect x="72" y="213" width="496" height="11" rx="5.5" fill="url(#icSheen)" opacity="0.9"/>
+    <rect x="66" y="248" width="508" height="12" rx="6" fill="#5A3A07" opacity="0.32"/>
+
+    <!-- gems: brand blue & green with a bright centre stone -->
+    <ellipse cx="320" cy="237" rx="21" ry="17" fill="url(#icDiamond)" stroke="#FFE9AD" stroke-width="2.5"/>
+    <circle cx="232" cy="237" r="12.5" fill="url(#icEmerald)" stroke="#FFE9AD" stroke-width="2"/>
+    <circle cx="408" cy="237" r="12.5" fill="url(#icEmerald)" stroke="#FFE9AD" stroke-width="2"/>
+    <circle cx="148" cy="237" r="10.5" fill="url(#icSapphire)" stroke="#FFE9AD" stroke-width="2"/>
+    <circle cx="492" cy="237" r="10.5" fill="url(#icSapphire)" stroke="#FFE9AD" stroke-width="2"/>
+    <g fill="url(#icPearl)">
+      <circle cx="190" cy="237" r="5"/>
+      <circle cx="276" cy="237" r="5.5"/>
+      <circle cx="364" cy="237" r="5.5"/>
+      <circle cx="450" cy="237" r="5"/>
+    </g>
+    <g fill="#FFFFFF" opacity="0.92">
+      <circle cx="313" cy="230" r="4.8"/>
+      <circle cx="228" cy="232" r="3.2"/>
+      <circle cx="404" cy="232" r="3.2"/>
+      <circle cx="145" cy="232" r="2.8"/>
+      <circle cx="489" cy="232" r="2.8"/>
+    </g>
+  </g>
+</svg>
