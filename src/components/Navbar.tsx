@@ -58,23 +58,37 @@ export default function Navbar() {
           scrolled ? "py-2" : "py-4"
         }`}
       >
-        <div className="container-px">
+        {/* translateZ(0): keep the navbar on its own composited layer from first paint.
+            Toggling backdrop-filter on a fixed element at scroll time creates a new
+            composited layer mid-session, which on Chromium (Chrome/Vivaldi) Android
+            breaks touch hit-testing — taps land at stale positions, so the language
+            buttons stop responding once the page is scrolled. */}
+        <div className="container-px" style={{ transform: "translateZ(0)" }}>
           <div
-            className={`flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-500 sm:px-5 ${
-              scrolled ? "glass-strong shadow-glass" : "border border-transparent"
+            className={`relative isolate flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-500 sm:px-5 ${
+              scrolled ? "shadow-glass" : "border border-transparent"
             }`}
           >
-            <Link to="/" className="group flex items-center gap-3" aria-label="پارسا اپس">
+            {/* Decorative glass layer: always mounted, pointer-events-none, only fades.
+                The blur layer therefore exists from page load (stable hit-test regions)
+                and can never intercept taps meant for the controls above it. */}
+            <div
+              aria-hidden="true"
+              className={`pointer-events-none absolute inset-0 -z-10 rounded-2xl glass-strong transition-opacity duration-500 ${
+                scrolled ? "opacity-100" : "opacity-0"
+              }`}
+            />
+            <Link to="/" className="group flex items-center gap-3" aria-label={t("person.name") + " — Parsa Apps"}>
               <BrandMark size={44} scanline={false} />
               <span className="leading-tight">
                 <span dir="ltr" className="block text-base font-black tracking-tight text-white">
                   Parsa <span className="text-gradient">Apps</span>
                 </span>
-                <span className="block text-[10px] font-semibold text-white/45">استودیو نرم‌افزار پرمیوم</span>
+                <span className="block text-[10px] font-semibold text-white/45">{t("nav.tagline")}</span>
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="منوی اصلی">
+            <nav className="hidden items-center gap-1 lg:flex" aria-label={t("a11y.mainNav")}>
               {LINKS.map((l) => (
                 <NavLink
                   key={l.to}
@@ -116,7 +130,7 @@ export default function Navbar() {
               <button
                 className="grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/5 text-white"
                 onClick={() => setOpen((v) => !v)}
-                aria-label="باز کردن منو"
+                aria-label={t("a11y.openMenu")}
                 aria-expanded={open}
               >
                 <span className="relative block h-4 w-5">

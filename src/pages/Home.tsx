@@ -10,17 +10,17 @@ const teaserApps = apps.slice(0, 4);
 const featured = apps.find((a) => a.slug === "fandoghi")!;
 
 const processSteps = [
-  { n: "01", icon: "🎯", title: "تحلیل دقیق", text: "تحلیل عمیق نیاز کاربر و ساختاردهی دقیق محصول پیش از شروع توسعه." },
-  { n: "02", icon: "🎨", title: "طراحی داده‌محور", text: "تجربه کاربری مدرن و راست‌چین فارسی بر پایه داده و الگوهای روز دنیا." },
-  { n: "03", icon: "⚙️", title: "مهندسی تمیز", text: "کدنویسی سریع‌تر و تمیزتر با بازبینی دقیق و تست خودکار کد." },
-  { n: "04", icon: "🚀", title: "انتشار و بهبود", text: "پایش کاربران و به‌روزرسانی منظم برای تجربه‌ای همیشه بهتر." },
+  { n: "1", icon: "🎯" },
+  { n: "2", icon: "🎨" },
+  { n: "3", icon: "⚙️" },
+  { n: "4", icon: "🚀" },
 ];
 
 const values = [
-  { icon: "💡", title: "خلاقیت", text: "ایده‌های نو برای دنیای دیجیتال" },
-  { icon: "⚙️", title: "مهندسی دقیق", text: "کدنویسی تمیز، تست و استانداردهای کیفیت" },
-  { icon: "🎨", title: "طراحی", text: "ساخت تجربه‌های زیبا و کاربردی" },
-  { icon: "🚀", title: "نوآوری", text: "به‌کارگیری فناوری‌های روز دنیا" },
+  { icon: "💡", key: "creativity" },
+  { icon: "⚙️", key: "engineering" },
+  { icon: "🎨", key: "design" },
+  { icon: "🚀", key: "innovation" },
 ];
 
 const heroContainer = {
@@ -72,7 +72,7 @@ export default function Home() {
 
             <motion.div variants={heroItem} className="mt-8 flex flex-wrap items-center gap-4">
               <Magnetic>
-                <Link to="/store" className="btn btn-primary" data-cursor-label="مشاهده">
+                <Link to="/store" className="btn btn-primary" data-cursor-label={t("cursor.view")}>
                   {t("hero.cta.primary")}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </Link>
@@ -84,13 +84,13 @@ export default function Home() {
 
             <motion.div variants={heroItem} className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-white/10 pt-6">
               {[
-                { to: 4, label: "اپلیکیشن" },
-                { to: 8, label: "مهارت تخصصی" },
-                { to: 100, label: "تعهد کیفیت", suffix: "%" },
+                { to: 4, key: "hero.stats.apps" },
+                { to: 8, key: "hero.stats.skills" },
+                { to: 100, key: "hero.stats.quality", suffix: "%" },
               ].map((s, i) => (
                 <div key={i} className="flex flex-col">
                   <Counter to={s.to} suffix={s.suffix ?? ""} className="text-2xl font-black text-white" />
-                  <span className="mt-1 text-xs text-white/45">{s.label}</span>
+                  <span className="mt-1 text-xs text-white/45">{t(s.key)}</span>
                 </div>
               ))}
             </motion.div>
@@ -144,27 +144,26 @@ export default function Home() {
       <section className="section-shell">
         <div className="container-px grid gap-12 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <span className="eyebrow">درباره استودیو</span>
+            <span className="eyebrow">{t("home.about.eyebrow")}</span>
             <h2 className="mt-5 text-3xl font-black leading-[1.3] sm:text-4xl lg:text-5xl">
-              پارسا اپس یک <span className="text-gradient">برند جدی نرم‌افزار</span> است
+              {t("home.about.title.a")} <span className="text-gradient">{t("home.about.title.b")}</span>{t("home.about.title.c") ? ` ${t("home.about.title.c")}` : ""}
             </h2>
             <p className="mt-5 max-w-xl leading-8 text-white/60">
-              ما فقط برنامه نمی‌سازیم؛ تجربه‌های دیجیتال باکیفیت خلق می‌کنیم. از مهندسی دقیق و طراحی مدرن
-              تا استانداردهای روز دنیا، هر محصول نشانه‌ای از تعهد ما به کیفیت است.
+              {t("home.about.text")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/about" className="btn btn-ghost">درباره فرشاد پارسا</Link>
-              <Link to="/store" className="btn btn-primary">مشاهده محصولات</Link>
+              <Link to="/about" className="btn btn-ghost">{t("home.about.btnAbout")}</Link>
+              <Link to="/store" className="btn btn-primary">{t("home.about.btnProducts")}</Link>
             </div>
           </Reveal>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {values.map((v, i) => (
-              <Reveal key={v.title} delay={i * 0.08}>
+              <Reveal key={v.key} delay={i * 0.08}>
                 <TiltCard className="card p-6">
                   <span className="text-3xl">{v.icon}</span>
-                  <h3 className="mt-4 text-lg font-black text-white">{v.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/55">{v.text}</p>
+                  <h3 className="mt-4 text-lg font-black text-white">{t(`value.${v.key}.title`)}</h3>
+                  <p className="mt-2 text-sm leading-7 text-white/55">{t(`value.${v.key}.text`)}</p>
                 </TiltCard>
               </Reveal>
             ))}
@@ -177,9 +176,9 @@ export default function Home() {
         <div className="pointer-events-none absolute right-0 top-20 h-72 w-72 rounded-full bg-neon-cyan/15 blur-[120px]" />
         <div className="container-px">
           <SectionHeader
-            eyebrow="☀️ محصول پرچم‌دار"
-            title={<>جزیره فندقی، <span className="text-gradient">دنیای یادگیری کودکان</span></>}
-            subtitle="دنیایی شاد، امن و آموزشی برای کودکان ۳ تا ۹ سال؛ جایی که بازی و یادگیری به هم می‌رسند."
+            eyebrow={t("home.flag.eyebrow")}
+            title={<>{t("home.flag.title.a")} <span className="text-gradient">{t("home.flag.title.b")}</span></>}
+            subtitle={t("home.flag.subtitle")}
           />
 
           <Reveal delay={0.1} className="mt-14">
@@ -191,21 +190,21 @@ export default function Home() {
                 <div className="flex items-center gap-4">
                   <AppIcon app={fandoghi} size={92} />
                   <div>
-                    <h3 className="text-2xl font-black text-white">جزیره فندقی</h3>
+                    <h3 className="text-2xl font-black text-white">{t("app.fandoghi.name")}</h3>
                     <div className="mt-2"><StatusBadge status={fandoghi.status} /></div>
                   </div>
                 </div>
-                <p className="mt-6 leading-8 text-white/65">{fandoghi.longDescription}</p>
+                <p className="mt-6 leading-8 text-white/65">{t("app.fandoghi.longDescription")}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {fandoghi.features.slice(0, 5).map((f) => (
-                    <span key={f} className="chip">✓ {f}</span>
+                  {fandoghi.features.slice(0, 5).map((_, fi) => (
+                    <span key={fi} className="chip">✓ {t(`app.fandoghi.feat.${fi}`)}</span>
                   ))}
                 </div>
-                <p className="mt-5 text-sm text-white/40">با Flutter، Dart و Firebase — طراحی‌شده برای آرامش والدین و شادی کودکان.</p>
+                <p className="mt-5 text-sm text-white/40">{t("home.flag.note")}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link to={`/apps/${fandoghi.slug}`} className="btn btn-primary">مشاهده صفحه محصول</Link>
+                  <Link to={`/apps/${fandoghi.slug}`} className="btn btn-primary">{t("app.btnViewProduct")}</Link>
                   <button className="btn btn-ghost" onClick={() => document.getElementById("download")?.scrollIntoView({ behavior: "smooth" })}>
-                    دانلود APK
+                    {t("app.downloadApk")}
                   </button>
                 </div>
               </div>
@@ -220,12 +219,12 @@ export default function Home() {
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeader
               align="start"
-              eyebrow="📱 پارسا استور"
-              title={<>هر محصول، <span className="text-gradient">یک تجربه کامل</span></>}
-              subtitle="میکرواستور رسمی اپلیکیشن‌های پارسا اپس — هر اپ با صفحه محصول، گالری و دانلود اختصاصی."
+              eyebrow={t("home.store.eyebrow")}
+              title={<>{t("home.store.title.a")} <span className="text-gradient">{t("home.store.title.b")}</span></>}
+              subtitle={t("home.store.subtitle")}
             />
             <Reveal delay={0.1}>
-              <Link to="/store" className="btn btn-ghost shrink-0">همه اپلیکیشن‌ها ←</Link>
+              <Link to="/store" className="btn btn-ghost shrink-0">{t("home.store.btnAll")}</Link>
             </Reveal>
           </div>
 
@@ -242,9 +241,9 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-0 grid-bg" />
         <div className="container-px">
           <SectionHeader
-            eyebrow="⚡ فرآیند توسعه محصول"
-            title={<>از ایده تا انتشار، <span className="text-gradient">قدم به قدم</span></>}
-            subtitle="در پارسا اپس، هر محصول از تحلیل نیاز تا انتشار و بهبود، در یک مسیر مهندسی‌شده و دقیق ساخته می‌شود."
+            eyebrow={t("home.process.eyebrow")}
+            title={<>{t("home.process.title.a")} <span className="text-gradient">{t("home.process.title.b")}</span></>}
+            subtitle={t("home.process.subtitle")}
           />
 
           {/* process visual */}
@@ -266,10 +265,10 @@ export default function Home() {
                     <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-neon-violet/40 hover:bg-white/[0.06]">
                       <div className="flex items-center justify-between">
                         <span className="text-3xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6">{s.icon}</span>
-                        <span className="text-sm font-black text-white/25">{s.n}</span>
+                        <span className="text-sm font-black text-white/25">0{s.n}</span>
                       </div>
-                      <h3 className="mt-4 font-black text-white">{s.title}</h3>
-                      <p className="mt-2 text-sm leading-7 text-white/55">{s.text}</p>
+                      <h3 className="mt-4 font-black text-white">{t(`process.${s.n}.title`)}</h3>
+                      <p className="mt-2 text-sm leading-7 text-white/55">{t(`process.${s.n}.text`)}</p>
                     </div>
                   </Reveal>
                 ))}
@@ -283,20 +282,19 @@ export default function Home() {
       <section className="section-shell">
         <div className="container-px grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal>
-            <span className="eyebrow">👨‍💻 توسعه‌دهنده</span>
+            <span className="eyebrow">{t("home.dev.eyebrow")}</span>
             <h2 className="mt-5 flex items-center gap-3 text-3xl font-black sm:text-4xl">
-              <span>فرشاد پارسا</span>
+              <span>{t("person.name")}</span>
               <img
                 src="/assets/logo.png"
-                alt="پارسا اپس"
+                alt="Parsa Apps"
                 width={36}
                 height={36}
                 className="inline-block object-contain drop-shadow-[0_0_12px_rgba(0,198,255,0.45)]"
               />
             </h2>
             <p className="mt-4 text-white/65">
-              بنیان‌گذار و برنامه‌نویس ارشد پارسا اپس — توسعه‌دهنده اندروید و فلاتر و طراح UI/UX.
-              هر خط کد با تست، بازبینی و عشق به جزئیات نوشته می‌شود.
+              {t("home.dev.text")}
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["Android Developer", "Flutter Developer", "UI/UX Designer", "Software Architect"].map((r) => (
@@ -304,15 +302,15 @@ export default function Home() {
               ))}
             </div>
             <div className="mt-8 flex gap-3">
-              <Link to="/about" className="btn btn-primary">پروفایل کامل</Link>
-              <a href={CONTACT.telegram} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">تلگرام</a>
+              <Link to="/about" className="btn btn-primary">{t("home.dev.btnProfile")}</Link>
+              <a href={CONTACT.telegram} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">{t("common.telegram")}</a>
             </div>
           </Reveal>
 
           <div className="relative">
             <div className="absolute -inset-6 -z-10 rounded-full bg-neon-violet/10 blur-[60px]" />
-            {timeline.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.08}>
+            {timeline.map((_, i) => (
+              <Reveal key={i} delay={i * 0.08}>
                 <div className="relative flex gap-5 pb-8 last:pb-0">
                   <div className="relative flex flex-col items-center">
                     <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-neon-violet to-neon-blue text-xs font-black text-white shadow-glow">
@@ -321,9 +319,9 @@ export default function Home() {
                     {i < timeline.length - 1 && <span className="mt-2 w-px flex-1 bg-gradient-to-b from-white/30 to-transparent" />}
                   </div>
                   <div className="glass flex-1 rounded-2xl p-5">
-                    <span className="text-xs font-bold text-neon-cyan">{item.year}</span>
-                    <h3 className="mt-1 font-black text-white">{item.title}</h3>
-                    <p className="mt-1 text-sm leading-7 text-white/55">{item.text}</p>
+                    <span className="text-xs font-bold text-neon-cyan">{t(`tl.${i + 1}.year`)}</span>
+                    <h3 className="mt-1 font-black text-white">{t(`tl.${i + 1}.title`)}</h3>
+                    <p className="mt-1 text-sm leading-7 text-white/55">{t(`tl.${i + 1}.text`)}</p>
                   </div>
                 </div>
               </Reveal>
@@ -336,9 +334,9 @@ export default function Home() {
       <section className="section-shell">
         <div className="container-px">
           <SectionHeader
-            eyebrow="🧩 تخصص‌ها"
-            title={<>ابزارهایی که <span className="text-gradient">ایده را واقعی می‌کنند</span></>}
-            subtitle="مهارت‌های فنی و طراحی پشت هر محصول پارسا اپس."
+            eyebrow={t("home.skills.eyebrow")}
+            title={<>{t("home.skills.title.a")} <span className="text-gradient">{t("home.skills.title.b")}</span></>}
+            subtitle={t("home.skills.subtitle")}
           />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {skills.map((skill, i) => (
@@ -369,9 +367,9 @@ export default function Home() {
       <section className="section-shell">
         <div className="container-px">
           <SectionHeader
-            eyebrow="🗂️ پروژه‌ها"
-            title={<>تاریخچه‌ای از <span className="text-gradient">محصولات واقعی</span></>}
-            subtitle="هر پروژه یک تجربه یادگیری است که به محصولی برای کاربران تبدیل شده است."
+            eyebrow={t("home.projects.eyebrow")}
+            title={<>{t("home.projects.title.a")} <span className="text-gradient">{t("home.projects.title.b")}</span></>}
+            subtitle={t("home.projects.subtitle")}
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((p, i) => (
@@ -384,11 +382,11 @@ export default function Home() {
                       className="absolute inset-0"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <span className="absolute right-4 top-4 chip !border-white/20 !bg-black/40">{p.status}</span>
+                    <span className="absolute right-4 top-4 chip !border-white/20 !bg-black/40">{t(p.status === "development" ? "status.development" : "status.released")}</span>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-black text-white">{p.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-white/55">{p.description}</p>
+                    <h3 className="font-black text-white">{t(`app.${p.slug}.name`)}</h3>
+                    <p className="mt-2 text-sm leading-7 text-white/55">{t(`app.${p.slug}.description`)}</p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {p.technologies.slice(0, 3).map((tech) => (
                         <span key={tech} className="chip">{tech}</span>
@@ -416,14 +414,14 @@ export default function Home() {
                 className="relative mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0,198,255,0.45)] animate-float object-contain"
               />
               <h2 className="relative text-3xl font-black sm:text-4xl">
-                آیا ایده‌ای برای محصول بعدی دارید؟
+                {t("home.cta.title")}
               </h2>
               <p className="relative mx-auto mt-4 max-w-xl leading-8 text-white/60">
-                از طراحی تا انتشار، کنار شما هستیم. پیام شما مستقیم به مدیر و توسعه‌دهنده ارشد می‌رسد.
+                {t("home.cta.text")}
               </p>
               <div className="relative mt-8 flex flex-wrap justify-center gap-4">
-                <Link to="/contact" className="btn btn-primary">ارتباط با ما</Link>
-                <Link to="/store" className="btn btn-ghost">مشاهده محصولات</Link>
+                <Link to="/contact" className="btn btn-primary">{t("home.cta.btnContact")}</Link>
+                <Link to="/store" className="btn btn-ghost">{t("home.about.btnProducts")}</Link>
               </div>
             </div>
           </Reveal>

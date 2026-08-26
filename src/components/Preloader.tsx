@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -28,6 +29,7 @@ function freshParticles(count: number) {
 }
 
 export default function Preloader({ onFinish }: { onFinish: () => void }) {
+  const { t } = useI18n();
   const [phase, setPhase] = useState(0);
   const [done, setDone] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -425,7 +427,7 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
           </motion.div>
 
           <div aria-hidden="true" className="sr-only">
-            Parsa Apps — برند نرم‌افزار پرمیوم
+            {t("brand.srTagline")}
           </div>
         </motion.div>
       )}

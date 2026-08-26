@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 import { Reveal } from "@/components/ui";
 
 export default function NotFound() {
+  const { t } = useI18n();
   return (
     <div className="relative grid min-h-screen place-items-center overflow-hidden pt-20">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
@@ -17,13 +19,13 @@ export default function NotFound() {
           className="mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0,198,255,0.45)] animate-float object-contain"
         />
         <h1 className="text-[7rem] font-black leading-none text-gradient sm:text-[10rem]">404</h1>
-        <h2 className="mt-4 text-2xl font-black text-white sm:text-3xl">اوه! این صفحه پیدا نشد</h2>
+        <h2 className="mt-4 text-2xl font-black text-white sm:text-3xl">{t("nf.title")}</h2>
         <p className="mx-auto mt-4 max-w-md leading-8 text-white/60">
-          به نظر می‌رسد این مسیر در دنیای پارسا اپس وجود ندارد. اما نگران نباشید، ما شما را به خانه برمی‌گردانیم.
+          {t("nf.text")}
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link to="/" className="btn btn-primary">بازگشت به صفحه اصلی</Link>
-          <Link to="/store" className="btn btn-ghost">مشاهده محصولات</Link>
+          <Link to="/" className="btn btn-primary">{t("nf.btnHome")}</Link>
+          <Link to="/store" className="btn btn-ghost">{t("home.about.btnProducts")}</Link>
         </div>
       </Reveal>
     </div>

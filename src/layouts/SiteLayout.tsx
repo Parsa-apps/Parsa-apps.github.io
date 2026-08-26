@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
@@ -15,7 +16,7 @@ function ScrollProgress() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 26, mass: 0.4 });
   return (
     <motion.div
-      className="fixed inset-x-0 top-0 z-[96] h-[3px] origin-left bg-gradient-to-r from-neon-violet via-neon-blue to-neon-cyan"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[96] h-[3px] origin-left bg-gradient-to-r from-neon-violet via-neon-blue to-neon-cyan"
       style={{ scaleX, boxShadow: "0 0 18px rgba(0,198,255,0.6)" }}
       aria-hidden="true"
     />
@@ -90,27 +91,34 @@ export default function SiteLayout() {
 }
 
 function usePageTitle(pathname: string) {
+  const { t } = useI18n();
   useEffect(() => {
-    const titles: Record<string, string> = {
-      "/": "پارسا اپس | استودیو نرم‌افزار پرمیوم",
-      "/store": "پارسا استور | همه اپلیکیشن‌ها",
-      "/about": "درباره | فرشاد پارسا — پارسا اپس",
-      "/contact": "تماس | ارتباط با استودیو",
-      "/privacy": "حریم خصوصی | پارسا اپس",
-    };
-    let title = titles[pathname] ?? "پارسا اپس | استودیو نرم‌افزار";
-    const appMatch = pathname.match(/^\/apps\/([a-z-]+)$/);
-    if (appMatch) {
-      const apps: Record<string, string> = {
-        fandoghi: "جزیره فندقی | Parsa Apps",
-        kartoniya: "کارتونیا | Parsa Apps",
-      };
-      title = apps[appMatch[1]] ?? "اپلیکیشن | پارسا اپس";
+    let title = t("title.home");
+    switch (pathname) {
+      case "/store":
+        title = t("title.store");
+        break;
+      case "/about":
+        title = t("title.about");
+        break;
+      case "/contact":
+        title = t("title.contact");
+        break;
+      case "/privacy":
+        title = t("title.privacy");
+        break;
+      default: {
+        const appMatch = pathname.match(/^\/apps\/([a-z-]+)$/);
+        if (appMatch) {
+          title = `${t(`app.${appMatch[1]}.name`)} | Parsa Apps`;
+        }
+        break;
+      }
     }
     try {
       document.title = title;
     } catch {
       // ignore
     }
-  }, [pathname]);
+  });
 }
