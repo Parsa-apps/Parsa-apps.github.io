@@ -26,7 +26,16 @@ export default function SiteLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    // safe scroll — instant is not supported everywhere, fall back to auto
+    try {
+      window.scrollTo({ top: 0, behavior: "auto" as ScrollBehavior });
+    } catch {
+      try {
+        window.scrollTo(0, 0);
+      } catch {
+        // ignore
+      }
+    }
   }, [location.pathname]);
 
   usePageTitle(location.pathname);
@@ -63,6 +72,9 @@ export default function SiteLayout() {
         <motion.main
           key={location.pathname}
           className="relative z-10"
+          // Start visible (opacity 1) then animate from hidden -> visible.
+          // If framer-motion fails, content is still visible instead of black screen.
+          style={{ opacity: 1 }}
           initial={{ opacity: 0, y: 22, scale: 0.996, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: -14, scale: 1.004, filter: "blur(8px)" }}
@@ -95,6 +107,10 @@ function usePageTitle(pathname: string) {
       };
       title = apps[appMatch[1]] ?? "اپلیکیشن | پارسا اپس";
     }
-    document.title = title;
+    try {
+      document.title = title;
+    } catch {
+      // ignore
+    }
   }, [pathname]);
 }

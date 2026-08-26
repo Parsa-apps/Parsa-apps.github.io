@@ -603,3 +603,66 @@ html.theme-light body {
     scroll-behavior: auto;
   }
 }
+
+/* ===== Persian strong font fix ===== */
+.font-persian-strong {
+  font-family: "Vazirmatn", system-ui, sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.015em !important;
+  font-feature-settings: "ss01" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* Ensure Persian text never breaks joining */
+[lang="fa"], [dir="rtl"] {
+  font-family: "Vazirmatn", system-ui, sans-serif;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+/* Fix for AnimatedText char mode breaking Persian - force word mode for RTL */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  /* Prevent breaking Arabic joining */
+  unicode-bidi: plaintext;
+}
+.word-mask > span {
+  display: inline-block;
+  will-change: transform, opacity;
+  /* Preserve Persian ligatures */
+  font-variant-ligatures: common-ligatures;
+  -webkit-font-feature-settings: "liga" 1, "calt" 1;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* ===== Black-screen safety nets ===== */
+/* If framer-motion fails and leaves main at opacity 0, force visible after 3s */
+@keyframes parsa-force-visible {
+  to { opacity: 1 !important; transform: none !important; filter: none !important; }
+}
+main {
+  animation: parsa-force-visible 0.5s forwards;
+  animation-delay: 3.2s;
+}
+/* If preloader somehow sticks, force hide after 7s via CSS (JS also does) */
+@keyframes parsa-kill-preloader {
+  to { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+}
+div[class*="z-[200]"] {
+  animation: parsa-kill-preloader 0.6s forwards;
+  animation-delay: 7s;
+}
+/* Ensure root never stays empty black — if empty, show subtle gradient so not pure black */
+#root:empty {
+  background: radial-gradient(120% 90% at 50% 42%, #0a0e24 0%, #05060e 60%, #02030a 100%);
+}
+
+/* Screenshot gallery fallback - ensure images always visible */
+.screenshot-fallback img {
+  opacity: 1 !important;
+  clip-path: none !important;
+  transform: none !important;
+}

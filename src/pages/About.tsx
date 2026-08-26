@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { skills, timeline, CONTACT } from "@/lib/data";
-import { AnimatedText, Parallax, Reveal, SectionHeader, TiltCard, Marquee } from "@/components/ui";
+import { Parallax, Reveal, SectionHeader, TiltCard, Marquee } from "@/components/ui";
 
 const roles = [
   { icon: "🤖", title: "Android Developer", text: "توسعه اپلیکیشن‌های اندرویدی سبک، سریع و بهینه." },
@@ -32,10 +32,29 @@ export default function About() {
               </Parallax>
             </div>
             <span className="eyebrow">👨‍💻 درباره توسعه‌دهنده و استودیو</span>
-            <h1 className="mt-4 flex items-center justify-center gap-4 text-4xl font-black sm:text-5xl">
-              <AnimatedText text="فرشاد پارسا" mode="chars" as="span" stagger={0.05} />
+            {/* Fixed: Persian name was split char-by-char which breaks Arabic joining. Use full word with strong Vazirmatn Black */}
+            <h1 className="mt-6 text-center font-black leading-[1.15] tracking-tight">
+              <motion.span
+                className="inline-block bg-gradient-to-l from-white via-[#d8d6ff] to-[#8a7dff] bg-clip-text text-transparent"
+                style={{
+                  fontFamily: "Vazirmatn, system-ui, sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(2.2rem, 6vw, 3.6rem)",
+                  letterSpacing: "-0.02em",
+                  textRendering: "optimizeLegibility",
+                  WebkitFontSmoothing: "antialiased",
+                }}
+                initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              >
+                فرشاد پارسا
+              </motion.span>
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl leading-8 text-white/60">
+            <p
+              className="mx-auto mt-6 max-w-2xl text-[15px] leading-[2.1] text-white/70 sm:text-[16px]"
+              style={{ fontFamily: "Vazirmatn, system-ui, sans-serif", fontWeight: 500 }}
+            >
               بنیان‌گذار و برنامه‌نویس ارشد پارسا اپس. من با سخت‌گیری مهندسی، کدنویسی تمیز و تمرکز روی جزئیات،
               محصولات دیجیتال می‌سازم. هر خط کد با تست و بازبینی، هر صفحه با استانداردهای تجربه کاربری فارسی و
               RTL، و هر انتشار با رعایت اصول امنیت و کیفیت انجام می‌شود؛ چون اینجا یک پروژه معمولی نیست — یک برند حرفه‌ای است.
@@ -48,7 +67,7 @@ export default function About() {
                 <TiltCard key={r.title} className="card p-6">
                   <span className="text-3xl">{r.icon}</span>
                   <h2 className="mt-4 text-base font-black text-white" dir="ltr">{r.title}</h2>
-                  <p className="mt-2 text-sm leading-7 text-white/55">{r.text}</p>
+                  <p className="mt-2 text-sm leading-7 text-white/55" style={{ fontFamily: "Vazirmatn" }}>{r.text}</p>
                 </TiltCard>
               ))}
             </div>
@@ -81,7 +100,7 @@ export default function About() {
               ].map((item) => (
                 <div key={item} className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-neon-violet/40 hover:bg-white/[0.06]">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-neon-violet/20 text-neon-violet transition-transform duration-300 group-hover:rotate-[14deg] group-hover:scale-110">✓</span>
-                  <p className="font-bold text-white/85">{item}</p>
+                  <p className="font-bold text-white/85" style={{ fontFamily: "Vazirmatn", fontWeight: 700 }}>{item}</p>
                 </div>
               ))}
             </div>
@@ -105,8 +124,8 @@ export default function About() {
                   </div>
                   <div className="glass flex-1 rounded-2xl p-6">
                     <span className="text-xs font-bold text-neon-cyan">{item.year}</span>
-                    <h3 className="mt-1 text-xl font-black text-white">{item.title}</h3>
-                    <p className="mt-2 leading-7 text-white/60">{item.text}</p>
+                    <h3 className="mt-1 text-xl font-black text-white" style={{ fontFamily: "Vazirmatn", fontWeight: 800 }}>{item.title}</h3>
+                    <p className="mt-2 leading-7 text-white/60" style={{ fontFamily: "Vazirmatn" }}>{item.text}</p>
                   </div>
                 </div>
               </Reveal>
@@ -158,8 +177,8 @@ export default function About() {
                 height={84}
                 className="relative mx-auto mb-5 drop-shadow-[0_0_24px_rgba(0,198,255,0.4)] animate-float object-contain"
               />
-              <h2 className="relative text-3xl font-black">بیایید با هم بسازیم</h2>
-              <p className="relative mx-auto mt-4 max-w-xl leading-8 text-white/60">
+              <h2 className="relative text-3xl font-black" style={{ fontFamily: "Vazirmatn", fontWeight: 900 }}>بیایید با هم بسازیم</h2>
+              <p className="relative mx-auto mt-4 max-w-xl leading-8 text-white/60" style={{ fontFamily: "Vazirmatn" }}>
                 سوال، پیشنهاد یا ایده همکاری دارید؟ پیام شما مستقیم به من می‌رسد.
               </p>
               <div className="relative mt-8 flex flex-wrap justify-center gap-4">

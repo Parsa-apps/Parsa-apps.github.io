@@ -15,12 +15,37 @@ const NotFound = lazy(() => import("@/pages/NotFound"));
 export default function App() {
   const [loading, setLoading] = useState(true);
 
-  // Absolute hard cap: even if the preloader somehow never calls onFinish,
-  // the loading overlay is dropped after the full cinematic intro + exit
-  // so content is always visible.
+  // Triple safety net: guarantees site becomes visible even if preloader crashes,
+  // tab was hidden, or framer-motion never fires.
   useEffect(() => {
-    const t = window.setTimeout(() => setLoading(false), 5600);
-    return () => window.clearTimeout(t);
+    const t1 = window.setTimeout(() => setLoading(false), 4800);
+    const t2 = window.setTimeout(() => setLoading(false), 7000);
+    const onError = () => setLoading(false);
+    const onLoad = () => {
+      // give the cinematic intro a moment, but don't block forever
+      window.setTimeout(() => setLoading(false), 500);
+    };
+
+    window.addEventListener("error", onError);
+    window.addEventListener("unhandledrejection", onError);
+    window.addEventListener("load", onLoad);
+
+    // If page was hidden during boot, rAF is throttled — force show when visible again
+    const onVisible = () => {
+      if (document.visibilityState === "visible") {
+        window.setTimeout(() => setLoading(false), 400);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.removeEventListener("error", onError);
+      window.removeEventListener("unhandledrejection", onError);
+      window.removeEventListener("load", onLoad);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, []);
 
   return (
@@ -28,9 +53,16 @@ export default function App() {
       {loading && <Preloader onFinish={() => setLoading(false)} />}
       <Suspense
         fallback={
-          <div className="grid min-h-screen place-items-center bg-[var(--bg)]">
+          <div className="grid min-h-screen place-items-center bg-[#05060e]">
             <div className="flex flex-col items-center gap-4">
-              <img src="/assets/logo.png" alt="Parsa Apps" width={72} height={72} className="animate-pulse object-contain drop-shadow-[0_0_20px_rgba(0,198,255,0.4)]" />
+              <img
+                src="/assets/logo.png"
+                alt="Parsa Apps"
+                width={72}
+                height={72}
+                className="animate-pulse object-contain drop-shadow-[0_0_20px_rgba(0,198,255,0.4)]"
+                onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
+              />
               <p className="text-sm text-white/60">در حال بارگذاری…</p>
             </div>
           </div>
