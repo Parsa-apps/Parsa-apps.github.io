@@ -93,16 +93,31 @@ npm run preview    # پیش‌نمایش بیلد
 بیلد خروجی را در `dist/` تولید می‌کند و فایل `404.html` برای مسیریابی SPA
 به‌صورت خودکار ساخته می‌شود.
 
-Workflow پیشنهادی استقرار خودکار در فایل
-[`contrib/github-pages.deploy.yml`](contrib/github-pages.deploy.yml) قرار دارد.
-برای فعال‌سازی:
+**تنظیمات فعلی و الزامی GitHub Pages:**
 
-1. در تنظیمات مخزن، **Pages → Source** را روی **GitHub Actions** قرار دهید.
-2. فایل `contrib/github-pages.deploy.yml` را به `.github/workflows/deploy.yml` منتقل کنید
-   (این کار نیاز به اجازه `workflows` روی اکانت GitHub دارد) و آن را روی `main` بفرستید.
-3. پس از ادغام، سایت به‌صورت خودکار از خروجی `dist/` منتشر می‌شود.
+1. در تنظیمات مخزن: **Settings → Pages → Build and deployment → Source = Deploy from a branch**
+2. **Branch را حتماً روی `gh-pages` و path را روی `/ (root)` بگذارید — نه `main`!**
+3. ذخیره کنید و منتظر بمانید تا بیلد صفحات تمام شود.
 
-> تا فعال شدن workflow، می‌توانید خروجی `dist/` را به‌صورت دستی در `main` انتشار دهید.
+> ⚠️ اگر Source روی `main` باشد، GitHub Pages **سورس خام پروژه (کد React/TSX)** را منتشر
+> می‌کند نه خروجی بیلدشده را؛ در نتیجه اپ اجرا نمی‌شود و سایت صفحهٔ سیاه/خالی نشان می‌دهد.
+> `main` فقط مخزن سورس است و `dist/` در آن کامیت نمی‌شود.
+
+**انتشار نسخهٔ جدید:**
+
+```bash
+npm run build          # بیلد محلی برای تست
+npm run deploy:pages   # بیلد + انتشار dist/ به شاخهٔ gh-pages (force-push)
+```
+
+اسکریپت `deploy:pages` خروجی بیلد را روی شاخهٔ `gh-pages` (orphan) پوش می‌کند و
+سایت بلافاصله پس از بیلد صفحات گیت‌هاب آپدیت می‌شود.
+
+**Workflow پیشنهادی استقرار خودکار** در فایل
+[`contrib/github-pages.deploy.yml`](contrib/github-pages.deploy.yml) قرار دارد؛
+برای فعال‌سازی آن (اختیاری) فایل را به `.github/workflows/deploy.yml` منتقل کنید —
+این کار به اجازهٔ `workflows` روی اکانت GitHub نیاز دارد — و سپس Source را روی
+**GitHub Actions** بگذارید.
 
 ## 📞 ارتباط
 
