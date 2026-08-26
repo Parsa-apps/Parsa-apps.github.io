@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   animate,
   motion,
@@ -39,8 +39,17 @@ export function Reveal({
   once = true,
   variant = "slide",
 }: RevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [forcedVisible, setForcedVisible] = useState(false);
+
+  // Safety: if IntersectionObserver never fires (old browser, error), force visible after 2s
+  useEffect(() => {
+    const t = setTimeout(() => setForcedVisible(true), 2000);
+    return () => clearTimeout(t);
+  }, []);
+
   const initial = (() => {
-    if (prefersReduced()) return { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: "none" };
+    if (prefersReduced() || forcedVisible) return { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: "none" };
     switch (variant) {
       case "fade":
         return { opacity: 0, x, y: y * 0.4, scale, rotate, filter: blur ? `blur(${blur}px)` : "none" };
@@ -53,8 +62,13 @@ export function Reveal({
     }
   })();
 
+  if (forcedVisible) {
+    return <div ref={ref} className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial={initial}
       whileInView={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, filter: "none" }}
@@ -172,14 +186,22 @@ export function TiltCard({ children, className = "", scale = 1.02, intensity = 1
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000, "--mx": glowX, "--my": glowY } as never}
       whileHover={{ scale }}
       onMouseMove={(e) => {
-        const r = ref.current?.getBoundingClientRect();
-        if (!r) return;
-        mx.set((e.clientX - r.left) / r.width);
-        my.set((e.clientY - r.top) / r.height);
+        try {
+          const r = ref.current?.getBoundingClientRect();
+          if (!r) return;
+          mx.set((e.clientX - r.left) / r.width);
+          my.set((e.clientY - r.top) / r.height);
+        } catch {
+          // ignore
+        }
       }}
       onMouseLeave={() => {
-        mx.set(0.5);
-        my.set(0.5);
+        try {
+          mx.set(0.5);
+          my.set(0.5);
+        } catch {
+          // ignore
+        }
       }}
       {...rest}
     >
@@ -200,14 +222,22 @@ export function Magnetic({ children, className = "", strength = 0.3 }: { childre
       className={className}
       style={{ x, y }}
       onMouseMove={(e) => {
-        const r = ref.current?.getBoundingClientRect();
-        if (!r) return;
-        x.set((e.clientX - (r.left + r.width / 2)) * strength);
-        y.set((e.clientY - (r.top + r.height / 2)) * strength);
+        try {
+          const r = ref.current?.getBoundingClientRect();
+          if (!r) return;
+          x.set((e.clientX - (r.left + r.width / 2)) * strength);
+          y.set((e.clientY - (r.top + r.height / 2)) * strength);
+        } catch {
+          // ignore
+        }
       }}
       onMouseLeave={() => {
-        x.set(0);
-        y.set(0);
+        try {
+          x.set(0);
+          y.set(0);
+        } catch {
+          // ignore
+        }
       }}
     >
       {children}
@@ -237,14 +267,22 @@ export function MouseParallax({
       className={className}
       style={{ x, y }}
       onMouseMove={(e) => {
-        const r = ref.current?.getBoundingClientRect();
-        if (!r) return;
-        mx.set(((e.clientX - r.left) / r.width - 0.5) * strength * 2);
-        my.set(((e.clientY - r.top) / r.height - 0.5) * strength * 2);
+        try {
+          const r = ref.current?.getBoundingClientRect();
+          if (!r) return;
+          mx.set(((e.clientX - r.left) / r.width - 0.5) * strength * 2);
+          my.set(((e.clientY - r.top) / r.height - 0.5) * strength * 2);
+        } catch {
+          // ignore
+        }
       }}
       onMouseLeave={() => {
-        mx.set(0);
-        my.set(0);
+        try {
+          mx.set(0);
+          my.set(0);
+        } catch {
+          // ignore
+        }
       }}
     >
       {children}
@@ -298,14 +336,18 @@ export function Counter({
 
   React.useEffect(() => {
     if (!inView) return;
-    const controls = animate(value, to, { duration, ease: [0.22, 1, 0.36, 1] });
-    const unsub = value.on("change", (v) => {
-      if (ref.current) ref.current.textContent = `${prefix}${Math.round(v).toLocaleString()}${suffix}`;
-    });
-    return () => {
-      controls.stop();
-      unsub();
-    };
+    try {
+      const controls = animate(value, to, { duration, ease: [0.22, 1, 0.36, 1] });
+      const unsub = value.on("change", (v) => {
+        if (ref.current) ref.current.textContent = `${prefix}${Math.round(v).toLocaleString()}${suffix}`;
+      });
+      return () => {
+        controls.stop();
+        unsub();
+      };
+    } catch {
+      if (ref.current) ref.current.textContent = `${prefix}${to}${suffix}`;
+    }
   }, [inView, to, suffix, prefix, duration, value]);
 
   return (
@@ -346,20 +388,26 @@ export function MediaReveal({
   imgClassName?: string;
   loading?: "lazy" | "eager";
 }) {
+  const [failed, setFailed] = useState(false);
   return (
     <div className={`media-reveal ${className}`}>
-      <motion.img
-        src={src}
-        alt={alt}
-        loading={loading}
-        decoding="async"
-        initial={prefersReduced() ? false : { clipPath: "inset(0 0 100% 0)", transform: "scale(1.2)" }}
-        whileInView={{ clipPath: "inset(0 0 0% 0)", transform: "scale(1.04)" }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 1.05, ease: EASE }}
-        whileHover={{ transform: "scale(1.08)" }}
-        className={`h-full w-full object-cover ${imgClassName}`}
-      />
+      {!failed ? (
+        <motion.img
+          src={src}
+          alt={alt}
+          loading={loading}
+          decoding="async"
+          initial={prefersReduced() ? false : { clipPath: "inset(0 0 100% 0)", transform: "scale(1.2)" }}
+          whileInView={{ clipPath: "inset(0 0 0% 0)", transform: "scale(1.04)" }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1.05, ease: EASE }}
+          whileHover={{ transform: "scale(1.08)" }}
+          className={`h-full w-full object-cover ${imgClassName}`}
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <div className="grid h-full w-full place-items-center bg-white/5 text-white/30">تصویر در دسترس نیست</div>
+      )}
     </div>
   );
 }

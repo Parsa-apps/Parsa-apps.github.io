@@ -36,9 +36,9 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
   finishRef.current = onFinish;
   const finishedRef = useRef(false);
 
-  // Pointer-based 3D tilt for the mark while the audience watches the build.
-  const rxBase = useRef(useMotionValue(0)).current;
-  const ryBase = useRef(useMotionValue(0)).current;
+  // Fixed: call hooks directly, not wrapped in useRef (was violating rules of hooks and could cause crash)
+  const rxBase = useMotionValue(0);
+  const ryBase = useMotionValue(0);
   const tiltRX = useSpring(rxBase, { stiffness: 90, damping: 18 });
   const tiltRY = useSpring(ryBase, { stiffness: 90, damping: 18 });
 
@@ -51,26 +51,47 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
       if (finishedRef.current) return;
       finishedRef.current = true;
       setDone(true);
-      // Let the exit clip/wash finish before handing control back to the site.
-      window.setTimeout(() => finishRef.current(), 860);
+      window.setTimeout(() => {
+        try {
+          finishRef.current();
+        } catch {
+          // ensure unmount even if callback throws
+        }
+      }, 860);
     };
+
+    // ABSOLUTE SAFETY: force finish after 5s even if rAF stalls (hidden tab, throttling, error)
+    const hardTimeout = window.setTimeout(finish, 5000);
 
     if (reduced) {
       const t = window.setTimeout(finish, 900);
-      return () => window.clearTimeout(t);
+      return () => {
+        window.clearTimeout(t);
+        window.clearTimeout(hardTimeout);
+      };
     }
 
     let raf = 0;
     let idx = 0;
-    const start = performance.now();
+    let start = 0;
+    try {
+      start = performance.now();
+    } catch {
+      start = Date.now();
+    }
 
     const tick = (now: number) => {
-      const elapsed = now - start;
-      while (idx < THRESHOLDS.length && elapsed >= THRESHOLDS[idx]) {
-        setPhase(idx);
-        idx += 1;
-      }
-      if (elapsed >= FINISH_MS) {
+      try {
+        const elapsed = now - start;
+        while (idx < THRESHOLDS.length && elapsed >= THRESHOLDS[idx]) {
+          setPhase(idx);
+          idx += 1;
+        }
+        if (elapsed >= FINISH_MS) {
+          finish();
+          return;
+        }
+      } catch {
         finish();
         return;
       }
@@ -78,7 +99,10 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
     };
     raf = requestAnimationFrame(tick);
 
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(hardTimeout);
+    };
   }, []);
 
   const bootText =
@@ -109,12 +133,16 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
           exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
           transition={{ duration: 0.85, ease: [0.83, 0, 0.17, 1] }}
           onPointerMove={(e) => {
-            const r = overlayRef.current?.getBoundingClientRect();
-            if (!r) return;
-            const nx = (e.clientX - r.left) / r.width;
-            const ny = (e.clientY - r.top) / r.height;
-            rxBase.set((ny - 0.5) * -16);
-            ryBase.set((nx - 0.5) * 16);
+            try {
+              const r = overlayRef.current?.getBoundingClientRect();
+              if (!r) return;
+              const nx = (e.clientX - r.left) / r.width;
+              const ny = (e.clientY - r.top) / r.height;
+              rxBase.set((ny - 0.5) * -16);
+              ryBase.set((nx - 0.5) * 16);
+            } catch {
+              // ignore pointer errors
+            }
           }}
         >
           {/* dark depth floor */}
@@ -173,16 +201,12 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                   fill="none"
                 >
                   {[
-                    // clockwise blueprint outline
                     { d: "M84 96 H260 A70 70 0 0 1 330 166 V234 A70 70 0 0 1 260 304 H120", delay: "0.05s", color: "#00c6ff" },
-                    // circuit traces (left)
                     { d: "M40 150 H108 L126 132 H168", delay: "0.2s", color: "#00ff9b" },
                     { d: "M28 210 H92 L112 230 H156", delay: "0.32s", color: "#00c6ff" },
                     { d: "M56 286 H120 L144 262 H176", delay: "0.44s", color: "#00ff9b" },
-                    // circuit nodes
                     { d: "M40 150 m-7 0 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0", delay: "0.2s", color: "#00ff9b" },
                     { d: "M28 210 m-7 0 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0", delay: "0.32s", color: "#00c6ff" },
-                    // circuit traces (right)
                     { d: "M380 132 H318 L300 150 H268", delay: "0.5s", color: "#00c6ff" },
                     { d: "M392 268 H322 L302 250 H274", delay: "0.62s", color: "#00ff9b" },
                   ].map((line, i) => (
@@ -196,12 +220,10 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                   ))}
                 </svg>
 
-                {/* ==== the mark build zone ==== */}
                 <div
                   className={`relative grid place-items-center ${finale ? "animate-float-soft" : ""}`}
                   style={{ width: "clamp(230px, 46vw, 360px)", transformStyle: "preserve-3d" }}
                 >
-                  {/* expanding blue outline that forms first */}
                   <motion.div
                     aria-hidden="true"
                     className="absolute"
@@ -228,7 +250,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                     transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
                   />
 
-                  {/* metallic mark — built from darkness like hardware */}
                   <motion.div
                     className="relative z-10 w-full"
                     style={{ filter: "drop-shadow(0 32px 70px rgba(0,0,0,0.75))" }}
@@ -254,13 +275,15 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                           : { filter: "brightness(0.08) saturate(0.2)" }
                       }
                       transition={{ duration: 1, ease: EASE }}
+                      onError={(e) => {
+                        // if image fails, don't block the whole intro
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
                     />
                   </motion.div>
 
-                  {/* scanner line travelling across the mark */}
                   {markFull && !finale && <div className="brand-scanner z-20" aria-hidden="true" />}
 
-                  {/* green Android core glow + boot chip */}
                   <motion.div
                     aria-hidden="true"
                     className="absolute z-20"
@@ -275,7 +298,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                     transition={{ duration: 0.8, ease: EASE }}
                   />
 
-                  {/* boot status chip */}
                   <AnimatePresence>
                     {androidOn && (
                       <motion.div
@@ -304,7 +326,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                   </AnimatePresence>
                 </div>
 
-                {/* ground glow that drifts beneath the mark */}
                 <div className="relative z-10 -mt-1 h-8 w-[min(70vw,340px)]" aria-hidden="true">
                   <motion.div
                     className="absolute inset-x-4 top-0 h-6 rounded-full bg-neon-cyan/35 blur-xl"
@@ -313,7 +334,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                   />
                 </div>
 
-                {/* ==== PARSA · metallic digital formation ==== */}
                 <div className="relative z-10 mt-1 flex items-end justify-center gap-[0.16em]" dir="ltr">
                   {PARSA.map((ch, i) => (
                     <span key={`p${i}`} className="inline-block overflow-hidden">
@@ -333,7 +353,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                   ))}
                 </div>
 
-                {/* ==== APPS · green tech + circuit nodes ==== */}
                 <div className="relative z-10 mt-3 flex items-center gap-3" dir="ltr">
                   <motion.span
                     aria-hidden="true"
@@ -376,7 +395,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
                   />
                 </div>
 
-                {/* finale: energy wave + pulse + floating */}
                 {finale && <div className="brand-energy-wave absolute inset-0 z-40" aria-hidden="true" />}
                 <div className={`${finale ? "brand-energy-ring is-active" : "brand-energy-ring"} z-50`} aria-hidden="true" />
                 {finale && (
@@ -393,7 +411,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
             </motion.div>
           </motion.div>
 
-          {/* subtle status line at bottom */}
           <motion.div
             className="pointer-events-none absolute bottom-[8%] flex flex-col items-center gap-2"
             initial={{ opacity: 0 }}
@@ -407,7 +424,6 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
             </span>
           </motion.div>
 
-          {/* hard safe-guard text should never block content */}
           <div aria-hidden="true" className="sr-only">
             Parsa Apps — برند نرم‌افزار پرمیوم
           </div>
