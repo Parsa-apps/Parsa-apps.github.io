@@ -1,167 +1,1029 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#05060e" />
-    <meta name="color-scheme" content="dark" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#05060e" />
+  <meta name="color-scheme" content="dark" />
+  <title>پارسا اپس | استودیو نرم‌افزار پرمیوم — Building the future of mobile experiences</title>
+  <meta name="description" content="پارسا اپس، استودیوی نرم‌افزار فرشاد پارسا — ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر با مهندسی دقیق و طراحی مدرن. سازنده جزیره فندقی." />
+  <meta name="keywords" content="پارسا اپس, فلاتر, اندروید, طراحی اپلیکیشن, جزیره فندقی, Parsa Apps, Flutter, Android" />
+  <link rel="canonical" href="https://parsa-apps.github.io/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Parsa Apps" />
+  <meta property="og:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
+  <meta property="og:description" content="Building the future of mobile experiences" />
+  <meta property="og:image" content="/assets/images/og-cover.jpg" />
+  <meta property="og:url" content="https://parsa-apps.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
+  <meta name="twitter:description" content="Building the future of mobile experiences." />
+  <meta name="twitter:image" content="/assets/images/og-cover.jpg" />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Black.woff2" as="font" type="font/woff2" crossorigin />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Parsa Apps","alternateName":"پارسا اپس","url":"https://parsa-apps.github.io","email":"farshadparsa2019@gmail.com","founder":{"@type":"Person","name":"Farshad Parsa"},"description":"Building the future of mobile experiences.","sameAs":["https://t.me/Parsaappsadmin","https://instagram.com/parsa_apps"]}
+  </script>
+  <style>
+    @font-face{font-family:'Vazirmatn';src:url('/assets/fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+    @font-face{font-family:'Vazirmatn';src:url('/assets/fonts/Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+    @font-face{font-family:'Vazirmatn';src:url('/assets/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+    @font-face{font-family:'Vazirmatn';src:url('/assets/fonts/Vazirmatn-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap}
+    @font-face{font-family:'Vazirmatn';src:url('/assets/fonts/Vazirmatn-Black.woff2') format('woff2');font-weight:900;font-display:swap}
 
-    <title>پارسا اپس | استودیو نرم‌افزار پرمیوم — Building the future of mobile experiences</title>
-    <meta
-      name="description"
-      content="پارسا اپس، استودیوی نرم‌افزار فرشاد پارسا — ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر با مهندسی دقیق و طراحی مدرن. سازنده جزیره فندقی."
-    />
-    <meta
-      name="keywords"
-      content="پارسا اپس, فلاتر, اندروید, طراحی اپلیکیشن, جزیره فندقی, کارتونیا, ضفحه, استودیو نرم‌افزار, Parsa Apps, Flutter, Android"
-    />
-    <link rel="canonical" href="https://parsa-apps.github.io/" />
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#05060e;--bg2:#0a0c1a;
+      --violet:#7c5cff;--cyan:#00c6ff;--green:#00ffd0;--gold:#f5c857;--pink:#ff5fa2;
+      --text:#fff;--muted:rgba(255,255,255,.55);--line:rgba(255,255,255,.08);--line-bright:rgba(255,255,255,.15);
+      --panel:rgba(255,255,255,.04);--panel-bright:rgba(255,255,255,.07);
+      --ease:cubic-bezier(.22,1,.36,1);--ease-bounce:cubic-bezier(.34,1.56,.64,1);
+    }
+    html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+    body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    button{border:none;background:none;cursor:pointer;font-family:inherit;color:inherit}
+    .container{max-width:1280px;margin:0 auto;padding:0 1.25rem}
+    @media(min-width:640px){.container{padding:0 2rem}}
+    @media(min-width:1024px){.container{padding:0 3rem}}
 
-    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
-    <link rel="manifest" href="/manifest.json" />
+    /* ===== PRELOADER ===== */
+    #preloader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .8s var(--ease),visibility .8s}
+    #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .preloader-logo{width:80px;height:80px;animation:preloaderPulse 1.5s ease-in-out infinite}
+    .preloader-bar{width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+    .preloader-fill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--cyan),var(--green));border-radius:99px;animation:preloaderFill 2.2s var(--ease) forwards}
+    @keyframes preloaderPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.08);opacity:1}}
+    @keyframes preloaderFill{to{width:100%}}
 
-    <!-- Open Graph / social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Parsa Apps" />
-    <meta property="og:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
-    <meta property="og:description" content="Building the future of mobile experiences — ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر با مهندسی دقیق و طراحی مدرن." />
-    <meta property="og:image" content="/assets/images/og-cover.jpg" />
-    <meta property="og:url" content="https://parsa-apps.github.io/" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
-    <meta name="twitter:description" content="Building the future of mobile experiences." />
-    <meta name="twitter:image" content="/assets/images/og-cover.jpg" />
+    /* ===== PARTICLES CANVAS ===== */
+    #particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
 
-    <!-- Fonts (self-hosted Vazirmatn) -->
-    <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/Vazirmatn-Medium.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/Vazirmatn-Black.woff2" as="font" type="font/woff2" crossorigin />
+    /* ===== AURORA BG ===== */
+    .aurora-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .aurora-bg .orb{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform;opacity:.4}
+    .aurora-bg .orb:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,rgba(124,92,255,.45),transparent 70%);top:-10%;right:-5%;animation:orbFloat1 20s ease-in-out infinite}
+    .aurora-bg .orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,rgba(0,198,255,.35),transparent 70%);bottom:10%;left:-8%;animation:orbFloat2 25s ease-in-out infinite}
+    .aurora-bg .orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,rgba(0,255,208,.2),transparent 70%);top:40%;right:30%;animation:orbFloat3 22s ease-in-out infinite}
+    .aurora-bg .orb:nth-child(4){width:350px;height:350px;background:radial-gradient(circle,rgba(245,200,87,.15),transparent 70%);bottom:30%;left:40%;animation:orbFloat4 28s ease-in-out infinite}
+    @keyframes orbFloat1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-60px,80px) scale(1.1)}50%{transform:translate(40px,-40px) scale(.95)}75%{transform:translate(-30px,50px) scale(1.05)}}
+    @keyframes orbFloat2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(80px,-60px) scale(1.08)}66%{transform:translate(-40px,40px) scale(.92)}}
+    @keyframes orbFloat3{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,-70px)}}
+    @keyframes orbFloat4{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,50px)}}
 
-    <!-- Structured data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Parsa Apps",
-        "alternateName": "پارسا اپس",
-        "url": "https://parsa-apps.github.io",
-        "email": "farshadparsa2019@gmail.com",
-        "founder": { "@type": "Person", "name": "Farshad Parsa" },
-        "description": "Building the future of mobile experiences. Professional Android & Flutter development powered by modern technology and clean engineering.",
-        "sameAs": [
-          "https://t.me/Parsaappsadmin",
-          "https://instagram.com/parsa_apps"
-        ]
+    /* ===== GRID OVERLAY ===== */
+    .grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;
+      background-image:linear-gradient(rgba(124,92,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,255,.04) 1px,transparent 1px);
+      background-size:60px 60px;
+      mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%);
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:all .5s var(--ease)}
+    nav.scrolled{background:rgba(5,6,14,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{display:flex;align-items:center;gap:12px}
+    .nav-logo img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(0,198,255,.4))}
+    .nav-logo span{font-weight:900;font-size:1.1rem;background:linear-gradient(110deg,#fff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .nav-links{display:none;gap:28px;align-items:center}
+    @media(min-width:768px){.nav-links{display:flex}}
+    .nav-links a{font-size:.875rem;font-weight:600;color:var(--muted);transition:color .3s;position:relative}
+    .nav-links a:hover{color:#fff}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;left:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:2px;transform:scaleX(0);transition:transform .3s var(--ease)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-cta{padding:8px 20px;border-radius:99px;font-size:.8rem;font-weight:700;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;transition:all .3s var(--ease);box-shadow:0 8px 30px -8px rgba(124,92,255,.5)}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px -8px rgba(0,198,255,.5)}
+
+    /* ===== HERO SECTION ===== */
+    .hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding-top:100px;padding-bottom:60px}
+    .hero-grid{display:grid;gap:48px;align-items:center}
+    @media(min-width:1024px){.hero-grid{grid-template-columns:1.1fr .9fr;gap:64px}}
+    .hero-content{position:relative;z-index:2}
+
+    /* Hero Entrance Animations */
+    .hero-eyebrow{opacity:0;transform:translateY(20px) scale(.95);animation:heroReveal .8s var(--ease) forwards;animation-delay:.6s}
+    .hero-title{opacity:0;transform:translateY(30px);filter:blur(8px);animation:heroReveal .9s var(--ease) forwards;animation-delay:.8s}
+    .hero-sub{opacity:0;transform:translateY(20px);animation:heroReveal .8s var(--ease) forwards;animation-delay:1.1s}
+    .hero-btns{opacity:0;transform:translateY(20px);animation:heroReveal .8s var(--ease) forwards;animation-delay:1.3s}
+    .hero-stats{opacity:0;transform:translateY(20px);animation:heroReveal .8s var(--ease) forwards;animation-delay:1.5s}
+    .hero-phone{opacity:0;transform:translateY(40px) scale(.9);animation:heroPhoneReveal 1.2s var(--ease) forwards;animation-delay:1s}
+    @keyframes heroReveal{to{opacity:1;transform:none;filter:none}}
+    @keyframes heroPhoneReveal{to{opacity:1;transform:none}}
+
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;font-size:.75rem;font-weight:700;letter-spacing:.15em;color:#cfc4ff;background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.25);text-transform:uppercase}
+    .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px 2px rgba(0,255,208,.8)}
+
+    .hero h1{margin-top:24px;font-size:clamp(2rem,5vw,3.8rem);font-weight:900;line-height:1.2}
+    .hero h1 .gradient-text{background:linear-gradient(110deg,#b4a0ff,var(--violet) 22%,var(--cyan) 48%,var(--green) 72%,#b4a0ff);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientShift 6s linear infinite;display:inline-block}
+    @keyframes gradientShift{to{background-position:-240% 0}}
+
+    .hero-sub{margin-top:20px;font-size:clamp(.95rem,1.8vw,1.15rem);color:var(--muted);max-width:540px;line-height:2}
+    .hero-btns{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px}
+
+    /* ===== BUTTONS ===== */
+    .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:99px;font-size:.9rem;font-weight:700;letter-spacing:.02em;overflow:hidden;isolation:isolate;transition:all .4s var(--ease);will-change:transform}
+    .btn-primary{background:linear-gradient(120deg,var(--violet),#4f8cff 55%,var(--cyan));color:#fff;box-shadow:0 18px 45px -18px rgba(124,92,255,.9),inset 0 1px rgba(255,255,255,.25)}
+    .btn-primary:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 26px 60px -18px rgba(0,198,255,.8),inset 0 1px rgba(255,255,255,.35)}
+    .btn-primary:active{transform:translateY(0) scale(.97)}
+    .btn-ghost{background:rgba(255,255,255,.05);border:1px solid var(--line-bright);color:#fff;backdrop-filter:blur(12px)}
+    .btn-ghost:hover{transform:translateY(-4px);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+    .btn::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.3) 50%,transparent 75%);background-size:240% 100%;background-position:160% 0;transition:background-position .85s var(--ease);pointer-events:none}
+    .btn:hover::after{background-position:-60% 0}
+    .btn .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:ripple .6s linear;pointer-events:none}
+    @keyframes ripple{to{transform:scale(4);opacity:0}}
+
+    /* Hero Stats */
+    .hero-stats{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:420px;padding-top:20px;border-top:1px solid var(--line)}
+    .stat-num{font-size:1.5rem;font-weight:900;background:linear-gradient(110deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .stat-label{font-size:.7rem;color:var(--muted);margin-top:2px}
+
+    /* ===== 3D PHONE ===== */
+    .phone-stage{position:relative;display:flex;flex-direction:column;align-items:center;perspective:1200px}
+    .phone-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,255,.4),rgba(0,198,255,.2),transparent 70%);filter:blur(80px);animation:phoneGlow 5s ease-in-out infinite;z-index:0}
+    @keyframes phoneGlow{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:.8}}
+    .phone-frame{position:relative;z-index:2;width:260px;height:520px;border-radius:40px;background:linear-gradient(145deg,#1a1a2e,#16213e);border:2px solid rgba(255,255,255,.1);box-shadow:0 50px 100px -20px rgba(0,0,0,.6),0 30px 60px -30px rgba(124,92,255,.3),inset 0 1px rgba(255,255,255,.1);transform-style:preserve-3d;transition:transform .6s var(--ease);overflow:hidden}
+    @media(min-width:640px){.phone-frame{width:280px;height:560px;border-radius:44px}}
+    .phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:100px;height:26px;background:#0a0a15;border-radius:0 0 16px 16px;z-index:10;display:flex;align-items:center;justify-content:center}
+    .phone-notch::after{content:'';width:8px;height:8px;border-radius:50%;background:#1a1a3a;border:1.5px solid #2a2a4a}
+    .phone-screen{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;border-radius:38px}
+    @media(min-width:640px){.phone-screen{border-radius:42px}}
+    .phone-screen-inner{position:relative;width:100%;height:100%;touch-action:pan-y}
+    .phone-slide{position:absolute;inset:0;opacity:0;transition:all .6s var(--ease);will-change:transform,opacity}
+    .phone-slide.active{opacity:1;transform:translateX(0) rotateY(0) scale(1)}
+    .phone-slide.exit-left{opacity:0;transform:translateX(-30%) rotateY(-15deg) scale(.9)}
+    .phone-slide.exit-right{opacity:0;transform:translateX(30%) rotateY(15deg) scale(.9)}
+    .phone-slide.enter-left{opacity:0;transform:translateX(-30%) rotateY(-15deg) scale(.9)}
+    .phone-slide.enter-right{opacity:0;transform:translateX(30%) rotateY(15deg) scale(.9)}
+    .phone-slide img{width:100%;height:100%;object-fit:cover}
+    .phone-reflection{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 40%,transparent 60%,rgba(255,255,255,.03) 100%);pointer-events:none;z-index:5;border-radius:inherit}
+    .phone-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.08) 45%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.08) 55%,transparent 60%);transform:translateX(-100%);transition:transform .8s var(--ease);pointer-events:none;z-index:6;border-radius:inherit}
+    .phone-slide.active .phone-shine{transform:translateX(100%)}
+
+    /* Pagination Dots */
+    .phone-dots{display:flex;gap:8px;margin-top:24px;position:relative;z-index:3}
+    .phone-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s var(--ease);cursor:pointer}
+    .phone-dot.active{width:28px;border-radius:4px;background:linear-gradient(90deg,var(--violet),var(--cyan));box-shadow:0 0 16px rgba(124,92,255,.6)}
+
+    /* Floating Badges */
+    .float-badge{position:absolute;z-index:3;padding:8px 16px;border-radius:16px;font-size:.75rem;font-weight:700;background:linear-gradient(150deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid var(--line-bright);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 8px 32px rgba(0,0,0,.3);white-space:nowrap;pointer-events:none}
+    .float-badge:nth-child(1){top:15%;right:-30px;animation:floatBadge1 4.5s ease-in-out infinite}
+    .float-badge:nth-child(2){top:50%;left:-40px;animation:floatBadge2 5.5s ease-in-out infinite}
+    .float-badge:nth-child(3){bottom:20%;left:-20px;animation:floatBadge3 4s ease-in-out infinite}
+    @media(max-width:640px){.float-badge{display:none}}
+    @keyframes floatBadge1{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    @keyframes floatBadge2{0%,100%{transform:translateY(0)}50%{transform:translateY(14px)}}
+    @keyframes floatBadge3{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+    /* ===== SECTIONS ===== */
+    section{position:relative;z-index:1}
+    .section-pad{padding:80px 0}
+    @media(min-width:640px){.section-pad{padding:100px 0}}
+    @media(min-width:1024px){.section-pad{padding:120px 0}}
+    .section-header{text-align:center;max-width:640px;margin:0 auto 60px}
+    .section-header h2{font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:900;margin-top:16px;line-height:1.3}
+    .section-header p{margin-top:14px;color:var(--muted);font-size:.95rem;line-height:1.9}
+
+    /* ===== MARQUEE ===== */
+    .marquee-section{padding:20px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.01)}
+    .marquee-track{display:flex;gap:48px;animation:marquee 30s linear infinite;width:max-content}
+    .marquee-item{font-size:1rem;font-weight:700;color:rgba(255,255,255,.2);white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:8px}
+    .marquee-item::before{content:'◆';color:var(--violet);font-size:.6rem}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+
+    /* ===== GLASS CARDS ===== */
+    .glass-card{position:relative;border-radius:24px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:32px;overflow:hidden;transition:all .5s var(--ease);transform-style:preserve-3d;will-change:transform}
+    .glass-card::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(124,92,255,.7),transparent 30%,transparent 70%,rgba(0,198,255,.55));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s ease;pointer-events:none}
+    .glass-card:hover::before{opacity:1}
+    .glass-card:hover{transform:translateY(-8px);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+    .glass-card .icon{font-size:2rem;margin-bottom:16px;display:block;transition:transform .4s var(--ease)}
+    .glass-card:hover .icon{transform:scale(1.2) rotate(5deg)}
+    .glass-card h3{font-size:1.15rem;font-weight:800;margin-bottom:8px}
+    .glass-card p{font-size:.875rem;color:var(--muted);line-height:1.9}
+
+    /* Grid Layouts */
+    .grid-2{display:grid;gap:20px}
+    .grid-3{display:grid;gap:20px}
+    .grid-4{display:grid;gap:20px}
+    @media(min-width:640px){.grid-2{grid-template-columns:repeat(2,1fr)}.grid-4{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:768px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.grid-3{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(4,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
+
+    /* ===== SKILL BARS ===== */
+    .skill-bar{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:16px}
+    .skill-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0;transition:width 1.2s var(--ease)}
+    .skill-fill.animated{width:var(--w)}
+
+    /* ===== PROJECT CARDS ===== */
+    .project-card{position:relative;border-radius:24px;overflow:hidden;background:var(--panel);border:1px solid var(--line);transition:all .5s var(--ease);transform-style:preserve-3d;cursor:pointer}
+    .project-card:hover{transform:translateY(-10px) rotateX(2deg);box-shadow:0 40px 80px -20px rgba(0,0,0,.6)}
+    .project-card .cover{position:relative;aspect-ratio:16/10;overflow:hidden}
+    .project-card .cover img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+    .project-card:hover .cover img{transform:scale(1.08)}
+    .project-card .cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent 50%);pointer-events:none}
+    .project-card .badge{position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:99px;font-size:.7rem;font-weight:700;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px);z-index:2}
+    .project-card .body{padding:24px}
+    .project-card h3{font-weight:800;font-size:1.05rem}
+    .project-card .desc{margin-top:8px;font-size:.85rem;color:var(--muted);line-height:1.8}
+    .project-card .tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+    .chip{display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;font-size:.7rem;font-weight:600;border:1px solid var(--line-bright);background:rgba(255,255,255,.04);color:#cfd6f2}
+
+    /* ===== PROCESS SECTION ===== */
+    .process-grid{display:grid;gap:20px}
+    @media(min-width:768px){.process-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.process-grid{grid-template-columns:repeat(4,1fr)}}
+    .process-step{padding:24px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:all .4s var(--ease)}
+    .process-step:hover{transform:translateY(-6px);border-color:rgba(124,92,255,.4);background:rgba(255,255,255,.05)}
+    .process-num{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .process-num .n{font-size:.85rem;font-weight:900;color:rgba(255,255,255,.2)}
+    .process-num .icon{font-size:1.8rem;transition:transform .3s var(--ease)}
+    .process-step:hover .process-num .icon{transform:scale(1.3) rotate(6deg)}
+    .process-step h3{font-weight:800;font-size:.95rem;margin-bottom:6px}
+    .process-step p{font-size:.8rem;color:var(--muted);line-height:1.8}
+
+    /* ===== CTA SECTION ===== */
+    .cta-section{position:relative;overflow:hidden;border-radius:24px;background:var(--panel);border:1px solid var(--line);text-align:center;padding:60px 24px}
+    @media(min-width:640px){.cta-section{padding:80px 40px}}
+    .cta-section h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900}
+    .cta-section p{margin-top:16px;color:var(--muted);max-width:500px;margin-left:auto;margin-right:auto;line-height:1.9}
+    .cta-section .btns{margin-top:32px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+    .cta-section .cta-bg{position:absolute;inset:0;opacity:.15;
+      background-image:linear-gradient(rgba(124,92,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,255,.06) 1px,transparent 1px);
+      background-size:52px 52px;mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%)}
+    .cta-logo{width:80px;height:80px;margin:0 auto 24px;animation:floatLogo 4s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(0,198,255,.45))}
+    @keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+    /* ===== FOOTER ===== */
+    footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:40px 0;text-align:center}
+    footer p{font-size:.8rem;color:rgba(255,255,255,.3)}
+    footer .socials{display:flex;justify-content:center;gap:16px;margin-bottom:16px}
+    footer .socials a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .3s var(--ease)}
+    footer .socials a:hover{background:rgba(255,255,255,.08);border-color:var(--violet);transform:translateY(-3px)}
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal{opacity:0;transform:translateY(40px);transition:all .8s var(--ease);will-change:transform,opacity}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-left{opacity:0;transform:translateX(60px);transition:all .8s var(--ease)}
+    .reveal-left.visible{opacity:1;transform:none}
+    .reveal-right{opacity:0;transform:translateX(-60px);transition:all .8s var(--ease)}
+    .reveal-right.visible{opacity:1;transform:none}
+    .reveal-scale{opacity:0;transform:scale(.9);transition:all .8s var(--ease)}
+    .reveal-scale.visible{opacity:1;transform:none}
+
+    /* ===== ABOUT SECTION ===== */
+    .about-grid{display:grid;gap:48px;align-items:center}
+    @media(min-width:1024px){.about-grid{grid-template-columns:1fr 1fr}}
+    .about-text h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;line-height:1.3}
+    .about-text p{margin-top:16px;color:var(--muted);line-height:2}
+    .about-text .btns{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
+
+    /* ===== DEVELOPER SECTION ===== */
+    .dev-grid{display:grid;gap:48px;align-items:center}
+    @media(min-width:1024px){.dev-grid{grid-template-columns:1fr 1fr}}
+    .dev-info h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;display:flex;align-items:center;gap:12px}
+    .dev-info h2 img{width:36px;height:36px;filter:drop-shadow(0 0 12px rgba(0,198,255,.45))}
+    .dev-info p{margin-top:14px;color:var(--muted);line-height:2}
+    .dev-chips{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+    .timeline{position:relative}
+    .timeline-item{display:flex;gap:20px;padding-bottom:28px}
+    .timeline-item:last-child{padding-bottom:0}
+    .timeline-marker{display:flex;flex-direction:column;align-items:center}
+    .timeline-dot{width:44px;height:44px;border-radius:16px;background:linear-gradient(135deg,var(--violet),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 0 20px rgba(124,92,255,.4)}
+    .timeline-line{width:1px;flex:1;background:linear-gradient(to bottom,rgba(255,255,255,.2),transparent);margin-top:8px}
+    .timeline-item:last-child .timeline-line{display:none}
+    .timeline-content{padding:16px 20px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);flex:1}
+    .timeline-content .year{font-size:.75rem;font-weight:700;color:var(--cyan)}
+    .timeline-content h3{font-weight:800;font-size:.95rem;margin-top:4px}
+    .timeline-content p{font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.8}
+
+    /* ===== FLAGSHIP ===== */
+    .flagship-card{display:grid;gap:40px;padding:32px;border-radius:24px;background:var(--panel);border:1px solid var(--line);overflow:hidden}
+    @media(min-width:1024px){.flagship-card{grid-template-columns:1fr 1fr;padding:40px}}
+    .flagship-info h3{font-size:1.5rem;font-weight:900}
+    .flagship-info .status{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 14px;border-radius:99px;font-size:.7rem;font-weight:700;background:rgba(0,255,208,.1);color:var(--green);border:1px solid rgba(0,255,208,.2)}
+    .flagship-info .desc{margin-top:20px;color:var(--muted);line-height:2}
+    .flagship-info .features{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+    .flagship-info .actions{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+    .flagship-phone{display:flex;justify-content:center;align-items:center;position:relative}
+    .flagship-phone .mini-phone{width:220px;height:440px;border-radius:36px;background:#0a0a1a;border:2px solid rgba(255,255,255,.08);overflow:hidden;box-shadow:0 30px 60px -15px rgba(0,0,0,.5)}
+    .flagship-phone .mini-phone img{width:100%;height:100%;object-fit:cover}
+
+    /* ===== COUNTERS ===== */
+    .counter{font-variant-numeric:tabular-nums}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      .aurora-bg .orb{display:none}
+      .grid-overlay{display:none}
+      .phone-frame{width:230px;height:460px;border-radius:36px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+      html{scroll-behavior:auto}
+    }
+
+    /* ===== SECTION DIVIDERS ===== */
+    .section-divider{position:relative;height:1px;margin:0 auto;max-width:80%;overflow:visible}
+    .section-divider::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent)}
+    .section-divider::after{content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:60px;height:40px;background:radial-gradient(ellipse,rgba(124,92,255,.3),transparent 70%);filter:blur(10px)}
+
+    /* ===== CARD SPOTLIGHT ===== */
+    .glass-card[data-spotlight]{position:relative}
+    .glass-card[data-spotlight]::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(350px circle at var(--mx,50%) var(--my,50%),rgba(124,92,255,.15),rgba(0,198,255,.06) 40%,transparent 65%);opacity:0;transition:opacity .35s;pointer-events:none}
+    .glass-card[data-spotlight]:hover::after{opacity:1}
+
+    /* ===== STAGGER CHILDREN ===== */
+    .stagger-children > *{opacity:0;transform:translateY(30px);transition:all .6s var(--ease)}
+    .stagger-children.visible > *:nth-child(1){transition-delay:.05s}
+    .stagger-children.visible > *:nth-child(2){transition-delay:.12s}
+    .stagger-children.visible > *:nth-child(3){transition-delay:.19s}
+    .stagger-children.visible > *:nth-child(4){transition-delay:.26s}
+    .stagger-children.visible > *:nth-child(5){transition-delay:.33s}
+    .stagger-children.visible > *:nth-child(6){transition-delay:.40s}
+    .stagger-children.visible > *:nth-child(7){transition-delay:.47s}
+    .stagger-children.visible > *:nth-child(8){transition-delay:.54s}
+    .stagger-children.visible > *{opacity:1;transform:none}
+
+    /* ===== GLOW TEXT ===== */
+    .glow{position:relative;display:inline-block}
+    .glow::after{content:attr(data-text);position:absolute;inset:0;background:linear-gradient(110deg,var(--violet),var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent;filter:blur(18px);opacity:.5;z-index:-1}
+
+    /* ===== DEPTH LAYERS ===== */
+    .depth-layer{transform-style:preserve-3d;perspective:800px}
+
+    /* ===== SCROLL INDICATOR ===== */
+    .scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:heroReveal .8s var(--ease) forwards;animation-delay:2s;z-index:5}
+    .scroll-indicator span{font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:.15em;font-weight:600}
+    .scroll-mouse{width:24px;height:38px;border:2px solid rgba(255,255,255,.2);border-radius:12px;position:relative}
+    .scroll-mouse::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:8px;border-radius:3px;background:var(--cyan);animation:scrollDot 2s ease-in-out infinite}
+    @keyframes scrollDot{0%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.4;transform:translateX(-50%) translateY(12px)}100%{opacity:0;transform:translateX(-50%) translateY(0)}}
+
+    /* ===== TECH ORBIT ===== */
+    .tech-orbit{position:absolute;width:380px;height:380px;border:1px dashed rgba(124,92,255,.06);border-radius:50%;animation:orbitSpin 60s linear infinite;pointer-events:none;z-index:0}
+    .tech-orbit::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px var(--violet);transform:translateX(-50%)}
+    .tech-orbit-2{width:320px;height:320px;animation-duration:45s;animation-direction:reverse;border-color:rgba(0,198,255,.05)}
+    .tech-orbit-2::before{background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+    @keyframes orbitSpin{to{transform:rotate(360deg)}}
+    @media(max-width:768px){.tech-orbit{display:none}}
+
+    /* ===== ANIMATED BORDER ===== */
+    @keyframes borderGlow{0%,100%{border-color:rgba(124,92,255,.2)}50%{border-color:rgba(0,198,255,.3)}}
+    .animated-border{animation:borderGlow 4s ease-in-out infinite}
+
+    /* ===== FLOATING ELEMENTS ===== */
+    @keyframes floatEl{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(3deg)}}
+    .float-element{animation:floatEl 6s ease-in-out infinite}
+
+    /* Smooth Scrollbar */
+    ::-webkit-scrollbar{width:8px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:rgba(124,92,255,.3);border-radius:99px}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(124,92,255,.5)}
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <img class="preloader-logo" src="/assets/logo.png" alt="Parsa Apps" />
+    <div class="preloader-bar"><div class="preloader-fill"></div></div>
+  </div>
+
+  <!-- Background Layers -->
+  <div class="aurora-bg">
+    <div class="orb"></div><div class="orb"></div><div class="orb"></div><div class="orb"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <canvas id="particles"></canvas>
+
+  <!-- Navigation -->
+  <nav id="mainNav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="/assets/logo.png" alt="Parsa Apps" />
+        <span>Parsa Apps</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about">درباره ما</a>
+        <a href="#apps">اپلیکیشن‌ها</a>
+        <a href="#process">فرآیند</a>
+        <a href="#skills">مهارت‌ها</a>
+        <a href="#projects">پروژه‌ها</a>
+        <a href="#contact" class="nav-cta">تماس با ما</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="eyebrow"><span class="dot"></span> استودیو نرم‌افزار پرمیوم</span>
+        </div>
+        <h1 class="hero-title">
+          ساخت آینده‌ی
+          <br/>
+          <span class="gradient-text">تجربه‌های موبایل</span>
+        </h1>
+        <p class="hero-sub">
+          پارسا اپس، استودیوی توسعه نرم‌افزار حرفه‌ای — ساخت اپلیکیشن‌های اندروید و فلاتر با مهندسی دقیق، طراحی مدرن و کیفیت جهانی.
+        </p>
+        <div class="hero-btns">
+          <a href="#apps" class="btn btn-primary">
+            مشاهده محصولات
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">تماس با ما</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="stat-num counter" data-target="4">0</span><div class="stat-label">اپلیکیشن</div></div>
+          <div><span class="stat-num counter" data-target="8">0</span><div class="stat-label">مهارت تخصصی</div></div>
+          <div><span class="stat-num counter" data-target="100" data-suffix="%">0</span><div class="stat-label">کیفیت کد</div></div>
+        </div>
+      </div>
+
+      <!-- 3D Phone -->
+      <div class="phone-stage hero-phone" id="phoneStage">
+        <div class="phone-glow"></div>
+        <div class="tech-orbit"></div>
+        <div class="tech-orbit tech-orbit-2"></div>
+        <div class="float-badge"><span style="color:var(--cyan)">⚡</span> Flutter & Dart</div>
+        <div class="float-badge"><span style="color:var(--gold)">👑</span> Farshad Parsa</div>
+        <div class="float-badge"><span style="color:var(--violet)">🎯</span> Clean Code</div>
+        <div class="phone-frame" id="phoneFrame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-screen-inner" id="phoneSlider">
+              <div class="phone-slide active"><img src="/assets/screenshots/1_home.png" alt="Home" loading="eager" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/2_learning.png" alt="Learning" loading="lazy" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/3_games.png" alt="Games" loading="lazy" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/4_stories.png" alt="Stories" loading="lazy" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/5_progress.png" alt="Progress" loading="lazy" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/6_missions.png" alt="Missions" loading="lazy" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/7_profile.png" alt="Profile" loading="lazy" /><div class="phone-shine"></div></div>
+              <div class="phone-slide"><img src="/assets/screenshots/8_safe.png" alt="Safe" loading="lazy" /><div class="phone-shine"></div></div>
+            </div>
+          </div>
+          <div class="phone-reflection"></div>
+        </div>
+        <div class="phone-dots" id="phoneDots"></div>
+      </div>
+    </div>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span>اسکرول کنید</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track" id="marquee">
+      <span class="marquee-item">Flutter</span><span class="marquee-item">Dart</span><span class="marquee-item">Kotlin</span>
+      <span class="marquee-item">Android</span><span class="marquee-item">Java</span><span class="marquee-item">Firebase</span>
+      <span class="marquee-item">UI/UX</span><span class="marquee-item">Material 3</span><span class="marquee-item">Mobile Games</span>
+      <span class="marquee-item">Clean Code</span>
+      <span class="marquee-item">Flutter</span><span class="marquee-item">Dart</span><span class="marquee-item">Kotlin</span>
+      <span class="marquee-item">Android</span><span class="marquee-item">Java</span><span class="marquee-item">Firebase</span>
+      <span class="marquee-item">UI/UX</span><span class="marquee-item">Material 3</span><span class="marquee-item">Mobile Games</span>
+      <span class="marquee-item">Clean Code</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT -->
+  <section class="section-pad" id="about">
+    <div class="container about-grid">
+      <div class="about-text reveal-left">
+        <span class="eyebrow"><span class="dot"></span> درباره ما</span>
+        <h2>ما خلاقیت و <span class="gradient-text">مهندسی دقیق</span> را ترکیب می‌کنیم</h2>
+        <p>پارسا اپس یک استودیوی تخصصی توسعه نرم‌افزار است که با تمرکز بر کیفیت، تجربه کاربری مدرن و فناوری‌های روز دنیا، اپلیکیشن‌هایی می‌سازد که کاربران عاشقشان می‌شوند.</p>
+        <div class="btns">
+          <a href="#projects" class="btn btn-ghost">بیشتر بدانید</a>
+          <a href="#apps" class="btn btn-primary">مشاهده محصولات</a>
+        </div>
+      </div>
+      <div class="grid-2 reveal-right" style="gap:16px">
+        <div class="glass-card reveal" data-spotlight style="transition-delay:.1s"><span class="icon">💡</span><h3>خلاقیت</h3><p>ایده‌های نو برای دنیای دیجیتال</p></div>
+        <div class="glass-card reveal" data-spotlight style="transition-delay:.2s"><span class="icon">⚙️</span><h3>مهندسی دقیق</h3><p>کدنویسی تمیز، تست و استانداردهای کیفیت</p></div>
+        <div class="glass-card reveal" data-spotlight style="transition-delay:.3s"><span class="icon">🎨</span><h3>طراحی</h3><p>ساخت تجربه‌های زیبا و کاربردی</p></div>
+        <div class="glass-card reveal" data-spotlight style="transition-delay:.4s"><span class="icon">🚀</span><h3>نوآوری</h3><p>به‌کارگیری فناوری‌های روز دنیا</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- FLAGSHIP APP -->
+  <section class="section-pad" id="apps">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow"><span class="dot"></span> محصول شاخص</span>
+        <h2>جزیره فندقی — <span class="gradient-text">دنیای یادگیری کودکان</span></h2>
+        <p>اپلیکیشن آموزشی و سرگرمی برای کودکان با طراحی حرفه‌ای و محتوای غنی</p>
+      </div>
+      <div class="flagship-card reveal-scale">
+        <div class="flagship-phone">
+          <div class="mini-phone">
+            <img src="/assets/screenshots/1_home.png" alt="جزیره فندقی" />
+          </div>
+        </div>
+        <div class="flagship-info">
+          <h3>🏝️ جزیره فندقی</h3>
+          <div class="status">● منتشر شده</div>
+          <p class="desc">جزیره فندقی یک اپلیکیشن آموزشی-سرگرمی کامل برای کودکان فارسی‌زبان است. با بازی‌های تعاملی، داستان‌های جذاب، فعالیت‌های یادگیری و سیستم پیشرفت هوشمند، کودکان در محیطی امن و شاد یاد می‌گیرند.</p>
+          <div class="features">
+            <span class="chip">✓ بازی‌های آموزشی</span>
+            <span class="chip">✓ داستان‌های تعاملی</span>
+            <span class="chip">✓ سیستم پیشرفت</span>
+            <span class="chip">✓ محیط امن کودکان</span>
+            <span class="chip">✓ طراحی RTL</span>
+          </div>
+          <div class="actions">
+            <a href="#" class="btn btn-primary">مشاهده جزئیات</a>
+            <a href="#" class="btn btn-ghost">دانلود APK</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PROCESS -->
+  <section class="section-pad" id="process">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow"><span class="dot"></span> فرآیند توسعه</span>
+        <h2>از ایده تا <span class="gradient-text">محصول نهایی</span></h2>
+        <p>چهار مرحله کلیدی برای ساخت اپلیکیشن‌های حرفه‌ای</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step reveal" style="transition-delay:.1s">
+          <div class="process-num"><span class="icon">🎯</span><span class="n">01</span></div>
+          <h3>تحلیل دقیق</h3>
+          <p>تحلیل عمیق نیاز کاربر و ساختاردهی دقیق محصول پیش از شروع توسعه.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay:.2s">
+          <div class="process-num"><span class="icon">🎨</span><span class="n">02</span></div>
+          <h3>طراحی داده‌محور</h3>
+          <p>تجربه کاربری مدرن و راست‌چین فارسی بر پایه داده و الگوهای روز دنیا.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay:.3s">
+          <div class="process-num"><span class="icon">⚙️</span><span class="n">03</span></div>
+          <h3>مهندسی تمیز</h3>
+          <p>کدنویسی سریع‌تر و تمیزتر با بازبینی دقیق و تست خودکار کد.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay:.4s">
+          <div class="process-num"><span class="icon">🚀</span><span class="n">04</span></div>
+          <h3>انتشار و بهبود</h3>
+          <p>پایش کاربران و به‌روزرسانی منظم برای تجربه‌ای همیشه بهتر.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- DEVELOPER -->
+  <section class="section-pad" id="developer">
+    <div class="container dev-grid">
+      <div class="dev-info reveal-left">
+        <span class="eyebrow"><span class="dot"></span> توسعه‌دهنده</span>
+        <h2>فرشاد پارسا <img src="/assets/logo.png" alt="Parsa Apps" /></h2>
+        <p>توسعه‌دهنده اندروید و فلاتر با تمرکز بر ساخت اپلیکیشن‌هایی که تجربه کاربری عالی و کد تمیز دارند. از طراحی UI/UX تا معماری نرم‌افزار.</p>
+        <div class="dev-chips">
+          <span class="chip" dir="ltr">Android Developer</span>
+          <span class="chip" dir="ltr">Flutter Developer</span>
+          <span class="chip" dir="ltr">UI/UX Designer</span>
+          <span class="chip" dir="ltr">Software Architect</span>
+        </div>
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#contact" class="btn btn-primary">پروفایل</a>
+          <a href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener" class="btn btn-ghost">تلگرام</a>
+        </div>
+      </div>
+      <div class="timeline reveal-right">
+        <div class="timeline-item">
+          <div class="timeline-marker"><div class="timeline-dot">1</div><div class="timeline-line"></div></div>
+          <div class="timeline-content"><span class="year">۱۴۰۱</span><h3>شروع مسیر</h3><p>ورود به دنیای توسعه اندروید و یادگیری Java و Kotlin.</p></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><div class="timeline-dot">2</div><div class="timeline-line"></div></div>
+          <div class="timeline-content"><span class="year">۱۴۰۲</span><h3>کشف فلاتر</h3><p>شروع کار با Flutter و Dart برای ساخت اپ‌های کراس‌پلتفرم.</p></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><div class="timeline-dot">3</div><div class="timeline-line"></div></div>
+          <div class="timeline-content"><span class="year">۱۴۰۳</span><h3>تأسیس استودیو</h3><p>راه‌اندازی پارسا اپس و انتشار اولین اپلیکیشن‌ها.</p></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><div class="timeline-dot">4</div></div>
+          <div class="timeline-content"><span class="year">۱۴۰۴</span><h3>رشد و گسترش</h3><p>انتشار جزیره فندقی و پروژه‌های جدید با کیفیت جهانی.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SKILLS -->
+  <section class="section-pad" id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow"><span class="dot"></span> مهارت‌ها</span>
+        <h2>تکنولوژی‌ها و <span class="gradient-text">تخصص‌ها</span></h2>
+        <p>ابزارها و فناوری‌هایی که برای ساخت محصولات حرفه‌ای استفاده می‌کنیم</p>
+      </div>
+      <div class="grid-4 stagger-children" id="skillsGrid">
+        <div class="glass-card" data-spotlight><span class="icon">📱</span><h3 dir="ltr">Flutter</h3><p>فریمورک کراس‌پلتفرم</p><div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🎯</span><h3 dir="ltr">Dart</h3><p>زبان برنامه‌نویسی</p><div class="skill-bar"><div class="skill-fill" style="--w:92%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🤖</span><h3 dir="ltr">Kotlin</h3><p>توسعه اندروید</p><div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🔥</span><h3 dir="ltr">Firebase</h3><p>سرویس‌های ابری</p><div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🎨</span><h3 dir="ltr">UI/UX Design</h3><p>طراحی رابط کاربری</p><div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">☕</span><h3 dir="ltr">Java</h3><p>زبان برنامه‌نویسی</p><div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🧩</span><h3 dir="ltr">Material 3</h3><p>سیستم طراحی</p><div class="skill-bar"><div class="skill-fill" style="--w:93%"></div></div></div>
+        <div class="glass-card" data-spotlight><span class="icon">🎮</span><h3 dir="ltr">Flame Engine</h3><p>بازی‌سازی موبایل</p><div class="skill-bar"><div class="skill-fill" style="--w:78%"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PROJECTS -->
+  <section class="section-pad" id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow"><span class="dot"></span> پروژه‌ها</span>
+        <h2>مجموعه <span class="gradient-text">اپلیکیشن‌ها</span></h2>
+        <p>محصولاتی که با عشق و دقت ساخته شده‌اند</p>
+      </div>
+      <div class="grid-3">
+        <div class="project-card reveal" style="transition-delay:.1s">
+          <div class="cover">
+            <img src="/assets/images/app-jazire.jpg" alt="جزیره فندقی" loading="lazy" />
+            <span class="badge">منتشر شده</span>
+          </div>
+          <div class="body">
+            <h3>🏝️ جزیره فندقی</h3>
+            <p class="desc">اپلیکیشن آموزشی-سرگرمی کودکان با بازی‌ها، داستان‌ها و فعالیت‌های تعاملی.</p>
+            <div class="tags"><span class="chip">Flutter</span><span class="chip">Dart</span><span class="chip">Firebase</span></div>
+          </div>
+        </div>
+        <div class="project-card reveal" style="transition-delay:.2s">
+          <div class="cover">
+            <img src="/assets/images/app-kartoniya.jpg" alt="کارتونیا" loading="lazy" />
+            <span class="badge">در حال توسعه</span>
+          </div>
+          <div class="body">
+            <h3>🎬 کارتونیا</h3>
+            <p class="desc">پلتفرم تماشای کارتون و انیمیشن برای کودکان با محتوای امن و فیلتر شده.</p>
+            <div class="tags"><span class="chip">Flutter</span><span class="chip">Video</span><span class="chip">UI/UX</span></div>
+          </div>
+        </div>
+        <div class="project-card reveal" style="transition-delay:.3s">
+          <div class="cover">
+            <img src="/assets/images/studio-craft.jpg" alt="پروژه‌های آینده" loading="lazy" />
+            <span class="badge">به‌زودی</span>
+          </div>
+          <div class="body">
+            <h3>🔮 پروژه‌های آینده</h3>
+            <p class="desc">اپلیکیشن‌های جدیدی در دست توسعه هستند که به‌زودی معرفی خواهند شد.</p>
+            <div class="tags"><span class="chip">Flutter</span><span class="chip">AI</span><span class="chip">Education</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CTA -->
+  <section class="section-pad" id="contact">
+    <div class="container">
+      <div class="cta-section reveal-scale">
+        <div class="cta-bg"></div>
+        <img class="cta-logo" src="/assets/logo.png" alt="Parsa Apps" style="position:relative" />
+        <h2 style="position:relative">آماده ساخت پروژه بعدی هستید؟</h2>
+        <p style="position:relative">با ما تماس بگیرید تا ایده شما را به یک محصول حرفه‌ای تبدیل کنیم.</p>
+        <div class="btns" style="position:relative">
+          <a href="mailto:farshadparsa2019@gmail.com" class="btn btn-primary">تماس با ما</a>
+          <a href="#apps" class="btn btn-ghost">مشاهده محصولات</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="socials">
+        <a href="https://t.me/Parsaappsadmin" target="_blank" rel="noopener" title="Telegram">📨</a>
+        <a href="https://instagram.com/parsa_apps" target="_blank" rel="noopener" title="Instagram">📷</a>
+        <a href="mailto:farshadparsa2019@gmail.com" title="Email">✉️</a>
+      </div>
+      <p>© ۱۴۰۴ پارسا اپس — تمامی حقوق محفوظ است. ساخته شده با ❤️ توسط فرشاد پارسا</p>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    'use strict';
+
+    // ===== PRELOADER =====
+    window.addEventListener('load', function(){
+      setTimeout(function(){ document.getElementById('preloader').classList.add('hidden'); }, 2200);
+    });
+    // Fallback
+    setTimeout(function(){ document.getElementById('preloader').classList.add('hidden'); }, 4000);
+
+    // ===== PARTICLES =====
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w, h, mouseX = 0, mouseY = 0;
+
+    function resizeCanvas(){
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const PARTICLE_COUNT = window.innerWidth < 768 ? 30 : 60;
+    for(let i = 0; i < PARTICLE_COUNT; i++){
+      particles.push({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3,
+        r: Math.random() * 1.5 + .5,
+        o: Math.random() * .4 + .1,
+        color: ['rgba(124,92,255,','rgba(0,198,255,','rgba(0,255,208,'][Math.floor(Math.random()*3)]
+      });
+    }
+
+    let animFrame;
+    function drawParticles(){
+      ctx.clearRect(0, 0, w, h);
+      for(let p of particles){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0) p.x = w; if(p.x > w) p.x = 0;
+        if(p.y < 0) p.y = h; if(p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.o + ')';
+        ctx.fill();
       }
-    </script>
-    <!-- Paint the dark canvas before any CSS arrives (no white flash) + emergency fallback styles -->
-    <style>
-      html,
-      body {
-        background: #05060e;
-      }
-      /* If JS fails, ensure root is visible */
-      #root:empty {
-        min-height: 100vh;
-        background: #05060e;
-      }
-      /* Emergency kill-switch: after 8s, any stuck preloader overlay is forced hidden via JS, but also via CSS animation as last resort */
-      @keyframes parsa-emergency-hide {
-        0% { opacity: 1; visibility: visible; }
-        99% { opacity: 1; visibility: visible; }
-        100% { opacity: 0; visibility: hidden; pointer-events: none; }
-      }
-      .parsa-emergency-guard {
-        animation: parsa-emergency-hide 0.6s forwards;
-        animation-delay: 8s;
-      }
-    </style>
-    <script type="module" crossorigin src="/assets/index-hS4BqW2E.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/motion-B1NiK7Pw.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-gEQQO4JK.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      // Apply saved language before first paint (set by the language switcher)
-      (function () {
-        try {
-          var l = localStorage.getItem("parsa_lang");
-          if (l === "en" || l === "ar" || l === "fa") {
-            document.documentElement.lang = l;
-            document.documentElement.dir = l === "en" ? "ltr" : "rtl";
+      // Connect nearby particles
+      for(let i = 0; i < particles.length; i++){
+        for(let j = i + 1; j < particles.length; j++){
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 120){
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(124,92,255,' + (.08 * (1 - dist/120)) + ')';
+            ctx.lineWidth = .5;
+            ctx.stroke();
           }
-        } catch (e) {}
-      })();
-    </script>
-    <script>
-      // Robust boot guards: multiple layers to prevent permanent black screen
-      (function () {
-        var BOOT_MSG =
-          '<div dir="rtl" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#05060e;color:#fff;font-family:system-ui,sans-serif;text-align:center;padding:24px">' +
-          '<img src="/assets/logo.png" alt="Parsa Apps" width="84" height="84" onerror="this.style.display=\'none\'" />' +
-          '<p style="font-size:18px;font-weight:800;margin:0">Parsa Apps</p>' +
-          '<p style="color:rgba(255,255,255,.6);font-size:14px;margin:0">متأسفانه سایت بارگذاری نشد. لطفاً صفحه را دوباره بارگذاری کنید.</p>' +
-          '<button onclick="location.reload()" style="margin-top:6px;padding:10px 22px;border:0;border-radius:12px;background:linear-gradient(90deg,#7c5cff,#00c6ff);color:#fff;font-weight:700;font-size:14px;cursor:pointer">بارگذاری مجدد</button>' +
-          "</div>";
-
-        function showFallbackIfEmpty() {
-          var root = document.getElementById("root");
-          if (root && root.children.length === 0) {
-            root.innerHTML = BOOT_MSG;
-            return true;
-          }
-          return false;
         }
+      }
+      animFrame = requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
 
-        function killStuckOverlays() {
-          // If root has content but a fixed z-[200] overlay is still stuck (preloader didn't unmount)
-          var root = document.getElementById("root");
-          if (!root) return;
-          // After 7.5s, if we still see a z-[200] overlay and root has more than 1 child or main content exists, force hide overlays
-          var overlays = document.querySelectorAll('[class*="z-[200]"]');
-          if (overlays.length > 0) {
-            // Check if main site content exists behind overlay
-            var hasMain = document.querySelector("main") || document.querySelector("header");
-            if (hasMain) {
-              overlays.forEach(function (el) {
-                el.style.opacity = "0";
-                el.style.pointerEvents = "none";
-                setTimeout(function () {
-                  el.style.display = "none";
-                }, 800);
-              });
-            }
-          }
+    // Pause particles when tab not visible
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ cancelAnimationFrame(animFrame); }
+      else { drawParticles(); }
+    });
+
+    // ===== NAV SCROLL =====
+    const nav = document.getElementById('mainNav');
+    let lastScroll = 0;
+    window.addEventListener('scroll', function(){
+      const st = window.scrollY;
+      if(st > 60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+      lastScroll = st;
+    }, {passive: true});
+
+    // ===== PHONE SLIDER =====
+    const slides = document.querySelectorAll('.phone-slide');
+    const dotsContainer = document.getElementById('phoneDots');
+    const phoneFrame = document.getElementById('phoneFrame');
+    let currentSlide = 0;
+    let autoPlayTimer;
+    let isDragging = false, startX = 0, currentX = 0;
+    const totalSlides = slides.length;
+
+    // Create dots
+    for(let i = 0; i < totalSlides; i++){
+      const dot = document.createElement('div');
+      dot.className = 'phone-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', function(){ goToSlide(i); resetAutoPlay(); });
+      dotsContainer.appendChild(dot);
+    }
+    const dots = document.querySelectorAll('.phone-dot');
+
+    function goToSlide(index, direction){
+      if(index === currentSlide) return;
+      const dir = direction || (index > currentSlide ? 'left' : 'right');
+      const prevIndex = currentSlide;
+      // Exit current
+      slides[prevIndex].classList.remove('active');
+      slides[prevIndex].classList.add(dir === 'left' ? 'exit-left' : 'exit-right');
+      setTimeout(function(){ slides[prevIndex].classList.remove('exit-left','exit-right'); }, 600);
+
+      // Enter new
+      slides[index].classList.add(dir === 'left' ? 'enter-right' : 'enter-left');
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          slides[index].classList.remove('enter-left','enter-right');
+          slides[index].classList.add('active');
+        });
+      });
+
+      // Update dots
+      dots[prevIndex].classList.remove('active');
+      dots[index].classList.add('active');
+
+      // 3D phone tilt
+      phoneFrame.style.transform = dir === 'left' ? 'rotateY(-5deg) rotateX(2deg)' : 'rotateY(5deg) rotateX(2deg)';
+      setTimeout(function(){ phoneFrame.style.transform = ''; }, 400);
+
+      currentSlide = index;
+    }
+
+    function nextSlide(){ goToSlide((currentSlide + 1) % totalSlides, 'left'); }
+    function prevSlide(){ goToSlide((currentSlide - 1 + totalSlides) % totalSlides, 'right'); }
+
+    function startAutoPlay(){ autoPlayTimer = setInterval(nextSlide, 3500); }
+    function stopAutoPlay(){ clearInterval(autoPlayTimer); }
+    function resetAutoPlay(){ stopAutoPlay(); startAutoPlay(); }
+
+    startAutoPlay();
+
+    // Touch/Mouse swipe
+    const slider = document.getElementById('phoneSlider');
+    slider.addEventListener('pointerdown', function(e){
+      isDragging = true; startX = e.clientX; currentX = e.clientX;
+      stopAutoPlay();
+      slider.style.cursor = 'grabbing';
+    });
+    slider.addEventListener('pointermove', function(e){
+      if(!isDragging) return;
+      currentX = e.clientX;
+    });
+    slider.addEventListener('pointerup', function(){
+      if(!isDragging) return;
+      isDragging = false;
+      slider.style.cursor = '';
+      const diff = startX - currentX;
+      if(Math.abs(diff) > 40){
+        if(diff > 0) nextSlide(); // Swipe left (RTL: next)
+        else prevSlide();
+      }
+      resetAutoPlay();
+    });
+    slider.addEventListener('pointercancel', function(){ isDragging = false; resetAutoPlay(); });
+
+    // Mouse parallax on phone
+    const phoneStage = document.getElementById('phoneStage');
+    phoneStage.addEventListener('mousemove', function(e){
+      const rect = phoneStage.getBoundingClientRect();
+      const cx = (e.clientX - rect.left) / rect.width - .5;
+      const cy = (e.clientY - rect.top) / rect.height - .5;
+      phoneFrame.style.transform = 'rotateY(' + (cx * 12) + 'deg) rotateX(' + (-cy * 8) + 'deg)';
+    });
+    phoneStage.addEventListener('mouseleave', function(){
+      phoneFrame.style.transform = '';
+    });
+
+    // ===== BUTTON RIPPLE =====
+    document.querySelectorAll('.btn').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top = (e.clientY - rect.top) + 'px';
+        ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+        btn.appendChild(ripple);
+        setTimeout(function(){ ripple.remove(); }, 600);
+      });
+    });
+
+    // ===== SCROLL REVEAL =====
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    const observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          // Animate skill bars
+          const fills = entry.target.querySelectorAll('.skill-fill');
+          fills.forEach(function(f){ f.classList.add('animated'); });
         }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    revealEls.forEach(function(el){ observer.observe(el); });
 
-        // Guard 1: 6s - if React never mounted, show fallback
-        setTimeout(showFallbackIfEmpty, 6000);
-        // Guard 2: 8s - second chance
-        setTimeout(showFallbackIfEmpty, 8500);
-        // Guard 3: 7.5s - if overlay stuck but content exists, kill overlay
-        setTimeout(killStuckOverlays, 7500);
-        setTimeout(killStuckOverlays, 9500);
+    // ===== COUNTER ANIMATION =====
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          let current = 0;
+          const increment = target / 40;
+          const timer = setInterval(function(){
+            current += increment;
+            if(current >= target){ current = target; clearInterval(timer); }
+            el.textContent = Math.round(current) + suffix;
+          }, 35);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function(c){ counterObserver.observe(c); });
 
-        // Global error listener: if chunk load fails, show fallback quickly
-        window.addEventListener("error", function (e) {
-          var msg = (e && e.message) || "";
-          if (msg.indexOf("Loading chunk") !== -1 || msg.indexOf("Failed to fetch") !== -1 || msg.indexOf("Importing a module") !== -1) {
-            setTimeout(showFallbackIfEmpty, 1000);
-          }
+    // ===== 3D TILT ON CARDS =====
+    if(window.matchMedia('(pointer:fine)').matches){
+      document.querySelectorAll('.glass-card, .project-card').forEach(function(card){
+        card.addEventListener('mousemove', function(e){
+          const rect = card.getBoundingClientRect();
+          const cx = (e.clientX - rect.left) / rect.width - .5;
+          const cy = (e.clientY - rect.top) / rect.height - .5;
+          card.style.transform = 'translateY(-8px) rotateX(' + (-cy * 8) + 'deg) rotateY(' + (cx * 8) + 'deg)';
         });
-
-        window.addEventListener("unhandledrejection", function (ev) {
-          var reason = ev && ev.reason ? String(ev.reason) : "";
-          if (reason.indexOf("Failed to fetch") !== -1 || reason.indexOf("Loading chunk") !== -1 || reason.indexOf("Import") !== -1) {
-            setTimeout(showFallbackIfEmpty, 1200);
-          }
+        card.addEventListener('mouseleave', function(){
+          card.style.transform = '';
         });
-      })();
-    </script>
-  </body>
+      });
+    }
+
+    // ===== MOUSE PARALLAX ON HERO =====
+    const heroContent = document.querySelector('.hero-content');
+    if(window.matchMedia('(pointer:fine)').matches && heroContent){
+      document.addEventListener('mousemove', function(e){
+        const mx = (e.clientX / window.innerWidth - .5) * 2;
+        const my = (e.clientY / window.innerHeight - .5) * 2;
+        // Subtle parallax on aurora orbs
+        document.querySelectorAll('.aurora-bg .orb').forEach(function(orb, i){
+          const speed = (i + 1) * 8;
+          orb.style.transform = 'translate(' + (mx * speed) + 'px, ' + (my * speed) + 'px)';
+        });
+      });
+    }
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        const id = a.getAttribute('href');
+        if(id === '#') return;
+        const target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ===== CARD SPOTLIGHT =====
+    if(window.matchMedia('(pointer:fine)').matches){
+      document.querySelectorAll('[data-spotlight]').forEach(function(card){
+        card.addEventListener('mousemove', function(e){
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+        });
+      });
+    }
+
+    // ===== STAGGER CHILDREN OBSERVER =====
+    const staggerEls = document.querySelectorAll('.stagger-children');
+    const staggerObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          // Animate skill bars inside
+          entry.target.querySelectorAll('.skill-fill').forEach(function(f){ f.classList.add('animated'); });
+          staggerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    staggerEls.forEach(function(el){ staggerObserver.observe(el); });
+
+  })();
+  </script>
+</body>
 </html>
