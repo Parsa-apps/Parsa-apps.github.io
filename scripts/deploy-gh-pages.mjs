@@ -33,10 +33,19 @@ if (!skipBuild) {
 
 console.log("→ Publishing dist/ to gh-pages (orphan, force)…");
 const tmp = mkdtempSync(resolve(tmpdir(), "parsa-ghpages-"));
+const tryRun = (cmd, opts = {}) => {
+  try {
+    run(cmd, opts);
+    return true;
+  } catch {
+    return false;
+  }
+};
 try {
   run(`git worktree add --detach ${JSON.stringify(tmp)} HEAD`);
   // Unique local name avoids clashing with any existing gh-pages checkout;
   // the push below targets the remote gh-pages branch explicitly.
+  tryRun(`git branch -D gh-pages-deploy-tmp`, { cwd: tmp }); // self-heal from a previous run
   run("git checkout --orphan gh-pages-deploy-tmp", { cwd: tmp });
   run("git rm -rf -q .", { cwd: tmp });
   cpSync(dist, tmp, { recursive: true });
@@ -49,5 +58,6 @@ try {
   console.log('  Make sure Settings → Pages → Source = "Deploy from a branch: gh-pages / (root)".');
 } finally {
   run(`git worktree remove --force ${JSON.stringify(tmp)}`);
+  tryRun(`git branch -D gh-pages-deploy-tmp`);
   rmSync(tmp, { recursive: true, force: true });
 }
