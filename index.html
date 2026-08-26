@@ -23,6 +23,10 @@
   <meta name="twitter:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
   <meta name="twitter:description" content="Building the future of mobile experiences." />
   <meta name="twitter:image" content="/assets/images/og-cover.jpg" />
+  <!-- Cinematic intro assets — preloaded so the reveal starts instantly -->
+  <link rel="preload" href="/assets/brand/intro-logo.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="/assets/brand/intro-wire.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="/assets/brand/intro-crown.svg" as="image" />
   <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
@@ -54,115 +58,538 @@
     @media(min-width:640px){.container{padding:0 2rem}}
     @media(min-width:1024px){.container{padding:0 3rem}}
 
-    /* ===== PRELOADER — ULTRA PREMIUM ===== */
+    /* ==========================================================
+       CINEMATIC INTRO — Parsa Apps Logo Reveal (~5s)
+       0.0–1.0s  cyber void: particles, circuits, energy
+       1.0–3.0s  logo assembly: neon trace + metal shards lock in
+       3.0–4.0s  light burst + camera push + 3D reveal
+       4.0–5.0s  golden premium crown descends
+       5.0s+     soft handoff to the site
+       ========================================================== */
     html.is-loading,body.is-loading{overflow:hidden;overscroll-behavior:none;touch-action:none}
     html.is-loading{height:100%;height:100dvh}
     body.is-loading{position:relative;height:100%;height:100dvh;min-height:100dvh}
+
     #preloader{
       position:fixed;inset:0;z-index:99999;
-      width:100%;height:100vh;height:100dvh;height:100svh;
-      min-height:100dvh;
-      background:#05060e;
+      width:100%;height:100vh;height:100dvh;height:100svh;min-height:100dvh;
+      background:#01020a;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;isolation:isolate;
-      padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      transition:opacity .9s var(--ease),visibility .9s var(--ease),transform .9s var(--ease);
-      will-change:opacity,transform,visibility;
+      perspective:1400px;perspective-origin:50% 46%;
+      contain:strict;
+      transition:opacity .85s var(--ease),visibility .85s var(--ease);
+      will-change:opacity;
     }
-    #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.04) translateY(-10px)}
-    #preloader .preloader-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-    #preloader .preloader-orb{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform;opacity:.9}
-    #preloader .orb-1{width:520px;height:520px;top:-18%;right:-10%;background:radial-gradient(circle at 30% 30%,rgba(124,92,255,.55),rgba(124,92,255,.05) 70%);animation:preOrb1 12s ease-in-out infinite}
-    #preloader .orb-2{width:460px;height:460px;bottom:-15%;left:-12%;background:radial-gradient(circle at 70% 70%,rgba(0,198,255,.45),rgba(0,255,208,.12) 60%,transparent 75%);animation:preOrb2 14s ease-in-out infinite}
-    @keyframes preOrb1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-30px,40px) scale(1.08)}66%{transform:translate(20px,-25px) scale(.96)}}
-    @keyframes preOrb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.1)}}
-    #preloader .preloader-grid{
-      position:absolute;inset:0;
-      background-image:linear-gradient(rgba(124,92,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,255,.05) 1px,transparent 1px);
-      background-size:56px 56px;
-      mask-image:radial-gradient(ellipse at center,#000 25%,transparent 72%);
-      -webkit-mask-image:radial-gradient(ellipse at center,#000 25%,transparent 72%);
-      opacity:.6
+    #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+
+    /* ---------- deep space / cyber void ---------- */
+    .intro-void{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .intro-void::before{
+      content:'';position:absolute;inset:-20%;
+      background:
+        radial-gradient(circle at 50% 46%,rgba(0,150,255,.20),transparent 46%),
+        radial-gradient(circle at 22% 78%,rgba(0,255,170,.13),transparent 52%),
+        radial-gradient(circle at 80% 24%,rgba(60,110,255,.15),transparent 50%);
+      opacity:0;animation:voidWake 1.5s var(--ease) .05s forwards;
     }
-    #preloader .preloader-center{
-      position:relative;z-index:2;
+    @keyframes voidWake{to{opacity:1}}
+    /* vignette keeps the frame cinematic */
+    .intro-vignette{
+      position:absolute;inset:0;z-index:6;pointer-events:none;
+      background:radial-gradient(ellipse 78% 66% at 50% 46%,transparent 42%,rgba(0,0,0,.55) 82%,rgba(0,0,0,.86) 100%);
+    }
+    /* electric scanning grid floor */
+    /* Perspective floor. The rotated plane is a fixed, modest size and the
+       scrolling is done with a GPU transform on an inner layer — no giant
+       repaints, so it stays smooth on mid-range phones. */
+    .intro-grid{
+      position:absolute;left:50%;top:50%;
+      width:190%;height:150%;
+      transform:translate3d(-50%,-26%,0) rotateX(74deg) scale(.9);
+      transform-origin:50% 50%;
+      -webkit-mask-image:radial-gradient(ellipse 40% 38% at 50% 34%,#000 0%,transparent 72%);
+      mask-image:radial-gradient(ellipse 40% 38% at 50% 34%,#000 0%,transparent 72%);
+      overflow:hidden;opacity:0;
+      animation:gridRise 2.4s var(--ease) .1s forwards;
+      will-change:opacity;
+    }
+    .intro-grid::before{
+      content:'';position:absolute;left:0;top:-52px;width:100%;height:calc(100% + 104px);
+      background-image:
+        linear-gradient(rgba(0,190,255,.30) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,190,.22) 1px,transparent 1px);
+      background-size:52px 52px;
+      animation:gridDrift 3.2s linear .4s infinite;
+      will-change:transform;
+    }
+    @keyframes gridRise{0%{opacity:0}45%{opacity:.85}100%{opacity:.5}}
+    @keyframes gridDrift{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,52px,0)}}
+
+    /* thunder / energy flashes felt in the design */
+    .intro-thunder{
+      position:absolute;inset:0;z-index:5;pointer-events:none;mix-blend-mode:screen;
+      background:linear-gradient(180deg,rgba(150,215,255,.9),rgba(90,180,255,.35) 40%,transparent 72%);
+      opacity:0;animation:thunderFlash 5s linear forwards;
+    }
+    @keyframes thunderFlash{
+      0%,5%{opacity:0}
+      6%{opacity:.30}7%{opacity:.04}8%{opacity:.22}9.5%{opacity:0}
+      33%{opacity:0}34%{opacity:.18}35%{opacity:.02}36%{opacity:.12}37.5%{opacity:0}
+      100%{opacity:0}
+    }
+
+    /* particle + circuit canvas (blue & green motes, live circuitry) */
+    #introCanvas{position:absolute;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
+
+    /* ---------- stage ---------- */
+    .intro-stage{
+      position:relative;z-index:3;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:28px;width:100%;max-width:360px;padding:24px 20px;
-      text-align:center;
+      gap:clamp(18px,3.4vh,34px);
+      width:min(92vw,520px);
+      transform-style:preserve-3d;
+      animation:cameraMove 5s var(--ease) forwards;
+      will-change:transform;
     }
-    .preloader-logo-wrap{
-      position:relative;width:112px;height:112px;display:flex;align-items:center;justify-content:center;
-      filter:drop-shadow(0 0 30px rgba(124,92,255,.35));
+    /* virtual camera: slow drift, then a short push-in on the reveal */
+    @keyframes cameraMove{
+      0%{transform:perspective(1400px) translate3d(0,14px,-190px) rotateX(9deg) rotateY(-7deg) scale(.94)}
+      20%{transform:perspective(1400px) translate3d(0,8px,-120px) rotateX(6deg) rotateY(-4.5deg) scale(.96)}
+      58%{transform:perspective(1400px) translate3d(0,2px,-30px) rotateX(2.5deg) rotateY(-1.6deg) scale(.99)}
+      /* 3.0–4.0s — camera pushes forward, logo tilts to show its 3D body */
+      68%{transform:perspective(1400px) translate3d(0,-2px,58px) rotateX(-1.6deg) rotateY(4deg) scale(1.045)}
+      80%{transform:perspective(1400px) translate3d(0,-4px,42px) rotateX(-.6deg) rotateY(1.4deg) scale(1.03)}
+      100%{transform:perspective(1400px) translate3d(0,0,0) rotateX(0deg) rotateY(0deg) scale(1)}
     }
-    @media(max-width:480px){.preloader-logo-wrap{width:96px;height:96px}}
-    .preloader-logo-inner{
-      position:relative;z-index:3;width:76px;height:76px;border-radius:22px;
-      background:radial-gradient(120% 120% at 30% 20%,rgba(255,255,255,.12),rgba(255,255,255,.02) 60%),linear-gradient(145deg,#14162b,#0c0e1e);
-      border:1px solid rgba(255,255,255,.12);
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 20px 50px -15px rgba(0,0,0,.7),inset 0 1px rgba(255,255,255,.12);
-      overflow:hidden;
-      animation:logoFloat 3.2s ease-in-out infinite;
+
+    .intro-logo-box{
+      position:relative;
+      width:clamp(190px,44vmin,300px);
+      aspect-ratio:1/1.015;
+      transform-style:preserve-3d;
+      will-change:transform;
     }
-    @media(max-width:480px){.preloader-logo-inner{width:68px;height:68px;border-radius:20px}}
-    .preloader-logo-inner img{width:62%;height:62%;object-fit:contain;filter:drop-shadow(0 0 14px rgba(0,198,255,.5))}
-    .preloader-logo-inner::after{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);
-      background-size:200% 100%;animation:logoShine 2.6s ease-in-out infinite;
-      mix-blend-mode:screen;pointer-events:none
+
+    /* halo: blue+green neon aura that strengthens as the system boots */
+    .intro-halo{
+      position:absolute;left:50%;top:31%;width:150%;aspect-ratio:1;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:
+        radial-gradient(circle,rgba(0,170,255,.42) 0%,rgba(0,120,255,.18) 34%,transparent 62%),
+        radial-gradient(circle,rgba(0,255,180,.24) 0%,transparent 54%);
+      filter:blur(26px);
+      opacity:0;z-index:0;
+      animation:haloBoot 5s var(--ease) forwards;
+      will-change:opacity,transform;
     }
-    @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    @keyframes logoShine{0%{background-position:150% 0}100%{background-position:-50% 0}}
-    .preloader-ring{
-      position:absolute;inset:0;border-radius:32px;
-      background:conic-gradient(from 0deg,var(--violet),var(--cyan),var(--green),var(--violet));
-      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;mask-composite:exclude;
-      padding:1.5px;animation:preRingSpin 2.2s linear infinite;
+    @keyframes haloBoot{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.62)}
+      22%{opacity:.35;transform:translate(-50%,-50%) scale(.82)}
+      52%{opacity:.62;transform:translate(-50%,-50%) scale(.98)}
+      /* light explosion at completion — controlled and luxurious */
+      62%{opacity:1;transform:translate(-50%,-50%) scale(1.18)}
+      72%{opacity:.78;transform:translate(-50%,-50%) scale(1.04)}
+      100%{opacity:.9;transform:translate(-50%,-50%) scale(1.08)}
     }
-    .preloader-ring.ring-2{inset:-10px;border-radius:38px;opacity:.5;animation-duration:3.4s;animation-direction:reverse;padding:1px;filter:blur(.2px)}
-    @keyframes preRingSpin{to{transform:rotate(360deg)}}
-    .preloader-glow{
-      position:absolute;inset:-22px;border-radius:50%;
-      background:radial-gradient(circle,rgba(124,92,255,.28),rgba(0,198,255,.12) 40%,transparent 70%);
-      filter:blur(18px);z-index:1;opacity:.9;animation:preGlowPulse 2.8s ease-in-out infinite;
+
+    /* energy waves travelling around the logo */
+    .intro-wave{
+      position:absolute;left:50%;top:31%;width:118%;aspect-ratio:1;
+      transform:translate(-50%,-50%) scale(.5);
+      border-radius:50%;
+      border:1.5px solid rgba(0,214,255,.55);
+      box-shadow:0 0 22px rgba(0,190,255,.45),inset 0 0 22px rgba(0,190,255,.22);
+      opacity:0;z-index:1;pointer-events:none;
+      animation:waveOut 1.9s var(--ease) infinite;
+      will-change:transform,opacity;
     }
-    @keyframes preGlowPulse{0%,100%{transform:scale(.92);opacity:.7}50%{transform:scale(1.08);opacity:1}}
-    .preloader-brand{display:flex;flex-direction:column;gap:6px;align-items:center}
-    .preloader-title{
-      font-weight:900;font-size:1.35rem;letter-spacing:.02em;line-height:1;
-      background:linear-gradient(110deg,#fff 20%,#b9acff 40%,var(--cyan) 60%,#fff 80%);
-      background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-      animation:titleShimmer 3s linear infinite;
+    .intro-wave.w2{animation-delay:.63s;border-color:rgba(0,255,180,.45);box-shadow:0 0 22px rgba(0,255,170,.35)}
+    .intro-wave.w3{animation-delay:1.26s}
+    @keyframes waveOut{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+      12%{opacity:.75}
+      100%{opacity:0;transform:translate(-50%,-50%) scale(1.42)}
     }
-    .preloader-subtitle{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.42)}
-    @keyframes titleShimmer{to{background-position:-200% 0}}
-    .preloader-progress{width:100%;display:flex;flex-direction:column;gap:12px;margin-top:4px}
-    .preloader-bar{position:relative;width:100%;height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
-    .preloader-fill{
-      position:absolute;top:0;right:0;bottom:0;width:0%;
-      background:linear-gradient(90deg,var(--violet),#5f8cff 35%,var(--cyan) 70%,var(--green));
-      background-size:200% 100%;border-radius:99px;
-      box-shadow:0 0 18px rgba(124,92,255,.6),0 0 28px rgba(0,198,255,.35);
-      transition:width .35s var(--ease);
-      animation:fillGradient 2s linear infinite;
+
+    /* circuit traces that light up around the mark */
+    .intro-circuit{
+      position:absolute;left:50%;top:31%;width:164%;aspect-ratio:1;
+      transform:translate(-50%,-50%);
+      z-index:0;pointer-events:none;overflow:visible;
+      opacity:0;animation:circuitOn .9s var(--ease) .25s forwards;
     }
-    @keyframes fillGradient{to{background-position:-200% 0}}
-    .preloader-meta{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .preloader-percent{font-size:.8rem;font-weight:800;font-variant-numeric:tabular-nums;color:#fff;letter-spacing:.02em;min-width:3ch;text-align:right}
-    .preloader-text{font-size:.75rem;color:rgba(255,255,255,.45);font-weight:600;display:flex;align-items:center;gap:6px}
-    .preloader-text::after{content:'';width:3px;height:3px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:dotBlink 1.2s ease-in-out infinite}
-    @keyframes dotBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
-    .preloader-dots{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:2px}
-    .preloader-dots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);animation:dotBounce 1.2s ease-in-out infinite}
-    .preloader-dots span:nth-child(2){animation-delay:.15s}
-    .preloader-dots span:nth-child(3){animation-delay:.3s}
-    @keyframes dotBounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-6px);opacity:1;background:var(--cyan)}}
-    /* Reduced motion */
+    @keyframes circuitOn{to{opacity:1}}
+    .intro-circuit path{
+      fill:none;stroke-linecap:round;stroke-linejoin:round;
+      stroke-dasharray:var(--len,120);stroke-dashoffset:var(--len,120);
+      animation:traceDraw 1.5s var(--ease) forwards,tracePulse 2.6s ease-in-out 1.6s infinite;
+    }
+    @keyframes traceDraw{to{stroke-dashoffset:0}}
+    @keyframes tracePulse{0%,100%{opacity:.45}50%{opacity:1}}
+    .intro-circuit circle{opacity:0;animation:nodeOn .5s var(--ease) forwards}
+    @keyframes nodeOn{to{opacity:1}}
+
+    /* --- the logo itself --- */
+    .intro-logo{position:absolute;inset:0;z-index:3;transform-style:preserve-3d}
+
+    /* stage 1 (1.0–1.9s): neon blue outline traces the logo's real contour */
+    .intro-wire{
+      position:absolute;inset:0;
+      background:var(--wire) center/contain no-repeat;
+      /* neon blue ink */
+      filter:drop-shadow(0 0 5px rgba(0,200,255,.95)) drop-shadow(0 0 16px rgba(0,150,255,.7)) drop-shadow(0 0 34px rgba(0,120,255,.35));
+      opacity:0;
+      -webkit-mask-image:linear-gradient(to top,#000 0%,#000 var(--rise,0%),transparent calc(var(--rise,0%) + 9%),transparent 100%);
+      mask-image:linear-gradient(to top,#000 0%,#000 var(--rise,0%),transparent calc(var(--rise,0%) + 9%),transparent 100%);
+      animation:wireTrace 2.4s linear .55s forwards;
+      will-change:opacity;
+    }
+    @property --rise{syntax:'<percentage>';inherits:false;initial-value:0%}
+    @keyframes wireTrace{
+      0%{opacity:0;--rise:0%}
+      12%{opacity:1}
+      55%{opacity:1;--rise:112%}
+      82%{opacity:.55;--rise:112%}
+      100%{opacity:0;--rise:112%}
+    }
+
+    /* stage 2 (1.4–3.0s): metallic shards fly in and lock into place.
+       Each shard is the REAL logo art, clipped to a wedge — so the pieces
+       reassemble into the true artwork, never a fake shape. */
+    .intro-shards{position:absolute;inset:0;transform-style:preserve-3d}
+    .intro-shard{
+      position:absolute;inset:0;
+      background:var(--logo) center/contain no-repeat;
+      -webkit-clip-path:var(--clip);clip-path:var(--clip);
+      opacity:0;
+      transform:translate3d(var(--dx),var(--dy),var(--dz)) rotate(var(--rot)) scale(var(--sc,1.12));
+      animation:shardLock .92s cubic-bezier(.18,.9,.26,1.04) var(--delay) forwards;
+      will-change:transform,opacity;
+      backface-visibility:hidden;
+    }
+    @keyframes shardLock{
+      0%{opacity:0;transform:translate3d(var(--dx),var(--dy),var(--dz)) rotate(var(--rot)) scale(var(--sc,1.12));filter:brightness(2.4) saturate(.5)}
+      18%{opacity:1}
+      /* micro overshoot = the piece "snaps" magnetically into position */
+      74%{transform:translate3d(calc(var(--dx) * .05),calc(var(--dy) * .05),14px) rotate(calc(var(--rot) * .06)) scale(1.012);filter:brightness(1.5)}
+      100%{opacity:1;transform:translate3d(0,0,0) rotate(0deg) scale(1);filter:brightness(1)}
+    }
+
+    /* spark burst fired at the exact moment a shard locks in */
+    .intro-spark{
+      position:absolute;left:var(--sx);top:var(--sy);
+      width:var(--ss,84px);aspect-ratio:1;
+      transform:translate(-50%,-50%) scale(.2);
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(120,225,255,.72) 26%,rgba(0,160,255,.28) 52%,transparent 72%);
+      opacity:0;pointer-events:none;mix-blend-mode:screen;
+      animation:sparkPop .52s ease-out var(--sdelay) forwards;
+      will-change:transform,opacity;
+    }
+    .intro-spark.green{background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(140,255,200,.7) 26%,rgba(0,220,140,.26) 52%,transparent 72%)}
+    @keyframes sparkPop{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+      22%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+      100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}
+    }
+    /* tiny lightning bolt at each lock point */
+    .intro-bolt{
+      position:absolute;left:var(--sx);top:var(--sy);
+      width:2px;height:var(--bh,54px);
+      transform:translate(-50%,-100%) rotate(var(--brot,0deg));
+      transform-origin:50% 100%;
+      background:linear-gradient(180deg,transparent,rgba(190,235,255,.95) 45%,rgba(255,255,255,.98));
+      box-shadow:0 0 10px rgba(120,215,255,.9);
+      opacity:0;pointer-events:none;mix-blend-mode:screen;
+      -webkit-clip-path:polygon(52% 0,100% 46%,60% 46%,100% 100%,0 54%,42% 54%,4% 32%);
+      clip-path:polygon(52% 0,100% 46%,60% 46%,100% 100%,0 54%,42% 54%,4% 32%);
+      animation:boltFlash .3s steps(3,end) var(--sdelay) forwards;
+    }
+    @keyframes boltFlash{0%{opacity:0}40%{opacity:1}100%{opacity:0}}
+
+    /* full metal logo — takes over once every shard has landed */
+    .intro-full{
+      position:absolute;inset:0;
+      background:var(--logo) center/contain no-repeat;
+      opacity:0;
+      filter:drop-shadow(0 14px 34px rgba(0,0,0,.6));
+      animation:fullOn .5s var(--ease) 2.72s forwards;
+      will-change:opacity;
+    }
+    @keyframes fullOn{to{opacity:1}}
+
+    /* moving reflection sweeping across the metal surface */
+    .intro-sheen{
+      position:absolute;inset:0;z-index:4;pointer-events:none;
+      -webkit-mask:var(--logo) center/contain no-repeat;
+      mask:var(--logo) center/contain no-repeat;
+      background:linear-gradient(104deg,transparent 34%,rgba(255,255,255,.10) 44%,rgba(255,255,255,.72) 50%,rgba(190,240,255,.34) 56%,transparent 66%);
+      background-size:280% 100%;background-position:170% 0;
+      mix-blend-mode:screen;opacity:0;
+      animation:sheenSweep 2.6s var(--ease) 2.75s forwards,sheenLoop 4.6s linear 5.3s infinite;
+      will-change:background-position,opacity;
+    }
+    @keyframes sheenSweep{0%{opacity:0;background-position:170% 0}18%{opacity:1}100%{opacity:.85;background-position:-70% 0}}
+    @keyframes sheenLoop{0%{background-position:170% 0}100%{background-position:-70% 0}}
+
+    /* the Android figure inside the logo powers up in tech green */
+    .intro-android{
+      position:absolute;left:39%;top:22.5%;width:20%;aspect-ratio:1;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(120,255,170,.55) 0%,rgba(40,220,120,.28) 40%,transparent 68%);
+      filter:blur(7px);
+      opacity:0;z-index:4;pointer-events:none;mix-blend-mode:screen;
+      animation:androidBoot 2.1s var(--ease) 2.28s forwards;
+    }
+    @keyframes androidBoot{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+      22%{opacity:1;transform:translate(-50%,-50%) scale(1.28)}
+      45%{opacity:.55;transform:translate(-50%,-50%) scale(.95)}
+      70%{opacity:.9;transform:translate(-50%,-50%) scale(1.08)}
+      100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}
+    }
+
+    /* controlled light explosion at 3.0s */
+    .intro-burst{
+      position:absolute;left:50%;top:31%;width:20%;aspect-ratio:1;
+      transform:translate(-50%,-50%) scale(.2);
+      border-radius:50%;
+      background:radial-gradient(circle,#fff 0%,rgba(200,240,255,.9) 18%,rgba(0,180,255,.42) 40%,transparent 68%);
+      opacity:0;z-index:5;pointer-events:none;mix-blend-mode:screen;
+      animation:burstGo 1.15s cubic-bezier(.16,.9,.3,1) 2.95s forwards;
+      will-change:transform,opacity;
+    }
+    @keyframes burstGo{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+      14%{opacity:1;transform:translate(-50%,-50%) scale(2.1)}
+      48%{opacity:.34;transform:translate(-50%,-50%) scale(4.4)}
+      100%{opacity:0;transform:translate(-50%,-50%) scale(6.2)}
+    }
+    /* anamorphic lens streak — the expensive-looking part of a light burst */
+    .intro-streak{
+      position:absolute;left:50%;top:31%;width:210%;height:2px;
+      transform:translate(-50%,-50%) scaleX(.1);
+      background:linear-gradient(90deg,transparent,rgba(120,210,255,.7) 22%,#fff 50%,rgba(120,210,255,.7) 78%,transparent);
+      filter:blur(1.2px);
+      opacity:0;z-index:5;pointer-events:none;mix-blend-mode:screen;
+      animation:streakGo 1s cubic-bezier(.16,.9,.3,1) 2.98s forwards;
+    }
+    @keyframes streakGo{
+      0%{opacity:0;transform:translate(-50%,-50%) scaleX(.1)}
+      16%{opacity:1;transform:translate(-50%,-50%) scaleX(1)}
+      100%{opacity:0;transform:translate(-50%,-50%) scaleX(1.15)}
+    }
+
+    /* light pooling under the logo after the reveal */
+    .intro-floor{
+      position:absolute;left:50%;bottom:29%;width:78%;height:20px;
+      transform:translateX(-50%) scaleX(.3);
+      border-radius:50%;
+      background:radial-gradient(ellipse,rgba(0,205,255,.78) 0%,rgba(0,150,255,.3) 42%,transparent 74%);
+      filter:blur(11px);
+      opacity:0;z-index:1;pointer-events:none;
+      animation:floorOn 1.5s var(--ease) 3.05s forwards;
+    }
+    @keyframes floorOn{
+      0%{opacity:0;transform:translateX(-50%) scaleX(.3)}
+      45%{opacity:1;transform:translateX(-50%) scaleX(1.06)}
+      100%{opacity:.85;transform:translateX(-50%) scaleX(1)}
+    }
+
+    /* ---------- 4.0–5.0s — the golden premium crown ---------- */
+    /* Geometry measured from the real artwork: the mark's crest spans
+       26%–82% of the box and its top edge sits at ~5% — so the crown is
+       centred at 54% and lands exactly on that crest. */
+    .intro-crown{
+      position:absolute;left:54%;top:-11.5%;
+      width:44%;height:auto;z-index:6;
+      transform:translate(-50%,-190%) scale(.62) rotate(-9deg);
+      opacity:0;
+      transform-origin:50% 100%;
+      filter:drop-shadow(0 6px 18px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(255,196,80,.65));
+      animation:crownDescend 1.25s cubic-bezier(.2,.86,.3,1.02) 3.82s forwards;
+      will-change:transform,opacity;
+    }
+    @keyframes crownDescend{
+      0%{opacity:0;transform:translate(-50%,-190%) scale(.62) rotate(-9deg)}
+      22%{opacity:1}
+      /* slow, luxurious settle onto the crest of the logo */
+      66%{transform:translate(-50%,-8%) scale(1.03) rotate(1.6deg)}
+      84%{transform:translate(-50%,3%) scale(.99) rotate(-.6deg)}
+      100%{opacity:1;transform:translate(-50%,0) scale(1) rotate(0deg)}
+    }
+    /* warm golden glow the crown carries with it */
+    .intro-crown-glow{
+      position:absolute;left:54%;top:-1%;width:66%;aspect-ratio:1;
+      transform:translate(-50%,-50%) scale(.4);
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(255,232,150,.85) 0%,rgba(255,190,70,.4) 32%,transparent 64%);
+      filter:blur(16px);
+      opacity:0;z-index:5;pointer-events:none;mix-blend-mode:screen;
+      animation:crownGlow 1.5s var(--ease) 4.6s forwards;
+    }
+    @keyframes crownGlow{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+      26%{opacity:1;transform:translate(-50%,-50%) scale(1.22)}
+      100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}
+    }
+    /* golden dust drifting around the crown */
+    .intro-dust{
+      position:absolute;left:54%;top:-8%;width:76%;height:34%;
+      transform:translateX(-50%);z-index:7;pointer-events:none;
+    }
+    .intro-dust i{
+      position:absolute;left:var(--gx);top:var(--gy);
+      width:var(--gs,4px);aspect-ratio:1;border-radius:50%;
+      background:radial-gradient(circle,#fff6cf 0%,#f7c85a 48%,rgba(240,170,40,0) 72%);
+      box-shadow:0 0 8px rgba(255,205,100,.9);
+      opacity:0;
+      animation:dustFly 1.5s ease-out var(--gd) forwards;
+      will-change:transform,opacity;
+    }
+    @keyframes dustFly{
+      0%{opacity:0;transform:translate(0,0) scale(.3)}
+      18%{opacity:1;transform:translate(calc(var(--gtx) * .28),calc(var(--gty) * .28)) scale(1.1)}
+      100%{opacity:0;transform:translate(var(--gtx),var(--gty)) scale(.35)}
+    }
+
+    /* ---------- brand type & progress ---------- */
+    .intro-brand{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
+    .intro-title{
+      font-weight:900;font-size:clamp(1.15rem,4.4vw,1.5rem);letter-spacing:.055em;line-height:1;
+      background:linear-gradient(100deg,#eaf6ff 12%,#8fd4ff 34%,#fff 52%,#7ef0c8 72%,#eaf6ff 92%);
+      background-size:220% 100%;
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      opacity:0;transform:translateY(14px);
+      text-shadow:0 0 26px rgba(0,170,255,.28);
+      animation:brandIn .9s var(--ease) 3.35s forwards,titleShimmer 3.6s linear 4.2s infinite;
+    }
+    .intro-sub{
+      font-size:clamp(.56rem,2.1vw,.68rem);font-weight:700;letter-spacing:.34em;text-transform:uppercase;
+      color:rgba(180,225,255,.62);
+      opacity:0;transform:translateY(10px);
+      animation:brandIn .9s var(--ease) 3.55s forwards;
+    }
+    @keyframes brandIn{to{opacity:1;transform:translateY(0)}}
+    @keyframes titleShimmer{to{background-position:-220% 0}}
+
+    .intro-progress{
+      width:min(72vw,232px);display:flex;flex-direction:column;gap:9px;align-items:center;
+      opacity:0;animation:brandIn .8s var(--ease) 3.7s forwards;
+    }
+    .intro-bar{
+      position:relative;width:100%;height:2px;border-radius:99px;
+      background:rgba(255,255,255,.09);overflow:hidden;
+    }
+    .intro-fill{
+      position:absolute;inset:0 auto 0 0;width:0%;border-radius:99px;
+      background:linear-gradient(90deg,#0080ff,#00c6ff 46%,#00ffc2);
+      box-shadow:0 0 12px rgba(0,190,255,.75);
+      transition:width .3s var(--ease);
+    }
+    .intro-meta{
+      display:flex;align-items:center;justify-content:space-between;width:100%;
+      font-size:.64rem;font-weight:700;letter-spacing:.12em;
+      color:rgba(170,215,255,.5);
+    }
+    .intro-percent{font-variant-numeric:tabular-nums;color:rgba(215,240,255,.9)}
+
+    /* skip control — respectful of the user's time */
+    .intro-skip{
+      position:absolute;z-index:9;
+      bottom:max(20px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+      padding:8px 20px;border-radius:99px;
+      font-family:inherit;font-size:.7rem;font-weight:700;letter-spacing:.05em;
+      color:rgba(200,232,255,.75);
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(140,200,255,.22);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      cursor:pointer;opacity:0;
+      transition:color .25s,border-color .25s,background .25s;
+      animation:brandIn .6s var(--ease) 1.6s forwards;
+    }
+    .intro-skip:hover,.intro-skip:focus-visible{color:#fff;border-color:rgba(0,200,255,.6);background:rgba(0,150,255,.16)}
+
+    /* ---------- exit: soft, professional handoff to the site ---------- */
+    #preloader.intro-exit{animation:introExit .95s var(--ease) forwards}
+    @keyframes introExit{
+      0%{opacity:1;transform:scale(1);filter:brightness(1)}
+      26%{opacity:1;transform:scale(1.035);filter:brightness(1.16)}
+      100%{opacity:0;transform:scale(1.14);filter:brightness(1)}
+    }
+    /* the logo keeps its living, technological feel as it hands over */
+    #preloader.intro-exit .intro-stage{animation:stageExit .95s var(--ease) forwards}
+    @keyframes stageExit{
+      0%{transform:scale(1);opacity:1}
+      100%{transform:scale(1.2) translateZ(120px);opacity:0}
+    }
+    #preloader.intro-exit .intro-void,#preloader.intro-exit #introCanvas,#preloader.intro-exit .intro-grid{
+      animation:fadeOutFast .5s linear forwards
+    }
+    @keyframes fadeOutFast{to{opacity:0}}
+
+    /* small screens: keep every detail readable, never cramped.
+       Blur radii and stacked drop-shadows are the costliest effects on a
+       phone GPU, so they are trimmed here — the look is preserved, the
+       per-frame cost is not. */
+    @media(max-width:640px){
+      .intro-halo{filter:blur(18px)}
+      .intro-crown-glow{filter:blur(11px)}
+      .intro-wire{filter:drop-shadow(0 0 4px rgba(0,200,255,.95)) drop-shadow(0 0 13px rgba(0,150,255,.6))}
+      .intro-crown{filter:drop-shadow(0 4px 12px rgba(0,0,0,.5)) drop-shadow(0 0 12px rgba(255,196,80,.6))}
+      .intro-floor{filter:blur(8px)}
+      .intro-android{filter:blur(5px)}
+      /* keep the snap, drop the per-frame filter repaint */
+      .intro-shard{animation-name:shardLockLite}
+      .intro-wave.w3{display:none}
+      .intro-bolt{display:none}
+    }
+    @keyframes shardLockLite{
+      0%{opacity:0;transform:translate3d(var(--dx),var(--dy),var(--dz)) rotate(var(--rot)) scale(var(--sc,1.12))}
+      18%{opacity:1}
+      74%{transform:translate3d(calc(var(--dx) * .05),calc(var(--dy) * .05),14px) rotate(calc(var(--rot) * .06)) scale(1.012)}
+      100%{opacity:1;transform:translate3d(0,0,0) rotate(0deg) scale(1)}
+    }
+    @media(max-width:480px){
+      .intro-stage{gap:16px;width:94vw}
+      .intro-logo-box{width:clamp(168px,58vmin,232px)}
+      .intro-title{letter-spacing:.04em}
+    }
+    @media(max-height:560px){
+      .intro-logo-box{width:clamp(140px,30vh,200px)}
+      .intro-stage{gap:12px}
+      .intro-progress{display:none}
+    }
+
+    /* Reduced motion: no theatrics — present the finished lockup, still and
+       correctly composed, then hand over to the site. */
     @media(prefers-reduced-motion:reduce){
-      #preloader .preloader-orb,.preloader-ring,.preloader-glow,.preloader-logo-inner,.preloader-title,.preloader-fill{animation:none!important}
+      #preloader *{animation:none!important;transition:none!important}
+      #preloader{perspective:none}
+      .intro-wire,.intro-shards,.intro-wave,.intro-burst,.intro-streak,
+      .intro-thunder,.intro-bolt,.intro-spark,.intro-dust,.intro-grid,.intro-circuit{display:none!important}
+      /* elements in normal flow */
+      .intro-stage,.intro-brand,.intro-title,.intro-sub,.intro-progress{transform:none!important;opacity:1!important}
+      .intro-skip{transform:translateX(-50%)!important;opacity:1!important}
+      /* absolutely-positioned layers keep their centring offsets */
+      .intro-full{opacity:1!important}
+      .intro-halo{opacity:.85!important;transform:translate(-50%,-50%)!important}
+      .intro-android{opacity:.7!important;transform:translate(-50%,-50%)!important}
+      .intro-crown-glow{opacity:.6!important;transform:translate(-50%,-50%)!important}
+      .intro-crown{opacity:1!important;transform:translate(-50%,0)!important}
+      .intro-floor{opacity:.8!important;transform:translateX(-50%)!important}
     }
+
+    /* While the intro covers the screen, the site's own animated background
+       (four 100px-blur orbs + particle canvas) is completely hidden yet still
+       painting every frame. Suspending it frees the GPU for the reveal. */
+    html.is-loading .aurora-bg,
+    html.is-loading .grid-overlay,
+    html.is-loading #particles{visibility:hidden}
+    html.is-loading .aurora-bg .orb{animation-play-state:paused}
 
     /* ===== PARTICLES CANVAS ===== */
     #particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
@@ -603,35 +1030,121 @@
   </style>
 </head>
 <body>
-  <!-- Preloader — Premium Professional -->
-  <div id="preloader" aria-live="polite" aria-busy="true" aria-label="در حال بارگذاری">
-    <div class="preloader-bg" aria-hidden="true">
-      <div class="preloader-orb orb-1"></div>
-      <div class="preloader-orb orb-2"></div>
-      <div class="preloader-grid"></div>
-    </div>
-    <div class="preloader-center">
-      <div class="preloader-logo-wrap" aria-hidden="true">
-        <div class="preloader-ring"></div>
-        <div class="preloader-ring ring-2"></div>
-        <div class="preloader-glow"></div>
-        <div class="preloader-logo-inner">
-          <img src="/assets/logo.png" alt="Parsa Apps" width="76" height="76" decoding="async" fetchpriority="high" />
+  <!-- ===== CINEMATIC INTRO — Parsa Apps Logo Reveal ===== -->
+  <div id="preloader" aria-live="polite" aria-busy="true" aria-label="در حال بارگذاری پارسا اپس"
+       style="--logo:url('/assets/brand/intro-logo.png');--wire:url('/assets/brand/intro-wire.png')">
+
+    <!-- 0–1s : the cyber void wakes up -->
+    <div class="intro-void" aria-hidden="true"></div>
+    <div class="intro-grid" aria-hidden="true"></div>
+    <canvas id="introCanvas" aria-hidden="true"></canvas>
+    <div class="intro-thunder" aria-hidden="true"></div>
+
+    <div class="intro-stage">
+      <div class="intro-logo-box" aria-hidden="true">
+        <!-- energy field -->
+        <div class="intro-halo"></div>
+        <div class="intro-wave"></div>
+        <div class="intro-wave w2"></div>
+        <div class="intro-wave w3"></div>
+
+        <!-- circuit traces that boot up around the mark -->
+        <svg class="intro-circuit" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+          <g stroke="#00b4ff" stroke-width=".9" opacity=".62">
+            <path d="M100 100 H44 V62 H16"    style="--len:126;animation-delay:.35s,1.9s"/>
+            <path d="M100 100 H38 V138 H12"   style="--len:132;animation-delay:.5s,2.1s"/>
+            <path d="M100 100 V46 H150 V22"   style="--len:128;animation-delay:.42s,2s"/>
+          </g>
+          <g stroke="#00ffb0" stroke-width=".9" opacity=".5">
+            <path d="M100 100 H160 V148 H186" style="--len:134;animation-delay:.6s,2.2s"/>
+            <path d="M100 100 V158 H58 V182"  style="--len:130;animation-delay:.72s,2.35s"/>
+            <path d="M100 100 H168 V56 H190"  style="--len:136;animation-delay:.66s,2.15s"/>
+          </g>
+          <g fill="#0a1428" stroke="#00d4ff" stroke-width="1.3" opacity=".8">
+            <circle cx="16"  cy="62"  r="2.7" style="animation-delay:1.5s"/>
+            <circle cx="12"  cy="138" r="2.7" style="animation-delay:1.62s"/>
+            <circle cx="150" cy="22"  r="2.7" style="animation-delay:1.56s"/>
+          </g>
+          <g fill="#0a1428" stroke="#00ffb0" stroke-width="1.3" opacity=".7">
+            <circle cx="186" cy="148" r="2.7" style="animation-delay:1.7s"/>
+            <circle cx="58"  cy="182" r="2.7" style="animation-delay:1.82s"/>
+            <circle cx="190" cy="56"  r="2.7" style="animation-delay:1.76s"/>
+          </g>
+        </svg>
+
+        <div class="intro-logo">
+          <!-- 1.0–1.9s : neon blue outline draws the true logo contour -->
+          <div class="intro-wire"></div>
+
+          <!-- 1.4–3.0s : real metal pieces fly in and lock into place -->
+          <div class="intro-shards">
+            <div class="intro-shard" style="--clip:polygon(50% 32%, 35.1% 0%, 72.4% 0%);            --dx:6%;   --dy:-58%; --dz:-180px; --rot:-13deg; --delay:1.38s"></div>
+            <div class="intro-shard" style="--clip:polygon(50% 32%, 72.4% 0%, 100% 0%, 100% 36.4%); --dx:54%;  --dy:-26%; --dz:-210px; --rot:11deg;  --delay:1.56s"></div>
+            <div class="intro-shard" style="--clip:polygon(50% 32%, 100% 36.4%, 100% 64%, 64.9% 64%);--dx:50%; --dy:34%;  --dz:-160px; --rot:14deg;  --delay:1.74s"></div>
+            <div class="intro-shard" style="--clip:polygon(50% 32%, 64.9% 64%, 27.6% 64%);          --dx:-6%;  --dy:60%;  --dz:-190px; --rot:-12deg; --delay:1.92s"></div>
+            <div class="intro-shard" style="--clip:polygon(50% 32%, 27.6% 64%, 0% 64%, 0% 27.6%);   --dx:-54%; --dy:26%;  --dz:-170px; --rot:-15deg; --delay:2.10s"></div>
+            <div class="intro-shard" style="--clip:polygon(50% 32%, 0% 27.6%, 0% 0%, 35.1% 0%);     --dx:-50%; --dy:-34%; --dz:-200px; --rot:12deg;  --delay:2.28s"></div>
+            <!-- the PARSA wordmark plate slides up into the lockup -->
+            <div class="intro-shard" style="--clip:polygon(0% 68%, 100% 68%, 100% 92%, 0% 92%);     --dx:0;    --dy:26%;  --dz:-120px; --rot:0deg;   --sc:1.05; --delay:2.44s"></div>
+            <!-- the green APPS bar clicks in last -->
+            <div class="intro-shard" style="--clip:polygon(0% 92%, 100% 92%, 100% 100%, 0% 100%);   --dx:0;    --dy:16%;  --dz:-80px;  --rot:0deg;   --sc:1.04; --delay:2.58s"></div>
+          </div>
+
+          <!-- complete metal logo + moving reflection -->
+          <div class="intro-full"></div>
+          <div class="intro-sheen"></div>
+          <div class="intro-android"></div>
+        </div>
+
+        <!-- energy sparks + micro lightning at each lock point -->
+        <div class="intro-spark"       style="--sx:50%;--sy:8%;  --ss:96px; --sdelay:1.62s"></div>
+        <div class="intro-spark"       style="--sx:82%;--sy:20%; --ss:88px; --sdelay:1.80s"></div>
+        <div class="intro-spark"       style="--sx:80%;--sy:50%; --ss:84px; --sdelay:1.98s"></div>
+        <div class="intro-spark green" style="--sx:46%;--sy:58%; --ss:92px; --sdelay:2.16s"></div>
+        <div class="intro-spark"       style="--sx:18%;--sy:48%; --ss:84px; --sdelay:2.34s"></div>
+        <div class="intro-spark"       style="--sx:20%;--sy:18%; --ss:88px; --sdelay:2.52s"></div>
+        <div class="intro-spark green" style="--sx:50%;--sy:80%; --ss:104px;--sdelay:2.68s"></div>
+        <div class="intro-bolt" style="--sx:50%;--sy:8%;  --bh:60px;--brot:6deg;  --sdelay:1.62s"></div>
+        <div class="intro-bolt" style="--sx:82%;--sy:20%; --bh:52px;--brot:-14deg;--sdelay:1.80s"></div>
+        <div class="intro-bolt" style="--sx:18%;--sy:48%; --bh:50px;--brot:16deg; --sdelay:2.34s"></div>
+        <div class="intro-bolt" style="--sx:50%;--sy:80%; --bh:58px;--brot:-4deg; --sdelay:2.68s"></div>
+
+        <!-- 3.0–4.0s : controlled luxury light explosion + floor light -->
+        <div class="intro-burst"></div>
+        <div class="intro-streak"></div>
+        <div class="intro-floor"></div>
+
+        <!-- 4.0–5.0s : the golden premium crown -->
+        <div class="intro-crown-glow"></div>
+        <img class="intro-crown" src="/assets/brand/intro-crown.svg" alt="" decoding="async" fetchpriority="high" />
+        <div class="intro-dust">
+          <i style="--gx:14%;--gy:34%;--gs:5px;--gtx:-26px;--gty:-34px;--gd:4.66s"></i>
+          <i style="--gx:30%;--gy:22%;--gs:4px;--gtx:-16px;--gty:-42px;--gd:4.74s"></i>
+          <i style="--gx:48%;--gy:14%;--gs:6px;--gtx:2px;  --gty:-48px;--gd:4.62s"></i>
+          <i style="--gx:66%;--gy:22%;--gs:4px;--gtx:20px; --gty:-40px;--gd:4.78s"></i>
+          <i style="--gx:84%;--gy:34%;--gs:5px;--gtx:30px; --gty:-32px;--gd:4.70s"></i>
+          <i style="--gx:22%;--gy:52%;--gs:3px;--gtx:-30px;--gty:-18px;--gd:4.86s"></i>
+          <i style="--gx:76%;--gy:52%;--gs:3px;--gtx:32px; --gty:-16px;--gd:4.90s"></i>
+          <i style="--gx:50%;--gy:44%;--gs:4px;--gtx:0px;  --gty:-56px;--gd:4.82s"></i>
         </div>
       </div>
-      <div class="preloader-brand">
-        <span class="preloader-title">Parsa Apps</span>
-        <span class="preloader-subtitle">Crafting Premium Experiences</span>
+
+      <div class="intro-brand">
+        <span class="intro-title">Parsa Apps</span>
+        <span class="intro-sub">Premium Technology Studio</span>
       </div>
-      <div class="preloader-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="preloaderProgressRoot">
-        <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill" style="width:0%"></div></div>
-        <div class="preloader-meta">
-          <span class="preloader-text">در حال بارگذاری</span>
-          <span class="preloader-percent" id="preloaderPercent">۰٪</span>
+
+      <div class="intro-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="preloaderProgressRoot">
+        <div class="intro-bar"><div class="intro-fill" id="preloaderFill" style="width:0%"></div></div>
+        <div class="intro-meta">
+          <span>در حال راه‌اندازی سیستم</span>
+          <span class="intro-percent" id="preloaderPercent">۰٪</span>
         </div>
-        <div class="preloader-dots" aria-hidden="true"><span></span><span></span><span></span></div>
       </div>
     </div>
+
+    <div class="intro-vignette" aria-hidden="true"></div>
+    <button type="button" class="intro-skip" id="introSkip">رد کردن</button>
   </div>
 
   <!-- Background Layers -->
@@ -1031,21 +1544,26 @@
       document.body.classList.add('is-loading');
     }catch(e){}
 
-    // ===== PRELOADER — ULTRA PRO (Mobile Flawless) =====
+    // ===== CINEMATIC INTRO CONTROLLER =====
     const preloader = document.getElementById('preloader');
     const fillEl = document.getElementById('preloaderFill');
     const percentEl = document.getElementById('preloaderPercent');
     const progressRoot = document.getElementById('preloaderProgressRoot');
-    let progress = 0;
-    let targetProgress = 0;
-    let rafId = null;
-    let isHiding = false;
+    const skipBtn = document.getElementById('introSkip');
+
+    const INTRO_DURATION = 5000;   // full cinematic runtime
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const introStart = (window.performance && performance.now) ? performance.now() : Date.now();
+
+    let progress = 0, targetProgress = 0, rafId = null, isHiding = false, pageReady = false;
+
+    function nowMs(){ return (window.performance && performance.now) ? performance.now() : Date.now(); }
 
     function toPersianPercent(n){
-      const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+      const d = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
       const s = Math.round(n).toString();
       let out = '';
-      for(let i=0;i<s.length;i++){ out += persianDigits[parseInt(s[i],10)] || s[i]; }
+      for(let i=0;i<s.length;i++){ out += d[parseInt(s[i],10)] || s[i]; }
       return out + '٪';
     }
 
@@ -1057,78 +1575,182 @@
     }
 
     function loop(){
+      // progress tracks the cinematic timeline so the bar always reads true
+      const elapsed = nowMs() - introStart;
+      const timeline = Math.min(100, (elapsed / INTRO_DURATION) * 100);
+      targetProgress = pageReady ? Math.max(timeline, targetProgress) : Math.min(timeline, 96);
       const diff = targetProgress - progress;
-      if(Math.abs(diff) < 0.08){
-        setProgress(targetProgress);
-      }else{
-        setProgress(progress + diff * 0.11);
-      }
-      if(!isHiding || progress < 100){
-        rafId = requestAnimationFrame(loop);
-      }
+      setProgress(Math.abs(diff) < 0.1 ? targetProgress : progress + diff * 0.16);
+      if(!isHiding || progress < 100) rafId = requestAnimationFrame(loop);
     }
     rafId = requestAnimationFrame(loop);
 
-    function startFakeProgress(){
-      targetProgress = 18;
-      setTimeout(function(){ if(!isHiding) targetProgress = 38; }, 220);
-      setTimeout(function(){ if(!isHiding) targetProgress = 64; }, 620);
-      setTimeout(function(){ if(!isHiding) targetProgress = 82; }, 1100);
-      setTimeout(function(){ if(!isHiding) targetProgress = 92; }, 1700);
-    }
-    startFakeProgress();
-
-    function hidePreloader(){
+    function finishIntro(){
       if(isHiding) return;
       isHiding = true;
-      targetProgress = 100;
-      const check = setInterval(function(){
-        if(progress >= 99.2){
-          clearInterval(check);
-          setProgress(100);
-          setTimeout(function(){
-            if(preloader){
-              preloader.classList.add('hidden');
-              preloader.setAttribute('aria-busy','false');
-              preloader.setAttribute('aria-hidden','true');
-            }
-            document.documentElement.classList.remove('is-loading');
-            document.body.classList.remove('is-loading');
-            document.body.style.overflow = '';
-            document.body.style.touchAction = '';
-            document.documentElement.style.overscrollBehavior = '';
-            if(rafId) cancelAnimationFrame(rafId);
-            setTimeout(function(){
-              if(preloader && preloader.parentNode){
-                preloader.style.display = 'none';
-              }
-            }, 900);
-          }, 320);
-        }
-      }, 24);
-      // Hard fallback
+      setProgress(100);
+      if(preloader){
+        preloader.classList.add('intro-exit');
+        preloader.setAttribute('aria-busy','false');
+        preloader.setAttribute('aria-hidden','true');
+      }
+      // release the page as the transition begins — feels instant, looks smooth
+      document.documentElement.classList.remove('is-loading');
+      document.body.classList.remove('is-loading');
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overscrollBehavior = '';
+      if(typeof stopIntroCanvas === 'function') stopIntroCanvas();
+      // wake the site's ambient background now that it's visible
+      try{ window.dispatchEvent(new Event('parsa:intro-done')); }catch(e){}
       setTimeout(function(){
-        if(preloader && !preloader.classList.contains('hidden')){
+        if(preloader){
           preloader.classList.add('hidden');
-          document.documentElement.classList.remove('is-loading');
-          document.body.classList.remove('is-loading');
-          document.body.style.overflow = '';
+          preloader.style.display = 'none';
         }
-      }, 1300);
+        if(rafId) cancelAnimationFrame(rafId);
+      }, 950);
     }
 
-    window.addEventListener('load', function(){
-      setTimeout(function(){
-        hidePreloader();
-      }, 280);
+    // Let the whole 5s story play, then hand off to the site.
+    function scheduleFinish(){
+      const remaining = Math.max(0, INTRO_DURATION - (nowMs() - introStart));
+      setTimeout(finishIntro, remaining + 320);
+    }
+
+    if(reduceMotion){
+      pageReady = true;
+      setTimeout(finishIntro, 700);
+    }else{
+      window.addEventListener('load', function(){ pageReady = true; });
+      // the intro is time-based, not load-based: the user always sees the full reveal
+      scheduleFinish();
+      // hard safety net
+      setTimeout(finishIntro, INTRO_DURATION + 2500);
+    }
+
+    if(skipBtn){
+      skipBtn.addEventListener('click', function(){ pageReady = true; finishIntro(); });
+    }
+    document.addEventListener('keydown', function(e){
+      if(!isHiding && (e.key === 'Escape')){ pageReady = true; finishIntro(); }
     });
 
-    // Absolute fallback for slow / broken load on mobile
-    setTimeout(function(){ hidePreloader(); }, 4200);
+    // ===== INTRO CANVAS — light motes + living circuitry =====
+    let stopIntroCanvas = function(){};
+    (function(){
+      const cv = document.getElementById('introCanvas');
+      if(!cv || reduceMotion) return;
+      const ctx = cv.getContext('2d', { alpha:true });
+      if(!ctx) return;
 
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      setTimeout(function(){ hidePreloader(); }, 700);
-    }
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let W = 0, H = 0, raf = null, running = true;
+      const small = window.innerWidth < 768;
+
+      function resize(){
+        W = cv.clientWidth; H = cv.clientHeight;
+        cv.width = Math.floor(W * dpr); cv.height = Math.floor(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive:true });
+
+      // blue & green light motes drifting through the space
+      const COUNT = small ? 34 : 64;
+      const motes = [];
+      for(let i=0;i<COUNT;i++){
+        const green = Math.random() < .38;
+        motes.push({
+          x: Math.random()*W, y: Math.random()*H,
+          z: Math.random()*.8 + .2,
+          vx: (Math.random()-.5)*.22, vy: (Math.random()-.5)*.22 - .06,
+          r: Math.random()*1.7 + .5,
+          o: Math.random()*.5 + .2,
+          tw: Math.random()*Math.PI*2,
+          c: green ? '0,255,180' : '0,180,255'
+        });
+      }
+
+      // data pulses running along circuit lines toward the centre
+      const lines = [];
+      const LCOUNT = small ? 7 : 12;
+      for(let i=0;i<LCOUNT;i++){
+        lines.push({
+          edge: i % 4,
+          off: Math.random(),
+          t: Math.random(),
+          sp: Math.random()*.0042 + .0016,
+          len: Math.random()*.18 + .1,
+          green: Math.random() < .4
+        });
+      }
+
+      function linePoint(l, t){
+        const cx = W/2, cy = H*0.46;
+        let sx, sy;
+        if(l.edge === 0){ sx = l.off*W; sy = -20; }
+        else if(l.edge === 1){ sx = W+20; sy = l.off*H; }
+        else if(l.edge === 2){ sx = l.off*W; sy = H+20; }
+        else { sx = -20; sy = l.off*H; }
+        // L-shaped routing = circuit-board feel, not straight rays
+        const midX = sx, midY = cy;
+        if(t < .5){ const k = t/.5; return [sx + (midX-sx)*k, sy + (midY-sy)*k]; }
+        const k = (t-.5)/.5; return [midX + (cx-midX)*k, midY + (cy-midY)*k];
+      }
+
+      const t0 = nowMs();
+      function frame(){
+        if(!running) return;
+        const age = (nowMs() - t0) / 1000;
+        // the field fades out as the logo takes over the frame
+        const fieldFade = age < 3 ? 1 : Math.max(0, 1 - (age - 3) / 2.2);
+        ctx.clearRect(0,0,W,H);
+
+        // circuit pulses
+        ctx.lineCap = 'round';
+        for(const l of lines){
+          l.t += l.sp;
+          if(l.t > 1.2){ l.t = -l.len; l.off = Math.random(); l.edge = Math.floor(Math.random()*4); }
+          const head = Math.min(1, Math.max(0, l.t));
+          const tail = Math.min(1, Math.max(0, l.t - l.len));
+          if(head <= tail) continue;
+          const [hx, hy] = linePoint(l, head);
+          const [tx, ty] = linePoint(l, tail);
+          const grad = ctx.createLinearGradient(tx, ty, hx, hy);
+          const rgb = l.green ? '0,255,175' : '0,175,255';
+          grad.addColorStop(0, 'rgba(' + rgb + ',0)');
+          grad.addColorStop(1, 'rgba(' + rgb + ',' + (0.5 * fieldFade).toFixed(3) + ')');
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.1;
+          ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(hx, hy); ctx.stroke();
+          // bright head node
+          ctx.beginPath();
+          ctx.fillStyle = 'rgba(' + rgb + ',' + (0.85 * fieldFade).toFixed(3) + ')';
+          ctx.arc(hx, hy, 1.7, 0, Math.PI*2); ctx.fill();
+        }
+
+        // light motes
+        for(const p of motes){
+          p.x += p.vx * p.z; p.y += p.vy * p.z; p.tw += .045;
+          if(p.x < -10) p.x = W+10; if(p.x > W+10) p.x = -10;
+          if(p.y < -10) p.y = H+10; if(p.y > H+10) p.y = -10;
+          const a = p.o * (0.55 + 0.45*Math.sin(p.tw)) * fieldFade;
+          ctx.beginPath();
+          ctx.fillStyle = 'rgba(' + p.c + ',' + a.toFixed(3) + ')';
+          ctx.arc(p.x, p.y, p.r * p.z, 0, Math.PI*2);
+          ctx.fill();
+        }
+
+        raf = requestAnimationFrame(frame);
+      }
+      raf = requestAnimationFrame(frame);
+
+      stopIntroCanvas = function(){
+        running = false;
+        if(raf) cancelAnimationFrame(raf);
+      };
+    })();
 
     // ===== MOBILE MENU — PREMIUM =====
     const navToggle = document.getElementById('navToggle');
@@ -1257,10 +1879,16 @@
         }
         animFrame = requestAnimationFrame(drawParticles);
       }
-      drawParticles();
+      // Don't burn frames while the cinematic intro covers the screen —
+      // this canvas is invisible until the intro hands over.
+      if(document.documentElement.classList.contains('is-loading')){
+        window.addEventListener('parsa:intro-done', function(){ drawParticles(); }, { once:true });
+      }else{
+        drawParticles();
+      }
       document.addEventListener('visibilitychange', function(){
         if(document.hidden){ cancelAnimationFrame(animFrame); }
-        else { drawParticles(); }
+        else if(!document.documentElement.classList.contains('is-loading')){ drawParticles(); }
       });
     }
 

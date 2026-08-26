@@ -7,8 +7,16 @@
    - If chunk 404s, delete old cache and force network
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v7"; // cache-bust after Pages rebuild
-const APP_SHELL = ["./", "./index.html", "./manifest.json"];
+const CACHE_NAME = "parsa-apps-v8"; // cache-bust: cinematic intro assets
+const APP_SHELL = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  // cinematic intro — precached so the reveal is instant on repeat visits
+  "./assets/brand/intro-logo.png",
+  "./assets/brand/intro-wire.png",
+  "./assets/brand/intro-crown.svg",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
