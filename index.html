@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta name="theme-color" content="#05060e" />
   <meta name="color-scheme" content="dark" />
   <title>پارسا اپس | استودیو نرم‌افزار پرمیوم — Building the future of mobile experiences</title>
@@ -27,10 +27,10 @@
   <link rel="preload" href="/assets/brand/intro-logo.png" as="image" fetchpriority="high" />
   <link rel="preload" href="/assets/brand/intro-wire.png" as="image" fetchpriority="high" />
   <link rel="preload" href="/assets/brand/intro-crown.svg" as="image" />
-  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/assets/fonts/Vazirmatn-Black.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Black.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Parsa Apps","alternateName":"پارسا اپس","url":"https://parsa-apps.github.io","email":"farshadparsa2019@gmail.com","founder":{"@type":"Person","name":"Farshad Parsa"},"description":"Building the future of mobile experiences.","sameAs":["https://t.me/Parsaappsadmin","https://instagram.com/parsa_apps"]}
   </script>
@@ -49,8 +49,8 @@
       --panel:rgba(255,255,255,.04);--panel-bright:rgba(255,255,255,.07);
       --ease:cubic-bezier(.22,1,.36,1);--ease-bounce:cubic-bezier(.34,1.56,.64,1);
     }
-    html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-    body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7;-webkit-font-smoothing:antialiased}
+    html{width:100%;overflow-x:hidden;scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+    body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;width:100%;max-width:100vw;line-height:1.7;-webkit-font-smoothing:antialiased}
     img{max-width:100%;display:block}
     a{color:inherit;text-decoration:none}
     button{border:none;background:none;cursor:pointer;font-family:inherit;color:inherit}
@@ -588,7 +588,8 @@
        painting every frame. Suspending it frees the GPU for the reveal. */
     html.is-loading .aurora-bg,
     html.is-loading .grid-overlay,
-    html.is-loading #particles{visibility:hidden}
+    html.is-loading #particles,
+    html.is-loading .glass-bg{visibility:hidden}
     html.is-loading .aurora-bg .orb{animation-play-state:paused}
 
     /* ===== PARTICLES CANVAS ===== */
@@ -605,6 +606,34 @@
     @keyframes orbFloat2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(80px,-60px) scale(1.08)}66%{transform:translate(-40px,40px) scale(.92)}}
     @keyframes orbFloat3{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,-70px)}}
     @keyframes orbFloat4{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,50px)}}
+
+    /* ===== 3D GLASS PANELS ===== */
+    .glass-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;perspective:1200px}
+    .glass-panel{position:absolute;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.12);transform-style:preserve-3d;will-change:transform}
+    .glass-panel::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 40%,transparent 60%,rgba(124,92,255,.06) 100%);pointer-events:none}
+    .glass-panel::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;border-radius:inherit;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);opacity:.6}
+    .glass-panel.g1{width:220px;height:140px;top:12%;left:-5%;animation:glassFloat1 18s ease-in-out infinite}
+    .glass-panel.g2{width:180px;height:180px;top:55%;right:-4%;animation:glassFloat2 22s ease-in-out infinite}
+    .glass-panel.g3{width:260px;height:100px;bottom:15%;left:8%;animation:glassFloat3 20s ease-in-out infinite}
+    .glass-panel.g4{width:140px;height:140px;top:30%;right:12%;animation:glassFloat4 25s ease-in-out infinite}
+    .glass-panel.g5{width:200px;height:120px;bottom:40%;left:-6%;animation:glassFloat5 19s ease-in-out infinite}
+    .glass-panel .g-shine{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.08) 45%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.08) 55%,transparent 80%);background-size:200% 100%;animation:gShine 6s ease-in-out infinite;pointer-events:none}
+    .glass-panel .g-reflect{position:absolute;top:8px;left:12px;right:30%;height:1px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,.4),transparent);opacity:.5}
+    .glass-panel .g-reflect2{position:absolute;bottom:12px;right:14px;width:40%;height:1px;border-radius:2px;background:linear-gradient(270deg,rgba(124,92,255,.3),transparent);opacity:.4}
+    @keyframes glassFloat1{0%,100%{transform:translate3d(0,0,0) rotateX(6deg) rotateY(-8deg) rotate(2deg)}33%{transform:translate3d(40px,60px,30px) rotateX(10deg) rotateY(-4deg) rotate(4deg)}66%{transform:translate3d(-20px,-30px,15px) rotateX(2deg) rotateY(-12deg) rotate(-1deg)}}
+    @keyframes glassFloat2{0%,100%{transform:translate3d(0,0,0) rotateX(-8deg) rotateY(10deg) rotate(-3deg)}50%{transform:translate3d(-50px,-40px,40px) rotateX(-4deg) rotateY(16deg) rotate(2deg)}}
+    @keyframes glassFloat3{0%,100%{transform:translate3d(0,0,0) rotateX(4deg) rotateY(6deg) rotate(-1deg)}33%{transform:translate3d(-30px,50px,-20px) rotateX(8deg) rotateY(2deg) rotate(3deg)}66%{transform:translate3d(40px,-20px,25px) rotateX(0deg) rotateY(10deg) rotate(-2deg)}}
+    @keyframes glassFloat4{0%,100%{transform:translate3d(0,0,0) rotateX(-6deg) rotateY(-4deg) rotate(1deg)}50%{transform:translate3d(30px,50px,-30px) rotateX(-10deg) rotateY(-8deg) rotate(-3deg)}}
+    @keyframes glassFloat5{0%,100%{transform:translate3d(0,0,0) rotateX(5deg) rotateY(-7deg) rotate(-2deg)}33%{transform:translate3d(35px,-40px,20px) rotateX(9deg) rotateY(-3deg) rotate(1deg)}66%{transform:translate3d(-25px,30px,-15px) rotateX(1deg) rotateY(-11deg) rotate(-4deg)}}
+
+    /* ===== ABOUT LOGO REPEATER ===== */
+    .about-logo-stage{position:relative;width:clamp(140px,28vmin,220px);aspect-ratio:1/1.015;margin:0 auto;transform-style:preserve-3d;perspective:800px}
+    .about-logo-stage .al-halo{position:absolute;left:50%;top:31%;width:140%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(0,170,255,.3),rgba(0,120,255,.12) 34%,transparent 62%),radial-gradient(circle,rgba(0,255,180,.18) 0%,transparent 54%);filter:blur(18px);opacity:0;animation:alHalo 4s ease-in-out infinite}
+    .about-logo-stage .al-wave{position:absolute;left:50%;top:31%;width:115%;aspect-ratio:1;transform:translate(-50%,-50%) scale(.5);border-radius:50%;border:1.5px solid rgba(0,214,255,.5);box-shadow:0 0 18px rgba(0,190,255,.35),inset 0 0 18px rgba(0,190,255,.18);opacity:0;z-index:1;pointer-events:none;animation:alWave 3.2s ease-out infinite}
+    .about-logo-stage .al-wave.w2{animation-delay:1.07s;border-color:rgba(0,255,180,.4);box-shadow:0 0 18px rgba(0,255,170,.28)}
+    .about-logo-stage .al-wave.w3{animation-delay:2.13s}
+    @keyframes alHalo{0%,100%{opacity:0;transform:translate(-50%,-50%) scale(.7)}15%{opacity:.6;transform:translate(-50%,-50%) scale(.95)}30%{opacity:.8;transform:translate(-50%,-50%) scale(1.08)}50%{opacity:.5;transform:translate(-50%,-50%) scale(.92)}70%{opacity:.7;transform:translate(-50%,-50%) scale(1.04)}85%{opacity:.3;transform:translate(-50%,-50%) scale(.85)}}
+    @keyframes alWave{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}15%{opacity:.6}100%{opacity:0;transform:translate(-50%,-50%) scale(1.35)}}
 
     /* ===== GRID OVERLAY ===== */
     .grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -631,6 +660,12 @@
     .nav-cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px -8px rgba(0,198,255,.5)}
     .nav-cta.nav-cta-mobile{display:none}
     @media(max-width:899px){.nav-cta.nav-cta-desktop{display:none}.nav-cta.nav-cta-mobile{display:inline-flex}}
+
+    /* Language Switcher */
+    .lang-switcher{display:flex;align-items:center;gap:2px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);padding:2px;flex-shrink:0}
+    .lang-btn{padding:3px 7px;border-radius:8px;font-size:.68rem;font-weight:800;line-height:1;color:rgba(255,255,255,.45);transition:all .3s var(--ease);cursor:pointer;font-family:inherit}
+    .lang-btn:hover{color:rgba(255,255,255,.75)}
+    .lang-btn.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;box-shadow:0 0 14px rgba(124,92,255,.45)}
 
     /* Hamburger */
     .nav-toggle{
@@ -914,6 +949,8 @@
     /* ===== ABOUT SECTION ===== */
     .about-grid{display:grid;gap:48px;align-items:center}
     @media(min-width:1024px){.about-grid{grid-template-columns:1fr 1fr}}
+    .about-logoside{display:flex;flex-direction:column;align-items:center;gap:20px}
+    @media(max-width:640px){.about-logoside{gap:14px}}
     .about-text h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;line-height:1.3}
     .about-text p{margin-top:16px;color:var(--muted);line-height:2}
     .about-text .btns{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
@@ -963,6 +1000,7 @@
     @media(max-width:768px){
       .aurora-bg .orb{display:none}
       .grid-overlay{display:none}
+      .glass-panel{display:none}
       .phone-frame{width:230px;height:460px;border-radius:36px}
     }
     @media(prefers-reduced-motion:reduce){
@@ -1031,7 +1069,7 @@
 </head>
 <body>
   <!-- ===== CINEMATIC INTRO — Parsa Apps Logo Reveal ===== -->
-  <div id="preloader" aria-live="polite" aria-busy="true" aria-label="در حال بارگذاری پارسا اپس"
+  <div id="preloader" aria-live="polite" aria-busy="true" aria-label="در حال بارگذاری پارسا اپس" data-i18n-aria="preloader.aria"
        style="--logo:url('/assets/brand/intro-logo.png');--wire:url('/assets/brand/intro-wire.png')">
 
     <!-- 0–1s : the cyber void wakes up -->
@@ -1137,39 +1175,51 @@
       <div class="intro-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="preloaderProgressRoot">
         <div class="intro-bar"><div class="intro-fill" id="preloaderFill" style="width:0%"></div></div>
         <div class="intro-meta">
-          <span>در حال راه‌اندازی سیستم</span>
+          <span data-i18n="preloader.label">در حال راه‌اندازی سیستم</span>
           <span class="intro-percent" id="preloaderPercent">۰٪</span>
         </div>
       </div>
     </div>
 
     <div class="intro-vignette" aria-hidden="true"></div>
-    <button type="button" class="intro-skip" id="introSkip">رد کردن</button>
+    <button type="button" class="intro-skip" id="introSkip" data-i18n="preloader.skip">رد کردن</button>
   </div>
 
   <!-- Background Layers -->
   <div class="aurora-bg">
     <div class="orb"></div><div class="orb"></div><div class="orb"></div><div class="orb"></div>
   </div>
+  <div class="glass-bg" aria-hidden="true">
+    <div class="glass-panel g1"><div class="g-shine"></div><div class="g-reflect"></div><div class="g-reflect2"></div></div>
+    <div class="glass-panel g2"><div class="g-shine"></div><div class="g-reflect"></div><div class="g-reflect2"></div></div>
+    <div class="glass-panel g3"><div class="g-shine"></div><div class="g-reflect"></div><div class="g-reflect2"></div></div>
+    <div class="glass-panel g4"><div class="g-shine"></div><div class="g-reflect"></div><div class="g-reflect2"></div></div>
+    <div class="glass-panel g5"><div class="g-shine"></div><div class="g-reflect"></div><div class="g-reflect2"></div></div>
+  </div>
   <div class="grid-overlay"></div>
   <canvas id="particles"></canvas>
 
   <!-- Navigation -->
-  <nav id="mainNav" aria-label="ناوبری اصلی">
+  <nav id="mainNav" aria-label="ناوبری اصلی" data-i18n-aria="nav.ariaLabel">
     <div class="container nav-inner">
-      <a href="#" class="nav-logo" aria-label="Parsa Apps - صفحه اصلی">
+      <a href="#hero" class="nav-logo" aria-label="Parsa Apps - صفحه اصلی" data-i18n-aria="nav.logoLabel">
         <img src="/assets/logo.png" alt="Parsa Apps" width="42" height="42" />
         <span>Parsa Apps</span>
       </a>
-      <div class="nav-links" role="navigation" aria-label="منوی دسکتاپ">
-        <a href="#about">درباره ما</a>
-        <a href="#apps">اپلیکیشن‌ها</a>
-        <a href="#process">فرآیند</a>
-        <a href="#skills">مهارت‌ها</a>
-        <a href="#projects">پروژه‌ها</a>
-        <a href="#contact" class="nav-cta nav-cta-desktop">تماس با ما</a>
+      <div class="nav-links" role="navigation" aria-label="منوی دسکتاپ" data-i18n-aria="nav.desktopLabel">
+        <a href="#about" data-i18n="nav.about">درباره ما</a>
+        <a href="#apps" data-i18n="nav.apps">اپلیکیشن‌ها</a>
+        <a href="#process" data-i18n="nav.process">فرآیند</a>
+        <a href="#skills" data-i18n="nav.skills">مهارت‌ها</a>
+        <a href="#projects" data-i18n="nav.projects">پروژه‌ها</a>
+        <a href="#contact" class="nav-cta nav-cta-desktop" data-i18n="nav.contactDesktop">تماس با ما</a>
       </div>
       <div class="nav-actions">
+        <div class="lang-switcher" role="radiogroup" aria-label="انتخاب زبان">
+          <button class="lang-btn" data-lang="fa" role="radio" aria-checked="true" title="فارسی">FA</button>
+          <button class="lang-btn" data-lang="en" role="radio" aria-checked="false" title="English">EN</button>
+          <button class="lang-btn" data-lang="ar" role="radio" aria-checked="false" title="العربية">AR</button>
+        </div>
         <a href="#contact" class="nav-cta nav-cta-mobile">تماس</a>
         <button class="nav-toggle" id="navToggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="mobileMenu">
           <span></span><span></span><span></span>
@@ -1179,7 +1229,7 @@
   </nav>
 
   <!-- Mobile Menu — Premium Drawer -->
-  <div id="mobileMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="منوی موبایل">
+  <div id="mobileMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="منوی موبایل" data-i18n-aria="nav.ariaLabel">
     <div class="mobile-backdrop" id="mobileBackdrop"></div>
     <div class="mobile-drawer" role="document">
       <div class="mobile-head">
@@ -1190,16 +1240,16 @@
         <button class="mobile-close" id="mobileClose" aria-label="بستن منو">✕</button>
       </div>
       <nav class="mobile-links" aria-label="منوی موبایل">
-        <a href="#about"><span class="m-icon">💡</span><span class="m-label"><span>درباره ما</span><small>About us</small></span><span class="m-arrow">‹</span></a>
-        <a href="#apps"><span class="m-icon">📱</span><span class="m-label"><span>اپلیکیشن‌ها</span><small>Our apps</small></span><span class="m-arrow">‹</span></a>
-        <a href="#process"><span class="m-icon">⚙️</span><span class="m-label"><span>فرآیند توسعه</span><small>Process</small></span><span class="m-arrow">‹</span></a>
-        <a href="#skills"><span class="m-icon">🎯</span><span class="m-label"><span>مهارت‌ها</span><small>Skills</small></span><span class="m-arrow">‹</span></a>
-        <a href="#projects"><span class="m-icon">🚀</span><span class="m-label"><span>پروژه‌ها</span><small>Projects</small></span><span class="m-arrow">‹</span></a>
+        <a href="#about"><span class="m-icon">💡</span><span class="m-label"><span data-i18n="nav.about">درباره ما</span><small>About us</small></span><span class="m-arrow">‹</span></a>
+        <a href="#apps"><span class="m-icon">📱</span><span class="m-label"><span data-i18n="nav.apps">اپلیکیشن‌ها</span><small>Our apps</small></span><span class="m-arrow">‹</span></a>
+        <a href="#process"><span class="m-icon">⚙️</span><span class="m-label"><span data-i18n="nav.process">فرآیند توسعه</span><small>Process</small></span><span class="m-arrow">‹</span></a>
+        <a href="#skills"><span class="m-icon">🎯</span><span class="m-label"><span data-i18n="nav.skills">مهارت‌ها</span><small>Skills</small></span><span class="m-arrow">‹</span></a>
+        <a href="#projects"><span class="m-icon">🚀</span><span class="m-label"><span data-i18n="nav.projects">پروژه‌ها</span><small>Projects</small></span><span class="m-arrow">‹</span></a>
         <a href="#developer"><span class="m-icon">👑</span><span class="m-label"><span>توسعه‌دهنده</span><small>Developer</small></span><span class="m-arrow">‹</span></a>
       </nav>
       <div class="mobile-divider"></div>
       <div class="mobile-footer">
-        <a href="#contact" class="mobile-cta">
+        <a href="#contact" class="mobile-cta" data-i18n="nav.contactMobile">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           تماس با ما
         </a>
@@ -1217,27 +1267,27 @@
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-eyebrow">
-          <span class="eyebrow"><span class="dot"></span> استودیو نرم‌افزار پرمیوم</span>
+          <span class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">استودیو نرم‌افزار پرمیوم</span></span>
         </div>
         <h1 class="hero-title">
-          ساخت آینده‌ی
+          <span data-i18n="hero.title1">ساخت آینده‌ی</span>
           <br/>
-          <span class="gradient-text">تجربه‌های موبایل</span>
+          <span class="gradient-text" data-i18n="hero.title2">تجربه‌های موبایل</span>
         </h1>
-        <p class="hero-sub">
+        <p class="hero-sub" data-i18n="hero.sub">
           پارسا اپس، استودیوی توسعه نرم‌افزار حرفه‌ای — ساخت اپلیکیشن‌های اندروید و فلاتر با مهندسی دقیق، طراحی مدرن و کیفیت جهانی.
         </p>
         <div class="hero-btns">
-          <a href="#apps" class="btn btn-primary">
+          <a href="#apps" class="btn btn-primary" data-i18n="hero.cta1">
             مشاهده محصولات
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
-          <a href="#contact" class="btn btn-ghost">تماس با ما</a>
+          <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta2">تماس با ما</a>
         </div>
         <div class="hero-stats">
-          <div><span class="stat-num counter" data-target="4">0</span><div class="stat-label">اپلیکیشن</div></div>
-          <div><span class="stat-num counter" data-target="8">0</span><div class="stat-label">مهارت تخصصی</div></div>
-          <div><span class="stat-num counter" data-target="100" data-suffix="%">0</span><div class="stat-label">کیفیت کد</div></div>
+          <div><span class="stat-num counter" data-target="4">0</span><div class="stat-label" data-i18n="stat.apps">اپلیکیشن</div></div>
+          <div><span class="stat-num counter" data-target="8">0</span><div class="stat-label" data-i18n="stat.skills">مهارت تخصصی</div></div>
+          <div><span class="stat-num counter" data-target="100" data-suffix="%">0</span><div class="stat-label" data-i18n="stat.quality">کیفیت کد</div></div>
         </div>
       </div>
 
@@ -1271,7 +1321,7 @@
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">
       <div class="scroll-mouse"></div>
-      <span>اسکرول کنید</span>
+      <span data-i18n="scroll.label">اسکرول کنید</span>
     </div>
   </section>
 
@@ -1291,11 +1341,11 @@
 
   <div class="section-divider"></div>
 
-  <!-- ABOUT -->
+  <!-- ABOUT - CINEMATIC -->
   <section class="section-pad" id="about">
     <div class="container about-grid">
       <div class="about-text reveal-left">
-        <span class="eyebrow"><span class="dot"></span> درباره ما</span>
+        <span class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">استودیو نرم‌افزار پرمیوم</span></span>
         <h2>ما خلاقیت و <span class="gradient-text">مهندسی دقیق</span> را ترکیب می‌کنیم</h2>
         <p>پارسا اپس یک استودیوی تخصصی توسعه نرم‌افزار است که با تمرکز بر کیفیت، تجربه کاربری مدرن و فناوری‌های روز دنیا، اپلیکیشن‌هایی می‌سازد که کاربران عاشقشان می‌شوند.</p>
         <div class="btns">
@@ -1303,11 +1353,20 @@
           <a href="#apps" class="btn btn-primary">مشاهده محصولات</a>
         </div>
       </div>
-      <div class="grid-2 reveal-right" style="gap:16px">
-        <div class="glass-card reveal" data-spotlight style="transition-delay:.1s"><span class="icon">💡</span><h3>خلاقیت</h3><p>ایده‌های نو برای دنیای دیجیتال</p></div>
-        <div class="glass-card reveal" data-spotlight style="transition-delay:.2s"><span class="icon">⚙️</span><h3>مهندسی دقیق</h3><p>کدنویسی تمیز، تست و استانداردهای کیفیت</p></div>
-        <div class="glass-card reveal" data-spotlight style="transition-delay:.3s"><span class="icon">🎨</span><h3>طراحی</h3><p>ساخت تجربه‌های زیبا و کاربردی</p></div>
-        <div class="glass-card reveal" data-spotlight style="transition-delay:.4s"><span class="icon">🚀</span><h3>نوآوری</h3><p>به‌کارگیری فناوری‌های روز دنیا</p></div>
+      <div class="about-logoside reveal-right" style="display:flex;flex-direction:column;align-items:center;gap:20px">
+        <div class="about-logo-stage" style="--logo:url('/assets/brand/intro-logo.png')">
+          <div class="al-halo"></div>
+          <div class="al-wave"></div>
+          <div class="al-wave w2"></div>
+          <div class="al-wave w3"></div>
+          <div class="intro-full" style="position:absolute;inset:0;background:var(--logo) center/contain no-repeat;opacity:1;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))"></div>
+          <div class="intro-sheen" style="position:absolute;inset:0;z-index:4;pointer-events:none;-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat;background:linear-gradient(104deg,transparent 34%,rgba(255,255,255,.10) 44%,rgba(255,255,255,.72) 50%,rgba(190,240,255,.34) 56%,transparent 66%);background-size:280% 100%;background-position:170% 0;mix-blend-mode:screen;opacity:1;animation:sheenLoop 4.6s linear infinite"></div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+          <div class="chip" style="font-size:.75rem;padding:6px 14px">⚡ Flutter & Dart</div>
+          <div class="chip" style="font-size:.75rem;padding:6px 14px">👑 Farshad Parsa</div>
+          <div class="chip" style="font-size:.75rem;padding:6px 14px">🎯 Clean Code</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1530,11 +1589,60 @@
         <a href="https://instagram.com/parsa_apps" target="_blank" rel="noopener" title="Instagram">📷</a>
         <a href="mailto:farshadparsa2019@gmail.com" title="Email">✉️</a>
       </div>
-      <p>© ۱۴۰۴ پارسا اپس — تمامی حقوق محفوظ است. ساخته شده با ❤️ توسط فرشاد پارسا</p>
+      <p data-i18n="footer.copyright">© ۱۴۰۴ پارسا اپس — تمامی حقوق محفوظ است. ساخته شده با ❤️ توسط فرشاد پارسا</p>
     </div>
   </footer>
 
   <script>
+  // ===== MULTI-LANGUAGE SYSTEM (fa / en / ar) =====
+  (function(){
+    const LS_KEY = 'parsa_lang';
+    const LANGS = {fa:{label:'FA',dir:'rtl',htmlLang:'fa'},en:{label:'EN',dir:'ltr',htmlLang:'en'},ar:{label:'AR',dir:'rtl',htmlLang:'ar'}};
+    const i18n = {
+      'nav.about':{fa:'درباره ما',en:'About',ar:'حول'},
+      'nav.apps':{fa:'اپلیکیشن‌ها',en:'Apps',ar:'التطبيقات'},
+      'nav.process':{fa:'فرآیند',en:'Process',ar:'العملية'},
+      'nav.skills':{fa:'مهارت‌ها',en:'Skills',ar:'المهارات'},
+      'nav.projects':{fa:'پروژه‌ها',en:'Projects',ar:'المشاريع'},
+      'nav.contactDesktop':{fa:'تماس با ما',en:'Contact Us',ar:'اتصل بنا'},
+      'nav.contactMobile':{fa:'تماس',en:'Contact',ar:'اتصال'},
+      'nav.ariaLabel':{fa:'ناوبری اصلی',en:'Main navigation',ar:'التنقل الرئيسي'},
+      'nav.desktopLabel':{fa:'منوی دسکتاپ',en:'Desktop menu',ar:'قائمة سطح المكتب'},
+      'nav.logoLabel':{fa:'Parsa Apps - صفحه اصلی',en:'Parsa Apps - Home',ar:'Parsa Apps - الرئيسية'},
+      'hero.eyebrow':{fa:'استودیو نرم‌افزار پرمیوم',en:'Premium Software Studio',ar:'استوديو برمجيات فاخر'},
+      'hero.title1':{fa:'ساخت آینده‌ی',en:'Building the',ar:'بناء'},
+      'hero.title2':{fa:'تجربه‌های موبایل',en:'Future of Mobile',ar:'مستقبل الجوال'},
+      'hero.sub':{fa:'پارسا اپس، استودیوی توسعه نرم‌افزار حرفه‌ای — ساخت اپلیکیشن‌های اندروید و فلاتر با مهندسی دقیق، طراحی مدرن و کیفیت جهانی.',en:'Parsa Apps — Professional Android & Flutter development powered by modern technology and clean engineering.',ar:'بارسا أبز — تطوير احترافي لأندرويد وفلتر مدعوم بأحدث التقنيات والهندسة الدقيقة.'},
+      'hero.cta1':{fa:'مشاهده محصولات',en:'View Products',ar:'عرض المنتجات'},
+      'hero.cta2':{fa:'تماس با ما',en:'Contact Us',ar:'اتصل بنا'},
+      'stat.apps':{fa:'اپلیکیشن',en:'Apps',ar:'تطبيقات'},
+      'stat.skills':{fa:'مهارت تخصصی',en:'Expert Skills',ar:'مهارات'},
+      'stat.quality':{fa:'کیفیت کد',en:'Code Quality',ar:'جودة الكود'},
+      'scroll.label':{fa:'اسکرول کنید',en:'Scroll down',ar:'اسفل'},
+      'preloader.label':{fa:'در حال راه‌اندازی سیستم',en:'Booting system',ar:'جارٍ تشغيل النظام'},
+      'preloader.skip':{fa:'رد کردن',en:'Skip',ar:'تخطي'},
+      'preloader.aria':{fa:'در حال بارگذاری پارسا اپس',en:'Loading Parsa Apps',ar:'جارٍ تحميل بارسا أبز'},
+      'footer.copyright':{fa:'© ۱۴۰۴ پارسا اپس — تمامی حقوق محفوظ است. ساخته شده با ❤️ توسط فرشاد پارسا',en:'© 2026 Parsa Apps — All rights reserved. Made with ❤️ by Farshad Parsa',ar:'© ٢٠٢٦ بارسا أبز — جميع الحقوق محفوظة. صُنع بـ ❤️ بواسطة فرشاد بارسا'},
+    };
+    function tt(key,lang){const m=i18n[key];return m?m[lang]||m.fa:''}
+    function getSavedLang(){try{var l=localStorage.getItem(LS_KEY);if(l==='en'||l==='ar'||l==='fa')return l}catch(e){}return'fa'}
+    function applyLang(lang){
+      document.documentElement.lang=LANGS[lang].htmlLang;
+      document.documentElement.dir=LANGS[lang].dir;
+      try{localStorage.setItem(LS_KEY,lang)}catch(e){}
+      document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);b.setAttribute('aria-checked',b.dataset.lang===lang?'true':'false')});
+      document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.dataset.i18n;var txt=tt(k,lang);if(txt){if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){el.placeholder=txt}else{el.textContent=txt}}});
+      // Translate placeholder attributes
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){var k=el.dataset.i18nPlaceholder;var txt=tt(k,lang);if(txt)el.placeholder=txt});
+      // Translate aria-label
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el){var k=el.dataset.i18nAria;var txt=tt(k,lang);if(txt)el.setAttribute('aria-label',txt)});
+    }
+    var currentLang=getSavedLang();applyLang(currentLang);
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){var l=this.dataset.lang;if(l!==currentLang){currentLang=l;applyLang(l)}});
+    });
+  })();
+
   (function(){
     'use strict';
 
