@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#05060e" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>پارسا اپس | استودیو نرم‌افزار پرمیوم — Building the future of mobile experiences</title>
+    <meta
+      name="description"
+      content="پارسا اپس، استودیوی نرم‌افزار فرشاد پارسا — ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر با مهندسی دقیق و طراحی مدرن. سازنده جزیره فندقی."
+    />
+    <meta
+      name="keywords"
+      content="پارسا اپس, فلاتر, اندروید, طراحی اپلیکیشن, جزیره فندقی, کارتونیا, ضفحه, استودیو نرم‌افزار, Parsa Apps, Flutter, Android"
+    />
+    <link rel="canonical" href="https://parsa-apps.github.io/" />
+
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Parsa Apps" />
+    <meta property="og:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
+    <meta property="og:description" content="Building the future of mobile experiences — ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر با مهندسی دقیق و طراحی مدرن." />
+    <meta property="og:image" content="/assets/images/og-cover.jpg" />
+    <meta property="og:url" content="https://parsa-apps.github.io/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="پارسا اپس | استودیو نرم‌افزار پرمیوم" />
+    <meta name="twitter:description" content="Building the future of mobile experiences." />
+    <meta name="twitter:image" content="/assets/images/og-cover.jpg" />
+
+    <!-- Fonts (self-hosted Vazirmatn) -->
+    <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/Vazirmatn-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/Vazirmatn-Black.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Parsa Apps",
+        "alternateName": "پارسا اپس",
+        "url": "https://parsa-apps.github.io",
+        "email": "farshadparsa2019@gmail.com",
+        "founder": { "@type": "Person", "name": "Farshad Parsa" },
+        "description": "Building the future of mobile experiences. Professional Android & Flutter development powered by modern technology and clean engineering.",
+        "sameAs": [
+          "https://t.me/Parsaappsadmin",
+          "https://instagram.com/parsa_apps"
+        ]
+      }
+    </script>
+    <!-- Paint the dark canvas before any CSS arrives (no white flash) + emergency fallback styles -->
+    <style>
+      html,
+      body {
+        background: #05060e;
+      }
+      /* If JS fails, ensure root is visible */
+      #root:empty {
+        min-height: 100vh;
+        background: #05060e;
+      }
+      /* Emergency kill-switch: after 8s, any stuck preloader overlay is forced hidden via JS, but also via CSS animation as last resort */
+      @keyframes parsa-emergency-hide {
+        0% { opacity: 1; visibility: visible; }
+        99% { opacity: 1; visibility: visible; }
+        100% { opacity: 0; visibility: hidden; pointer-events: none; }
+      }
+      .parsa-emergency-guard {
+        animation: parsa-emergency-hide 0.6s forwards;
+        animation-delay: 8s;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-hS4BqW2E.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/motion-B1NiK7Pw.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-gEQQO4JK.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>window.__PARSA_NOT_FOUND__ = location.pathname;</script>
+    <script>
+      // Robust boot guards: multiple layers to prevent permanent black screen
+      (function () {
+        var BOOT_MSG =
+          '<div dir="rtl" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#05060e;color:#fff;font-family:system-ui,sans-serif;text-align:center;padding:24px">' +
+          '<img src="/assets/logo.png" alt="Parsa Apps" width="84" height="84" onerror="this.style.display=\'none\'" />' +
+          '<p style="font-size:18px;font-weight:800;margin:0">Parsa Apps</p>' +
+          '<p style="color:rgba(255,255,255,.6);font-size:14px;margin:0">متأسفانه سایت بارگذاری نشد. لطفاً صفحه را دوباره بارگذاری کنید.</p>' +
+          '<button onclick="location.reload()" style="margin-top:6px;padding:10px 22px;border:0;border-radius:12px;background:linear-gradient(90deg,#7c5cff,#00c6ff);color:#fff;font-weight:700;font-size:14px;cursor:pointer">بارگذاری مجدد</button>' +
+          "</div>";
+
+        function showFallbackIfEmpty() {
+          var root = document.getElementById("root");
+          if (root && root.children.length === 0) {
+            root.innerHTML = BOOT_MSG;
+            return true;
+          }
+          return false;
+        }
+
+        function killStuckOverlays() {
+          // If root has content but a fixed z-[200] overlay is still stuck (preloader didn't unmount)
+          var root = document.getElementById("root");
+          if (!root) return;
+          // After 7.5s, if we still see a z-[200] overlay and root has more than 1 child or main content exists, force hide overlays
+          var overlays = document.querySelectorAll('[class*="z-[200]"]');
+          if (overlays.length > 0) {
+            // Check if main site content exists behind overlay
+            var hasMain = document.querySelector("main") || document.querySelector("header");
+            if (hasMain) {
+              overlays.forEach(function (el) {
+                el.style.opacity = "0";
+                el.style.pointerEvents = "none";
+                setTimeout(function () {
+                  el.style.display = "none";
+                }, 800);
+              });
+            }
+          }
+        }
+
+        // Guard 1: 6s - if React never mounted, show fallback
+        setTimeout(showFallbackIfEmpty, 6000);
+        // Guard 2: 8s - second chance
+        setTimeout(showFallbackIfEmpty, 8500);
+        // Guard 3: 7.5s - if overlay stuck but content exists, kill overlay
+        setTimeout(killStuckOverlays, 7500);
+        setTimeout(killStuckOverlays, 9500);
+
+        // Global error listener: if chunk load fails, show fallback quickly
+        window.addEventListener("error", function (e) {
+          var msg = (e && e.message) || "";
+          if (msg.indexOf("Loading chunk") !== -1 || msg.indexOf("Failed to fetch") !== -1 || msg.indexOf("Importing a module") !== -1) {
+            setTimeout(showFallbackIfEmpty, 1000);
+          }
+        });
+
+        window.addEventListener("unhandledrejection", function (ev) {
+          var reason = ev && ev.reason ? String(ev.reason) : "";
+          if (reason.indexOf("Failed to fetch") !== -1 || reason.indexOf("Loading chunk") !== -1 || reason.indexOf("Import") !== -1) {
+            setTimeout(showFallbackIfEmpty, 1200);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
