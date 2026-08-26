@@ -7,7 +7,6 @@ const channels = [
   { icon: "📩", title: "ایمیل", value: CONTACT.email, href: `mailto:${CONTACT.email}`, note: "همکاری و پیشنهادهای تجاری" },
   { icon: "✈️", title: "تلگرام", value: CONTACT.telegramHandle, href: CONTACT.telegram, note: "پاسخ سریع در کمتر از ۲۴ ساعت" },
   { icon: "📸", title: "اینستاگرام", value: CONTACT.instagramHandle, href: CONTACT.instagram, note: "پیج رسمی پارسا اپس" },
-  { icon: "🐙", title: "گیت‌هاب", value: "github.com/Parsa-apps", href: CONTACT.github, note: "مخزن پروژه‌ها و ایده‌ها" },
 ];
 
 export default function Contact() {

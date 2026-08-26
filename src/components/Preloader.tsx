@@ -104,37 +104,27 @@ export default function Preloader({ onFinish }: { onFinish: () => void }) {
             <div className="relative">
               {/* orbit rings */}
               <motion.span
-                className="absolute -inset-4 rounded-full border border-neon-violet/30"
+                className="absolute -inset-6 rounded-full border border-neon-violet/30"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
                 style={{ borderTopColor: "#7c5cff", borderTopWidth: 2 }}
               />
               <motion.span
-                className="absolute -inset-8 rounded-full border border-neon-cyan/20"
+                className="absolute -inset-10 rounded-full border border-neon-cyan/25"
                 animate={{ rotate: -360 }}
                 transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
                 style={{ borderBottomColor: "#00c6ff", borderBottomWidth: 2 }}
               />
 
               <motion.img
-                src="/assets/logo.svg"
+                src="/assets/logo.png"
                 alt="پارسا اپس"
-                width={132}
-                height={132}
-                className="relative drop-shadow-[0_0_34px_rgba(245,200,87,0.55)]"
-                initial={{ opacity: 0, y: 20, scale: 0.7 }}
-                animate={{ opacity: 1, y: 0, scale: 1, rotate: 360 }}
-                transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-              />
-              <motion.img
-                src="/assets/brand/parsa-main-crown.svg"
-                alt=""
-                width={96}
-                height={45}
-                className="absolute -top-9 left-1/2 -translate-x-1/2 drop-shadow-[0_0_18px_rgba(245,200,87,0.8)]"
-                initial={{ opacity: 0, y: -24, scale: 0.6 }}
+                width={140}
+                height={140}
+                className="relative drop-shadow-[0_0_40px_rgba(0,198,255,0.5)]"
+                initial={{ opacity: 0, y: 16, scale: 0.75 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: 0.9, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
 

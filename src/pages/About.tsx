@@ -17,16 +17,21 @@ export default function About() {
       <section className="section-shell pb-8">
         <div className="container-px text-center">
           <Reveal>
-            <span className="eyebrow">👨‍💻 درباره توسعه‌دهنده</span>
-            <h1 className="mt-6 flex items-center justify-center gap-4 text-4xl font-black sm:text-5xl">
-              <span>فرشاد پارسا</span>
+            <div className="mx-auto mb-6 flex justify-center">
               <motion.img
-                src="/assets/brand/parsa-main-crown.svg"
-                alt="تاج طلایی"
-                width={72}
-                height={34}
-                className="inline-block animate-float drop-shadow-[0_0_20px_rgba(245,200,87,0.8)]"
+                src="/assets/logo.png"
+                alt="لوگوی پارسا اپس"
+                width={120}
+                height={120}
+                className="drop-shadow-[0_0_35px_rgba(0,198,255,0.45)] object-contain"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8 }}
               />
+            </div>
+            <span className="eyebrow">👨‍💻 درباره توسعه‌دهنده و استودیو</span>
+            <h1 className="mt-4 flex items-center justify-center gap-4 text-4xl font-black sm:text-5xl">
+              <span>فرشاد پارسا</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl leading-8 text-white/60">
               بنیان‌گذار و برنامه‌نویس ارشد پارسا اپس. من با سخت‌گیری مهندسی، کدنویسی تمیز و تمرکز روی جزئیات،
@@ -144,6 +149,13 @@ export default function About() {
           <Reveal>
             <div className="card relative overflow-hidden p-8 text-center sm:p-12">
               <div className="absolute inset-0 grid-bg" />
+              <motion.img
+                src="/assets/logo.png"
+                alt="Parsa Apps"
+                width={84}
+                height={84}
+                className="relative mx-auto mb-5 drop-shadow-[0_0_24px_rgba(0,198,255,0.4)] animate-float object-contain"
+              />
               <h2 className="relative text-3xl font-black">بیایید با هم بسازیم</h2>
               <p className="relative mx-auto mt-4 max-w-xl leading-8 text-white/60">
                 سوال، پیشنهاد یا ایده همکاری دارید؟ پیام شما مستقیم به من می‌رسد.

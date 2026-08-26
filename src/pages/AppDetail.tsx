@@ -171,24 +171,46 @@ export default function AppDetail() {
       </section>
 
       {/* video */}
-      {app.video && (
+      {((app.videos && app.videos.length > 0) || app.video) && (
         <section className="section-shell">
           <div className="container-px">
-            <SectionHeader eyebrow="🎬 تریلر" title={<>ویدئوی معرفی <span className="text-gradient">{app.name}</span></>} />
-            <Reveal className="mt-10">
-              <div className="card overflow-hidden p-2">
-                <video
-                  className="aspect-[9/16] w-full rounded-2xl object-cover sm:mx-auto sm:max-w-sm"
-                  poster={app.cover}
-                  controls
-                  playsInline
-                  preload="metadata"
-                >
-                  <source src={app.video} type="video/mp4" />
-                  مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
-                </video>
-              </div>
-            </Reveal>
+            <SectionHeader
+              eyebrow="🎬 ویدئوها"
+              title={<>ویدئوهای معرفی و بررسی <span className="text-gradient">{app.name}</span></>}
+              subtitle="تماشای تریلر رسمی و ویدئوی بررسی کامل امکانات و محیط برنامه."
+            />
+            <div className="mx-auto mt-12 flex max-w-3xl flex-col gap-10">
+              {(app.videos && app.videos.length > 0
+                ? app.videos
+                : [{ title: `ویدئوی معرفی ${app.name}`, src: app.video!, poster: app.cover }]
+              ).map((v, i) => (
+                <Reveal key={v.src} delay={i * 0.12}>
+                  <div className="card overflow-hidden p-5 sm:p-7">
+                    <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="grid h-8 w-8 place-items-center rounded-xl bg-neon-cyan/20 text-xs font-black text-neon-cyan">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <h3 className="text-lg font-black text-white">{v.title}</h3>
+                      </div>
+                      {v.subtitle && <p className="text-xs text-white/50">{v.subtitle}</p>}
+                    </div>
+                    <div className="overflow-hidden rounded-2xl bg-black/80 shadow-2xl ring-1 ring-white/10">
+                      <video
+                        className="mx-auto max-h-[540px] w-full rounded-2xl object-contain"
+                        poster={v.poster ?? app.cover}
+                        controls
+                        playsInline
+                        preload="metadata"
+                      >
+                        <source src={v.src} type="video/mp4" />
+                        مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
+                      </video>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
       )}

@@ -24,7 +24,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
       return (
         <div className="grid min-h-screen place-items-center px-6 text-center">
           <div>
-            <img src="/assets/logo.svg" alt="" width={88} height={88} className="mx-auto" />
+            <img src="/assets/logo.png" alt="Parsa Apps" width={88} height={88} className="mx-auto object-contain drop-shadow-[0_0_24px_rgba(0,198,255,0.4)]" />
             <h1 className="mt-6 text-2xl font-black text-white">مشکلی در نمایش صفحه پیش آمد</h1>
             <p className="mt-3 text-white/55">لطفاً صفحه را دوباره بارگذاری کنید.</p>
             <Link to="/" className="btn btn-primary mt-6" onClick={() => this.setState({ hasError: false })}>

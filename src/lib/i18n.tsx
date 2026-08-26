@@ -25,7 +25,7 @@ const dict: Dict = {
     en: "Professional Android and Flutter development powered by modern technology and clean engineering.",
     ar: "تطوير احترافي لتطبيقات أندرويد وفلوتن مدعوم بأحدث التقنيات والهندسة الدقيقة.",
   },
-  "hero.cta.primary": { fa: "اکتشاف اپلیکیشن‌ها", en: "Explore Applications", ar: "استكشاف التطبيقات" },
+  "hero.cta.primary": { fa: "لیست برنامه‌ها", en: "Explore Applications", ar: "استكشاف التطبيقات" },
   "hero.cta.secondary": { fa: "ارتباط با توسعه‌دهنده", en: "Contact Developer", ar: "تواصل مع المطور" },
 
   "brand.tagline": { fa: "Building the future of mobile experiences", en: "Building the future of mobile experiences", ar: "بناء مستقبل تجارب الجوال" },

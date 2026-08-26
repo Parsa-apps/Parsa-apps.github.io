@@ -62,7 +62,7 @@ export default function Navbar() {
           >
             <Link to="/" className="group flex items-center gap-3" aria-label="پارسا اپس">
               <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-xl bg-white/5 ring-1 ring-white/15">
-                <img src="/assets/logo.svg" alt="" width={44} height={44} className="transition-transform duration-500 group-hover:scale-110" />
+                <img src="/assets/logo.png" alt="Parsa Apps" width={40} height={40} className="object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(0,198,255,0.4)]" />
               </span>
               <span className="leading-tight">
                 <span dir="ltr" className="block text-base font-black tracking-tight text-white">
