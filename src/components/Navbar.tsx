@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { Magnetic } from "./ui";
+import BrandMark from "./BrandMark";
 
 const LINKS = [
   { to: "/", key: "nav.home" },
@@ -20,7 +21,7 @@ function LanguageSwitch() {
         <button
           key={l}
           onClick={() => setLang(l)}
-          className={`rounded-full px-3 py-1.5 transition-all ${
+          className={`rounded-full px-3 py-1.5 transition-all duration-300 hover:scale-110 active:scale-95 ${
             lang === l ? "bg-neon-violet text-white shadow-[0_0_16px_rgba(124,92,255,0.5)]" : "text-white/60 hover:text-white"
           }`}
           aria-pressed={lang === l}
@@ -49,8 +50,11 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-[90] transition-all duration-500 ${
+      <motion.header
+        initial={{ y: -70, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+        className={`fixed inset-x-0 top-0 z-[90] transition-[padding] duration-500 ${
           scrolled ? "py-2" : "py-4"
         }`}
       >
@@ -61,9 +65,7 @@ export default function Navbar() {
             }`}
           >
             <Link to="/" className="group flex items-center gap-3" aria-label="پارسا اپس">
-              <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-xl bg-white/5 ring-1 ring-white/15">
-                <img src="/assets/logo.png" alt="Parsa Apps" width={40} height={40} className="object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(0,198,255,0.4)]" />
-              </span>
+              <BrandMark size={44} scanline={false} />
               <span className="leading-tight">
                 <span dir="ltr" className="block text-base font-black tracking-tight text-white">
                   Parsa <span className="text-gradient">Apps</span>
@@ -126,7 +128,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <AnimatePresence>
         {open && (

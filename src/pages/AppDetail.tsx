@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getApp, CONTACT } from "@/lib/data";
-import { Reveal, SectionHeader } from "@/components/ui";
+import { MediaReveal, Reveal, SectionHeader } from "@/components/ui";
 import { AppIcon, FeatureItem, PhoneMockup, StatusBadge } from "@/components/apps";
 import NotFound from "./NotFound";
 
@@ -82,7 +82,12 @@ export default function AppDetail() {
               ) : (
                 <div className="relative">
                   <div className="absolute inset-0 -z-10 rounded-full blur-[100px]" style={{ background: app.palette.from }} />
-                  <img src={app.cover} alt={app.name} className="w-72 rounded-[2rem] object-cover shadow-2xl sm:w-80" />
+                  <MediaReveal
+                    src={app.cover}
+                    alt={app.name}
+                    className="aspect-[4/5] w-72 rounded-[2rem] shadow-2xl sm:w-80"
+                    imgClassName="rounded-[2rem]"
+                  />
                 </div>
               )}
             </Reveal>
@@ -116,13 +121,11 @@ export default function AppDetail() {
             <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {app.screenshots.map((src, i) => (
                 <Reveal key={src} delay={i * 0.06}>
-                  <motion.img
+                  <MediaReveal
                     src={src}
                     alt={`${app.name} اسکرین‌شات ${i + 1}`}
-                    loading="lazy"
-                    className="aspect-[9/16] w-full rounded-3xl object-cover ring-1 ring-white/10 shadow-lg"
-                    whileHover={{ y: -8, scale: 1.03 }}
-                    transition={{ duration: 0.3 }}
+                    className="aspect-[9/16] w-full rounded-3xl ring-1 ring-white/10 shadow-lg"
+                    imgClassName="rounded-3xl"
                   />
                 </Reveal>
               ))}
@@ -145,10 +148,15 @@ export default function AppDetail() {
               </div>
               <div className="space-y-4">
                 {app.educationalBenefits.map((b) => (
-                  <div key={b} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <span className="grid h-9 w-9 place-items-center rounded-xl text-neon-cyan" style={{ background: `${app.palette.accent}22` }}>
+                  <div key={b} className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.06]">
+                    <motion.span
+                      whileHover={{ rotate: 12, scale: 1.12 }}
+                      transition={{ type: "spring", stiffness: 280, damping: 18 }}
+                      className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-neon-cyan"
+                      style={{ background: `${app.palette.accent}22` }}
+                    >
                       ✓
-                    </span>
+                    </motion.span>
                     <p className="font-bold text-white">{b}</p>
                   </div>
                 ))}

@@ -18,6 +18,7 @@ export default {
           cyan: "#00ffd0",
           gold: "#f5c857",
           pink: "#ff5fa2",
+          green: "#00ff9b",
         },
       },
       fontFamily: {

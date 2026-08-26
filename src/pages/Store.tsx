@@ -32,12 +32,19 @@ export default function Store() {
                 <button
                   key={c}
                   onClick={() => setCat(c)}
-                  className={`rounded-full border px-4 py-2 text-sm font-bold transition-all ${
+                  className={`relative rounded-full border px-4 py-2 text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95 ${
                     cat === c
-                      ? "border-neon-violet bg-neon-violet/20 text-white shadow-[0_0_20px_rgba(124,92,255,0.4)]"
-                      : "border-white/10 bg-white/5 text-white/55 hover:text-white"
+                      ? "border-transparent text-white"
+                      : "border-white/10 bg-white/5 text-white/55 hover:border-white/25 hover:text-white"
                   }`}
                 >
+                  {cat === c && (
+                    <motion.span
+                      layoutId="store-cat"
+                      className="absolute inset-0 -z-[1] rounded-full border border-neon-violet bg-neon-violet/25 shadow-[0_0_20px_rgba(124,92,255,0.4)]"
+                      transition={{ type: "spring", stiffness: 360, damping: 30 }}
+                    />
+                  )}
                   {c}
                 </button>
               ))}
