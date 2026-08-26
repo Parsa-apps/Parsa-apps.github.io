@@ -108,6 +108,6 @@ Workflow پیشنهادی استقرار خودکار در فایل
 
 - ایمیل: `farshadparsa2019@gmail.com`
 - تلگرام: [@Parsaappsadmin](https://t.me/Parsaappsadmin)
-- اینستاگرام: [@parsa.apps](https://instagram.com/parsa.apps)
+- اینستاگرام: [@parsa_apps](https://instagram.com/parsa_apps)
 
 **© ۱۴۰۵ پارسا اپس | تمامی حقوق محفوظ است**

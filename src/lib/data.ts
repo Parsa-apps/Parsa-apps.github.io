@@ -40,8 +40,8 @@ export const CONTACT = {
   email: "farshadparsa2019@gmail.com",
   telegram: "https://t.me/Parsaappsadmin",
   telegramHandle: "@Parsaappsadmin",
-  instagram: "https://instagram.com/parsa.apps",
-  instagramHandle: "@parsa.apps",
+  instagram: "https://instagram.com/parsa_apps",
+  instagramHandle: "@parsa_apps",
 };
 
 export const apps: StudioApp[] = [
