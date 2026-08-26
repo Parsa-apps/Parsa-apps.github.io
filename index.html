@@ -310,6 +310,13 @@
     .flagship-info .desc{margin-top:20px;color:var(--muted);line-height:2}
     .flagship-info .features{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
     .flagship-info .actions{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+    .app-specs{margin-top:22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .app-spec{padding:12px 8px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);text-align:center}
+    .app-spec .lbl{display:block;font-size:.7rem;color:var(--muted);font-weight:600}
+    .app-spec .val{display:block;margin-top:4px;font-size:.95rem;font-weight:800;letter-spacing:.02em}
+    .btn-myket{background:linear-gradient(120deg,#00b89c,#12d4b8 55%,#2ee6c8);color:#04241e;box-shadow:0 18px 45px -18px rgba(0,184,156,.9),inset 0 1px rgba(255,255,255,.35)}
+    .btn-myket:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 26px 60px -18px rgba(18,212,184,.85),inset 0 1px rgba(255,255,255,.45)}
+    @media(max-width:520px){.app-specs{grid-template-columns:1fr 1fr}.app-specs .app-spec:last-child{grid-column:1 / -1}}
     .flagship-phone{display:flex;justify-content:center;align-items:center;position:relative}
     .flagship-phone .mini-phone{width:220px;height:440px;border-radius:36px;background:#0a0a1a;border:2px solid rgba(255,255,255,.08);overflow:hidden;box-shadow:0 30px 60px -15px rgba(0,0,0,.5)}
     .flagship-phone .mini-phone img{width:100%;height:100%;object-fit:cover}
@@ -537,8 +544,13 @@
         </div>
         <div class="flagship-info">
           <h3>🏝️ جزیره فندقی</h3>
-          <div class="status">● منتشر شده</div>
-          <p class="desc">جزیره فندقی یک اپلیکیشن آموزشی-سرگرمی کامل برای کودکان فارسی‌زبان است. با بازی‌های تعاملی، داستان‌های جذاب، فعالیت‌های یادگیری و سیستم پیشرفت هوشمند، کودکان در محیطی امن و شاد یاد می‌گیرند.</p>
+          <div class="status">● منتشر شده در مایکت</div>
+          <p class="desc">جزیره فندقی یک اپلیکیشن آموزشی-سرگرمی کامل برای کودکان فارسی‌زبان است. با بازی‌های تعاملی، داستان‌های جذاب، فعالیت‌های یادگیری و سیستم پیشرفت هوشمند، کودکان در محیطی امن و شاد یاد می‌گیرند. نسخه ۶.۲.۴ هم‌اکنون با حجم بسته ۷۸ مگابایت از مایکت قابل دانلود و نصب است.</p>
+          <div class="app-specs" aria-label="مشخصات اپلیکیشن">
+            <div class="app-spec"><span class="lbl">نسخه</span><span class="val">۶.۲.۴</span></div>
+            <div class="app-spec"><span class="lbl">حجم بسته</span><span class="val">۷۸ مگابایت</span></div>
+            <div class="app-spec"><span class="lbl">آخرین بروزرسانی</span><span class="val">۱۴۰۵/۰۶/۰۴</span></div>
+          </div>
           <div class="features">
             <span class="chip">✓ بازی‌های آموزشی</span>
             <span class="chip">✓ داستان‌های تعاملی</span>
@@ -546,10 +558,14 @@
             <span class="chip">✓ محیط امن کودکان</span>
             <span class="chip">✓ طراحی RTL</span>
           </div>
-          <div class="actions">
-            <a href="#" class="btn btn-primary">مشاهده جزئیات</a>
-            <a href="#" class="btn btn-ghost">دانلود APK</a>
+          <div class="actions" id="download">
+            <a href="https://myket.ir/app/com.parsaapps.amoozesh_fandoghi" target="_blank" rel="noopener noreferrer" class="btn btn-myket">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15 7.5 10.5M5 19h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از مایکت
+            </a>
+            <a href="/apps/fandoghi" class="btn btn-ghost">مشاهده جزئیات</a>
           </div>
+          <p class="desc" style="margin-top:14px;font-size:.8rem">با کلیک روی دانلود، صفحهٔ رسمی اپ در مایکت باز می‌شود و می‌توانید مستقیم نصب کنید.</p>
         </div>
       </div>
     </div>
@@ -1021,6 +1037,13 @@
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    staggerEls.forEach(function(el){ staggerObserver.observe(el); });
+
+  })();
+  </script>
+</body>
+</html>
+old: 0.1, rootMargin: '0px 0px -30px 0px' });
     staggerEls.forEach(function(el){ staggerObserver.observe(el); });
 
   })();
