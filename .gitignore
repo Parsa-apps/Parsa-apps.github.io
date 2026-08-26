@@ -11,3 +11,6 @@ debug-shots/
 *.local
 .env
 .env.*
+
+# typescript incremental build cache
+*.tsbuildinfo

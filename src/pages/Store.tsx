@@ -2,24 +2,29 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { apps } from "@/lib/data";
+import { useI18n } from "@/lib/i18n";
 import { Reveal, SectionHeader } from "@/components/ui";
 import { StoreCard } from "@/components/apps";
 
-const categories = ["همه", ...Array.from(new Set(apps.map((a) => a.category)))];
+const categories = ["store.cat.all", ...Array.from(new Set(apps.map((a) => a.category)))];
 
 export default function Store() {
-  const [cat, setCat] = useState("همه");
+  const { t } = useI18n();
+  const [cat, setCat] = useState("store.cat.all");
 
-  const filtered = useMemo(() => (cat === "همه" ? apps : apps.filter((a) => a.category === cat)), [cat]);
+  const filtered = useMemo(
+    () => (cat === "store.cat.all" ? apps : apps.filter((a) => a.category === cat)),
+    [cat]
+  );
 
   return (
     <div className="pt-28">
       <section className="section-shell pb-6">
         <div className="container-px">
           <SectionHeader
-            eyebrow="📱 پارسا استور"
-            title={<>میکرواستور رسمی <span className="text-gradient">پارسا اپس</span></>}
-            subtitle="هر محصول صفحه اختصاصی، گالری اسکرین‌شات، امکانات و مسیر دانلود خود را دارد. اینجا همه اپلیکیشن‌های استودیو را می‌بینید."
+            eyebrow={t("store.hero.eyebrow")}
+            title={<>{t("store.hero.title.a")} <span className="text-gradient">{t("store.hero.title.b")}</span></>}
+            subtitle={t("store.hero.subtitle")}
           />
         </div>
       </section>
@@ -45,7 +50,7 @@ export default function Store() {
                       transition={{ type: "spring", stiffness: 360, damping: 30 }}
                     />
                   )}
-                  {c}
+                  {t(c)}
                 </button>
               ))}
             </div>
@@ -62,7 +67,7 @@ export default function Store() {
           </motion.div>
 
           {filtered.length === 0 && (
-            <div className="mt-10 text-center text-white/50">محصولی در این دسته وجود ندارد.</div>
+            <div className="mt-10 text-center text-white/50">{t("store.empty")}</div>
           )}
         </div>
       </section>
@@ -71,14 +76,13 @@ export default function Store() {
         <div className="container-px">
           <Reveal>
             <div className="card p-8 text-center sm:p-10">
-              <h2 className="text-2xl font-black sm:text-3xl">چگونه اپلیکیشن را نصب کنم؟</h2>
+              <h2 className="text-2xl font-black sm:text-3xl">{t("store.install.title")}</h2>
               <p className="mx-auto mt-4 max-w-2xl leading-8 text-white/60">
-                از صفحه هر محصول، بخش دانلود را باز کنید و فایل APK مستقیم را دریافت کنید. تا زمان انتشار رسمی،
-                دکمه دانلود وضعیت «به‌زودی» را نمایش می‌دهد.
+                {t("store.install.text")}
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Link to="/apps/fandoghi" className="btn btn-primary">جزیره فندقی</Link>
-                <Link to="/apps/kartoniya" className="btn btn-ghost">کارتونیا</Link>
+                <Link to="/apps/fandoghi" className="btn btn-primary">{t("app.fandoghi.name")}</Link>
+                <Link to="/apps/kartoniya" className="btn btn-ghost">{t("app.kartoniya.name")}</Link>
               </div>
             </div>
           </Reveal>

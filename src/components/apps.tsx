@@ -2,13 +2,15 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import type { StudioApp } from "@/lib/data";
+import { useI18n } from "@/lib/i18n";
 import { TiltCard } from "./ui";
 
 export function StatusBadge({ status }: { status: StudioApp["status"] }) {
+  const { t } = useI18n();
   const map = {
-    released: { label: "منتشر شده", color: "#00ffd0" },
-    beta: { label: "نسخه آزمایشی", color: "#00c6ff" },
-    development: { label: "در حال توسعه", color: "#f5c857" },
+    released: { key: "status.released", color: "#00ffd0" },
+    beta: { key: "status.beta", color: "#00c6ff" },
+    development: { key: "status.development", color: "#f5c857" },
   } as const;
   const s = map[status];
   return (
@@ -17,12 +19,13 @@ export function StatusBadge({ status }: { status: StudioApp["status"] }) {
       style={{ color: s.color, borderColor: `${s.color}55`, background: `${s.color}14` }}
     >
       <span className="h-1.5 w-1.5 rounded-full" style={{ background: s.color, boxShadow: `0 0 10px 1px ${s.color}` }} />
-      {s.label}
+      {t(s.key)}
     </span>
   );
 }
 
 export function AppIcon({ app, size = 72 }: { app: StudioApp; size?: number }) {
+  const { t } = useI18n();
   return (
     <motion.span
       whileHover={{ rotate: 4, scale: 1.05 }}
@@ -40,7 +43,7 @@ export function AppIcon({ app, size = 72 }: { app: StudioApp; size?: number }) {
       />
       <img
         src={app.icon}
-        alt={`آیکون ${app.name}`}
+        alt={t(`app.${app.slug}.name`)}
         width={size}
         height={size}
         loading="lazy"
@@ -52,6 +55,7 @@ export function AppIcon({ app, size = 72 }: { app: StudioApp; size?: number }) {
 }
 
 export function StoreCard({ app, index = 0 }: { app: StudioApp; index?: number }) {
+  const { t } = useI18n();
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -69,12 +73,12 @@ export function StoreCard({ app, index = 0 }: { app: StudioApp; index?: number }
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="text-xl font-black text-white">{app.name}</h3>
+                <h3 className="text-xl font-black text-white">{t(`app.${app.slug}.name`)}</h3>
                 <p className="text-[11px] font-semibold text-white/40" dir="ltr">{app.nameEn}</p>
               </div>
               <StatusBadge status={app.status} />
             </div>
-            <p className="mt-2 text-sm leading-7 text-white/60">{app.description}</p>
+            <p className="mt-2 text-sm leading-7 text-white/60">{t(`app.${app.slug}.description`)}</p>
           </div>
         </div>
 
@@ -86,15 +90,15 @@ export function StoreCard({ app, index = 0 }: { app: StudioApp; index?: number }
 
         <div className="relative mt-5 flex flex-wrap items-center gap-3 pt-4">
           <Link to={`/apps/${app.slug}`} className="btn btn-primary !px-5 !py-2.5 !text-xs">
-            مشاهده صفحه محصول
+            {t("app.btnViewProduct")}
           </Link>
           <button
             className="btn btn-ghost !px-5 !py-2.5 !text-xs"
             onClick={() => document.getElementById("download")?.scrollIntoView({ behavior: "smooth" })}
           >
-            دانلود
+            {t("app.download")}
           </button>
-          <span className="ms-auto text-xs text-white/40">نسخه {app.version}</span>
+          <span className="ms-auto text-xs text-white/40">{t("store.versionPrefix")} {t(`app.${app.slug}.version`)}</span>
         </div>
       </TiltCard>
     </motion.div>
@@ -103,13 +107,14 @@ export function StoreCard({ app, index = 0 }: { app: StudioApp; index?: number }
 
 export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
   const [active, setActive] = useState(0);
+  const { t } = useI18n();
 
   return (
     <div className="relative mx-auto w-[280px] sm:w-[300px]" style={{ filter: `drop-shadow(0 40px 80px rgba(0,0,0,0.55))` }}>
       <div
         className="relative aspect-[9/19] cursor-pointer overflow-hidden rounded-[2.8rem] border-[6px] border-[#0b0e1c] bg-black shadow-[0_0_0_1px_rgba(255,255,255,0.08),inset_0_0_30px_rgba(0,0,0,0.6)]"
         onClick={() => setActive((prev) => (prev + 1) % screenshots.length)}
-        title="کلیک برای مشاهده تصویر بعدی"
+        title={t("app.mockup.title")}
       >
         {/* status bar / island */}
         <div className="absolute left-1/2 top-2.5 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black/90 ring-1 ring-white/10" />
@@ -118,7 +123,7 @@ export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
           <img
             key={src}
             src={src}
-            alt={`اسکرین‌شات برنامه ${i + 1}`}
+            alt={`${t("app.gallery.shot")} ${i + 1}`}
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover transition-all duration-700"
             style={{ opacity: i === active ? 1 : 0, transform: i === active ? "scale(1)" : "scale(1.06)" }}
@@ -131,7 +136,7 @@ export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
         {screenshots.map((_, i) => (
           <button
             key={i}
-            aria-label={`نمایش اسکرین‌شات ${i + 1}`}
+            aria-label={`${t("app.gallery.shot")} ${i + 1}`}
             onClick={() => setActive(i)}
             className="h-1.5 rounded-full transition-all duration-400"
             style={{

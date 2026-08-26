@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import {
   animate,
   motion,
@@ -392,18 +393,19 @@ export function MediaReveal({
   imgClassName?: string;
   loading?: "lazy" | "eager";
 }) {
+  const { t } = useI18n();
   const [failed, setFailed] = useState(false);
   const [forceShow, setForceShow] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setForceShow(true), 1600);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setForceShow(true), 1600);
+    return () => clearTimeout(timer);
   }, []);
 
   if (failed) {
     return (
       <div className={`grid place-items-center bg-white/[0.04] text-white/30 ${className}`}>
-        تصویر در دسترس نیست
+        {t("app.gallery.fallback")}
       </div>
     );
   }

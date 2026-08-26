@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { tStatic } from "@/lib/i18n";
 
 interface Props {
   children: React.ReactNode;
@@ -33,8 +34,8 @@ export default class ErrorBoundary extends React.Component<Props, State> {
               className="mx-auto object-contain drop-shadow-[0_0_24px_rgba(0,198,255,0.4)]"
               onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
             />
-            <h1 className="mt-6 text-2xl font-black text-white">مشکلی در نمایش صفحه پیش آمد</h1>
-            <p className="mt-3 text-white/55">لطفاً صفحه را دوباره بارگذاری کنید. اگر مشکل ادامه داشت، کش مرورگر را پاک کنید.</p>
+            <h1 className="mt-6 text-2xl font-black text-white">{tStatic("error.title")}</h1>
+            <p className="mt-3 text-white/55">{tStatic("error.text")}</p>
             {this.state.errorInfo && (
               <p className="mt-2 text-xs text-white/30" dir="ltr">
                 {this.state.errorInfo.slice(0, 200)}
@@ -42,10 +43,10 @@ export default class ErrorBoundary extends React.Component<Props, State> {
             )}
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <button onClick={() => window.location.reload()} className="btn btn-primary">
-                بارگذاری مجدد
+                {tStatic("error.reload")}
               </button>
               <Link to="/" className="btn btn-ghost" onClick={() => this.setState({ hasError: false })}>
-                بازگشت به خانه
+                {tStatic("error.home")}
               </Link>
               <button
                 onClick={() => {
@@ -65,7 +66,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
                 }}
                 className="btn btn-ghost"
               >
-                پاک‌سازی کش
+                {tStatic("error.clearCache")}
               </button>
             </div>
           </div>

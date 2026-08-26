@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import SiteLayout from "@/layouts/SiteLayout";
 import Preloader from "@/components/Preloader";
+import { useI18n } from "@/lib/i18n";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 const Home = lazy(() => import("@/pages/Home"));
@@ -13,6 +14,7 @@ const Privacy = lazy(() => import("@/pages/Privacy"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 export default function App() {
+  const { t } = useI18n();
   const [loading, setLoading] = useState(true);
 
   // Triple safety net: guarantees site becomes visible even if preloader crashes,
@@ -63,7 +65,7 @@ export default function App() {
                 className="animate-pulse object-contain drop-shadow-[0_0_20px_rgba(0,198,255,0.4)]"
                 onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
               />
-              <p className="text-sm text-white/60">در حال بارگذاری…</p>
+              <p className="text-sm text-white/60">{t("common.loading")}</p>
             </div>
           </div>
         }

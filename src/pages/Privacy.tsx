@@ -1,29 +1,31 @@
+import { useI18n } from "@/lib/i18n";
 import { Reveal, SectionHeader } from "@/components/ui";
 
 const sections = [
-  { icon: "📋", title: "اطلاعات کاربران", text: "ما تلاش می‌کنیم کمترین اطلاعات مورد نیاز را دریافت کنیم و امنیت اطلاعات کاربران را حفظ کنیم. هیچ داده‌ای بدون ضرورت جمع‌آوری نمی‌شود." },
-  { icon: "🧒", title: "امنیت کودکان", text: "جزیره فندقی با هدف ایجاد محیطی امن و مناسب برای کودکان طراحی شده است: بدون تبلیغات مزاحم، بدون محتوای نامناسب و با تمرکز کامل روی یادگیری و سرگرمی سالم." },
-  { icon: "🔐", title: "تعهد ما", text: "در صورت تغییر در سیاست‌های حریم خصوصی، این صفحه به‌روزرسانی خواهد شد و کاربران در جریان قرار می‌گیرند." },
+  { icon: "📋", n: 1 },
+  { icon: "🧒", n: 2 },
+  { icon: "🔐", n: 3 },
 ];
 
 export default function Privacy() {
+  const { t } = useI18n();
   return (
     <div className="pt-28">
       <section className="section-shell">
         <div className="container-px max-w-3xl">
           <SectionHeader
-            eyebrow="🔒 حریم خصوصی"
-            title={<>شفافیت، <span className="text-gradient">اصل کار ما</span></>}
-            subtitle="پارسا اپس به حریم خصوصی کاربران اهمیت می‌دهد و شفافیت را اصل کار خود قرار داده است."
+            eyebrow={t("privacy.hero.eyebrow")}
+            title={<>{t("privacy.hero.title.a")} <span className="text-gradient">{t("privacy.hero.title.b")}</span></>}
+            subtitle={t("privacy.hero.subtitle")}
           />
 
           <div className="mt-12 space-y-6">
             {sections.map((s, i) => (
-              <Reveal key={s.title} delay={i * 0.08}>
+              <Reveal key={s.n} delay={i * 0.08}>
                 <div className="card p-6 sm:p-8">
                   <span className="text-3xl">{s.icon}</span>
-                  <h2 className="mt-4 text-xl font-black text-white">{s.title}</h2>
-                  <p className="mt-2 leading-8 text-white/60">{s.text}</p>
+                  <h2 className="mt-4 text-xl font-black text-white">{t(`privacy.${s.n}.title`)}</h2>
+                  <p className="mt-2 leading-8 text-white/60">{t(`privacy.${s.n}.text`)}</p>
                 </div>
               </Reveal>
             ))}
