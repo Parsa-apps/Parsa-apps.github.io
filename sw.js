@@ -7,7 +7,7 @@
    - If chunk 404s, delete old cache and force network
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v6"; // bumped: Myket download + version 6.2.4 / 78MB
+const CACHE_NAME = "parsa-apps-v7"; // cache-bust after Pages rebuild
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {
