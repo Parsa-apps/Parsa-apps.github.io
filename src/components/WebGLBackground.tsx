@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-/** Cheap up-front probe: does this environment give us a WebGL context at all? */
 function webglSupported(): boolean {
   try {
     const canvas = document.createElement("canvas");
@@ -14,6 +13,16 @@ function webglSupported(): boolean {
   }
 }
 
+/** True when we should keep the scene intentionally light (small screens, low-power). */
+function lightProfile(): boolean {
+  return (
+    typeof window === "undefined" ||
+    window.innerWidth < 768 ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    (navigator.hardwareConcurrency ?? 8) <= 4
+  );
+}
+
 /**
  * Lightweight full-page WebGL scene: a slowly drifting star field with a
  * translucent wireframe ring for a subtle premium "orbit" feel.
@@ -23,28 +32,27 @@ export default function WebGLBackground() {
 
   useEffect(() => {
     const mount = mountRef.current;
-    // Skip silently (no crash, no black screen) when WebGL is unavailable —
-    // e.g. software-rendering VMs, blocked GPUs, or hardened browsers.
     if (!mount || !webglSupported()) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const light = lightProfile();
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, mount.clientWidth / mount.clientHeight, 0.1, 600);
     camera.position.z = 42;
 
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !light, powerPreference: "high-performance" });
     } catch {
-      // Context creation can still fail after the support probe — degrade quietly.
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, light ? 1.2 : 1.7));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 
-    // Star particles
-    const starsCount = 1100;
+    // Star particles (fewer on light profiles)
+    const starsCount = light ? 520 : 1100;
     const positions = new Float32Array(starsCount * 3);
     const colors = new Float32Array(starsCount * 3);
     const palette = [new THREE.Color("#b4a0ff"), new THREE.Color("#00c6ff"), new THREE.Color("#00ffd0")];
@@ -64,7 +72,6 @@ export default function WebGLBackground() {
     const stars = new THREE.Points(starsGeo, starsMat);
     scene.add(stars);
 
-    // Orbit ring
     const ringGeo = new THREE.TorusGeometry(17, 0.06, 16, 200);
     const ringMat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent: true, opacity: 0.22 });
     const ring = new THREE.Mesh(ringGeo, ringMat);
@@ -78,20 +85,40 @@ export default function WebGLBackground() {
     ring2.rotation.y = 0.5;
     scene.add(ring2);
 
+    // Subtle mouse parallax for depth (skipped on light/reduced profiles)
+    let targetX = 0;
+    let targetY = 0;
+    const onMouse = (e: MouseEvent) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    if (!reduced && !light) window.addEventListener("mousemove", onMouse, { passive: true });
+
     let raf = 0;
+    let running = true;
     const clock = new THREE.Clock();
     const animate = () => {
       raf = requestAnimationFrame(animate);
+      if (!running) return;
+      const t = clock.getElapsedTime();
       if (!reduced) {
-        const t = clock.getElapsedTime();
         stars.rotation.y = t * 0.018;
         stars.rotation.x = Math.sin(t * 0.1) * 0.04;
         ring.rotation.z = t * 0.05;
         ring2.rotation.z = -t * 0.04;
+        camera.position.x += (targetX * 1.4 - camera.position.x) * 0.04;
+        camera.position.y += (-targetY * 1.2 - camera.position.y) * 0.04;
+        camera.lookAt(scene.position);
       }
       renderer.render(scene, camera);
     };
     animate();
+
+    const onVisibility = () => {
+      running = document.visibilityState === "visible";
+      if (running && !reduced) clock.getDelta();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const onResize = () => {
       if (!mount) return;
@@ -104,6 +131,8 @@ export default function WebGLBackground() {
     return () => {
       window.cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMouse);
+      document.removeEventListener("visibilitychange", onVisibility);
       starsGeo.dispose();
       starsMat.dispose();
       ringGeo.dispose();

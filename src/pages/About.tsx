@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { skills, timeline, CONTACT } from "@/lib/data";
-import { Reveal, SectionHeader, TiltCard, Marquee } from "@/components/ui";
+import { AnimatedText, Parallax, Reveal, SectionHeader, TiltCard, Marquee } from "@/components/ui";
 
 const roles = [
   { icon: "🤖", title: "Android Developer", text: "توسعه اپلیکیشن‌های اندرویدی سبک، سریع و بهینه." },
@@ -18,20 +18,22 @@ export default function About() {
         <div className="container-px text-center">
           <Reveal>
             <div className="mx-auto mb-6 flex justify-center">
-              <motion.img
-                src="/assets/logo.png"
-                alt="لوگوی پارسا اپس"
-                width={120}
-                height={120}
-                className="drop-shadow-[0_0_35px_rgba(0,198,255,0.45)] object-contain"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
-              />
+              <Parallax speed={0.08}>
+                <motion.img
+                  src="/assets/logo.png"
+                  alt="لوگوی پارسا اپس"
+                  width={120}
+                  height={120}
+                  className="drop-shadow-[0_0_35px_rgba(0,198,255,0.45)] object-contain"
+                  initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                />
+              </Parallax>
             </div>
             <span className="eyebrow">👨‍💻 درباره توسعه‌دهنده و استودیو</span>
             <h1 className="mt-4 flex items-center justify-center gap-4 text-4xl font-black sm:text-5xl">
-              <span>فرشاد پارسا</span>
+              <AnimatedText text="فرشاد پارسا" mode="chars" as="span" stagger={0.05} />
             </h1>
             <p className="mx-auto mt-5 max-w-2xl leading-8 text-white/60">
               بنیان‌گذار و برنامه‌نویس ارشد پارسا اپس. من با سخت‌گیری مهندسی، کدنویسی تمیز و تمرکز روی جزئیات،
@@ -77,8 +79,8 @@ export default function About() {
                 "پشتیبانی واقعی و پاسخ سریع به کاربران",
                 "به‌روزرسانی منظم و برنامه توسعه شفاف",
               ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-neon-violet/20 text-neon-violet">✓</span>
+                <div key={item} className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-neon-violet/40 hover:bg-white/[0.06]">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-neon-violet/20 text-neon-violet transition-transform duration-300 group-hover:rotate-[14deg] group-hover:scale-110">✓</span>
                   <p className="font-bold text-white/85">{item}</p>
                 </div>
               ))}

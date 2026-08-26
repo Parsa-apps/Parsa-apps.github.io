@@ -24,7 +24,9 @@ export function StatusBadge({ status }: { status: StudioApp["status"] }) {
 
 export function AppIcon({ app, size = 72 }: { app: StudioApp; size?: number }) {
   return (
-    <span
+    <motion.span
+      whileHover={{ rotate: 4, scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 260, damping: 18 }}
       className="relative grid shrink-0 place-items-center overflow-hidden rounded-[22%] shadow-lg"
       style={{ width: size, height: size, background: `linear-gradient(145deg, ${app.palette.from}44, ${app.palette.to}33)` }}
     >
@@ -32,15 +34,20 @@ export function AppIcon({ app, size = 72 }: { app: StudioApp; size?: number }) {
         className="absolute inset-0 opacity-40"
         style={{ background: `radial-gradient(circle at 30% 20%, ${app.palette.from}, transparent 70%)` }}
       />
+      <span
+        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-60"
+        style={{ background: `radial-gradient(circle at 70% 80%, ${app.palette.to}, transparent 65%)` }}
+      />
       <img
         src={app.icon}
         alt={`آیکون ${app.name}`}
         width={size}
         height={size}
         loading="lazy"
-        className="relative h-[78%] w-[78%] object-contain drop-shadow-lg"
+        decoding="async"
+        className="relative h-[78%] w-[78%] object-contain drop-shadow-lg transition-transform duration-500 group-hover:scale-110"
       />
-    </span>
+    </motion.span>
   );
 }
 
@@ -140,14 +147,22 @@ export function PhoneMockup({ screenshots }: { screenshots: string[] }) {
 
 export function FeatureItem({ icon, title, text }: { icon: string; title: string; text: string }) {
   return (
-    <div className="card flex items-start gap-4 p-5 transition-transform duration-300 hover:-translate-y-1">
-      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-white/10 to-white/5 text-2xl ring-1 ring-white/10">
+    <motion.div
+      whileHover={{ y: -5 }}
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      className="card group flex items-start gap-4 p-5"
+    >
+      <motion.span
+        whileHover={{ rotate: 8, scale: 1.08 }}
+        transition={{ type: "spring", stiffness: 280, damping: 18 }}
+        className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-white/10 to-white/5 text-2xl ring-1 ring-white/10"
+      >
         {icon}
-      </span>
+      </motion.span>
       <div>
         <h4 className="font-black text-white">{title}</h4>
         <p className="mt-1 text-sm leading-7 text-white/55">{text}</p>
       </div>
-    </div>
+    </motion.div>
   );
 }

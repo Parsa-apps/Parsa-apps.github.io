@@ -16,9 +16,10 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   // Absolute hard cap: even if the preloader somehow never calls onFinish,
-  // the loading overlay is dropped after 4.5s so content is always visible.
+  // the loading overlay is dropped after the full cinematic intro + exit
+  // so content is always visible.
   useEffect(() => {
-    const t = window.setTimeout(() => setLoading(false), 4500);
+    const t = window.setTimeout(() => setLoading(false), 5600);
     return () => window.clearTimeout(t);
   }, []);
 

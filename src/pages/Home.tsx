@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 import { apps, skills, timeline, projects, CONTACT } from "@/lib/data";
-import { Counter, Magnetic, Marquee, Reveal, SectionHeader, TiltCard } from "@/components/ui";
+import { AnimatedText, Counter, Magnetic, Marquee, MediaReveal, MouseParallax, Parallax, Reveal, SectionHeader, TiltCard } from "@/components/ui";
 import { AppIcon, PhoneMockup, StatusBadge, StoreCard } from "@/components/apps";
+import BrandMark from "@/components/BrandMark";
 
 const teaserApps = apps.slice(0, 4);
 const featured = apps.find((a) => a.slug === "fandoghi")!;
@@ -22,6 +23,15 @@ const values = [
   { icon: "🚀", title: "نوآوری", text: "به‌کارگیری فناوری‌های روز دنیا" },
 ];
 
+const heroContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.11, delayChildren: 0.1 } },
+};
+const heroItem = {
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
 export default function Home() {
   const { t } = useI18n();
   const fandoghi = featured;
@@ -31,90 +41,96 @@ export default function Home() {
       {/* ===================== HERO ===================== */}
       <section className="relative pb-10 pt-10 sm:pt-16">
         <div className="container-px grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative z-10">
-            <Reveal>
+          <motion.div
+            className="relative z-10"
+            variants={heroContainer}
+            initial="hidden"
+            animate="show"
+          >
+            <motion.div variants={heroItem}>
               <span className="eyebrow">
                 <span className="h-1.5 w-1.5 rounded-full bg-neon-cyan shadow-[0_0_12px_2px_rgba(0,255,208,0.8)]" />
                 {t("hero.kicker")}
               </span>
-            </Reveal>
+            </motion.div>
 
-            <Reveal delay={0.06}>
-              <h1 className="mt-6 text-4xl font-black leading-[1.2] sm:text-5xl lg:text-6xl">
-                {t("hero.title.1")}
-                <span className="mt-2 block text-gradient">{t("hero.title.2")}</span>
-              </h1>
-            </Reveal>
+            <h1 className="mt-6 text-4xl font-black leading-[1.2] sm:text-5xl lg:text-6xl">
+              <AnimatedText text={t("hero.title.1")} as="span" mode="words" className="-mx-1" delay={0.2} />
+              <motion.span
+                className="mt-2 block text-gradient-animated"
+                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {t("hero.title.2")}
+              </motion.span>
+            </h1>
 
-            <Reveal delay={0.14}>
+            <motion.div variants={heroItem}>
               <p className="mt-6 max-w-xl text-base leading-8 text-[var(--muted)] sm:text-lg">{t("hero.sub")}</p>
-            </Reveal>
+            </motion.div>
 
-            <Reveal delay={0.22}>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Magnetic>
-                  <Link to="/store" className="btn btn-primary">
-                    {t("hero.cta.primary")}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  </Link>
-                </Magnetic>
-                <Magnetic>
-                  <Link to="/contact" className="btn btn-ghost">{t("hero.cta.secondary")}</Link>
-                </Magnetic>
-              </div>
-            </Reveal>
+            <motion.div variants={heroItem} className="mt-8 flex flex-wrap items-center gap-4">
+              <Magnetic>
+                <Link to="/store" className="btn btn-primary" data-cursor-label="مشاهده">
+                  {t("hero.cta.primary")}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <Link to="/contact" className="btn btn-ghost">{t("hero.cta.secondary")}</Link>
+              </Magnetic>
+            </motion.div>
 
-            <Reveal delay={0.3}>
-              <div className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-white/10 pt-6">
-                {[
-                  { to: 4, label: "اپلیکیشن" },
-                  { to: 8, label: "مهارت تخصصی" },
-                  { to: 100, label: "تعهد کیفیت", suffix: "%" },
-                ].map((s, i) => (
-                  <div key={i} className="flex flex-col">
-                    <Counter to={s.to} suffix={s.suffix ?? ""} className="text-2xl font-black text-white" />
-                    <span className="mt-1 text-xs text-white/45">{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
+            <motion.div variants={heroItem} className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-white/10 pt-6">
+              {[
+                { to: 4, label: "اپلیکیشن" },
+                { to: 8, label: "مهارت تخصصی" },
+                { to: 100, label: "تعهد کیفیت", suffix: "%" },
+              ].map((s, i) => (
+                <div key={i} className="flex flex-col">
+                  <Counter to={s.to} suffix={s.suffix ?? ""} className="text-2xl font-black text-white" />
+                  <span className="mt-1 text-xs text-white/45">{s.label}</span>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
 
           {/* hero visual */}
-          <Reveal delay={0.2} className="relative">
-            <div className="relative mx-auto flex flex-col items-center">
-              <motion.div
-                className="absolute inset-0 -z-10 rounded-full blur-[110px]"
-                style={{ background: "radial-gradient(circle, rgba(124,92,255,0.45), rgba(0,198,255,0.2), transparent 70%)" }}
-                animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.img
-                src="/assets/logo.png"
-                alt="Parsa Apps"
-                width={100}
-                height={100}
-                className="relative z-10 -mb-6 w-24 sm:w-28 drop-shadow-[0_8px_30px_rgba(0,198,255,0.45)] animate-float object-contain"
-              />
-              <PhoneMockup screenshots={fandoghi.screenshots} />
+          <Reveal delay={0.15} className="relative">
+            <Parallax speed={0.09} rotate={1.5}>
+              <div className="relative mx-auto flex flex-col items-center">
+                <motion.div
+                  className="absolute inset-0 -z-10 rounded-full blur-[110px]"
+                  style={{ background: "radial-gradient(circle, rgba(124,92,255,0.45), rgba(0,198,255,0.2), transparent 70%)" }}
+                  animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <MouseParallax strength={9}>
+                  <div className="relative z-10 -mb-6 w-28 sm:w-36">
+                    <BrandMark size={112} interactive scanline />
+                  </div>
+                  <PhoneMockup screenshots={fandoghi.screenshots} />
+                </MouseParallax>
 
-              {/* floating chips */}
-              <motion.div className="absolute -right-2 top-24 hidden sm:block" animate={{ y: [0, -14, 0] }} transition={{ duration: 4.5, repeat: Infinity }}>
-                <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass">
-                  <span className="text-neon-cyan">⚡</span> Flutter &amp; Dart
-                </div>
-              </motion.div>
-              <motion.div className="absolute -left-4 top-1/2 hidden sm:block" animate={{ y: [0, 14, 0] }} transition={{ duration: 5.5, repeat: Infinity }}>
-                <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass">
-                  <span className="text-neon-gold">👑</span> Farshad Parsa
-                </div>
-              </motion.div>
-              <motion.div className="absolute bottom-20 -left-2 hidden sm:block" animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }}>
-                <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass">
-                  <span className="text-neon-violet">🎯</span> Clean Code
-                </div>
-              </motion.div>
-            </div>
+                {/* floating chips */}
+                <motion.div className="absolute -right-2 top-24 hidden sm:block" animate={{ y: [0, -14, 0] }} transition={{ duration: 4.5, repeat: Infinity }}>
+                  <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
+                    <span className="text-neon-cyan">⚡</span> Flutter &amp; Dart
+                  </div>
+                </motion.div>
+                <motion.div className="absolute -left-4 top-1/2 hidden sm:block" animate={{ y: [0, 14, 0] }} transition={{ duration: 5.5, repeat: Infinity }}>
+                  <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
+                    <span className="text-neon-gold">👑</span> Farshad Parsa
+                  </div>
+                </motion.div>
+                <motion.div className="absolute bottom-20 -left-2 hidden sm:block" animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }}>
+                  <div className="glass-strong rounded-2xl px-4 py-2 text-xs font-bold text-white shadow-glass transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
+                    <span className="text-neon-violet">🎯</span> Clean Code
+                  </div>
+                </motion.div>
+              </div>
+            </Parallax>
           </Reveal>
         </div>
       </section>
@@ -247,9 +263,9 @@ export default function Home() {
               <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-4">
                 {processSteps.map((s, i) => (
                   <Reveal key={s.n} delay={i * 0.08}>
-                    <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-neon-violet/40 hover:bg-white/[0.06]">
+                    <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-neon-violet/40 hover:bg-white/[0.06]">
                       <div className="flex items-center justify-between">
-                        <span className="text-3xl">{s.icon}</span>
+                        <span className="text-3xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6">{s.icon}</span>
                         <span className="text-sm font-black text-white/25">{s.n}</span>
                       </div>
                       <h3 className="mt-4 font-black text-white">{s.title}</h3>
@@ -362,8 +378,12 @@ export default function Home() {
               <Reveal key={p.slug} delay={i * 0.06}>
                 <Link to={`/apps/${p.slug}`} className="card group block h-full overflow-hidden">
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <MediaReveal
+                      src={p.image}
+                      alt={p.title}
+                      className="absolute inset-0"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <span className="absolute right-4 top-4 chip !border-white/20 !bg-black/40">{p.status}</span>
                   </div>
                   <div className="p-5">

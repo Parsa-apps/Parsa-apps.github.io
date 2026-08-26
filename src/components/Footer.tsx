@@ -1,6 +1,40 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { CONTACT } from "@/lib/data";
 import { Reveal } from "./ui";
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 520);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          aria-label="بازگشت به بالا"
+          initial={{ opacity: 0, y: 24, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 24, scale: 0.8 }}
+          whileHover={{ y: -4, scale: 1.06 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 left-6 z-[80] grid h-12 w-12 place-items-center rounded-2xl glass-strong text-white shadow-[0_18px_50px_-12px_rgba(0,198,255,0.45)]"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
 
 const quick = [
   { to: "/", label: "خانه" },
@@ -65,10 +99,11 @@ export default function Footer() {
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row">
           <p>© ۱۴۰۵ پارسا اپس | تمامی حقوق محفوظ است</p>
           <p className="flex items-center gap-2">
-            ساخته‌شده با <span className="text-neon-pink">♥</span> توسط تیم پارسا اپس
+            ساخته‌شده با <span className="animate-pulse text-neon-pink">♥</span> توسط تیم پارسا اپس
           </p>
         </div>
       </div>
+      <BackToTop />
     </footer>
   );
 }
