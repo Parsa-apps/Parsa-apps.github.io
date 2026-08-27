@@ -1,13 +1,12 @@
 /* ============================================================
-   Parsa Apps — Service Worker v4 (black-screen fix)
+   Parsa Apps — Service Worker v5 (static single-page site)
    Strategy:
-   - Navigations: network-first, never serve stale hashed chunks
+   - Navigations: network-first, fall back to cached index.html
    - Static assets: cache-first with background refresh
-   - Bumps cache version to purge old broken builds
-   - If chunk 404s, delete old cache and force network
+   - v5 bump purges all caches from the previous React/Vite builds
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v4"; // bumped: fix black screen from stale chunk 404s
+const CACHE_NAME = "parsa-apps-v5"; // bumped: static redesign — purge old hashed React chunks
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {
