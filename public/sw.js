@@ -1,14 +1,14 @@
 /* ============================================================
-   Parsa Apps — Service Worker v7 (static single-page site)
+   Parsa Apps — Service Worker v8 (static single-page site)
    Strategy:
    - Navigations: network-first, fall back to cached index.html
    - Static assets: cache-first with background refresh
-   - v7 bump purges v6 caches: cinematic loader (pieces + golden halo + crown)
-     with logo 2026_20260821_002324_0001.png so every user gets the fresh
-     cinematic intro instead of old simple loader.
+   - v8 bump purges v7 caches: loader logo background removed
+     (transparent PNG) + longer cinematic intro so every user
+     gets the fresh transparent-logo intro.
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v7"; // bumped: cinematic loader (logo pieces + halo + crown)
+const CACHE_NAME = "parsa-apps-v8"; // bumped: transparent loader logo + longer cinematic intro
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {
