@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="جزیره فندقی">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFF6D6"/>
+      <stop offset="55%" stop-color="#BDEAFA"/>
+      <stop offset="100%" stop-color="#8BCFE8"/>
+    </linearGradient>
+    <linearGradient id="shell" x1="14" y1="36" x2="50" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E5A06A"/>
+      <stop offset="50%" stop-color="#8B4B1F"/>
+      <stop offset="100%" stop-color="#5A2E15"/>
+    </linearGradient>
+    <linearGradient id="moss" x1="14" y1="28" x2="50" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7DDC9A"/>
+      <stop offset="100%" stop-color="#2E9E5A"/>
+    </linearGradient>
+    <linearGradient id="house" x1="22" y1="14" x2="42" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5D33"/>
+      <stop offset="100%" stop-color="#5A3418"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#sky)"/>
+  <!-- soft clouds -->
+  <ellipse cx="12" cy="16" rx="10" ry="6" fill="white" opacity="0.6"/>
+  <ellipse cx="52" cy="52" rx="12" ry="7" fill="white" opacity="0.5"/>
+  <!-- hazelnut shell bottom -->
+  <path d="M10 36 C 10 36 14 56 32 62 C 50 56 54 36 54 36 C 54 36 46 38 32 38 C 18 38 10 36 10 36 Z" fill="url(#shell)"/>
+  <path d="M10 36 Q 32 46 54 36 Q 49 40 32 41 Q 15 40 10 36" fill="#3D1F0E" opacity="0.25"/>
+  <!-- moss top -->
+  <path d="M11 36 C 11 29 16 26 21 29 C 24 25 28 24 32 27 C 36 22 42 23 45 28 C 48 26 54 28 53 35 C 53 35 47 38 32 38 C 17 38 11 36 11 36 Z" fill="url(#moss)"/>
+  <!-- roots -->
+  <path d="M28 44 C 27 48 24 51 22 53" stroke="#4A2A14" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M40 44 C 41 48 43 51 45 53" stroke="#4A2A14" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M32 45 C 32 50 32 54 32 57" stroke="#4A2A14" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <!-- tree trunks small -->
+  <rect x="18" y="24" width="2.5" height="8" rx="1" fill="#5A3418"/>
+  <rect x="44" y="23" width="2.5" height="9" rx="1" fill="#5A3418"/>
+  <!-- trees foliage -->
+  <circle cx="19.5" cy="22" r="6.5" fill="#2E9E5A"/>
+  <circle cx="17" cy="20" r="5" fill="#5ACB7B"/>
+  <circle cx="45.5" cy="21" r="6.8" fill="#2E9E5A"/>
+  <circle cx="48" cy="19.5" r="5.2" fill="#5ACB7B"/>
+  <!-- house -->
+  <g transform="translate(0,0)">
+    <path d="M22 20 L 32 11 L 42 20 L 42 31 L 22 31 Z" fill="url(#house)" stroke="#3A2210" stroke-width="0.8"/>
+    <path d="M22 20 L 32 12 L 42 20" fill="none" stroke="#3A2210" stroke-width="0.8" stroke-linecap="round"/>
+    <rect x="24.5" y="24" width="3.5" height="4" rx="0.8" fill="#8ED8F5" stroke="#3A2210" stroke-width="0.6"/>
+    <rect x="30" y="24" width="3" height="6" rx="1" fill="#FFD27A" stroke="#3A2210" stroke-width="0.6"/>
+    <rect x="36.5" y="24" width="3.5" height="4" rx="0.8" fill="#FFB347" stroke="#3A2210" stroke-width="0.6"/>
+    <circle cx="32" cy="18" r="1.6" fill="#FFD27A" stroke="#3A2210" stroke-width="0.5"/>
+  </g>
+  <!-- glowing dots -->
+  <circle cx="27" cy="32" r="0.9" fill="#7EF2FF" opacity="0.95"/>
+  <circle cx="38" cy="33" r="0.8" fill="#FFE27A" opacity="0.95"/>
+  <circle cx="45" cy="31" r="0.7" fill="#7EF2FF" opacity="0.9"/>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="پارسا اپس">
+  <defs>
+    <linearGradient id="pa-gold" x1="10" y1="8" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FBE08A"/>
+      <stop offset="28%" stop-color="#E9B949"/>
+      <stop offset="55%" stop-color="#C9922B"/>
+      <stop offset="78%" stop-color="#F2D479"/>
+      <stop offset="100%" stop-color="#A9761C"/>
+    </linearGradient>
+    <linearGradient id="pa-gold-soft" x1="18" y1="14" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F7D98B"/>
+      <stop offset="100%" stop-color="#BE8A24"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="15" fill="#0B1220"/>
+  <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="13.9" fill="none" stroke="url(#pa-gold)" stroke-opacity="0.34" stroke-width="1.1"/>
+
+  <!-- P -->
+  <path d="M13.5 13.5h11.2a9.2 9.2 0 0 1 0 18.4h-5.4V50h-5.8Z" fill="url(#pa-gold)"/>
+  <path d="M19.3 18.6h5.1a4.2 4.2 0 0 1 0 8.4h-5.1Z" fill="#0B1220"/>
+
+  <!-- A -->
+  <path d="M37.4 50h-5.9l9.9-36.5h4.7L56 50h-6l-2-8.2h-8.6Zm3.4-13.2h6.1l-3-12.2Z" fill="url(#pa-gold-soft)"/>
+
+  <!-- sparkle accent -->
+  <path d="M50.5 12.2l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1Z" fill="#FBE08A" opacity="0.9"/>
+</svg>
