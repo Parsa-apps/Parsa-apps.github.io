@@ -1017,8 +1017,16 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
   .mm-tile{ padding:10px 12px; }
   .stat b{ font-size:26px; }
   .stat span{ font-size:12px; }
-  .loader-word{ font-size:26px; }
+  .loader-percent { font-size: 26px; }
 }
+/* mobile loader fix: prevent float overflow / left-shift */
+@media (max-width: 560px) {
+  .intro-stage { padding: 24px 14px; }
+  .intro-float { width: min(82vw, 260px); margin: 0 auto; }
+  .loader-bar { width: min(72vw, 240px); }
+  .loader-percent { font-size: 14px; }
+}
+
 /* short landscape phones: tighten vertical rhythm so content is reachable */
 @media (max-height:520px) and (orientation:landscape){
   section{ padding:56px 18px; }
