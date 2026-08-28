@@ -3,13 +3,12 @@
    Strategy:
    - Navigations: network-first, fall back to cached index.html
    - Static assets: cache-first with background refresh
-   - v8 bump purges v7 caches: transparent-background loader logo
-     (2026_20260821_002324_0001.png) + longer cinematic intro timing,
-     so every user gets the natural blended intro instead of the
-     old black-box logo.
+   - v8 bump purges v7 caches: loader logo background removed
+     (transparent PNG) + longer cinematic intro so every user
+     gets the fresh transparent-logo intro.
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v8"; // bumped: transparent loader logo + longer intro timeline
+const CACHE_NAME = "parsa-apps-v8"; // bumped: transparent loader logo + longer cinematic intro
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {
