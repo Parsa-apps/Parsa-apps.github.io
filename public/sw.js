@@ -1,12 +1,14 @@
 /* ============================================================
-   Parsa Apps — Service Worker v5 (static single-page site)
+   Parsa Apps — Service Worker v6 (static single-page site)
    Strategy:
    - Navigations: network-first, fall back to cached index.html
    - Static assets: cache-first with background refresh
-   - v5 bump purges all caches from the previous React/Vite builds
+   - v6 bump purges v5 caches: new optimized assets (WebP screenshots,
+     variable font, logo-sm, three.js removed) so every user gets the
+     fresh asset set instead of stale heavy copies from v5.
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v5"; // bumped: static redesign — purge old hashed React chunks
+const CACHE_NAME = "parsa-apps-v6"; // bumped: optimized assets (webp images + variable font)
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {

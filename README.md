@@ -22,7 +22,7 @@
 | لایه | فناوری |
 | --- | --- |
 | صفحه | HTML5 + CSS3 سفارشی (متغیرهای طراحی، Glassmorphism) |
-| سه‌بعدی | Three.js (نسخهٔ UMD محلی در `assets/vendor`) |
+| سه‌بعدی | رندرر WebGL دست‌نویس سبک (~۱۰KB، بدون وابستگی) |
 | انیمیشن | CSS + IntersectionObserver + requestAnimationFrame |
 | زبان | فارسی / انگلیسی / عربی با `data-i18n` |
 | بیلد | اسکریپت Node.js بدون هیچ وابستگی (`scripts/build.mjs`) |
@@ -34,11 +34,10 @@
 index.html            ← کل سایت (مارک‌آپ + استایل + اسکریپت + دیکشنری ترجمه)
 public/
   assets/
-    fonts/            ← Vazirmatn (5 وزن) + JetBrains Mono (3 وزن)
-    screenshots/      ← اسکرین‌شات‌های جزیره فندقی (کاروسل و محصول شاخص)
+    fonts/            ← Vazirmatn Variable (۱۰۰–۹۰۰) + JetBrains Mono (400/700)
+    screenshots/      ← اسکرین‌شات‌های جزیره فندقی (نسخهٔ کامل + sm/ بهینه برای وب)
     images/           ← تصاویر پروژه‌ها، او‌جی و …
     brand/            ← لوگوها و برند
-    vendor/three.min.js  ← Three.js محلی
   manifest.json       ← PWA
   sw.js               ← Service Worker (network-first برای ناوبری)
   robots.txt, sitemap.xml

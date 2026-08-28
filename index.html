@@ -29,10 +29,9 @@
 <meta name="twitter:description" content="Building the future of mobile experiences.">
 <meta name="twitter:image" content="https://parsa-apps.github.io/assets/images/og-cover.jpg">
 
-<!-- Fonts: self-hosted (no external requests) -->
-<link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/Vazirmatn-Black.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Fonts: self-hosted (no external requests) — Vazirmatn variable (100–900 in one file) + JetBrains Mono 400/700 -->
+<link rel="preload" href="/assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -54,14 +53,8 @@
 
 <style>
 /* ============ FONTS (self-hosted) ============ */
-@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
-@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
-@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+08A0-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC; }
-@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
-@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-ExtraBold.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
-@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-Black.woff2') format('woff2'); font-weight:900; font-style:normal; font-display:swap; }
+@font-face{ font-family:'Vazirmatn'; src:url('/assets/fonts/Vazirmatn-Variable.woff2') format('woff2'); font-weight:100 900; font-style:normal; font-display:swap; }
 @font-face{ font-family:'JetBrains Mono'; src:url('/assets/fonts/JetBrainsMono-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-@font-face{ font-family:'JetBrains Mono'; src:url('/assets/fonts/JetBrainsMono-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+2000-206F; }
 @font-face{ font-family:'JetBrains Mono'; src:url('/assets/fonts/JetBrainsMono-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 
 /* ============ TOKENS ============ */
@@ -98,7 +91,7 @@ body{
 }
 body.lock, body.menu-lock{ overflow:hidden; height:100vh; }
 .mono{ font-family:'JetBrains Mono','Vazirmatn',ui-monospace,monospace; letter-spacing:.02em; }
-img{max-width:100%;display:block;}
+img{max-width:100%;height:auto;display:block;}
 a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;}
 ::selection{ background:var(--violet); color:#fff; }
@@ -124,7 +117,7 @@ section[id]{ scroll-margin-top:80px; }
   position:fixed; inset:0; z-index:9999;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
   background:radial-gradient(circle at 50% 40%, #10122400, var(--bg) 75%), var(--bg);
-  transition:opacity .9s var(--ease), visibility .9s var(--ease);
+  transition:opacity .6s var(--ease), visibility .6s var(--ease);
 }
 #loader.hide{ opacity:0; visibility:hidden; pointer-events:none; }
 #loaderCanvas{ position:absolute; inset:0; width:100%; height:100%; }
@@ -219,7 +212,7 @@ p.section-lead{ color:var(--text-dim); font-size:17px; line-height:1.9; max-widt
 @media (prefers-reduced-motion:reduce){ [data-reveal]{ transition:opacity .4s ease; transform:none !important; } }
 
 /* ============ HERO ============ */
-#hero{ min-height:100vh; display:flex; flex-direction:column; align-items:center; padding-top:150px; }
+#hero{ min-height:100vh; min-height:100svh; display:flex; flex-direction:column; align-items:center; padding-top:150px; }
 #heroCanvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.85; }
 .hero-inner{
   position:relative; z-index:2; text-align:center; margin:0 auto; width:100%;
@@ -239,16 +232,17 @@ h1.hero-title{
 .chip{ background:var(--surface); border:1px solid var(--border); padding:8px 16px; border-radius:999px; font-size:13px; color:var(--text-dim); }
 
 /* coverflow */
-.coverflow-wrap{ perspective:1400px; height:280px; position:relative; margin-top:10px; }
-.coverflow{ position:relative; width:100%; height:100%; transform-style:preserve-3d; touch-action:pan-y; }
+.coverflow-wrap{ perspective:1400px; height:280px; position:relative; margin-top:10px; overflow:hidden; }
+.coverflow{ position:relative; width:100%; height:100%; transform-style:preserve-3d; touch-action:pan-y; pointer-events:none; }
 .cf-slide{
   position:absolute; top:50%; left:50%; width:150px; height:270px;
   margin:-135px 0 0 -75px; border-radius:22px; overflow:hidden;
   border:1px solid var(--border-strong); box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
   transition:transform .6s var(--ease), opacity .6s var(--ease), filter .6s var(--ease);
-  background:#111; cursor:pointer;
+  background:#111; cursor:pointer; pointer-events:auto; touch-action:pan-y;
 }
-.cf-slide img{ width:100%; height:100%; object-fit:cover; }
+.cf-slide img{ width:100%; height:100%; object-fit:cover; pointer-events:none; -webkit-user-drag:none; user-select:none; }
+.coverflow.dragging .cf-slide{ transition:none; }
 .cf-dots{ display:flex; justify-content:center; gap:7px; margin-top:20px; }
 .cf-dots span{ width:6px; height:6px; border-radius:50%; background:var(--border-strong); transition:.3s; cursor:pointer; }
 .cf-dots span.active{ background:var(--violet-soft); width:20px; border-radius:4px; }
@@ -363,7 +357,8 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
 @media (max-width:980px){
   header nav.desktop-nav, header .nav-cta, header .lang-switch{ display:none; }
   .burger{ display:flex; }
-  .about-grid, .feature-grid{ grid-template-columns:1fr; gap:44px; }
+  /* note: #apps .feature-grid has higher specificity — override it explicitly */
+  .about-grid, #apps .feature-grid{ grid-template-columns:1fr; gap:44px; }
   .process-grid{ grid-template-columns:repeat(2,1fr); }
   .skills-grid{ grid-template-columns:repeat(3,1fr); }
   .projects-grid{ grid-template-columns:1fr; }
@@ -371,11 +366,57 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
   .about-crystal-wrap{ height:300px; }
 }
 @media (max-width:560px){
-  section{ padding:90px 18px; }
-  .process-grid{ grid-template-columns:1fr; }
-  .skills-grid{ grid-template-columns:repeat(2,1fr); }
+  section{ padding:76px 18px; }
+  #hero{ padding-top:112px; min-height:100svh; }
+  /* mobile: never center-clip tall hero content — align to top and let it scroll */
+  .hero-inner{ justify-content:flex-start; }
+  .hero-lead{ margin-bottom:26px; }
+  .hero-ctas{ gap:12px; margin-bottom:36px; }
+  .hero-stats{ margin-bottom:28px; }
+  .hero-tags{ gap:8px; margin-bottom:44px; }
+  .scroll-hint{ margin-top:22px; }
+  .btn{ padding:10px 18px; font-size:13.5px; }
+  .chip{ padding:7px 13px; font-size:12px; }
   .cf-slide{ width:120px; height:216px; margin:-108px 0 0 -60px; }
   .coverflow-wrap{ height:230px; }
+  .marquee{ margin-top:46px; }
+  .phone-frame{ max-width:250px; }
+  /* keep the timeline number marker fully inside the timeline box */
+  .timeline{ padding-inline-start:30px; }
+  .timeline-item::before{ inset-inline-start:-43px; }
+  .cta-panel{ padding:48px 20px; }
+  footer{ margin-top:46px; }
+  .social-row{ margin-bottom:18px; }
+  .process-grid{ grid-template-columns:1fr; }
+  .skills-grid{ grid-template-columns:repeat(2,1fr); }
+  .meta-row{ gap:20px; }
+  .dev-ctas{ margin-top:26px; }
+  .about-crystal-wrap{ height:260px; }
+}
+@media (max-width:400px){
+  .cf-slide{ width:106px; height:190px; margin:-95px 0 0 -53px; }
+  .coverflow-wrap{ height:204px; }
+  .hero-title{ font-size:31px; }
+  .phone-frame{ max-width:230px; }
+  #mobileMenu a{ font-size:19px; padding:12px 0; }
+  .stat b{ font-size:26px; }
+  .stat span{ font-size:12px; }
+  .loader-word{ font-size:26px; }
+}
+/* short landscape phones: tighten vertical rhythm so content is reachable */
+@media (max-height:520px) and (orientation:landscape){
+  section{ padding:56px 18px; }
+  #hero{ padding-top:96px; }
+  .hero-inner{ justify-content:flex-start; }
+  .hero-lead{ margin-bottom:18px; }
+  .hero-ctas{ margin-bottom:22px; }
+  .hero-stats{ margin-bottom:18px; }
+  .hero-tags{ margin-bottom:26px; }
+  .scroll-hint{ display:none; }
+  .coverflow-wrap{ height:206px; }
+  .marquee{ margin-top:34px; }
+  .cta-panel{ padding:40px 20px; }
+  #mobileMenu{ justify-content:flex-start; padding-top:80px; }
 }
 </style>
 <noscript>
@@ -405,7 +446,7 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
 <!-- ============ HEADER ============ -->
 <header id="siteHeader">
   <a href="#" class="brand">
-    <img src="/assets/logo.png" alt="Parsa Apps">
+    <img src="/assets/logo-sm.webp" alt="Parsa Apps" width="32" height="32">
     Parsa Apps
   </a>
   <nav class="desktop-nav" aria-label="ناوبری اصلی">
@@ -464,14 +505,14 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
 
     <div class="coverflow-wrap" id="coverflowWrap">
       <div class="coverflow" id="coverflow">
-        <div class="cf-slide"><img src="/assets/screenshots/1_home.png" alt="جزیره فندقی — خانه" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/2_learning.png" alt="جزیره فندقی — یادگیری" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/3_games.png" alt="جزیره فندقی — بازی‌ها" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/4_stories.png" alt="جزیره فندقی — داستان‌ها" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/5_progress.png" alt="جزیره فندقی — پیشرفت" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/6_missions.png" alt="جزیره فندقی — مأموریت‌ها" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/7_profile.png" alt="جزیره فندقی — پروفایل" loading="lazy" decoding="async"></div>
-        <div class="cf-slide"><img src="/assets/screenshots/8_safe.png" alt="جزیره فندقی — محیط امن" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/1_home.webp" alt="جزیره فندقی — خانه" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/2_learning.webp" alt="جزیره فندقی — یادگیری" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/3_games.webp" alt="جزیره فندقی — بازی‌ها" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/4_stories.webp" alt="جزیره فندقی — داستان‌ها" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/5_progress.webp" alt="جزیره فندقی — پیشرفت" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/6_missions.webp" alt="جزیره فندقی — مأموریت‌ها" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/7_profile.webp" alt="جزیره فندقی — پروفایل" width="150" height="270" loading="lazy" decoding="async"></div>
+        <div class="cf-slide"><img src="/assets/screenshots/sm/8_safe.webp" alt="جزیره فندقی — محیط امن" width="150" height="270" loading="lazy" decoding="async"></div>
       </div>
     </div>
     <div class="cf-dots" id="cfDots"></div>
@@ -494,7 +535,7 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
       <div class="tilt" data-reveal>
         <div class="tilt-inner">
           <div class="phone-frame">
-            <img src="/assets/screenshots/1_home.png" alt="جزیره فندقی" loading="lazy" decoding="async">
+            <img src="/assets/screenshots/1_home-640.webp" alt="جزیره فندقی" width="640" height="1138" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -616,17 +657,17 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     <p class="section-lead" data-reveal data-i18n="projectsLead">محصولاتی که با عشق و دقت ساخته شده‌اند.</p>
     <div class="projects-grid" id="projectsGrid">
       <div class="panel proj-card" data-reveal>
-        <div class="proj-media"><span class="proj-badge badge-live" data-i18n="projectsBadge1">منتشر شده</span><img src="/assets/images/app-jazire.jpg" alt="جزیره فندقی" loading="lazy" decoding="async"></div>
+        <div class="proj-media"><span class="proj-badge badge-live" data-i18n="projectsBadge1">منتشر شده</span><img src="/assets/images/app-jazire-740.webp" alt="جزیره فندقی" width="740" height="404" loading="lazy" decoding="async"></div>
         <div class="proj-body"><h4 data-i18n="projectsC1t">🏝️ جزیره فندقی</h4><p data-i18n="projectsC1d">اپلیکیشن آموزشی-سرگرمی کودکان با بازی‌ها، داستان‌ها و فعالیت‌های تعاملی.</p>
         <div class="proj-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span></div></div>
       </div>
       <div class="panel proj-card" data-reveal>
-        <div class="proj-media"><span class="proj-badge badge-dev" data-i18n="projectsBadge2">در حال توسعه</span><img src="/assets/images/app-kartoniya.jpg" alt="کارتونیا" loading="lazy" decoding="async"></div>
+        <div class="proj-media"><span class="proj-badge badge-dev" data-i18n="projectsBadge2">در حال توسعه</span><img src="/assets/images/app-kartoniya-740.webp" alt="کارتونیا" width="740" height="404" loading="lazy" decoding="async"></div>
         <div class="proj-body"><h4 data-i18n="projectsC2t">🎬 کارتونیا</h4><p data-i18n="projectsC2d">پلتفرم تماشای کارتون و انیمیشن برای کودکان با محتوای امن و فیلتر شده.</p>
         <div class="proj-tags"><span>Flutter</span><span>Video</span><span>UI/UX</span></div></div>
       </div>
       <div class="panel proj-card" data-reveal>
-        <div class="proj-media"><span class="proj-badge badge-soon" data-i18n="projectsBadge3">به‌زودی</span><img src="/assets/images/studio-craft.jpg" alt="پروژه‌های آینده" loading="lazy" decoding="async"></div>
+        <div class="proj-media"><span class="proj-badge badge-soon" data-i18n="projectsBadge3">به‌زودی</span><img src="/assets/images/studio-craft-740.webp" alt="پروژه‌های آینده" width="740" height="404" loading="lazy" decoding="async"></div>
         <div class="proj-body"><h4 data-i18n="projectsC3t">🔮 پروژه‌های آینده</h4><p data-i18n="projectsC3d">اپلیکیشن‌های جدیدی در دست توسعه هستند که به‌زودی معرفی خواهند شد.</p>
         <div class="proj-tags"><span>Flutter</span><span>AI</span><span>Education</span></div></div>
       </div>
@@ -656,7 +697,6 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
   </div>
 </section>
 
-<script src="/assets/vendor/three.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -671,7 +711,6 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
       return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
     } catch (e) { return false; }
   })();
-  var HAS_THREE = typeof THREE !== 'undefined';
 
   /* ============================================================
      1. i18n — فارسی / English / العربية
@@ -929,9 +968,9 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     ['Flutter', 'AI', 'Education']
   ];
   var PROJECT_IMGS = [
-    '/assets/images/app-jazire.jpg',
-    '/assets/images/app-kartoniya.jpg',
-    '/assets/images/studio-craft.jpg'
+    '/assets/images/app-jazire-740.webp',
+    '/assets/images/app-kartoniya-740.webp',
+    '/assets/images/studio-craft-740.webp'
   ];
   var PROJECT_ALTS = ['جزیره فندقی', 'کارتونیا', 'پروژه‌های آینده'];
 
@@ -941,7 +980,7 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     grid.innerHTML = d.projectsCards.map(function (card, i) {
       return '<div class="panel proj-card" data-reveal>' +
         '<div class="proj-media"><span class="proj-badge ' + PROJECT_BADGES[i] + '">' + d.projectsBadges[i] + '</span>' +
-        '<img src="' + PROJECT_IMGS[i] + '" alt="' + PROJECT_ALTS[i] + '" loading="lazy" decoding="async"></div>' +
+        '<img src="' + PROJECT_IMGS[i] + '" alt="' + PROJECT_ALTS[i] + '" width="740" height="404" loading="lazy" decoding="async"></div>' +
         '<div class="proj-body"><h4>' + card.t + '</h4><p>' + card.d + '</p>' +
         '<div class="proj-tags">' + PROJECT_TAGS[i].map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div></div></div>';
     }).join('');
@@ -1036,60 +1075,243 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
 
   /* ============================================================
      2. Crystal scene factory (loader / hero / about)
+
+     Lightweight hand-written WebGL renderer (~10 KB) that replaces the
+     592 KB three.min.js dependency. It reproduces the same scene:
+     a rotating icosahedral crystal with wireframe overlay, three
+     orbiting emissive spheres and a drifting particle field, lit by
+     the same three colored point lights.
   ============================================================= */
+  var MAT4 = {
+    ident: function () { return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]; },
+    mul: function (a, b) { // column-major a*b
+      var o = new Array(16);
+      for (var c = 0; c < 4; c++) {
+        for (var r = 0; r < 4; r++) {
+          o[c*4+r] = a[r]*b[c*4] + a[4+r]*b[c*4+1] + a[8+r]*b[c*4+2] + a[12+r]*b[c*4+3];
+        }
+      }
+      return o;
+    },
+    perspective: function (fovy, aspect, near, far) {
+      var f = 1 / Math.tan(fovy * Math.PI / 360), nf = 1 / (near - far);
+      return [f/aspect,0,0,0, 0,f,0,0, 0,0,(far+near)*nf,-1, 0,0,2*far*near*nf,0];
+    },
+    lookAt: function (eye, target) {
+      var up = [0, 1, 0];
+      var zx = eye[0]-target[0], zy = eye[1]-target[1], zz = eye[2]-target[2];
+      var zl = Math.hypot(zx, zy, zz) || 1; zx/=zl; zy/=zl; zz/=zl;
+      var xx = up[1]*zz - up[2]*zy, xy = up[2]*zx - up[0]*zz, xz = up[0]*zy - up[1]*zx;
+      var xl = Math.hypot(xx, xy, xz) || 1; xx/=xl; xy/=xl; xz/=xl;
+      var yx = zy*xz - zz*xy, yy = zz*xx - zx*xz, yz = zx*xy - zy*xx;
+      return [xx,yx,zx,0, xy,yy,zy,0, xz,yz,zz,0,
+        -(xx*eye[0]+xy*eye[1]+xz*eye[2]),
+        -(yx*eye[0]+yy*eye[1]+yz*eye[2]),
+        -(zx*eye[0]+zy*eye[1]+zz*eye[2]), 1];
+    },
+    translate: function (x, y, z) {
+      return [1,0,0,0, 0,1,0,0, 0,0,1,0, x,y,z,1];
+    },
+    rotXY: function (rx, ry) { // first rotate about X, then about Y (matches three's XYZ euler with z=0)
+      var cx = Math.cos(rx), sx = Math.sin(rx), cy = Math.cos(ry), sy = Math.sin(ry);
+      return [cy,0,-sy,0, sy*sx,cx,cy*sx,0, sy*cx,-sx,cy*cx,0, 0,0,0,1];
+    }
+  };
+
+  /* ---- geometry: subdivided icosphere (crystal) ---- */
+  var ICO_CACHE = {};
+  function icosphere(detail) {
+    if (ICO_CACHE[detail]) return ICO_CACHE[detail];
+    var t = (1 + Math.sqrt(5)) / 2;
+    var verts = [
+      -1,t,0, 1,t,0, -1,-t,0, 1,-t,0,
+      0,-1,t, 0,1,t, 0,-1,-t, 0,1,-t,
+      t,0,-1, t,0,1, -t,0,-1, -t,0,1
+    ];
+    var faces = [
+      0,11,5, 0,5,1, 0,1,7, 0,7,10, 0,10,11,
+      1,5,9, 5,11,4, 11,10,2, 10,7,6, 7,1,8,
+      3,9,4, 3,4,2, 3,2,6, 3,6,8, 3,8,9,
+      4,9,5, 2,4,11, 6,2,10, 8,6,7, 9,8,1
+    ];
+    for (var d = 0; d < detail; d++) {
+      var nf = [];
+      var cache = {};
+      function mid(a, b) {
+        var key = a < b ? a + '_' + b : b + '_' + a;
+        if (key in cache) return cache[key];
+        var i = verts.length / 3;
+        verts.push(
+          (verts[a*3] + verts[b*3]) / 2,
+          (verts[a*3+1] + verts[b*3+1]) / 2,
+          (verts[a*3+2] + verts[b*3+2]) / 2
+        );
+        cache[key] = i;
+        return i;
+      }
+      for (var f = 0; f < faces.length; f += 3) {
+        var a = faces[f], b = faces[f+1], c = faces[f+2];
+        var ab = mid(a, b), bc = mid(b, c), ca = mid(c, a);
+        nf.push(a, ab, ca, b, bc, ab, c, ca, bc, ab, bc, ca);
+      }
+      faces = nf;
+    }
+    // normalize -> radius 1, positions double as smooth normals
+    var n = verts.length / 3;
+    for (var i = 0; i < n; i++) {
+      var x = verts[i*3], y = verts[i*3+1], z = verts[i*3+2];
+      var l = Math.hypot(x, y, z) || 1;
+      verts[i*3] = x/l; verts[i*3+1] = y/l; verts[i*3+2] = z/l;
+    }
+    // unique edges -> wireframe line vertices
+    var edgeSet = {}, lines = [];
+    for (var f2 = 0; f2 < faces.length; f2 += 3) {
+      var tri = [faces[f2], faces[f2+1], faces[f2+2]];
+      for (var e = 0; e < 3; e++) {
+        var a2 = tri[e], b2 = tri[(e+1)%3];
+        var k = a2 < b2 ? a2 + '_' + b2 : b2 + '_' + a2;
+        if (!edgeSet[k]) {
+          edgeSet[k] = 1;
+          lines.push(verts[a2*3], verts[a2*3+1], verts[a2*3+2], verts[b2*3], verts[b2*3+1], verts[b2*3+2]);
+        }
+      }
+    }
+    ICO_CACHE[detail] = { verts: new Float32Array(verts), idx: new Uint16Array(faces), lines: new Float32Array(lines) };
+    return ICO_CACHE[detail];
+  }
+
+  /* ---- geometry: uv sphere (orbiting moons) ---- */
+  var SPHERE = null;
+  function moonSphere() {
+    if (SPHERE) return SPHERE;
+    var LAT = 10, LON = 14, verts = [], idx = [];
+    for (var i = 0; i <= LAT; i++) {
+      var th = i / LAT * Math.PI, st = Math.sin(th), ct = Math.cos(th);
+      for (var j = 0; j <= LON; j++) {
+        var ph = j / LON * Math.PI * 2;
+        verts.push(st * Math.cos(ph), ct, st * Math.sin(ph));
+      }
+    }
+    for (var i2 = 0; i2 < LAT; i2++) {
+      for (var j2 = 0; j2 < LON; j2++) {
+        var a = i2 * (LON+1) + j2, b = a + LON + 1;
+        idx.push(a, b, a+1, b, b+1, a+1);
+      }
+    }
+    SPHERE = { verts: new Float32Array(verts), idx: new Uint16Array(idx) };
+    return SPHERE;
+  }
+
+  /* Detect once whether WebGL runs on a real GPU. Software rasterizers
+     (SwiftShader/llvmpipe) redraw at 100–500 ms/frame and would stall the
+     page, so the decorative crystals are skipped there entirely. */
+  var GPU_WEBGL = null;
+  function hasGpuWebGL() {
+    if (GPU_WEBGL !== null) return GPU_WEBGL;
+    GPU_WEBGL = false;
+    try {
+      var probe = document.createElement('canvas');
+      probe.width = probe.height = 1;
+      var gl = probe.getContext('webgl') || probe.getContext('experimental-webgl');
+      if (!gl) return false;
+      var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+      var gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : String(gl.getParameter(gl.RENDERER));
+      GPU_WEBGL = !/swiftshader|llvmpipe|softpipe|software rasterizer|basic render/i.test(gpu);
+    } catch (e) { GPU_WEBGL = false; }
+    return GPU_WEBGL;
+  }
+
+  var VSH = 'attribute vec3 aPos;attribute vec3 aNor;uniform mat4 uP;uniform mat4 uV;uniform mat4 uM;' +
+    'varying vec3 vN;varying vec3 vW;void main(){vec4 w=uM*vec4(aPos,1.0);vW=w.xyz;' +
+    'vN=mat3(uM[0].xyz,uM[1].xyz,uM[2].xyz)*aNor;gl_Position=uP*uV*w;}';
+  var FSH = 'precision mediump float;varying vec3 vN;varying vec3 vW;' +
+    'uniform vec3 uEye;uniform vec3 uBase;uniform vec3 uEmis;uniform float uAlpha;' +
+    'uniform float uMetal;uniform float uShine;uniform float uSpec;' +
+    'void main(){vec3 N=normalize(vN);vec3 V=normalize(uEye-vW);vec3 col=uEmis;vec3 sp=vec3(0.0);' +
+    'vec3 lp0=vec3(3.0,3.0,4.0);vec3 lc0=vec3(0.486,0.361,0.988)*3.2;' +
+    'vec3 lp1=vec3(-4.0,-2.0,-3.0);vec3 lc1=vec3(0.369,0.918,0.831)*2.2;' +
+    'vec3 lp2=vec3(0.0,-3.0,3.0);vec3 lc2=vec3(1.0,0.714,0.282)*1.4;' +
+    'for(int i=0;i<3;i++){vec3 lp=i==0?lp0:(i==1?lp1:lp2);vec3 lc=i==0?lc0:(i==1?lc1:lc2);' +
+    'vec3 L=lp-vW;float d=length(L);L/=d;float att=clamp(1.0-d/26.0,0.0,1.0);' +
+    'float ndl=max(dot(N,L),0.0);col+=uBase*(1.0-uMetal)*ndl*lc*att;' +
+    'vec3 H=normalize(L+V);sp+=lc*att*ndl*pow(max(dot(N,H),0.0),uShine);}' +
+    'col+=mix(vec3(1.0),uBase,uMetal)*uSpec*sp;' +
+    'float fr=pow(1.0-max(dot(N,V),0.0),3.0);col+=uBase*fr*0.35;' +
+    'gl_FragColor=vec4(col*uAlpha,uAlpha);}'; // premultiplied alpha
+  var VSH_LINE = 'attribute vec3 aPos;uniform mat4 uP;uniform mat4 uV;uniform mat4 uM;' +
+    'void main(){gl_Position=uP*uV*uM*vec4(aPos,1.0);}';
+  var FSH_LINE = 'precision mediump float;uniform float uAlpha;void main(){gl_FragColor=vec4(uAlpha,uAlpha,uAlpha,uAlpha);}';
+  var VSH_POINT = 'attribute vec3 aPos;uniform mat4 uP;uniform mat4 uV;uniform mat4 uM;' +
+    'uniform float uSize;uniform float uHalfH;void main(){vec4 mv=uV*uM*vec4(aPos,1.0);' +
+    'gl_Position=uP*mv;gl_PointSize=max(uSize*uHalfH/max(-mv.z,0.001),1.0);}';
+  var FSH_POINT = 'precision mediump float;uniform float uAlpha;void main(){gl_FragColor=vec4(uAlpha,uAlpha,uAlpha,uAlpha);}';
+
   function createCrystalScene(canvas, opts) {
     opts = opts || {};
+    if (!HAS_WEBGL || !hasGpuWebGL()) return null;
     var detail = opts.detail !== undefined ? opts.detail : 1;
     var particleCount = opts.particleCount || 260;
     var autoRotateSpeed = REDUCED ? 0.0006 : (opts.autoRotateSpeed || 0.0045);
     var cameraZ = opts.cameraZ || 7;
     var interactive = !!opts.interactive && !REDUCED;
 
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(0, 0, cameraZ);
-    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    var gl;
+    try { gl = canvas.getContext('webgl', { alpha: true, antialias: true }) || canvas.getContext('experimental-webgl', { alpha: true, antialias: true }); }
+    catch (e) { return null; }
+    if (!gl) return null;
 
+    function sh(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src); gl.compileShader(s);
+      return s;
+    }
+    function prog(vs, fs) {
+      var p = gl.createProgram();
+      gl.attachShader(p, sh(gl.VERTEX_SHADER, vs));
+      gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs));
+      gl.linkProgram(p);
+      return p;
+    }
+    var pMain = prog(VSH, FSH), pLine = prog(VSH_LINE, FSH_LINE), pPoint = prog(VSH_POINT, FSH_POINT);
+    function locs(p, names) {
+      var o = { aPos: gl.getAttribLocation(p, 'aPos') };
+      names.forEach(function (n) { o[n] = gl.getUniformLocation(p, n); });
+      return o;
+    }
+    var LMain = locs(pMain, ['uP','uV','uM','uEye','uBase','uEmis','uAlpha','uMetal','uShine','uSpec']);
+    LMain.aNor = gl.getAttribLocation(pMain, 'aNor');
+    var LLine = locs(pLine, ['uP','uV','uM','uAlpha']);
+    var LPoint = locs(pPoint, ['uP','uV','uM','uSize','uHalfH','uAlpha']);
+
+    function buf(data, target) {
+      var b = gl.createBuffer();
+      gl.bindBuffer(target || gl.ARRAY_BUFFER, b);
+      gl.bufferData(target || gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+      return b;
+    }
+    var ico = icosphere(detail);
+    var sph = moonSphere();
+    var bIco = buf(ico.verts), iIco = buf(ico.idx, gl.ELEMENT_ARRAY_BUFFER);
+    var bLine = buf(ico.lines);
+    var bSph = buf(sph.verts), iSph = buf(sph.idx, gl.ELEMENT_ARRAY_BUFFER);
+    var ppos = new Float32Array(particleCount * 3);
+    for (var pi = 0; pi < ppos.length; pi++) ppos[pi] = (Math.random() - 0.5) * 18;
+    var bPts = buf(ppos);
+
+    var proj = MAT4.ident(), view = MAT4.ident();
+    var halfH = 1;
+    // render scale — starts modest and drops automatically when frames are slow
+    // (software rasterizers / weak GPUs), keeping the UI responsive.
+    var quality = opts.quality || Math.min(window.devicePixelRatio || 1, 1.5);
     function resize() {
       var w = canvas.clientWidth || canvas.parentElement.clientWidth || 300;
       var h = canvas.clientHeight || canvas.parentElement.clientHeight || 300;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+      var W = Math.max(1, Math.round(w * quality)), H = Math.max(1, Math.round(h * quality));
+      if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+      gl.viewport(0, 0, W, H);
+      proj = MAT4.perspective(45, W / H, 0.1, 100);
+      halfH = H * 0.5;
     }
-    resize();
-
-    scene.add(new THREE.AmbientLight(0x2a2740, 1.3));
-    var key = new THREE.PointLight(0x7c5cfc, 3.2, 26); key.position.set(3, 3, 4); scene.add(key);
-    var rim = new THREE.PointLight(0x5eead4, 2.2, 26); rim.position.set(-4, -2, -3); scene.add(rim);
-    var warm = new THREE.PointLight(0xffb648, 1.4, 26); warm.position.set(0, -3, 3); scene.add(warm);
-
-    var geo = new THREE.IcosahedronGeometry(1.6, detail);
-    var mat = new THREE.MeshStandardMaterial({
-      color: 0x8b6bff, metalness: 0.55, roughness: 0.22,
-      emissive: 0x3a2472, emissiveIntensity: 0.55,
-      transparent: true, opacity: 0.93
-    });
-    var crystal = new THREE.Mesh(geo, mat);
-    scene.add(crystal);
-    var wire = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.12 }));
-    crystal.add(wire);
-
-    var moonColors = [0xffb648, 0x5eead4, 0xff6ea8];
-    var moons = moonColors.map(function (c, i) {
-      var m = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 16), new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.9 }));
-      m.userData = { radius: 2.6 + i * 0.55, speed: 0.35 + i * 0.12, offset: i * 2.1 };
-      scene.add(m);
-      return m;
-    });
-
-    var pGeo = new THREE.BufferGeometry();
-    var pos = new Float32Array(particleCount * 3);
-    for (var i = 0; i < particleCount * 3; i++) pos[i] = (Math.random() - 0.5) * 18;
-    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    var particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.025, transparent: true, opacity: 0.45, sizeAttenuation: true }));
-    scene.add(particles);
 
     var targetX = 0, targetY = 0, curX = 0, curY = 0;
     function onMove(e) {
@@ -1100,81 +1322,220 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     }
     if (interactive) window.addEventListener('mousemove', onMove);
 
-    var running = true, raf;
+    var rotX = 0, rotY = 0, pRot = 0;
+    var moonColors = [
+      [1.000, 0.714, 0.282], // amber  #ffb648
+      [0.369, 0.918, 0.831], // cyan   #5eead4
+      [1.000, 0.431, 0.659]  // pink   #ff6ea8
+    ];
+    var moonData = moonColors.map(function (c, i) {
+      return { color: c, radius: 2.6 + i * 0.55, speed: 0.35 + i * 0.12, offset: i * 2.1 };
+    });
+
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+    var running = false, visible = true, raf = 0;
+    // adaptive quality: degrade the render scale as soon as frames run slow
+    // (software rasterizers / weak GPUs), keeping the main thread responsive.
+    var frameTimes = [], lastFrameAt = 0;
+    function watchFrame() {
+      var now = performance.now();
+      if (lastFrameAt) {
+        var dt = now - lastFrameAt;
+        frameTimes.push(dt);
+        if (frameTimes.length > 12) frameTimes.shift();
+        var spike = dt > 150;
+        var avg = frameTimes.length >= 8 && frameTimes.reduce(function (a, b) { return a + b; }, 0) / frameTimes.length > 34;
+        if ((spike || avg) && quality > 0.55) {
+          quality = quality > 1 ? 1 : 0.55;
+          frameTimes.length = 0;
+          resize();
+        }
+      }
+      lastFrameAt = now;
+    }
+
+    function drawMesh(program, L, buffer, index, count, model, setUniforms) {
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.enableVertexAttribArray(L.aPos);
+      gl.vertexAttribPointer(L.aPos, 3, gl.FLOAT, false, 0, 0);
+      if (L.aNor >= 0) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.enableVertexAttribArray(L.aNor);
+        gl.vertexAttribPointer(L.aNor, 3, gl.FLOAT, false, 0, 0);
+      }
+      gl.uniformMatrix4fv(L.uP, false, proj);
+      gl.uniformMatrix4fv(L.uV, false, view);
+      gl.uniformMatrix4fv(L.uM, false, model);
+      setUniforms(L);
+      if (index) {
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index);
+        gl.drawElements(gl.TRIANGLES, count, gl.UNSIGNED_SHORT, 0);
+      } else {
+        gl.drawArrays(gl.POINTS, 0, count);
+      }
+    }
+
     function tick() {
       if (!running) return;
       raf = requestAnimationFrame(tick);
-      crystal.rotation.y += autoRotateSpeed;
-      crystal.rotation.x += autoRotateSpeed * 0.35;
-      var t = performance.now() * 0.001;
-      moons.forEach(function (m) {
-        var a = t * m.userData.speed + m.userData.offset;
-        m.position.set(Math.cos(a) * m.userData.radius, Math.sin(a * 1.3) * 0.6, Math.sin(a) * m.userData.radius);
-      });
-      if (!REDUCED) particles.rotation.y += 0.0003;
+      if (!visible) return;
+      watchFrame();
+      resize();
+      rotY += autoRotateSpeed;
+      rotX += autoRotateSpeed * 0.35;
+      pRot += REDUCED ? 0 : 0.0003;
+
+      var eye = [0, 0, cameraZ];
       if (interactive) {
         curX += (targetX - curX) * 0.03;
         curY += (targetY - curY) * 0.03;
-        camera.position.x = curX * 1.6;
-        camera.position.y = -curY * 1.2;
-        camera.lookAt(0, 0, 0);
+        eye = [curX * 1.6, -curY * 1.2, cameraZ];
       }
-      renderer.render(scene, camera);
+      view = MAT4.lookAt(eye, [0, 0, 0]);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+      // crystal (radius 1.6, metallic purple, semi-transparent)
+      var cm = MAT4.rotXY(rotX, rotY);
+      var scale = 1.6;
+      var cmS = [scale*cm[0],scale*cm[1],scale*cm[2],cm[3], scale*cm[4],scale*cm[5],scale*cm[6],cm[7], scale*cm[8],scale*cm[9],scale*cm[10],cm[11], cm[12],cm[13],cm[14],cm[15]];
+      gl.enable(gl.BLEND);
+      drawMesh(pMain, LMain, bIco, iIco, ico.idx.length, cmS, function (L) {
+        gl.uniform3f(L.uEye, eye[0], eye[1], eye[2]);
+        gl.uniform3f(L.uBase, 0.545, 0.420, 1.0);   // #8b6bff
+        gl.uniform3f(L.uEmis, 0.227, 0.141, 0.447); // #3a2472 * 0.55
+        gl.uniform1f(L.uAlpha, 0.93);
+        gl.uniform1f(L.uMetal, 0.55);
+        gl.uniform1f(L.uShine, 48.0);
+        gl.uniform1f(L.uSpec, 0.9);
+      });
+      // wireframe overlay (slightly enlarged to sit above the surface)
+      var wm = [1.002*cmS[0],1.002*cmS[1],1.002*cmS[2],cmS[3], 1.002*cmS[4],1.002*cmS[5],1.002*cmS[6],cmS[7], 1.002*cmS[8],1.002*cmS[9],1.002*cmS[10],cmS[11], cmS[12],cmS[13],cmS[14],cmS[15]];
+      gl.disable(gl.CULL_FACE);
+      drawMesh(pLine, LLine, bLine, null, ico.lines.length / 3, wm, function (L) {
+        gl.uniform1f(L.uAlpha, 0.12);
+      });
+      gl.enable(gl.CULL_FACE);
+      // orbiting moons
+      var t = performance.now() * 0.001;
+      moonData.forEach(function (m) {
+        var a = t * m.speed + m.offset;
+        var pos = [Math.cos(a) * m.radius, Math.sin(a * 1.3) * 0.6, Math.sin(a) * m.radius];
+        var mm = MAT4.translate(pos[0], pos[1], pos[2]);
+        var sc = 0.16;
+        var mmS = [sc*mm[0],sc*mm[1],sc*mm[2],mm[3], sc*mm[4],sc*mm[5],sc*mm[6],mm[7], sc*mm[8],sc*mm[9],sc*mm[10],mm[11], mm[12],mm[13],mm[14],mm[15]];
+        drawMesh(pMain, LMain, bSph, iSph, sph.idx.length, mmS, function (L) {
+          gl.uniform3f(L.uEye, eye[0], eye[1], eye[2]);
+          gl.uniform3f(L.uBase, m.color[0], m.color[1], m.color[2]);
+          gl.uniform3f(L.uEmis, m.color[0] * 0.9, m.color[1] * 0.9, m.color[2] * 0.9);
+          gl.uniform1f(L.uAlpha, 1.0);
+          gl.uniform1f(L.uMetal, 0.0);
+          gl.uniform1f(L.uShine, 16.0);
+          gl.uniform1f(L.uSpec, 0.15);
+        });
+      });
+      // particle field
+      var pm = [Math.cos(pRot),0,-Math.sin(pRot),0, 0,1,0,0, Math.sin(pRot),0,Math.cos(pRot),0, 0,0,0,1];
+      gl.depthMask(false);
+      drawMesh(pPoint, LPoint, bPts, null, particleCount, pm, function (L) {
+        gl.uniform1f(L.uSize, 0.025);
+        gl.uniform1f(L.uHalfH, halfH);
+        gl.uniform1f(L.uAlpha, 0.45);
+      });
+      gl.depthMask(true);
     }
-    tick();
+
+    function start() { if (!running) { running = true; raf = requestAnimationFrame(tick); } }
+    function stop() { running = false; cancelAnimationFrame(raf); }
 
     var ro = new ResizeObserver(resize);
     ro.observe(canvas.parentElement || canvas);
     window.addEventListener('resize', resize);
 
+    // pause rendering while the canvas is off-screen
+    var vio = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible = e.isIntersecting; });
+    }, { rootMargin: '60px' }) : null;
+    if (vio) vio.observe(canvas);
+
+    canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); stop(); });
+    resize();
+    start();
+
     return {
-      scene: scene, camera: camera, renderer: renderer, crystal: crystal,
       destroy: function () {
-        running = false;
-        cancelAnimationFrame(raf);
+        stop();
         window.removeEventListener('resize', resize);
         if (interactive) window.removeEventListener('mousemove', onMove);
         try { ro.disconnect(); } catch (e) {}
-        renderer.dispose();
-        geo.dispose(); mat.dispose(); pGeo.dispose();
+        try { if (vio) vio.disconnect(); } catch (e) {}
+        var ext = gl.getExtension('WEBGL_lose_context');
+        if (ext) ext.loseContext();
       }
     };
   }
 
   var loaderScene = null, heroScene = null, aboutScene = null;
 
-  function initScenes() {
-    if (!(HAS_WEBGL && HAS_THREE)) return;
-    var loaderCanvas = document.getElementById('loaderCanvas');
-    var heroCanvas = document.getElementById('heroCanvas');
-    var aboutCanvas = document.getElementById('aboutCanvas');
-    try { loaderScene = createCrystalScene(loaderCanvas, { detail: 2, particleCount: 220, autoRotateSpeed: 0.012, cameraZ: 6.2, interactive: false }); } catch (e) {}
-    try { heroScene = createCrystalScene(heroCanvas, { detail: 1, particleCount: 180, autoRotateSpeed: 0.0035, cameraZ: 8, interactive: true }); } catch (e) {}
-    try { aboutScene = createCrystalScene(aboutCanvas, { detail: 2, particleCount: 150, autoRotateSpeed: 0.005, cameraZ: 6, interactive: false }); } catch (e) {}
+  function initLoaderScene() {
+    if (!HAS_WEBGL || loaderScene) return;
+    var c = document.getElementById('loaderCanvas');
+    try { loaderScene = createCrystalScene(c, { detail: 2, particleCount: 220, autoRotateSpeed: 0.012, cameraZ: 6.2, interactive: false, quality: 1 }); } catch (e) {}
   }
+
+  function initHeroScene() {
+    if (!HAS_WEBGL || heroScene) return;
+    var c = document.getElementById('heroCanvas');
+    try { heroScene = createCrystalScene(c, { detail: 1, particleCount: 180, autoRotateSpeed: 0.0035, cameraZ: 8, interactive: true }); } catch (e) {}
+  }
+
+  function initAboutScene() {
+    if (!HAS_WEBGL || aboutScene) return;
+    var c = document.getElementById('aboutCanvas');
+    try { aboutScene = createCrystalScene(c, { detail: 2, particleCount: 150, autoRotateSpeed: 0.005, cameraZ: 6, interactive: false }); } catch (e) {}
+  }
+
+  // about scene is strictly lazy: build it only when its section approaches the viewport
+  (function () {
+    var about = document.getElementById('about');
+    if (!about || !('IntersectionObserver' in window)) {
+      if (about) initAboutScene();
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { io.disconnect(); initAboutScene(); }
+      });
+    }, { rootMargin: '300px 0px' });
+    io.observe(about);
+  })();
 
   /* ============================================================
      3. Loader progress + fallback
+     Time-capped (~1.1s): never blocks on window.load — remaining
+     resources keep loading in the background after the reveal.
   ============================================================= */
   var lastLoaderPercent = 0;
   (function () {
     var loader = document.getElementById('loader');
     var bar = document.getElementById('loaderBarFill');
     var skipBtn = document.getElementById('loaderSkip');
-    var progress = 0, windowLoaded = false, done = false;
-
-    window.addEventListener('load', function () { windowLoaded = true; });
+    var done = false;
+    var DURATION = REDUCED ? 300 : 1050;
+    var t0 = performance.now();
 
     function step() {
       if (done) return;
-      var cap = windowLoaded ? 100 : 90;
-      var inc = progress < 60 ? (Math.random() * 5 + 3) : (Math.random() * 1.6 + 0.4);
-      progress = Math.min(progress + inc, cap);
-      lastLoaderPercent = progress;
-      bar.style.width = progress + '%';
-      setLoaderPercent(progress);
-      if (progress >= 100) { finish(); }
-      else { setTimeout(step, REDUCED ? 40 : 90); }
+      var t = Math.min((performance.now() - t0) / DURATION, 1);
+      var p = 100 * (1 - Math.pow(1 - t, 2.1)); // ease-out
+      lastLoaderPercent = Math.round(p);
+      bar.style.width = p + '%';
+      setLoaderPercent(p);
+      if (t >= 1) finish();
+      else setTimeout(step, 30);
     }
 
     function finish() {
@@ -1186,14 +1547,15 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
       setTimeout(function () {
         loader.classList.add('hide');
         document.body.classList.remove('lock');
-        if (loaderScene) { setTimeout(function () { loaderScene.destroy(); loaderScene = null; }, 900); }
-      }, 260);
+        initHeroScene(); // hero crystal starts as soon as the loader begins fading
+        if (loaderScene) { setTimeout(function () { loaderScene.destroy(); loaderScene = null; }, 700); }
+      }, 150);
     }
 
-    skipBtn.addEventListener('click', function () { progress = 100; finish(); });
+    skipBtn.addEventListener('click', function () { finish(); });
     step();
-    // absolute safety net
-    setTimeout(function () { if (!done) { progress = 100; finish(); } }, 6500);
+    // absolute safety net (1.6s)
+    setTimeout(function () { if (!done) finish(); }, 1600);
   })();
 
   /* ============================================================
@@ -1314,18 +1676,27 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     });
     var dots = Array.from(dotsWrap.children);
 
+    // responsive metrics: keep side slides inside the viewport on small screens
+    function metrics() {
+      var w = window.innerWidth;
+      if (w < 400) return { spacing: 76, depth: 120, rot: 30 };
+      if (w < 560) return { spacing: 92, depth: 130, rot: 32 };
+      return { spacing: 150, depth: 140, rot: 32 };
+    }
+
+    var dragOffset = 0; // live px offset applied while dragging
+
     function layout() {
-      var isSmall = window.innerWidth < 560;
-      var spacing = isSmall ? 92 : 150;
+      var m = metrics();
       slides.forEach(function (slide, i) {
         var diff = i - active;
         var n = slides.length;
         if (diff > n / 2) diff -= n;
         if (diff < -n / 2) diff += n;
         var abs = Math.abs(diff);
-        var tx = diff * spacing;
-        var tz = -abs * 140;
-        var ry = diff * -32;
+        var tx = diff * m.spacing + dragOffset;
+        var tz = -abs * m.depth;
+        var ry = diff * -m.rot;
         var opacity = abs <= 3 ? (1 - abs * 0.28) : 0;
         slide.style.transform = 'translateX(' + tx + 'px) translateZ(' + tz + 'px) rotateY(' + ry + 'deg)';
         slide.style.opacity = Math.max(opacity, 0);
@@ -1352,21 +1723,39 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     function startAuto() { if (REDUCED) return; autoTimer = setInterval(function () { setActive(active + 1); }, 3600); }
     function resetAuto() { clearInterval(autoTimer); startAuto(); }
 
-    // touch/drag support
-    var startX = 0, deltaX = 0, dragging = false;
+    // touch/drag support — slides follow the finger 1:1, then snap
+    var startX = 0, deltaX = 0, dragging = false, moved = false;
     var wrap = document.getElementById('coverflowWrap');
-    wrap.addEventListener('pointerdown', function (e) { dragging = true; startX = e.clientX; });
-    window.addEventListener('pointermove', function (e) { if (dragging) deltaX = e.clientX - startX; });
+    wrap.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    wrap.addEventListener('pointerdown', function (e) {
+      dragging = true; moved = false;
+      startX = e.clientX; deltaX = 0; dragOffset = 0;
+      track.classList.add('dragging');
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      deltaX = e.clientX - startX;
+      if (Math.abs(deltaX) > 6) moved = true;
+      dragOffset = deltaX;
+      layout();
+    }, { passive: true });
     function endDrag() {
       if (!dragging) return;
       dragging = false;
-      if (deltaX > 40) setActive(active - 1);
-      else if (deltaX < -40) setActive(active + 1);
-      deltaX = 0;
+      track.classList.remove('dragging');
+      var dx = deltaX;
+      deltaX = 0; dragOffset = 0;
+      if (dx > 40) setActive(active - 1);
+      else if (dx < -40) setActive(active + 1);
+      else layout();
       resetAuto();
     }
     window.addEventListener('pointerup', endDrag);
     window.addEventListener('pointercancel', endDrag);
+    // swallow the synthetic click that follows a real drag
+    wrap.addEventListener('click', function (e) {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
 
     window.addEventListener('resize', layout);
     layout();
@@ -1386,7 +1775,8 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
      11. Boot
   ============================================================= */
   applyLang(true);
-  initScenes();
+  // loader crystal starts on the next frame so the first paint is never blocked
+  requestAnimationFrame(function () { initLoaderScene(); });
 })();
 </script>
 </body>
