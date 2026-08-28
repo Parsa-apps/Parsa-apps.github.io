@@ -583,8 +583,14 @@ h3.feature-title{ font-size:clamp(24px,3vw,32px); font-weight:800; margin:0 0 14
 #about{ background:linear-gradient(180deg,transparent,rgba(124,92,252,.05),transparent); }
 .about-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:70px; align-items:center; }
 .about-crystal-wrap{ position:relative; height:420px; }
-#aboutCanvas{ width:100%; height:100%; }
-.about-crystal-ring{ position:absolute; inset:0; border:1px dashed var(--border-strong); border-radius:50%; margin:auto; width:70%; height:70%; animation:spin 40s linear infinite; }
+/* looping brand intro — same cinematic as the loader, sized for the column */
+.about-intro{
+  position:relative; width:100%; height:100%;
+  display:grid; place-items:center;
+  transition:opacity .45s ease;
+}
+.about-intro.swap{ opacity:0; }
+.about-intro .intro-float{ width:min(100%, 340px); }
 @keyframes spin{ to{ transform:rotate(360deg);} }
 .dev-tags{ display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 32px; }
 .timeline{ display:flex; flex-direction:column; gap:0; border-inline-start:1px solid var(--border-strong); padding-inline-start:26px; margin-top:38px; }
@@ -657,6 +663,7 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
   .projects-grid{ grid-template-columns:1fr; }
   .phone-frame{ max-width:260px; margin:0 auto; }
   .about-crystal-wrap{ height:300px; }
+  .about-intro .intro-float{ width:min(100%, 280px); }
 }
 @media (max-width:560px){
   section{ padding:76px 18px; }
@@ -685,6 +692,7 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
   .meta-row{ gap:20px; }
   .dev-ctas{ margin-top:26px; }
   .about-crystal-wrap{ height:260px; }
+  .about-intro .intro-float{ width:min(100%, 230px); }
 }
 @media (max-width:400px){
   .cf-slide{ width:106px; height:190px; margin:-95px 0 0 -53px; }
@@ -886,8 +894,29 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
 <section id="about">
   <div class="wrap about-grid">
     <div class="about-crystal-wrap" data-reveal>
-      <div class="about-crystal-ring"></div>
-      <canvas id="aboutCanvas"></canvas>
+      <!-- same cinematic brand intro as the loader, replayed on a loop -->
+      <div class="about-intro" id="aboutIntro">
+        <div class="intro-float">
+          <span class="intro-bloom" aria-hidden="true"></span>
+          <span class="intro-orbit" aria-hidden="true"></span>
+          <span class="intro-orbit o2" aria-hidden="true"></span>
+          <div class="intro-logo-box">
+            <span class="intro-piece pc1" aria-hidden="true"></span>
+            <span class="intro-piece pc2" aria-hidden="true"></span>
+            <span class="intro-piece pc3" aria-hidden="true"></span>
+            <span class="intro-piece pc4" aria-hidden="true"></span>
+            <span class="intro-piece pc5" aria-hidden="true"></span>
+            <img class="intro-logo" src="/assets/brand/2026_20260821_002324_0001.png" alt="Parsa Apps" width="512" height="512" decoding="async">
+            <span class="intro-halo" aria-hidden="true"></span>
+            <span class="intro-burst" aria-hidden="true"></span>
+            <img class="intro-crown" src="/assets/crown.svg" alt="" width="120" height="86" decoding="async" aria-hidden="true">
+          </div>
+          <span class="intro-star st1" aria-hidden="true">✦</span>
+          <span class="intro-star st2" aria-hidden="true">✦</span>
+          <span class="intro-star st3" aria-hidden="true">✦</span>
+          <span class="intro-star st4" aria-hidden="true">✦</span>
+        </div>
+      </div>
     </div>
     <div data-reveal>
       <div class="eyebrow" data-i18n="aboutEyebrow">درباره پارسا اپس</div>
@@ -1795,8 +1824,8 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     };
   }
 
-  /* loader cinematic does not use WebGL crystal — only hero/about do */
-  var heroScene = null, aboutScene = null;
+  /* loader cinematic does not use WebGL crystal — only hero does */
+  var heroScene = null;
 
   function initHeroScene() {
     if (!HAS_WEBGL || heroScene) return;
@@ -1804,25 +1833,38 @@ footer{ margin-top:70px; text-align:center; color:var(--text-dimmer); font-size:
     try { heroScene = createCrystalScene(c, { detail: 1, particleCount: 180, autoRotateSpeed: 0.0035, cameraZ: 8, interactive: true }); } catch (e) {}
   }
 
-  function initAboutScene() {
-    if (!HAS_WEBGL || aboutScene) return;
-    var c = document.getElementById('aboutCanvas');
-    try { aboutScene = createCrystalScene(c, { detail: 2, particleCount: 150, autoRotateSpeed: 0.005, cameraZ: 6, interactive: false }); } catch (e) {}
-  }
-
-  // about scene is strictly lazy: build it only when its section approaches the viewport
+  /* about — replay the loader cinematic on a loop while the section is in view.
+     Re-inserting the markup restarts every CSS animation from zero. */
   (function () {
-    var about = document.getElementById('about');
-    if (!about || !('IntersectionObserver' in window)) {
-      if (about) initAboutScene();
-      return;
+    var box = document.getElementById('aboutIntro');
+    if (!box || REDUCED) return; // reduced motion: static logo via CSS
+    var tpl = box.innerHTML;
+    var CYCLE = 10000; // assembly → crown landing → hold → soft swap
+    var timer = 0, swapT = 0;
+    function restart() {
+      box.classList.add('swap');
+      swapT = setTimeout(function () {
+        box.innerHTML = tpl;
+        box.classList.remove('swap');
+      }, 480);
     }
+    function start() {
+      if (timer) return;
+      clearTimeout(swapT);
+      box.classList.remove('swap');
+      box.innerHTML = tpl; // fresh timeline whenever it enters the viewport
+      timer = setInterval(restart, CYCLE);
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = 0; }
+      clearTimeout(swapT);
+      box.classList.remove('swap');
+    }
+    if (!('IntersectionObserver' in window)) { start(); return; }
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { io.disconnect(); initAboutScene(); }
-      });
-    }, { rootMargin: '300px 0px' });
-    io.observe(about);
+      entries.forEach(function (e) { if (e.isIntersecting) start(); else stop(); });
+    }, { rootMargin: '120px 0px' });
+    io.observe(box);
   })();
 
   /* ============================================================
