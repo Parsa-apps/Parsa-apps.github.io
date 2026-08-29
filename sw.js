@@ -1,14 +1,13 @@
 /* ============================================================
-   Parsa Apps — Service Worker v8 (static single-page site)
+   Parsa Apps — Service Worker v9 (premium redesign)
    Strategy:
    - Navigations: network-first, fall back to cached index.html
    - Static assets: cache-first with background refresh
-   - v8 bump purges v7 caches: loader logo background removed
-     (transparent PNG) + longer cinematic intro so every user
-     gets the fresh transparent-logo intro.
+   - v9 purges v8 caches: new premium design system
+     (assets/css/site.css + assets/js/site.js)
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v8"; // bumped: transparent loader logo + longer cinematic intro
+const CACHE_NAME = "parsa-apps-v9"; // bumped: premium redesign
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {
@@ -31,7 +30,6 @@ self.addEventListener("activate", (event) => {
       const keys = await caches.keys();
       await Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)));
       await self.clients.claim();
-      // Notify clients that a new SW is active — they can reload if needed
       const clients = await self.clients.matchAll({ type: "window" });
       clients.forEach((c) => {
         try {
@@ -50,9 +48,6 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-
-  // Never intercept HMR / Vite dev requests
-  if (url.pathname.startsWith("/@") || url.pathname.includes("node_modules")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(
@@ -76,7 +71,6 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  const isHashedAsset = /\/assets\/.*-[A-Za-z0-9_-]{6,}\.(js|css)$/.test(url.pathname);
   const isAsset =
     request.destination === "script" ||
     request.destination === "style" ||
@@ -91,15 +85,14 @@ self.addEventListener("fetch", (event) => {
       (async () => {
         const cache = await caches.open(CACHE_NAME);
 
-        // For hashed JS/CSS: network-first to avoid serving old index.html that points to deleted chunks (main cause of black screen)
-        if (isHashedAsset) {
+        // For JS/CSS: network-first to avoid old HTML referencing deleted chunks
+        if (request.destination === "script" || request.destination === "style") {
           try {
             const fresh = await fetch(request, { cache: "no-store" });
             if (fresh && fresh.ok) {
               cache.put(request, fresh.clone()).catch(() => undefined);
               return fresh;
             }
-            // If fresh 404, it's an old chunk — purge caches to force reload of new index.html next time
             if (fresh && fresh.status === 404) {
               cache.delete(request).catch(() => undefined);
               const keys = await caches.keys();
@@ -114,7 +107,7 @@ self.addEventListener("fetch", (event) => {
           }
         }
 
-        // For other assets: cache-first with background refresh
+        // Other assets: cache-first with background refresh
         const cached = await cache.match(request);
         const network = fetch(request)
           .then((response) => {
