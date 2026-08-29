@@ -17,6 +17,9 @@
     (navigator.deviceMemory || 8) <= 4 ||
     (window.innerWidth || 1280) < 900;
   var SAVER = REDUCED || LOW_POWER;
+  /* CSS hook: lets the stylesheet strip heavy filters/layers for weak
+     hardware even when it has a mouse (budget laptops, hybrid tablets). */
+  if (LOW_POWER) document.documentElement.classList.add('lite');
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
@@ -114,7 +117,8 @@
     var o = opts || {};
     var W = 0, H = 0, DPR = 1;
     var parts = [];
-    var running = true;
+    var running = o.autoplay !== false;
+    var rafId = 0;
     var mouse = { x: -9999, y: -9999 };
     var time = 0;
 
@@ -159,7 +163,7 @@
     }
 
     function step() {
-      if (!running) { requestAnimationFrame(step); return; }
+      if (!running) { rafId = 0; return; }
       ctx.clearRect(0, 0, W, H);
       time++;
       var i, j, p, q;
@@ -222,7 +226,13 @@
           }
         }
       }
-      requestAnimationFrame(step);
+      rafId = requestAnimationFrame(step);
+    }
+
+    /* One rAF chain while playing, zero while paused — a paused field
+       must not keep waking up the main thread. */
+    function kick() {
+      if (!rafId && running) rafId = requestAnimationFrame(step);
     }
 
     if (MOUSE_INTERACT && FINE_POINTER) {
@@ -233,11 +243,15 @@
 
     window.addEventListener('resize', resize);
     resize();
-    requestAnimationFrame(step);
+    kick();
 
     return {
-      pause: function () { running = false; },
-      play: function () { running = true; }
+      pause: function () {
+        running = false;
+        if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+      },
+      play: function () { running = true; kick(); },
+      resize: resize
     };
   }
 
@@ -250,12 +264,21 @@
     var ring = $('.cursor-ring');
     if (!dot || !ring) return;
     var mx = -100, my = -100, rx = -100, ry = -100;
+    var rafId = 0, rw = 20, rh = 20;
+
+    function measure() {
+      rw = ring.offsetWidth / 2 || 20;
+      rh = ring.offsetHeight / 2 || 20;
+    }
+    window.addEventListener('resize', measure, { passive: true });
 
     window.addEventListener('mousemove', function (e) {
       mx = e.clientX; my = e.clientY;
       dot.style.opacity = '1'; ring.style.opacity = '1';
       var t = e.target.closest ? e.target.closest('a,button,.proj-card,.gal-item,.hero-chip,.skill-card,.up-item') : null;
       ring.classList.toggle('grow', !!t);
+      /* Restart the follow loop only when there is actual movement. */
+      if (!rafId) { measure(); rafId = requestAnimationFrame(loop); }
     }, { passive: true });
 
     // Click animation
@@ -268,13 +291,18 @@
       dot.style.opacity = '0'; ring.style.opacity = '0';
     });
 
-    (function loop() {
+    /* Follows the pointer, then parks itself once it has caught up —
+       an idle loop that keeps writing transforms 60×/s forever is what
+       kept mid-range machines hot for nothing. */
+    function loop() {
       rx = lerp(rx, mx, 0.15);
       ry = lerp(ry, my, 0.15);
       dot.style.transform = 'translate3d(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px,0)';
-      ring.style.transform = 'translate3d(' + (rx - ring.offsetWidth / 2) + 'px,' + (ry - ring.offsetHeight / 2) + 'px,0)';
-      requestAnimationFrame(loop);
-    })();
+      ring.style.transform = 'translate3d(' + (rx - rw) + 'px,' + (ry - rh) + 'px,0)';
+      if (Math.abs(rx - mx) < 0.15 && Math.abs(ry - my) < 0.15) { rafId = 0; return; }
+      rafId = requestAnimationFrame(loop);
+    }
+    measure();
   }
 
   /* =====================================================================
@@ -297,17 +325,21 @@
     if (!stage) return;
 
     var tx = 0, ty = 0, cx = 0, cy = 0;
-    window.addEventListener('mousemove', function (e) {
-      tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      ty = (e.clientY / window.innerHeight - 0.5) * 2;
-    }, { passive: true });
+    var rafId = 0;
 
-    (function loop() {
+    function loop() {
       cx = lerp(cx, tx, 0.06);
       cy = lerp(cy, ty, 0.06);
       stage.style.transform = 'translate3d(' + (cx * 16).toFixed(2) + 'px,' + (cy * 12).toFixed(2) + 'px,0) rotateY(' + (cx * 16).toFixed(2) + 'deg) rotateX(' + (-cy * 14).toFixed(2) + 'deg)';
-      requestAnimationFrame(loop);
-    })();
+      if (Math.abs(cx - tx) < 0.01 && Math.abs(cy - ty) < 0.01) { rafId = 0; return; }
+      rafId = requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('mousemove', function (e) {
+      tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      if (!rafId) rafId = requestAnimationFrame(loop);
+    }, { passive: true });
   }
 
   /* =====================================================================
@@ -336,23 +368,30 @@
   function phoneTilt() {
     var phone = $('#phone3d');
     var stage = $('#phoneStage');
-    if (!phone || !stage || REDUCED) return;
+    /* Fine pointer only: on touch devices mousemove never fires, so the
+       old loop just wrote rotateX(0) rotateY(0) 60×/s forever — a
+       permanent style-invalidation treadmill on every phone. */
+    if (!phone || !stage || REDUCED || !FINE_POINTER) return;
 
     var rx = 0, ry = 0, trx = 0, try_ = 0;
+    var rafId = 0;
+
+    function loop() {
+      rx = lerp(rx, trx, 0.08);
+      ry = lerp(ry, try_, 0.08);
+      phone.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+      if (Math.abs(rx - trx) < 0.01 && Math.abs(ry - try_) < 0.01) { rafId = 0; return; }
+      rafId = requestAnimationFrame(loop);
+    }
+
     window.addEventListener('mousemove', function (e) {
       var r = stage.getBoundingClientRect();
       var dx = (e.clientX - r.left - r.width / 2) / r.width;
       var dy = (e.clientY - r.top - r.height / 2) / r.height;
       try_ = clamp(dx, -1, 1) * 18;
       trx = clamp(dy, -1, 1) * -16;
+      if (!rafId) rafId = requestAnimationFrame(loop);
     }, { passive: true });
-
-    (function loop() {
-      rx = lerp(rx, trx, 0.08);
-      ry = lerp(ry, try_, 0.08);
-      phone.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
-      requestAnimationFrame(loop);
-    })();
   }
 
   /* =====================================================================
@@ -594,8 +633,10 @@
     var menu = $('#menu');
     if (!burger || !menu) return;
     var canvas = $('#menuCanvas');
+    /* Created paused: the old field started animating a hidden canvas
+       immediately and never stopped until the menu was toggled once. */
     var field = SAVER ? null : ParticleField(canvas, {
-      count: 32, colors: ['139,123,255', '63,224,255'], linkDist: 110, speed: 0.14, mouse: true
+      count: 32, colors: ['139,123,255', '63,224,255'], linkDist: 110, speed: 0.14, mouse: true, autoplay: false
     });
     var open = false;
 
@@ -609,7 +650,9 @@
       items.forEach(function (a, i) {
         a.style.transitionDelay = (open ? 0.08 + i * 0.065 : 0) + 's';
       });
-      if (field) { open ? field.play() : field.pause(); }
+      if (field) {
+        if (open) { field.resize(); field.play(); } else { field.pause(); }
+      }
     }
 
     burger.addEventListener('click', toggle);
@@ -632,7 +675,11 @@
         var el = document.querySelector(id);
         if (!el) return;
         e.preventDefault();
-        el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+        if (typeof el.scrollIntoView === 'function') {
+          el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+        } else {
+          window.scrollTo(0, el.offsetTop || 0);
+        }
       });
     });
     var top = $('.to-top');

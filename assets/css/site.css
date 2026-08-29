@@ -88,14 +88,15 @@ body::before{
    GLOBAL FX LAYERS
    ===================================================================== */
 
-/* Film grain */
-.noise{position:fixed;inset:-60%;z-index:60;pointer-events:none;opacity:.035;
+/* Film grain — the layer is only 124% of the viewport (it used to be
+   220%, i.e. a ~40 MB GPU texture on a 1080p screen). */
+.noise{position:fixed;inset:-12%;z-index:60;pointer-events:none;opacity:.035;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:grain 8s steps(12) infinite}
 @keyframes grain{
-  0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,2%)}
-  30%{transform:translate(-3%,1%)}40%{transform:translate(2%,-2%)}50%{transform:translate(-1%,3%)}
-  60%{transform:translate(3%,-1%)}70%{transform:translate(-2%,2%)}80%{transform:translate(1%,-3%)}90%{transform:translate(2%,3%)}
+  0%,100%{transform:translate(0,0)}10%{transform:translate(-1%,-1.5%)}20%{transform:translate(1.5%,1%)}
+  30%{transform:translate(-1.5%,.5%)}40%{transform:translate(1%,-1%)}50%{transform:translate(-.5%,1.5%)}
+  60%{transform:translate(1.5%,-.5%)}70%{transform:translate(-1%,1%)}80%{transform:translate(.5%,-1.5%)}90%{transform:translate(1%,1.5%)}
 }
 
 /* Canvas particle field */
@@ -860,17 +861,56 @@ footer{position:relative;z-index:5;border-top:1px solid var(--stroke);
    ===================================================================== */
 @media (hover:none),(pointer:coarse){
   .noise{display:none}
-  .aurora{animation:none}
+  #fxCanvas{display:none}
   #nav.solid,#menu,#lightbox,.glass,.marquee,.hero-chip,.phone-float,.to-top,.btn-ghost,.proj-badge{
     backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   #nav.solid{background:rgba(5,7,20,.96)}
   .glass{background:linear-gradient(155deg,rgba(22,26,50,.94),rgba(9,12,28,.94))}
   #menu{background:rgba(4,5,16,.98)}
   #lightbox{background:rgba(3,4,12,.98)}
-  .core-halo,.founder-card .halo,.phone-reflection,.cta-orb,#process::before{filter:none}
+  .core-halo,.founder-card .halo,.phone-reflection,.cta-orb,#process::before,.hero-mark,.err-code{filter:none}
   .cta-shine,.hero-eyebrow::after,.nav-cta::after,.btn-primary::after{animation:none}
   .hero-title .grad{animation:none}
   .loader-word span{filter:none}
+  /* Decorative floaters/spinners freeze into static positions: each one
+     is a permanently composited GPU layer while animating. */
+  .hero-chip,.phone-float,.cta-orb,.cta-panel .icon,.founder-avatar .ring,
+  .core-orbit,.core-ring,.err-code,.err-orbits{animation:none}
+  .phone-3d{will-change:auto}
+}
+
+/* =====================================================================
+   JS-DETECTED LOW-POWER MODE (html.lite)
+   Mirrors the touch safe-mode for weak devices that DO report a mouse
+   (budget laptops, hybrid tablets). site.js adds the class when
+   CPU cores / RAM / viewport are below par.
+   ===================================================================== */
+html.lite .noise{display:none}
+html.lite #fxCanvas{display:none}
+html.lite #nav.solid,html.lite #menu,html.lite #lightbox,html.lite .glass,html.lite .marquee,
+html.lite .hero-chip,html.lite .phone-float,html.lite .to-top,html.lite .btn-ghost,html.lite .proj-badge{
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html.lite #nav.solid{background:rgba(5,7,20,.96)}
+html.lite .glass{background:linear-gradient(155deg,rgba(22,26,50,.94),rgba(9,12,28,.94))}
+html.lite #menu{background:rgba(4,5,16,.98)}
+html.lite #lightbox{background:rgba(3,4,12,.98)}
+html.lite .core-halo,html.lite .founder-card .halo,html.lite .phone-reflection,html.lite .cta-orb,
+html.lite #process::before,html.lite .hero-mark,html.lite .err-code{filter:none}
+html.lite .cta-shine,html.lite .hero-eyebrow::after,html.lite .nav-cta::after,html.lite .btn-primary::after,
+html.lite .hero-title .grad{animation:none}
+html.lite .loader-word span{filter:none}
+html.lite .hero-chip,html.lite .phone-float,html.lite .cta-orb,html.lite .cta-panel .icon,
+html.lite .founder-avatar .ring,html.lite .core-orbit,html.lite .core-ring,
+html.lite .err-code,html.lite .err-orbits{animation:none}
+html.lite .phone-3d{will-change:auto}
+
+/* ---------- Off-screen rendering skip ----------
+   Below-the-fold sections are not laid out / painted until they get
+   near the viewport — first render stops paying for 6 sections the
+   visitor cannot see yet. (#about is excluded: it hosts a sticky card.) */
+#process,#skills,#projects,#gallery,#contact,footer{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 760px;
 }
 
 @media(prefers-reduced-motion:reduce){
