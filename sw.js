@@ -1,15 +1,81 @@
 /* ============================================================
-   Parsa Apps — Service Worker v9 (premium redesign)
-   Strategy:
-   - Navigations: network-first, fall back to cached index.html
-   - Static assets: cache-first with background refresh
-   - v9 purges v8 caches: new premium design system
-     (assets/css/site.css + assets/js/site.js)
+   Parsa Apps — Service Worker v10 (performance + cache health)
+   - v10 purges v9 caches that could hold multi-MB media
+   - Never caches videos / big files / range requests
+   - Cache quota: keeps the cache small (LRU eviction)
+   - JS/CSS/fonts/images: stale-while-revalidate (instant loads)
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v9"; // bumped: premium redesign
+const CACHE_NAME = "parsa-apps-v10";
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
+// Cache health limits
+const MAX_CACHE_BYTES = 30 * 1024 * 1024; // 30 MB total (mobile-friendly)
+const MAX_ENTRY_BYTES = 2 * 1024 * 1024; // skip anything bigger than 2 MB
+const META_KEY = "__parsa-meta-v10__";
+
+/* ---------- LRU bookkeeping (kept inside the same cache) ---------- */
+async function getMeta(cache) {
+  try {
+    const r = await cache.match(META_KEY);
+    if (!r) return { entries: {} };
+    return (await r.json()) || { entries: {} };
+  } catch {
+    return { entries: {} };
+  }
+}
+
+async function saveMeta(cache, meta) {
+  try {
+    await cache.put(
+      META_KEY,
+      new Response(JSON.stringify(meta), {
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+async function putGuarded(cache, request, response) {
+  if (request.method !== "GET") return false;
+  if (request.headers.get("range")) return false; // media seeking
+  if (!response || response.status !== 200 || response.type !== "basic") return false;
+
+  // Only cache responses with a known, safe size. GitHub Pages always
+  // sends Content-Length for static files, so we never have to read a
+  // huge body just to measure it.
+  const len = Number(response.headers.get("content-length"));
+  if (!len || len > MAX_ENTRY_BYTES) return false;
+
+  const url = new URL(request.url).pathname;
+  const meta = await getMeta(cache);
+  meta.entries[url] = { size: len, time: Date.now() };
+
+  // Evict oldest entries until we are under the quota
+  let total = Object.keys(meta.entries).reduce(
+    (sum, k) => sum + (meta.entries[k].size || 0),
+    0
+  );
+  if (total > MAX_CACHE_BYTES) {
+    const ordered = Object.keys(meta.entries).sort(
+      (a, b) => (meta.entries[a].time || 0) - (meta.entries[b].time || 0)
+    );
+    for (const key of ordered) {
+      if (total <= MAX_CACHE_BYTES) break;
+      await cache.delete(key).catch(() => undefined);
+      total -= meta.entries[key].size || 0;
+      delete meta.entries[key];
+    }
+  }
+
+  await saveMeta(cache, meta);
+  await cache.put(request, response.clone()).catch(() => undefined);
+  return true;
+}
+
+/* ---------- Install / Activate ---------- */
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -28,7 +94,11 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
-      await Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)));
+      await Promise.all(
+        keys
+          .filter((k) => k !== CACHE_NAME && k !== "parsa-apps-meta")
+          .map((k) => caches.delete(k))
+      );
       await self.clients.claim();
       const clients = await self.clients.matchAll({ type: "window" });
       clients.forEach((c) => {
@@ -42,6 +112,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+/* ---------- Fetch ---------- */
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
@@ -49,6 +120,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
+  // Navigation: network-first, cached fallback
   if (request.mode === "navigate") {
     event.respondWith(
       (async () => {
@@ -71,58 +143,55 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  const isAsset =
+  // Media (video/audio) and range requests: let the browser stream them
+  // normally — they are NEVER stored in Cache Storage (this was the
+  // main cause of the oversized cache).
+  if (
+    request.destination === "video" ||
+    request.destination === "audio" ||
+    request.headers.get("range")
+  ) {
+    return;
+  }
+
+  const isCacheable =
     request.destination === "script" ||
     request.destination === "style" ||
     request.destination === "font" ||
     request.destination === "image" ||
-    request.destination === "video" ||
+    url.pathname.endsWith(".json") ||
     url.pathname.endsWith(".woff2") ||
-    url.pathname.endsWith(".json");
+    url.pathname.endsWith(".webmanifest") ||
+    url.pathname.endsWith(".svg");
 
-  if (isAsset) {
-    event.respondWith(
-      (async () => {
-        const cache = await caches.open(CACHE_NAME);
+  if (!isCacheable) return;
 
-        // For JS/CSS: network-first to avoid old HTML referencing deleted chunks
-        if (request.destination === "script" || request.destination === "style") {
-          try {
-            const fresh = await fetch(request, { cache: "no-store" });
-            if (fresh && fresh.ok) {
-              cache.put(request, fresh.clone()).catch(() => undefined);
-              return fresh;
-            }
-            if (fresh && fresh.status === 404) {
-              cache.delete(request).catch(() => undefined);
-              const keys = await caches.keys();
-              await Promise.all(keys.map((k) => caches.delete(k))).catch(() => undefined);
-            }
-            const cached = await cache.match(request);
-            return cached || fresh;
-          } catch {
-            const cached = await cache.match(request);
-            if (cached) return cached;
-            return fetch(request).catch(() => Response.error());
+  event.respondWith(
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(request);
+
+      // Stale-while-revalidate: return cache instantly, refresh quietly
+      const network = fetch(request)
+        .then((response) => {
+          if (response && response.ok) {
+            putGuarded(cache, request, response).catch(() => undefined);
           }
-        }
+          return response;
+        })
+        .catch(() => cached);
 
-        // Other assets: cache-first with background refresh
-        const cached = await cache.match(request);
-        const network = fetch(request)
-          .then((response) => {
-            if (response && response.status === 200 && response.type === "basic") {
-              cache.put(request, response.clone()).catch(() => undefined);
-            }
-            return response;
-          })
-          .catch(() => cached);
-        return cached || (await network) || Response.error();
-      })()
-    );
-  }
+      if (cached) {
+        return cached;
+      }
+      const fresh = await network;
+      if (fresh) return fresh;
+      return Response.error();
+    })()
+  );
 });
 
+/* ---------- Messages ---------- */
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();

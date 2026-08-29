@@ -8,6 +8,15 @@
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FINE_POINTER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  /* Low-power / mobile devices: heavy GPU effects are disabled so the
+     browser tab does not run out of memory (aurora blur, 3 particle
+     canvases, cursor rings, 3D tilts …). */
+  var LOW_POWER =
+    !FINE_POINTER ||
+    (navigator.hardwareConcurrency || 8) <= 4 ||
+    (navigator.deviceMemory || 8) <= 4 ||
+    (window.innerWidth || 1280) < 900;
+  var SAVER = REDUCED || LOW_POWER;
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
@@ -33,7 +42,11 @@
 
   function runLoader() {
     if (!loader) return;
-    if (REDUCED) {
+    /* Show the cinematic loader only once per visit, and never on
+       mobile / low-end devices — it was blocking the page for ~4 s. */
+    var skip = REDUCED || LOW_POWER || sessionStorage.getItem('pa-loader-seen') === '1';
+    try { sessionStorage.setItem('pa-loader-seen', '1'); } catch (e) { /* ignore */ }
+    if (skip) {
       loader.classList.add('gone');
       loader.remove();
       document.body.classList.remove('lock');
@@ -42,7 +55,7 @@
     }
 
     var t0 = performance.now();
-    var DURATION = 3800;
+    var DURATION = 1300;
     var frame;
     var idx = 0;
     var statusFlick = 0;
@@ -72,10 +85,10 @@
     }
     frame = requestAnimationFrame(tick);
 
-    // safety: never hold the user beyond 5.5s
+    // safety: never hold the user beyond 2.6s
     setTimeout(function () {
       if (!loaderDone) finishLoader(true);
-    }, 5500);
+    }, 2600);
 
     function finishLoader(force) {
       if (loaderDone) return;
@@ -113,7 +126,9 @@
     var GLOW = o.glow !== undefined ? o.glow : true;
 
     function resize() {
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      /* Cap the backing store: DPR 2 on a phone = a ~10 MP canvas
+         cleared 60×/s, which is what made low-end devices crash. */
+      DPR = Math.min(window.devicePixelRatio || 1, LOW_POWER ? 1 : 1.5);
       W = canvas.clientWidth || window.innerWidth;
       H = canvas.clientHeight || window.innerHeight;
       canvas.width = W * DPR;
@@ -123,7 +138,8 @@
     }
 
     function seed() {
-      var n = Math.round(COUNT * clamp(W / 1440, 0.4, 1));
+      var scale = LOW_POWER ? 0.3 : clamp(W / 1440, 0.4, 1);
+      var n = Math.max(8, Math.round(COUNT * scale));
       parts = [];
       for (var i = 0; i < n; i++) {
         parts.push({
@@ -186,8 +202,9 @@
         ctx.fill();
       }
 
-      // Connection lines with gradient
-      if (LINK_DIST > 0) {
+      // Connection lines with gradient (skipped on low-power devices —
+      // the O(n²) pair check is the most expensive part of the field)
+      if (LINK_DIST > 0 && !LOW_POWER) {
         ctx.lineWidth = 0.4;
         for (i = 0; i < parts.length; i++) {
           for (j = i + 1; j < parts.length; j++) {
@@ -577,8 +594,8 @@
     var menu = $('#menu');
     if (!burger || !menu) return;
     var canvas = $('#menuCanvas');
-    var field = ParticleField(canvas, {
-      count: 48, colors: ['139,123,255', '63,224,255'], linkDist: 120, speed: 0.16, mouse: true
+    var field = SAVER ? null : ParticleField(canvas, {
+      count: 32, colors: ['139,123,255', '63,224,255'], linkDist: 110, speed: 0.14, mouse: true
     });
     var open = false;
 
@@ -674,28 +691,34 @@
   document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('lock');
 
-    // Initialize global particle fields
-    ParticleField($('#fxCanvas'), {
-      count: 75, colors: ['139,123,255', '63,224,255', '255,255,255'], linkDist: 160, speed: 0.18, mouse: true, glow: true
-    });
-    ParticleField($('#heroCanvas'), {
-      count: 50, colors: ['139,123,255', '63,224,255', '245,197,102', '255,110,199'], linkDist: 0, speed: 0.28, glow: true
-    });
-    ParticleField($('#loaderFx'), {
-      count: 65, colors: ['139,123,255', '63,224,255', '245,197,102'], linkDist: 180, speed: 0.26, glow: true
+    /* One particle layer only (was 3 fullscreen canvases running at
+       60 fps forever — the main CPU/GPU killer on phones). */
+    var fxField = null;
+    if (!SAVER) {
+      fxField = ParticleField($('#fxCanvas'), {
+        count: 40, colors: ['139,123,255', '63,224,255', '255,255,255'], linkDist: 150, speed: 0.16, mouse: true, glow: true
+      });
+    }
+
+    // Pause the particle engine while the tab is hidden
+    document.addEventListener('visibilitychange', function () {
+      if (!fxField) return;
+      if (document.hidden) { fxField.pause(); } else { fxField.play(); }
     });
 
-    // Initialize all interactive systems
-    cursorFX();
-    hero3D();
-    magnetic();
-    phoneTilt();
+    // Initialize all interactive systems (heavy ones only on capable devices)
+    if (!SAVER) {
+      cursorFX();
+      hero3D();
+      magnetic();
+      phoneTilt();
+      spotFX();
+      parallaxFX();
+    }
     initScroll();
-    spotFX();
     galleryFX();
     menuFX();
     anchorsFX();
-    parallaxFX();
     sectionGlowFX();
 
     // Run the cinematic loader last

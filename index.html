@@ -94,7 +94,6 @@
 
 <!-- ============ CINEMATIC LOADER ============ -->
 <div id="loader" role="status" aria-label="در حال بارگذاری پارسا اپس">
-  <canvas id="loaderFx" aria-hidden="true"></canvas>
   <div class="loader-grid" aria-hidden="true"></div>
   <div class="loader-core">
     <div class="loader-emblem">
@@ -107,13 +106,13 @@
       <span class="loader-orb o3"></span>
       <svg class="loader-mark" viewBox="0 0 200 200" aria-hidden="true">
         <path class="dash" style="--len:1" d="M64 46v108" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
-        <path class="dash" style="--len:1;animation-delay:.4s" d="M64 46h42a38 38 0 0 1 0 76H64" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
-        <path class="pop" style="animation-delay:1.25s" d="M100 18l8 10-8 10-8-10z" fill="#f5c566"/>
-        <circle class="pop" style="animation-delay:1.6s" cx="42" cy="86" r="3.4" fill="#3fe0ff"/>
-        <circle class="pop" style="animation-delay:1.72s" cx="30" cy="108" r="3.4" fill="#8b7bff"/>
-        <circle class="pop" style="animation-delay:1.84s" cx="42" cy="130" r="3.4" fill="#f5c566"/>
-        <path class="fadeup" style="animation-delay:2s" d="M42 86h-8M30 108h-8M42 130h-8" stroke="rgba(160,150,255,.5)" stroke-width="1.4" stroke-linecap="round"/>
-        <path class="fadeup" style="animation-delay:2.35s" d="M30 140h140" stroke="url(#paGradSoft)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+        <path class="dash" style="--len:1;animation-delay:.18s" d="M64 46h42a38 38 0 0 1 0 76H64" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
+        <path class="pop" style="animation-delay:.42s" d="M100 18l8 10-8 10-8-10z" fill="#f5c566"/>
+        <circle class="pop" style="animation-delay:.56s" cx="42" cy="86" r="3.4" fill="#3fe0ff"/>
+        <circle class="pop" style="animation-delay:.64s" cx="30" cy="108" r="3.4" fill="#8b7bff"/>
+        <circle class="pop" style="animation-delay:.72s" cx="42" cy="130" r="3.4" fill="#f5c566"/>
+        <path class="fadeup" style="animation-delay:.8s" d="M42 86h-8M30 108h-8M42 130h-8" stroke="rgba(160,150,255,.5)" stroke-width="1.4" stroke-linecap="round"/>
+        <path class="fadeup" style="animation-delay:.9s" d="M30 140h140" stroke="url(#paGradSoft)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
       </svg>
     </div>
     <div class="loader-word" aria-hidden="true">
@@ -169,7 +168,6 @@
 <main>
 <!-- ============ HERO ============ -->
 <section id="hero">
-  <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="hero-vignette" aria-hidden="true"></div>
   <div class="hero-content">
     <div>
@@ -464,18 +462,18 @@
     </div>
     <div class="up-strip rv" style="--d:.18s" aria-label="پروژه‌های در حال توسعه">
       <div class="up-track">
-        <div class="up-item glass"><img src="/assets/images/upcoming/ashpazkhaneh.png" alt="آشپزخانه کوچک" width="512" height="512" loading="lazy"><h5>آشپزخانه کوچک</h5><p>بازی آشپزی کودکان</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/bagh-alfaba.png" alt="باغ الفبا" width="512" height="512" loading="lazy"><h5>باغ الفبا</h5><p>آموزش حروف و کلمات</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/gheseh-shab.png" alt="قصه شب" width="512" height="512" loading="lazy"><h5>قصهٔ شب</h5><p>داستان‌های صوتی کودکان</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/negar-khaneh.png" alt="نگارخانه" width="512" height="512" loading="lazy"><h5>نگارخانه</h5><p>نقاشی و خلاقیت کودک</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/riyazidan.png" alt="ریاضیدان کوچک" width="512" height="512" loading="lazy"><h5>ریاضی‌دان کوچک</h5><p>یادگیری ریاضی با بازی</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/sayarehnama.png" alt="سیاره‌نما" width="512" height="512" loading="lazy"><h5>سیاره‌نما</h5><p>ماجراجویی فضایی</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/ashpazkhaneh.png" alt="آشپزخانه کوچک" width="512" height="512" loading="lazy"><h5>آشپزخانه کوچک</h5><p>بازی آشپزی کودکان</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/bagh-alfaba.png" alt="باغ الفبا" width="512" height="512" loading="lazy"><h5>باغ الفبا</h5><p>آموزش حروف و کلمات</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/gheseh-shab.png" alt="قصه شب" width="512" height="512" loading="lazy"><h5>قصهٔ شب</h5><p>داستان‌های صوتی کودکان</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/negar-khaneh.png" alt="نگارخانه" width="512" height="512" loading="lazy"><h5>نگارخانه</h5><p>نقاشی و خلاقیت کودک</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/riyazidan.png" alt="ریاضیدان کوچک" width="512" height="512" loading="lazy"><h5>ریاضی‌دان کوچک</h5><p>یادگیری ریاضی با بازی</p></div>
-        <div class="up-item glass"><img src="/assets/images/upcoming/sayarehnama.png" alt="سیاره‌نما" width="512" height="512" loading="lazy"><h5>سیاره‌نما</h5><p>ماجراجویی فضایی</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/ashpazkhaneh.webp" alt="آشپزخانه کوچک" width="512" height="512" loading="lazy"><h5>آشپزخانه کوچک</h5><p>بازی آشپزی کودکان</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/bagh-alfaba.webp" alt="باغ الفبا" width="512" height="512" loading="lazy"><h5>باغ الفبا</h5><p>آموزش حروف و کلمات</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/gheseh-shab.webp" alt="قصه شب" width="512" height="512" loading="lazy"><h5>قصهٔ شب</h5><p>داستان‌های صوتی کودکان</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/negar-khaneh.webp" alt="نگارخانه" width="512" height="512" loading="lazy"><h5>نگارخانه</h5><p>نقاشی و خلاقیت کودک</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/riyazidan.webp" alt="ریاضیدان کوچک" width="512" height="512" loading="lazy"><h5>ریاضی‌دان کوچک</h5><p>یادگیری ریاضی با بازی</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/sayarehnama.webp" alt="سیاره‌نما" width="512" height="512" loading="lazy"><h5>سیاره‌نما</h5><p>ماجراجویی فضایی</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/ashpazkhaneh.webp" alt="آشپزخانه کوچک" width="512" height="512" loading="lazy"><h5>آشپزخانه کوچک</h5><p>بازی آشپزی کودکان</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/bagh-alfaba.webp" alt="باغ الفبا" width="512" height="512" loading="lazy"><h5>باغ الفبا</h5><p>آموزش حروف و کلمات</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/gheseh-shab.webp" alt="قصه شب" width="512" height="512" loading="lazy"><h5>قصهٔ شب</h5><p>داستان‌های صوتی کودکان</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/negar-khaneh.webp" alt="نگارخانه" width="512" height="512" loading="lazy"><h5>نگارخانه</h5><p>نقاشی و خلاقیت کودک</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/riyazidan.webp" alt="ریاضیدان کوچک" width="512" height="512" loading="lazy"><h5>ریاضی‌دان کوچک</h5><p>یادگیری ریاضی با بازی</p></div>
+        <div class="up-item glass"><img src="/assets/images/upcoming/sayarehnama.webp" alt="سیاره‌نما" width="512" height="512" loading="lazy"><h5>سیاره‌نما</h5><p>ماجراجویی فضایی</p></div>
       </div>
     </div>
   </div>
@@ -568,10 +566,11 @@
 
 <script src="/assets/js/site.js"></script>
 <script>
-/* Service worker registration */
+/* Service worker registration — check for updates on every visit
+   so the new v10 (cache-safe) worker replaces old cache bloat fast */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js').catch(function () {});
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).catch(function () {});
   });
 }
 </script>
