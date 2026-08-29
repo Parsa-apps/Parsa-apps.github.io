@@ -1,12 +1,13 @@
 /* ============================================================
-   Parsa Apps — Service Worker v10 (performance + cache health)
-   - v10 purges v9 caches that could hold multi-MB media
+   Parsa Apps — Service Worker v11 (performance + cache health)
+   - v11: images are plain cache-first (stale-while-revalidate was
+     re-downloading every image on every visit = double bandwidth)
    - Never caches videos / big files / range requests
    - Cache quota: keeps the cache small (LRU eviction)
-   - JS/CSS/fonts/images: stale-while-revalidate (instant loads)
+   - JS/CSS/fonts: stale-while-revalidate (instant loads)
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v10";
+const CACHE_NAME = "parsa-apps-v11";
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 // Cache health limits
@@ -154,15 +155,39 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // Images: cache-first, no background revalidation — a repeat visit
+  // downloads ZERO image bytes instead of silently re-fetching all of
+  // them while the cache is served.
+  if (
+    request.destination === "image" ||
+    /\.(png|jpe?g|webp|gif|ico|svg)$/i.test(url.pathname)
+  ) {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const cached = await cache.match(request);
+        if (cached) return cached;
+        try {
+          const fresh = await fetch(request);
+          if (fresh && fresh.ok) {
+            putGuarded(cache, request, fresh).catch(() => undefined);
+          }
+          return fresh;
+        } catch {
+          return Response.error();
+        }
+      })()
+    );
+    return;
+  }
+
   const isCacheable =
     request.destination === "script" ||
     request.destination === "style" ||
     request.destination === "font" ||
-    request.destination === "image" ||
     url.pathname.endsWith(".json") ||
     url.pathname.endsWith(".woff2") ||
-    url.pathname.endsWith(".webmanifest") ||
-    url.pathname.endsWith(".svg");
+    url.pathname.endsWith(".webmanifest");
 
   if (!isCacheable) return;
 
