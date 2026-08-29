@@ -1,6 +1,7 @@
 /* =====================================================================
-   PARSA APPS — MOTION ENGINE
+   PARSA APPS — PREMIUM MOTION ENGINE v3
    Cinematic loader • particle fields • 3D tilt • scroll-driven reveals
+   • magnetic buttons • custom cursor • phone tilt • smooth scroll
    ===================================================================== */
 (function () {
   'use strict';
@@ -13,7 +14,7 @@
   var lerp = function (a, b, t) { return a + (b - a) * t; };
 
   /* =====================================================================
-     1. LOADER — cinematic logo assembly + curtain reveal
+     1. CINEMATIC LOADER — logo assembly + curtain reveal + flash
      ===================================================================== */
   var loader = $('#loader');
   var loaderBar = $('#loaderBar');
@@ -25,6 +26,7 @@
     ['DRAWING MONOGRAM', 'ترسیم مونوگرام P'],
     ['CONNECTING CIRCUITS', 'اتصال مدارهای نئونی'],
     ['CHARGING SHADERS', 'شارژ نور و سایه'],
+    ['LOADING PARTICLES', 'بارگذاری ذرات'],
     ['PLACING CROWN', 'نشان‌گذاری طلایی'],
     ['READY', 'آماده']
   ];
@@ -40,14 +42,15 @@
     }
 
     var t0 = performance.now();
-    var DURATION = 3600;
+    var DURATION = 3800;
     var frame;
     var idx = 0;
     var statusFlick = 0;
 
     function tick(now) {
       var t = clamp((now - t0) / DURATION, 0, 1);
-      var eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // easeInOut
+      // smooth easeInOutCubic
+      var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       var pct = Math.round(eased * 100);
 
       if (loaderBar) loaderBar.style.width = pct + '%';
@@ -57,7 +60,7 @@
       if (si !== idx) {
         idx = si;
         if (loaderStatus) loaderStatus.innerHTML = STATUS[si][0] + ' · ' + STATUS[si][1] + ' <span class="tick">▮</span>';
-      } else if (loaderStatus && statusFlick % 14 === 0) {
+      } else if (loaderStatus && statusFlick % 12 === 0) {
         loaderStatus.innerHTML = STATUS[si][0] + ' · ' + STATUS[si][1] + ' <span class="tick">▮</span>';
       }
 
@@ -69,10 +72,10 @@
     }
     frame = requestAnimationFrame(tick);
 
-    // safety: never hold the user beyond 5.2s
+    // safety: never hold the user beyond 5.5s
     setTimeout(function () {
       if (!loaderDone) finishLoader(true);
-    }, 5200);
+    }, 5500);
 
     function finishLoader(force) {
       if (loaderDone) return;
@@ -80,34 +83,34 @@
       cancelAnimationFrame(frame);
       loader.classList.add('done');
       startHero();
-      // unlock scroll after curtains finish opening
-      setTimeout(function () { document.body.classList.remove('lock'); }, 1050);
+      setTimeout(function () { document.body.classList.remove('lock'); }, 1100);
       setTimeout(function () {
         loader.classList.add('gone');
         loader.style.display = 'none';
         window.dispatchEvent(new CustomEvent('parsa:loaded'));
-      }, 1350);
+      }, 1500);
     }
   }
 
   /* =====================================================================
-     2. PARTICLE FIELDS (canvas)
+     2. ADVANCED PARTICLE FIELD ENGINE
      ===================================================================== */
   function ParticleField(canvas, opts) {
-    if (!canvas) return null;
+    if (!canvas || REDUCED) return null;
     var ctx = canvas.getContext('2d');
     var o = opts || {};
     var W = 0, H = 0, DPR = 1;
     var parts = [];
-    var links = [];
     var running = true;
+    var mouse = { x: -9999, y: -9999 };
+    var time = 0;
 
     var COLORS = o.colors || ['139,123,255', '63,224,255', '245,197,102', '255,110,199'];
-    var COUNT = o.count || 60;
-    var LINK_DIST = o.linkDist || 130;
-    var SPEED = o.speed || 0.22;
-    var MOUSE = o.mouse || false;
-    var mouse = { x: -9999, y: -9999 };
+    var COUNT = o.count || 65;
+    var LINK_DIST = o.linkDist || 140;
+    var SPEED = o.speed || 0.2;
+    var MOUSE_INTERACT = o.mouse || false;
+    var GLOW = o.glow !== undefined ? o.glow : true;
 
     function resize() {
       DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -120,7 +123,7 @@
     }
 
     function seed() {
-      var n = REDUCED ? 0 : Math.round(COUNT * clamp(W / 1440, 0.42, 1));
+      var n = Math.round(COUNT * clamp(W / 1440, 0.4, 1));
       parts = [];
       for (var i = 0; i < n; i++) {
         parts.push({
@@ -128,63 +131,84 @@
           y: Math.random() * H,
           vx: (Math.random() - 0.5) * SPEED,
           vy: (Math.random() - 0.5) * SPEED,
-          r: Math.random() * 1.6 + 0.4,
+          r: Math.random() * 1.8 + 0.3,
           c: COLORS[(Math.random() * COLORS.length) | 0],
-          a: Math.random() * 0.5 + 0.15,
-          ph: Math.random() * Math.PI * 2
+          a: Math.random() * 0.5 + 0.12,
+          ph: Math.random() * Math.PI * 2,
+          // Orbit drift for extra motion
+          orbitSpeed: (Math.random() - 0.5) * 0.003,
+          orbitRadius: Math.random() * 0.4
         });
       }
     }
 
-    function step(t) {
+    function step() {
       if (!running) { requestAnimationFrame(step); return; }
       ctx.clearRect(0, 0, W, H);
+      time++;
       var i, j, p, q;
 
       for (i = 0; i < parts.length; i++) {
         p = parts[i];
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
-        if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+        // Add orbital drift for organic feel
+        p.x += p.vx + Math.sin(time * p.orbitSpeed + p.ph) * p.orbitRadius;
+        p.y += p.vy + Math.cos(time * p.orbitSpeed + p.ph) * p.orbitRadius;
+        
+        if (p.x < -30) p.x = W + 30; if (p.x > W + 30) p.x = -30;
+        if (p.y < -30) p.y = H + 30; if (p.y > H + 30) p.y = -30;
 
-        // gentle mouse repulsion
-        if (MOUSE) {
+        // Mouse repulsion
+        if (MOUSE_INTERACT && FINE_POINTER) {
           var dx = p.x - mouse.x, dy = p.y - mouse.y;
           var d2 = dx * dx + dy * dy;
-          if (d2 < 120 * 120 && d2 > 0.01) {
+          if (d2 < 140 * 140 && d2 > 0.01) {
             var d = Math.sqrt(d2);
-            p.x += (dx / d) * 0.9;
-            p.y += (dy / d) * 0.9;
+            var force = (140 - d) / 140;
+            p.x += (dx / d) * force * 1.2;
+            p.y += (dy / d) * force * 1.2;
           }
         }
 
-        var tw = 0.55 + 0.45 * Math.sin(t * 0.002 + p.ph);
+        var tw = 0.5 + 0.5 * Math.sin(time * 0.015 + p.ph);
+        
+        // Draw glow
+        if (GLOW && p.r > 1) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + p.c + ',' + (p.a * tw * 0.15).toFixed(3) + ')';
+          ctx.fill();
+        }
+        
+        // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(' + p.c + ',' + (p.a * tw).toFixed(3) + ')';
         ctx.fill();
       }
 
-      // connection lines
-      ctx.lineWidth = 0.5;
-      for (i = 0; i < parts.length; i++) {
-        for (j = i + 1; j < parts.length; j++) {
-          p = parts[i]; q = parts[j];
-          var ddx = p.x - q.x, ddy = p.y - q.y;
-          var dist = Math.sqrt(ddx * ddx + ddy * ddy);
-          if (dist < LINK_DIST) {
-            ctx.strokeStyle = 'rgba(139,123,255,' + ((1 - dist / LINK_DIST) * 0.16).toFixed(3) + ')';
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.stroke();
+      // Connection lines with gradient
+      if (LINK_DIST > 0) {
+        ctx.lineWidth = 0.4;
+        for (i = 0; i < parts.length; i++) {
+          for (j = i + 1; j < parts.length; j++) {
+            p = parts[i]; q = parts[j];
+            var ddx = p.x - q.x, ddy = p.y - q.y;
+            var dist = Math.sqrt(ddx * ddx + ddy * ddy);
+            if (dist < LINK_DIST) {
+              var alpha = (1 - dist / LINK_DIST) * 0.14;
+              ctx.strokeStyle = 'rgba(139,123,255,' + alpha.toFixed(3) + ')';
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.stroke();
+            }
           }
         }
       }
       requestAnimationFrame(step);
     }
 
-    if (MOUSE && FINE_POINTER) {
+    if (MOUSE_INTERACT && FINE_POINTER) {
       window.addEventListener('mousemove', function (e) {
         mouse.x = e.clientX; mouse.y = e.clientY;
       }, { passive: true });
@@ -201,7 +225,7 @@
   }
 
   /* =====================================================================
-     3. CUSTOM CURSOR
+     3. CUSTOM CURSOR with click feedback
      ===================================================================== */
   function cursorFX() {
     if (!FINE_POINTER || REDUCED) return;
@@ -217,26 +241,37 @@
       ring.classList.toggle('grow', !!t);
     }, { passive: true });
 
+    // Click animation
+    window.addEventListener('mousedown', function () {
+      ring.classList.add('click');
+      setTimeout(function () { ring.classList.remove('click'); }, 200);
+    });
+
     document.addEventListener('mouseleave', function () {
       dot.style.opacity = '0'; ring.style.opacity = '0';
     });
 
     (function loop() {
-      rx = lerp(rx, mx, 0.16);
-      ry = lerp(ry, my, 0.16);
-      dot.style.transform = 'translate3d(' + (mx - 3) + 'px,' + (my - 3) + 'px,0)';
+      rx = lerp(rx, mx, 0.15);
+      ry = lerp(ry, my, 0.15);
+      dot.style.transform = 'translate3d(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px,0)';
       ring.style.transform = 'translate3d(' + (rx - ring.offsetWidth / 2) + 'px,' + (ry - ring.offsetHeight / 2) + 'px,0)';
       requestAnimationFrame(loop);
     })();
   }
 
   /* =====================================================================
-     4. HERO: staged entrance + 3D core parallax + magnetic buttons
+     4. HERO ENTRANCE + 3D CORE PARALLAX
      ===================================================================== */
   function startHero() {
     document.body.classList.add('loaded');
     var hero = $('#hero');
-    if (hero) hero.classList.add('in');
+    if (hero) {
+      // Small delay to ensure CSS transitions trigger properly
+      requestAnimationFrame(function () {
+        hero.classList.add('in');
+      });
+    }
   }
 
   function hero3D() {
@@ -251,91 +286,102 @@
     }, { passive: true });
 
     (function loop() {
-      cx = lerp(cx, tx, 0.07);
-      cy = lerp(cy, ty, 0.07);
-      stage.style.transform = 'translate3d(' + (cx * 14).toFixed(2) + 'px,' + (cy * 10).toFixed(2) + 'px,0) rotateY(' + (cx * 14).toFixed(2) + 'deg) rotateX(' + (-cy * 12).toFixed(2) + 'deg)';
+      cx = lerp(cx, tx, 0.06);
+      cy = lerp(cy, ty, 0.06);
+      stage.style.transform = 'translate3d(' + (cx * 16).toFixed(2) + 'px,' + (cy * 12).toFixed(2) + 'px,0) rotateY(' + (cx * 16).toFixed(2) + 'deg) rotateX(' + (-cy * 14).toFixed(2) + 'deg)';
       requestAnimationFrame(loop);
     })();
   }
 
+  /* =====================================================================
+     5. MAGNETIC BUTTONS
+     ===================================================================== */
   function magnetic() {
     if (!FINE_POINTER || REDUCED) return;
     $$('.btn, .socials a, .to-top').forEach(function (el) {
       el.addEventListener('mousemove', function (e) {
         var r = el.getBoundingClientRect();
-        var dx = (e.clientX - r.left - r.width / 2) * 0.22;
-        var dy = (e.clientY - r.top - r.height / 2) * 0.28;
+        var dx = (e.clientX - r.left - r.width / 2) * 0.24;
+        var dy = (e.clientY - r.top - r.height / 2) * 0.3;
         el.style.transform = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0)';
       });
       el.addEventListener('mouseleave', function () {
-        el.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)';
+        el.style.transition = 'transform .65s cubic-bezier(.34,1.56,.64,1)';
         el.style.transform = '';
-        setTimeout(function () { el.style.transition = ''; }, 620);
+        setTimeout(function () { el.style.transition = ''; }, 650);
       });
     });
   }
 
+  /* =====================================================================
+     6. PHONE 3D TILT
+     ===================================================================== */
   function phoneTilt() {
     var phone = $('#phone3d');
     var stage = $('#phoneStage');
-    if (!phone || !stage) return;
-    if (REDUCED) return;
+    if (!phone || !stage || REDUCED) return;
 
     var rx = 0, ry = 0, trx = 0, try_ = 0;
     window.addEventListener('mousemove', function (e) {
       var r = stage.getBoundingClientRect();
       var dx = (e.clientX - r.left - r.width / 2) / r.width;
       var dy = (e.clientY - r.top - r.height / 2) / r.height;
-      try_ = clamp(dx, -1, 1) * 16;
-      trx = clamp(dy, -1, 1) * -14;
+      try_ = clamp(dx, -1, 1) * 18;
+      trx = clamp(dy, -1, 1) * -16;
     }, { passive: true });
 
     (function loop() {
-      rx = lerp(rx, trx, 0.09);
-      ry = lerp(ry, try_, 0.09);
+      rx = lerp(rx, trx, 0.08);
+      ry = lerp(ry, try_, 0.08);
       phone.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
       requestAnimationFrame(loop);
     })();
   }
 
   /* =====================================================================
-     5. SCROLL ENGINE: progress, nav, reveals, counters, parallax, timeline
+     7. SCROLL ENGINE
      ===================================================================== */
   function initScroll() {
     var progress = $('#scrollProgress');
     var nav = $('#nav');
     var toTop = $('.to-top');
     var lastY = 0;
+    var ticking = false;
 
     function onScroll() {
-      var y = window.scrollY || document.documentElement.scrollTop;
-      var doc = document.documentElement;
-      var max = doc.scrollHeight - doc.clientHeight;
-      var p = max > 0 ? y / max : 0;
-      if (progress) progress.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY || document.documentElement.scrollTop;
+        var doc = document.documentElement;
+        var max = doc.scrollHeight - doc.clientHeight;
+        var p = max > 0 ? y / max : 0;
+        if (progress) progress.style.transform = 'scaleX(' + p.toFixed(4) + ')';
 
-      // timeline progress
-      var tl = $('.timeline');
-      if (tl) {
-        var r = tl.getBoundingClientRect();
-        var vh = window.innerHeight;
-        var prog = clamp((vh * 0.72 - r.top) / (r.height + vh * 0.1), 0, 1) * 100;
-        tl.style.setProperty('--tl-progress', prog.toFixed(1));
-      }
+        // Timeline progress
+        var tl = $('.timeline');
+        if (tl) {
+          var r = tl.getBoundingClientRect();
+          var vh = window.innerHeight;
+          var prog = clamp((vh * 0.72 - r.top) / (r.height + vh * 0.1), 0, 1) * 100;
+          tl.style.setProperty('--tl-progress', prog.toFixed(1));
+        }
 
-      if (nav) {
-        nav.classList.toggle('solid', y > 30);
-        nav.classList.toggle('hidden', y > 500 && y > lastY && y < doc.scrollHeight - vp() * 1.4);
-      }
-      lastY = y;
-      if (toTop) toTop.classList.toggle('show', y > 900);
+        // Nav behavior
+        if (nav) {
+          nav.classList.toggle('solid', y > 30);
+          nav.classList.toggle('hidden', y > 500 && y > lastY && y < doc.scrollHeight - (window.innerHeight || 800) * 1.4);
+        }
+        lastY = y;
+        if (toTop) toTop.classList.toggle('show', y > 900);
+        ticking = false;
+      });
     }
-    function vp() { return window.innerHeight || 800; }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Scroll-spy
+    // Scroll-spy for active nav link
     var spy = $$('section[id]');
     var links = $$('.nav-links a[href^="#"]');
     if ('IntersectionObserver' in window && spy.length) {
@@ -361,13 +407,13 @@
             rio.unobserve(en.target);
           }
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
       rvs.forEach(function (el) { rio.observe(el); });
     } else {
       rvs.forEach(function (el) { el.classList.add('in'); });
     }
 
-    // Counters
+    // Animated counters
     $$('.stat-num[data-count]').forEach(function (el) {
       var target = parseFloat(el.getAttribute('data-count'));
       var suf = el.getAttribute('data-suffix') || '';
@@ -381,10 +427,10 @@
           if (!en.isIntersecting || done) return;
           done = true;
           cio.unobserve(el);
-          var t0 = performance.now(), dur = 1700;
+          var t0 = performance.now(), dur = 2000;
           (function cstep(now) {
             var t = clamp((now - t0) / dur, 0, 1);
-            var e = 1 - Math.pow(1 - t, 4);
+            var e = 1 - Math.pow(1 - t, 5); // quintic ease out
             var val = Math.round(target * e);
             el.innerHTML = val + (suf ? '<span class="suf">' + suf + '</span>' : '');
             if (t < 1) requestAnimationFrame(cstep);
@@ -393,31 +439,15 @@
       }, { threshold: 0.5 });
       cio.observe(el);
     });
-
-    // Parallax floats
-    if (!REDUCED) {
-      var floats = $$('[data-parallax]');
-      if (floats.length) {
-        var py = 0, pyT = 0;
-        window.addEventListener('scroll', function () { pyT = window.scrollY; }, { passive: true });
-        (function loop() {
-          py = lerp(py, pyT, 0.08);
-          floats.forEach(function (el) {
-            var sp = parseFloat(el.getAttribute('data-parallax')) || 0.12;
-            el.style.setProperty('--py', ((py * sp) % 120).toFixed(1) + 'px');
-            el.style.transform = 'translateY(calc(var(--py,0px) * -1))';
-          });
-          requestAnimationFrame(loop);
-        })();
-      }
-    }
   }
 
   /* =====================================================================
-     6. SPOTLIGHT + TILT CARDS
+     8. SPOTLIGHT + 3D TILT CARDS
      ===================================================================== */
   function spotFX() {
     if (!FINE_POINTER) return;
+    
+    // Spotlight follow for glass cards
     $$('.spot,.skill-card').forEach(function (el) {
       el.addEventListener('mousemove', function (e) {
         var r = el.getBoundingClientRect();
@@ -427,23 +457,40 @@
     });
 
     if (REDUCED) return;
+    
+    // 3D tilt on project cards
     $$('.proj-card').forEach(function (el) {
       el.addEventListener('mousemove', function (e) {
         var r = el.getBoundingClientRect();
         var dx = (e.clientX - r.left) / r.width - 0.5;
         var dy = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = 'perspective(1100px) rotateY(' + dx * 10 + 'deg) rotateX(' + (-dy * 9) + 'deg) translateY(-6px)';
+        el.style.transform = 'perspective(1200px) rotateY(' + (dx * 12) + 'deg) rotateX(' + (-dy * 10) + 'deg) translateY(-8px)';
       });
       el.addEventListener('mouseleave', function () {
-        el.style.transition = 'transform .8s cubic-bezier(.22,1,.36,1)';
+        el.style.transition = 'transform .85s cubic-bezier(.22,1,.36,1)';
         el.style.transform = '';
-        setTimeout(function () { el.style.transition = ''; }, 820);
+        setTimeout(function () { el.style.transition = ''; }, 850);
+      });
+    });
+
+    // Subtle tilt on skill cards
+    $$('.skill-card').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - r.left) / r.width - 0.5;
+        var dy = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'perspective(800px) rotateY(' + (dx * 8) + 'deg) rotateX(' + (-dy * 6) + 'deg) translateY(-10px) scale(1.03)';
+      });
+      el.addEventListener('mouseleave', function () {
+        el.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)';
+        el.style.transform = '';
+        setTimeout(function () { el.style.transition = ''; }, 600);
       });
     });
   }
 
   /* =====================================================================
-     7. GALLERY: drag scroll + lightbox
+     9. GALLERY: drag scroll + lightbox
      ===================================================================== */
   function galleryFX() {
     var track = $('#galTrack');
@@ -523,7 +570,7 @@
   }
 
   /* =====================================================================
-     8. MENU
+     10. FULLSCREEN MENU
      ===================================================================== */
   function menuFX() {
     var burger = $('#burgerBtn');
@@ -531,7 +578,7 @@
     if (!burger || !menu) return;
     var canvas = $('#menuCanvas');
     var field = ParticleField(canvas, {
-      count: 44, colors: ['139,123,255', '63,224,255'], linkDist: 110, speed: 0.18, mouse: true
+      count: 48, colors: ['139,123,255', '63,224,255'], linkDist: 120, speed: 0.16, mouse: true
     });
     var open = false;
 
@@ -543,13 +590,13 @@
       document.body.classList.toggle('menu-open', open);
       var items = $$('.menu-links a');
       items.forEach(function (a, i) {
-        a.style.transitionDelay = (open ? 0.08 + i * 0.06 : 0) + 's';
+        a.style.transitionDelay = (open ? 0.08 + i * 0.065 : 0) + 's';
       });
       if (field) { open ? field.play() : field.pause(); }
     }
 
     burger.addEventListener('click', toggle);
-    $$('.menu-links a, .menu-close').forEach(function (a) {
+    $$('.menu-links a').forEach(function (a) {
       a.addEventListener('click', function () { if (open) toggle(); });
     });
     document.addEventListener('keydown', function (e) {
@@ -558,7 +605,7 @@
   }
 
   /* =====================================================================
-     9. SMOOTH ANCHORS + NAV CTA
+     11. SMOOTH ANCHOR SCROLLING
      ===================================================================== */
   function anchorsFX() {
     $$('a[href^="#"]').forEach(function (a) {
@@ -578,22 +625,67 @@
   }
 
   /* =====================================================================
-     10. BOOT
+     12. PARALLAX SCROLL for data-parallax elements
+     ===================================================================== */
+  function parallaxFX() {
+    if (REDUCED) return;
+    var floats = $$('[data-parallax]');
+    if (!floats.length) return;
+    var py = 0, pyT = 0;
+    window.addEventListener('scroll', function () { pyT = window.scrollY; }, { passive: true });
+    (function loop() {
+      py = lerp(py, pyT, 0.07);
+      floats.forEach(function (el) {
+        var sp = parseFloat(el.getAttribute('data-parallax')) || 0.12;
+        el.style.transform = 'translateY(' + (-(py * sp) % 130).toFixed(1) + 'px)';
+      });
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* =====================================================================
+     13. SECTION DIVIDER GLOW — subtle breathing light between sections
+     ===================================================================== */
+  function sectionGlowFX() {
+    if (REDUCED) return;
+    // Add subtle glow dividers between major sections
+    $$('section').forEach(function (sec, i) {
+      if (i === 0) return;
+      var divider = document.createElement('div');
+      divider.setAttribute('aria-hidden', 'true');
+      divider.style.cssText = 'position:absolute;top:-1px;left:10%;right:10%;height:1px;' +
+        'background:linear-gradient(90deg,transparent,rgba(139,123,255,.3),rgba(63,224,255,.2),transparent);' +
+        'pointer-events:none;z-index:10';
+      sec.style.position = 'relative';
+      sec.appendChild(divider);
+    });
+  }
+
+  /* =====================================================================
+     14. TYPING EFFECT for hero eyebrow (optional subtle touch)
+     ===================================================================== */
+  function heroTypingFX() {
+    // Removed - keep the eyebrow static for cleaner look
+  }
+
+  /* =====================================================================
+     BOOT — initialize everything
      ===================================================================== */
   document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('lock');
 
-    // global canvases
+    // Initialize global particle fields
     ParticleField($('#fxCanvas'), {
-      count: 70, colors: ['139,123,255', '63,224,255', '255,255,255'], linkDist: 150, speed: 0.2, mouse: true
+      count: 75, colors: ['139,123,255', '63,224,255', '255,255,255'], linkDist: 160, speed: 0.18, mouse: true, glow: true
     });
     ParticleField($('#heroCanvas'), {
-      count: 46, colors: ['139,123,255', '63,224,255', '245,197,102', '255,110,199'], linkDist: 0, speed: 0.32
+      count: 50, colors: ['139,123,255', '63,224,255', '245,197,102', '255,110,199'], linkDist: 0, speed: 0.28, glow: true
     });
     ParticleField($('#loaderFx'), {
-      count: 60, colors: ['139,123,255', '63,224,255', '245,197,102'], linkDist: 170, speed: 0.3
+      count: 65, colors: ['139,123,255', '63,224,255', '245,197,102'], linkDist: 180, speed: 0.26, glow: true
     });
 
+    // Initialize all interactive systems
     cursorFX();
     hero3D();
     magnetic();
@@ -603,6 +695,10 @@
     galleryFX();
     menuFX();
     anchorsFX();
+    parallaxFX();
+    sectionGlowFX();
+
+    // Run the cinematic loader last
     runLoader();
   });
 

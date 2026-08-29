@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>پارسا اپس | استودیوی دیجیتال پرمیوم — Parsa Apps</title>
 <meta name="description" content="پارسا اپس (Parsa Apps)، استودیوی مستقل فرشاد پارسا — ساخت اپلیکیشن‌های حرفه‌ای اندروید و فلاتر، وب‌سایت و تجربه‌های دیجیتال سطح جهانی. سازنده جزیره فندقی.">
-<meta name="keywords" content="پارسا اپس, Parsa Apps, فلاتر, Flutter, اندروید, Android, جزیره فندقی, کارتونیا, فشاد پارسا, استودیو نرم‌افزار">
+<meta name="keywords" content="پارسا اپس, Parsa Apps, فلاتر, Flutter, اندروید, Android, جزیره فندقی, کارتونیا, فرشاد پارسا, استودیو نرم‌افزار">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#04050e">
+<meta name="theme-color" content="#03050c">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://parsa-apps.github.io/">
 
@@ -67,13 +67,13 @@
       <stop offset="1" stop-color="#f5c566"/>
     </linearGradient>
     <filter id="paGlow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feGaussianBlur stdDeviation="7" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <symbol id="pa-mark" viewBox="0 0 200 200">
       <path d="M64 46v108" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
       <path d="M64 46h42a38 38 0 0 1 0 76H64" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
-      <path d="M100 18l8 10-8 10-8-10z" fill="#f5c566" stroke="#04050e" stroke-width="2"/>
+      <path d="M100 18l8 10-8 10-8-10z" fill="#f5c566" stroke="#03050c" stroke-width="2"/>
       <circle cx="42" cy="86" r="3.4" fill="#3fe0ff"/>
       <circle cx="30" cy="108" r="3.4" fill="#8b7bff"/>
       <circle cx="42" cy="130" r="3.4" fill="#f5c566"/>
@@ -82,11 +82,12 @@
   </defs>
 </svg>
 
-<!-- ============ GLOBAL FX ============ -->
+<!-- ============ GLOBAL FX LAYERS ============ -->
 <canvas id="fxCanvas" aria-hidden="true"></canvas>
 <div class="aurora" aria-hidden="true"></div>
 <div class="grid-bg" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
 <div class="cursor-dot" aria-hidden="true"></div>
 <div class="cursor-ring" aria-hidden="true"></div>
 <div id="scrollProgress" aria-hidden="true"></div>
@@ -100,17 +101,19 @@
       <div class="loader-ring"></div>
       <div class="loader-ring r2"></div>
       <div class="loader-ring r3"></div>
+      <div class="loader-ring r4"></div>
       <span class="loader-orb o1"></span>
       <span class="loader-orb o2"></span>
+      <span class="loader-orb o3"></span>
       <svg class="loader-mark" viewBox="0 0 200 200" aria-hidden="true">
         <path class="dash" style="--len:1" d="M64 46v108" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
-        <path class="dash" style="--len:1;animation-delay:.35s" d="M64 46h42a38 38 0 0 1 0 76H64" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
-        <path class="pop" style="animation-delay:1.15s" d="M100 18l8 10-8 10-8-10z" fill="#f5c566"/>
-        <circle class="pop" style="animation-delay:1.5s" cx="42" cy="86" r="3.4" fill="#3fe0ff"/>
-        <circle class="pop" style="animation-delay:1.62s" cx="30" cy="108" r="3.4" fill="#8b7bff"/>
-        <circle class="pop" style="animation-delay:1.74s" cx="42" cy="130" r="3.4" fill="#f5c566"/>
-        <path class="fadeup" style="animation-delay:1.9s" d="M42 86h-8M30 108h-8M42 130h-8" stroke="rgba(160,150,255,.5)" stroke-width="1.4" stroke-linecap="round"/>
-        <path class="fadeup" style="animation-delay:2.25s" d="M30 140h140" stroke="url(#paGradSoft)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+        <path class="dash" style="--len:1;animation-delay:.4s" d="M64 46h42a38 38 0 0 1 0 76H64" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round" pathLength="1"/>
+        <path class="pop" style="animation-delay:1.25s" d="M100 18l8 10-8 10-8-10z" fill="#f5c566"/>
+        <circle class="pop" style="animation-delay:1.6s" cx="42" cy="86" r="3.4" fill="#3fe0ff"/>
+        <circle class="pop" style="animation-delay:1.72s" cx="30" cy="108" r="3.4" fill="#8b7bff"/>
+        <circle class="pop" style="animation-delay:1.84s" cx="42" cy="130" r="3.4" fill="#f5c566"/>
+        <path class="fadeup" style="animation-delay:2s" d="M42 86h-8M30 108h-8M42 130h-8" stroke="rgba(160,150,255,.5)" stroke-width="1.4" stroke-linecap="round"/>
+        <path class="fadeup" style="animation-delay:2.35s" d="M30 140h140" stroke="url(#paGradSoft)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
       </svg>
     </div>
     <div class="loader-word" aria-hidden="true">
@@ -121,6 +124,7 @@
     <div class="loader-progress"><i id="loaderBar"></i></div>
   </div>
   <div class="loader-status" id="loaderStatus">INITIALIZING CORE · راه‌اندازی هسته <span class="tick">▮</span></div>
+  <div class="loader-flash" aria-hidden="true"></div>
   <div class="loader-curtain left" aria-hidden="true"></div>
   <div class="loader-curtain right" aria-hidden="true"></div>
 </div>
@@ -159,7 +163,7 @@
     <a href="#gallery"><small>06 — GALLERY</small>گالری</a>
     <a href="#contact"><small>07 — CONTACT</small>شروع پروژه</a>
   </nav>
-  <div class="menu-foot">PARSAAAPPS.GITHUB.IO · ESC TO CLOSE</div>
+  <div class="menu-foot">PARSAAPPS.GITHUB.IO · ESC TO CLOSE</div>
 </div>
 
 <main>
@@ -517,6 +521,8 @@
   <div class="wrap">
     <div class="cta-panel glass rv zoom">
       <div class="cta-shine" aria-hidden="true"></div>
+      <div class="cta-orb o1" aria-hidden="true"></div>
+      <div class="cta-orb o2" aria-hidden="true"></div>
       <div class="icon">✦</div>
       <h2>آماده ساخت <span class="grad">پروژه بعدی</span> هستید؟</h2>
       <p>ایده شما را با دقت تحلیل می‌کنیم و آن را به یک محصول حرفه‌ای با استانداردهای جهانی تبدیل می‌کنیم. همین حالا گفتگو را شروع کنید.</p>
