@@ -1,18 +1,18 @@
 /* ============================================================
-   Parsa Apps — Service Worker v10 (performance + cache health)
-   - v10 purges v9 caches that could hold multi-MB media
+   Parsa Apps — Service Worker v11 (performance + cache health)
+   - v11 refreshes the shell after the Jazire Fandoqi 7.5.7 / Kartoniya 1.3.0 site update
    - Never caches videos / big files / range requests
    - Cache quota: keeps the cache small (LRU eviction)
    - JS/CSS/fonts/images: stale-while-revalidate (instant loads)
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v10";
+const CACHE_NAME = "parsa-apps-v11";
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 // Cache health limits
 const MAX_CACHE_BYTES = 30 * 1024 * 1024; // 30 MB total (mobile-friendly)
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024; // skip anything bigger than 2 MB
-const META_KEY = "__parsa-meta-v10__";
+const META_KEY = "__parsa-meta-v11__";
 
 /* ---------- LRU bookkeeping (kept inside the same cache) ---------- */
 async function getMeta(cache) {
