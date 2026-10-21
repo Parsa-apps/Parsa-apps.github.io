@@ -3071,6 +3071,7 @@ html[data-intro="play"] .cinema-logo {
   font-weight: 700;
   cursor: pointer;
   opacity: 0;
+  visibility: hidden;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition:
@@ -3079,20 +3080,25 @@ html[data-intro="play"] .cinema-logo {
     color 0.25s var(--ease-out);
 }
 
+/* دکمه رد کردن در ابتدای افتتاحیه ظاهر نمی‌شود؛ پس از استقرار لوگو (ثانیه ~۱٫۷۵) نرم وارد می‌شود
+   و تا آن لحظه با visibility:hidden نه دیده می‌شود و نه کلیک/فوکوس می‌پذیرد */
 html[data-intro="play"] .cinema-skip {
-  animation: skipAppear 0.5s ease-out 0.85s forwards;
+  animation: skipAppear 0.45s ease-out 1.75s both;
 }
 
 html[data-intro="reduced"] .cinema-skip {
   opacity: 1;
+  visibility: visible;
 }
 
 @keyframes skipAppear {
   from {
     opacity: 0;
+    visibility: hidden;
   }
   to {
     opacity: 1;
+    visibility: visible;
   }
 }
 
