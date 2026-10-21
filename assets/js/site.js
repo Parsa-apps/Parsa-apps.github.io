@@ -21,6 +21,11 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
+  /* Persian numerals for every counter / dynamic number on the page */
+  var FA_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  var faNum = function (n) {
+    return String(n).replace(/[0-9]/g, function (d) { return FA_DIGITS[+d]; });
+  };
 
   /* =====================================================================
      1. CINEMATIC LOADER — logo assembly + curtain reveal + flash
@@ -334,25 +339,36 @@
      6. PHONE 3D TILT
      ===================================================================== */
   function phoneTilt() {
-    var phone = $('#phone3d');
-    var stage = $('#phoneStage');
-    if (!phone || !stage || REDUCED) return;
+    if (REDUCED) return;
+    $$('.phone-stage').forEach(function (stage) {
+      var phone = stage.querySelector('.phone-3d');
+      if (!phone) return;
 
-    var rx = 0, ry = 0, trx = 0, try_ = 0;
-    window.addEventListener('mousemove', function (e) {
-      var r = stage.getBoundingClientRect();
-      var dx = (e.clientX - r.left - r.width / 2) / r.width;
-      var dy = (e.clientY - r.top - r.height / 2) / r.height;
-      try_ = clamp(dx, -1, 1) * 18;
-      trx = clamp(dy, -1, 1) * -16;
-    }, { passive: true });
+      var rx = 0, ry = 0, trx = 0, try_ = 0;
 
-    (function loop() {
-      rx = lerp(rx, trx, 0.08);
-      ry = lerp(ry, try_, 0.08);
-      phone.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
-      requestAnimationFrame(loop);
-    })();
+      stage.addEventListener('mousemove', function (e) {
+        var r = stage.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width / 2) / r.width;
+        var dy = (e.clientY - r.top - r.height / 2) / r.height;
+        try_ = clamp(dx, -1, 1) * 18;
+        trx = clamp(dy, -1, 1) * -16;
+      }, { passive: true });
+
+      stage.addEventListener('mouseleave', function () {
+        trx = 0; try_ = 0;
+      });
+
+      (function loop() {
+        rx = lerp(rx, trx, 0.08);
+        ry = lerp(ry, try_, 0.08);
+        // skip the style write once the tilt has settled (saves paint work)
+        if (Math.abs(rx - trx) > 0.02 || Math.abs(ry - try_) > 0.02 ||
+            Math.abs(rx) > 0.02 || Math.abs(ry) > 0.02) {
+          phone.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+        }
+        requestAnimationFrame(loop);
+      })();
+    });
   }
 
   /* =====================================================================
@@ -436,7 +452,7 @@
       var suf = el.getAttribute('data-suffix') || '';
       var done = false;
       if (!('IntersectionObserver' in window) || REDUCED) {
-        el.innerHTML = target + (suf ? '<span class="suf">' + suf + '</span>' : '');
+        el.innerHTML = faNum(target) + (suf ? '<span class="suf">' + suf + '</span>' : '');
         return;
       }
       var cio = new IntersectionObserver(function (es) {
@@ -449,7 +465,7 @@
             var t = clamp((now - t0) / dur, 0, 1);
             var e = 1 - Math.pow(1 - t, 5); // quintic ease out
             var val = Math.round(target * e);
-            el.innerHTML = val + (suf ? '<span class="suf">' + suf + '</span>' : '');
+            el.innerHTML = faNum(val) + (suf ? '<span class="suf">' + suf + '</span>' : '');
             if (t < 1) requestAnimationFrame(cstep);
           })(t0);
         });
@@ -511,13 +527,14 @@
      ===================================================================== */
   function galleryFX() {
     var track = $('#galTrack');
-    var items = $$('.gal-item');
+    var allItems = $$('.gal-item');
+    var visible = allItems.slice();
     var lb = $('#lightbox');
     var lbImg = $('#lightboxImg');
     var lbCap = $('#lightboxCap');
     var idx = 0;
 
-    if (track && items.length) {
+    if (track && allItems.length) {
       var isDown = false, startX = 0, startScroll = 0, moved = false;
       track.addEventListener('pointerdown', function (e) {
         isDown = true; moved = false;
@@ -537,28 +554,59 @@
           track.classList.remove('dragging');
         });
       });
-      items.forEach(function (it, i) {
+      allItems.forEach(function (it) {
         it.addEventListener('click', function () {
           if (moved) return;
-          openLb(i);
+          var i = visible.indexOf(it);
+          if (i > -1) openLb(i);
         });
         it.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
+            var i = visible.indexOf(it);
+            if (i < 0) return;
             e.preventDefault();
             openLb(i);
           }
         });
       });
+
+      /* ---- Filter tabs: همه / جزیره فندقی / کارتونیا ---- */
+      var filters = $$('.gal-filter');
+      filters.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var f = btn.getAttribute('data-filter') || 'all';
+          filters.forEach(function (b) {
+            var on = b === btn;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          visible = [];
+          allItems.forEach(function (it) {
+            var shows = f === 'all' || it.getAttribute('data-app') === f;
+            it.classList.toggle('hide', !shows);
+            if (shows) visible.push(it);
+          });
+          if (track) track.scrollLeft = 0;
+        });
+      });
     }
 
     function openLb(i) {
-      if (!lb) return;
+      if (!lb || !visible.length) return;
+      if (i < 0 || i >= visible.length) i = 0;
       idx = i;
-      var img = items[i].querySelector('img');
-      var cap = items[i].querySelector('.cap');
+      var item = visible[i];
+      var img = item.querySelector('.gal-app + img') || item.querySelector('img');
+      var cap = item.querySelector('.cap');
+      var capSmall = cap ? cap.querySelector('small') : null;
+      var capTitle = cap ? cap.textContent.replace(capSmall ? capSmall.textContent : '', '').trim() : '';
       lbImg.src = img.getAttribute('data-full') || img.src;
       lbImg.alt = img.alt;
-      if (lbCap) lbCap.textContent = cap ? cap.textContent : img.alt;
+      if (lbCap) {
+        lbCap.textContent = capTitle
+          ? capTitle + (capSmall ? ' · ' + capSmall.textContent : '')
+          : img.alt;
+      }
       lb.classList.add('open');
       document.body.classList.add('lock');
     }
@@ -568,8 +616,8 @@
       document.body.classList.remove('lock');
     }
     function navLb(d) {
-      if (!items.length) return;
-      openLb((idx + d + items.length) % items.length);
+      if (!visible.length) return;
+      openLb((idx + d + visible.length) % visible.length);
     }
 
     if (lb) {
