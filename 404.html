@@ -1,87 +1,100 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>۴۰۴ — مسیر یافت نشد | پارسا اپس</title>
-<meta name="description" content="صفحه مورد نظر شما در پارسا اپس پیدا نشد. به خانه بازگردید.">
+<title>صفحه پیدا نشد (۴۰۴) | پارسا اپس — Parsa Apps</title>
+<meta name="description" content="صفحه موردنظر شما در وب‌سایت پارسا اپس پیدا نشد. به صفحه اصلی، پروژه‌ها یا بخش تماس بازگردید.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#04050e">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050c17">
 <link rel="canonical" href="https://parsa-apps.github.io/404.html">
-<link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+<link rel="icon" type="image/svg+xml" href="/assets/crown.svg">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
 <link rel="preload" href="/assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('parsa-theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  } catch (e) {}
+})();
+</script>
 <style>
-  #e404{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;z-index:5}
-  .err-wrap{max-width:720px;padding:40px 24px}
-  .err-code{font-family:var(--font-mono);font-weight:700;font-size:clamp(80px,20vw,190px);line-height:1;direction:ltr;
-    background:linear-gradient(120deg,var(--violet-2),var(--cyan) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:drop-shadow(0 0 44px rgba(139,123,255,.35));animation:floatY 5s ease-in-out infinite}
-  .err-wrap h1{font-size:clamp(22px,4.4vw,36px);font-weight:900;margin:10px 0 14px}
-  .err-wrap p{color:var(--dim);max-width:46ch;margin:0 auto 34px;font-size:14.5px}
-  .err-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .err-orbits{position:absolute;left:50%;top:50%;width:min(64vw,660px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(150,140,255,.14);animation:spin 40s linear infinite;pointer-events:none}
-  .err-orbits::before{content:'';position:absolute;inset:-14%;border-radius:50%;border:1px solid rgba(255,255,255,.04)}
-  .err-orbits::after{content:'';position:absolute;top:6%;right:14%;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}
+  .err-stage {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 18px;
+    text-align: center;
+  }
+  .err-box {
+    max-width: 580px;
+    width: 100%;
+    padding: clamp(30px, 6vw, 52px);
+    border-radius: var(--radius-xl);
+    background: var(--bg-surface-strong);
+    border: 1px solid var(--border-gold-strong);
+    box-shadow: var(--shadow-deep);
+  }
+  .err-num {
+    font-size: clamp(68px, 16vw, 128px);
+    font-weight: 900;
+    line-height: 1;
+    margin: 12px 0 8px;
+    background: linear-gradient(180deg, #fff6d4 0%, #f5c34d 52%, #d78f1f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .err-box h1 {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 900;
+    color: var(--text-strong);
+    margin-bottom: 12px;
+  }
+  .err-box p {
+    font-size: 15px;
+    color: var(--text-soft);
+    margin-bottom: 26px;
+    line-height: 1.9;
+  }
+  .err-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
 </style>
 </head>
 <body>
-
-<!-- FX -->
-<canvas id="fxCanvas" aria-hidden="true"></canvas>
-<div class="aurora" aria-hidden="true"></div>
-<div class="grid-bg" aria-hidden="true"></div>
-<div class="noise" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-
-<!-- SVG symbols -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="paGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#b9acff"/><stop offset="0.5" stop-color="#8b7bff"/><stop offset="1" stop-color="#3fe0ff"/>
-    </linearGradient>
-    <filter id="paGlow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <symbol id="pa-mark" viewBox="0 0 200 200">
-      <path d="M64 46v108" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round"/>
-      <path d="M64 46h42a38 38 0 0 1 0 76H64" fill="none" stroke="url(#paGrad)" stroke-width="26" stroke-linecap="round"/>
-      <path d="M100 18l8 10-8 10-8-10z" fill="#f5c566" stroke="#04050e" stroke-width="2"/>
-      <circle cx="42" cy="86" r="3.4" fill="#3fe0ff"/>
-      <circle cx="30" cy="108" r="3.4" fill="#8b7bff"/>
-      <circle cx="42" cy="130" r="3.4" fill="#f5c566"/>
-    </symbol>
-  </defs>
-</svg>
-
-<main id="e404">
-  <div class="err-orbits" aria-hidden="true"></div>
-  <div class="err-wrap">
-    <svg style="width:74px;height:74px;margin:0 auto 14px;display:block;filter:drop-shadow(0 0 24px rgba(139,123,255,.5));animation:floatY 5s ease-in-out infinite" viewBox="0 0 200 200" aria-hidden="true"><use href="#pa-mark"/></svg>
-    <div class="err-code">404</div>
-    <h1>این مسیر در <span style="color:var(--violet-2)">فضای پارسا اپس</span> وجود ندارد</h1>
-    <p>صفحه‌ای که دنبالش بودید جابه‌جا شده یا هرگز ساخته نشده. بیایید به تجربه اصلی بازگردیم.</p>
+<main class="err-stage">
+  <div class="err-box">
+    <a href="/" aria-label="بازگشت به خانه پارسا اپس">
+      <span class="brand-lockup" style="justify-content:center">
+        <img src="/assets/crown.svg" alt="" class="brand-crown" width="38" height="28">
+        <span class="brand-word">
+          <span class="brand-parsa">Parsa</span>
+          <span class="brand-apps">Apps</span>
+        </span>
+      </span>
+    </a>
+    <div class="err-num">۴۰۴</div>
+    <h1>صفحه موردنظر شما در جزیره پارسا اپس پیدا نشد</h1>
+    <p>ممکن است نشانی واردشده جابه‌جا شده باشد یا با خطای تایپی همراه باشد. از دکمه‌های زیر می‌توانید مستقیماً به بخش‌های اصلی وب‌سایت بازگردید.</p>
     <div class="err-actions">
-      <a href="/" class="btn btn-primary">بازگشت به خانه <span class="ico">✦</span></a>
-      <a href="/#apps" class="btn btn-ghost">محصولات</a>
-      <a href="/#contact" class="btn btn-ghost">تماس با ما</a>
+      <a href="/" class="btn btn-gold btn-sm">بازگشت به خانه</a>
+      <a href="/#projects" class="btn btn-glass btn-sm">مشاهده پروژه‌ها</a>
+      <a href="/#contact" class="btn btn-glass btn-sm">تماس با ما</a>
     </div>
   </div>
 </main>
-
 <script src="/assets/js/site.js"></script>
 <script>
-/* 404 quick-start (skip cinematic loader, keep FX) */
-document.addEventListener('DOMContentLoaded', function () {
-  document.body.classList.remove('lock');
-  window.requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
-});
-/* Service worker */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).catch(function () {});

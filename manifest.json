@@ -1,7 +1,7 @@
 {
-  "name": "پارسا اپس | Parsa Apps Studio",
-  "short_name": "Parsa Apps",
-  "description": "Building the future of mobile experiences. استودیوی پرمیوم ساخت اپلیکیشنهای حرفهای اندروید و فلاتر.",
+  "name": "پارسا اپس | ایده‌های بزرگ برای دنیای کوچک",
+  "short_name": "پارسا اپس",
+  "description": "استودیوی مستقل طراحی و توسعه اپلیکیشن‌های آموزشی، سرگرمی و بازی‌های خلاقانه فارسی؛ سازنده جزیره فندقی، کارتونیا، استودیو نقاشی فندوقی و سرزمین بقا.",
   "lang": "fa",
   "dir": "rtl",
   "id": "/",
@@ -9,12 +9,12 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#04050e",
-  "theme_color": "#04050e",
+  "background_color": "#050c17",
+  "theme_color": "#050c17",
   "categories": [
-    "productivity",
     "education",
-    "entertainment"
+    "entertainment",
+    "games"
   ],
   "icons": [
     {
