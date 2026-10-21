@@ -11,9 +11,9 @@
 <meta name="color-scheme" content="dark light">
 <link rel="canonical" href="https://parsa-apps.github.io/">
 
-<link rel="icon" type="image/svg+xml" href="/assets/crown.svg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/icons/icon-180.png">
 <link rel="manifest" href="/manifest.json">
 
 <!-- فراداده اشتراک‌گذاری شبکه‌های اجتماعی -->
@@ -34,12 +34,14 @@
 <meta name="twitter:image" content="https://parsa-apps.github.io/assets/images/cinema/og-parsa-apps.jpg">
 <meta name="twitter:image:alt" content="نمای سینمایی وب‌سایت رسمی پارسا اپس">
 
-<!-- پیش‌بارگذاری فونت فارسی خودمیزبان و تصویر آغازین -->
+<!-- پیش‌بارگذاری فونت فارسی خودمیزبان، لوگوی رسمی و تصویر آغازین -->
 <link rel="preload" href="/assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="/assets/images/cinema/hero-1080.avif" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/brand/parsa-apps-logo-320.webp" type="image/webp">
+<link rel="preload" as="image" href="/assets/brand/parsa-apps-logo-1024.webp" type="image/webp">
 <link rel="stylesheet" href="/assets/css/site.css">
 
-<!-- اعمال فوری پوسته ذخیره‌شده پیش از رسم صفحه برای جلوگیری از پرش نوری -->
+<!-- اعمال فوری پوسته ذخیره‌شده و تصمیم افتتاحیه سینمایی پیش از رسم صفحه -->
 <script>
 (function () {
   try {
@@ -48,12 +50,28 @@
       document.documentElement.setAttribute('data-theme', saved);
     }
   } catch (e) {}
+  try {
+    var root = document.documentElement;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var seen = sessionStorage.getItem('parsa-cinema-intro');
+    if (seen === 'done') {
+      root.setAttribute('data-intro', 'skip');
+    } else {
+      root.setAttribute('data-intro', reduced ? 'reduced' : 'play');
+      root.classList.add('cinema-lock');
+      // قفل اسکرول فقط برای مدت افتتاحیه؛ تضمین بازگشت حتی اگر اسکریپت اصلی اجرا نشود
+      setTimeout(function () { root.classList.remove('cinema-lock'); }, 3800);
+    }
+  } catch (e) {
+    document.documentElement.setAttribute('data-intro', 'play');
+  }
 })();
 </script>
 
 <noscript>
   <style>
     .reveal { opacity: 1 !important; transform: none !important; }
+    .cinema-intro { display: none !important; }
   </style>
 </noscript>
 
@@ -65,7 +83,7 @@
   "name": "پارسا اپس",
   "alternateName": "Parsa Apps",
   "url": "https://parsa-apps.github.io",
-  "logo": "https://parsa-apps.github.io/assets/brand/parsa-apps-icon-512.png",
+  "logo": "https://parsa-apps.github.io/assets/brand/parsa-apps-logo-512.png",
   "email": "farshadparsa2019@gmail.com",
   "founder": {
     "@type": "Person",
@@ -129,17 +147,95 @@
 <a href="#mainContent" class="skip-link">پرش به محتوای اصلی</a>
 <div id="scrollProgress" aria-hidden="true"></div>
 
+<!-- ==================== افتتاحیه سینمایی سه‌ثانیه‌ای لوگوی رسمی ==================== -->
+<div class="cinema-intro" id="cinemaIntro">
+  <div class="cinema-circuits" aria-hidden="true">
+    <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <defs>
+        <filter id="circuitGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="3.2" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <g class="circuit-lines" filter="url(#circuitGlow)" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path class="cline cl1" d="M-20,120 L180,120 L260,200 L520,200"/>
+        <path class="cline cl2" d="M-20,320 L120,320 L220,420 L430,420 L510,500 L740,500"/>
+        <path class="cline cl3" d="M1460,140 L1260,140 L1160,240 L980,240"/>
+        <path class="cline cl4" d="M1460,380 L1300,380 L1210,470 L1010,470 L930,550 L820,550"/>
+        <path class="cline cl5" d="M120,720 L320,720 L420,620 L640,620"/>
+        <path class="cline cl6" d="M1340,700 L1120,700 L1010,610 L840,610"/>
+      </g>
+      <g class="circuit-nodes" fill="#7dd3fc">
+        <circle class="cnode n1" cx="180" cy="120" r="5"/>
+        <circle class="cnode n2" cx="520" cy="200" r="5"/>
+        <circle class="cnode n3" cx="220" cy="420" r="5"/>
+        <circle class="cnode n4" cx="740" cy="500" r="5"/>
+        <circle class="cnode n5" cx="1260" cy="140" r="5"/>
+        <circle class="cnode n6" cx="980" cy="240" r="5"/>
+        <circle class="cnode n7" cx="1210" cy="470" r="5"/>
+        <circle class="cnode n8" cx="420" cy="620" r="5"/>
+        <circle class="cnode n9" cx="1120" cy="700" r="5"/>
+      </g>
+    </svg>
+  </div>
+  <div class="cinema-halo" aria-hidden="true"></div>
+  <div class="cinema-particles" aria-hidden="true">
+    <span class="c-particle" style="--x:10%;--y:72%;--d:.05s;--dur:2.7s;--s:5px"></span>
+    <span class="c-particle" style="--x:20%;--y:80%;--d:.25s;--dur:2.5s;--s:3px"></span>
+    <span class="c-particle" style="--x:30%;--y:68%;--d:.15s;--dur:2.8s;--s:4px"></span>
+    <span class="c-particle" style="--x:42%;--y:84%;--d:.4s;--dur:2.4s;--s:3px"></span>
+    <span class="c-particle" style="--x:56%;--y:82%;--d:.1s;--dur:2.6s;--s:5px"></span>
+    <span class="c-particle" style="--x:66%;--y:70%;--d:.35s;--dur:2.7s;--s:3px"></span>
+    <span class="c-particle" style="--x:76%;--y:78%;--d:.2s;--dur:2.5s;--s:4px"></span>
+    <span class="c-particle" style="--x:88%;--y:74%;--d:.45s;--dur:2.6s;--s:3px"></span>
+    <span class="c-particle" style="--x:15%;--y:46%;--d:.5s;--dur:2.4s;--s:3px"></span>
+    <span class="c-particle" style="--x:36%;--y:38%;--d:.3s;--dur:2.5s;--s:2px"></span>
+    <span class="c-particle" style="--x:62%;--y:40%;--d:.55s;--dur:2.3s;--s:3px"></span>
+    <span class="c-particle" style="--x:84%;--y:48%;--d:.4s;--dur:2.4s;--s:2px"></span>
+    <span class="c-particle c-gold" style="--x:26%;--y:58%;--d:.22s;--dur:2.6s;--s:4px"></span>
+    <span class="c-particle c-gold" style="--x:70%;--y:60%;--d:.48s;--dur:2.5s;--s:3px"></span>
+    <span class="c-particle c-gold" style="--x:48%;--y:30%;--d:.38s;--dur:2.4s;--s:2px"></span>
+    <span class="c-particle c-gold" style="--x:8%;--y:32%;--d:.6s;--dur:2.3s;--s:2px"></span>
+  </div>
+  <div class="cinema-stage">
+    <div class="cinema-logo-wrap">
+      <picture>
+        <source srcset="/assets/brand/parsa-apps-logo-1024.webp" type="image/webp">
+        <img
+          src="/assets/brand/parsa-apps-logo-1024.png"
+          alt="لوگوی رسمی پارسا اپس"
+          width="1024"
+          height="1024"
+          class="cinema-logo"
+          fetchpriority="high"
+          decoding="sync">
+      </picture>
+      <div class="cinema-glow cinema-glow-gold" aria-hidden="true"></div>
+      <div class="cinema-glow cinema-glow-blue" aria-hidden="true"></div>
+      <div class="cinema-sweep" aria-hidden="true"><span class="cinema-sweep-band"></span></div>
+    </div>
+  </div>
+  <button type="button" class="cinema-skip" id="cinemaSkip">رد کردن</button>
+</div>
+
 <!-- ==================== ۱. نوار پیمایش اصلی ==================== -->
 <header class="site-header" id="siteHeader">
   <div class="container nav-inner">
     <a href="#home" class="nav-brand-link" aria-label="پارسا اپس — بازگشت به ابتدای صفحه">
-      <span class="brand-lockup">
-        <img src="/assets/crown.svg" alt="" class="brand-crown" width="34" height="26">
-        <span class="brand-word">
-          <span class="brand-parsa">Parsa</span>
-          <span class="brand-apps">Apps</span>
-        </span>
-      </span>
+      <picture class="brand-logo">
+        <source srcset="/assets/brand/parsa-apps-logo-320.webp" type="image/webp">
+        <img
+          src="/assets/brand/parsa-apps-logo-320.png"
+          alt="لوگوی رسمی پارسا اپس"
+          width="320"
+          height="320"
+          class="brand-logo-img"
+          fetchpriority="high"
+          decoding="sync">
+      </picture>
     </a>
 
     <nav class="nav-links" aria-label="پیمایش اصلی وب‌سایت">
@@ -176,12 +272,16 @@
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <div class="drawer-panel">
     <div class="drawer-head">
-      <span class="brand-lockup">
-        <img src="/assets/crown.svg" alt="" class="brand-crown" width="32" height="24">
-        <span class="brand-word">
-          <span class="brand-parsa">Parsa</span>
-          <span class="brand-apps">Apps</span>
-        </span>
+      <span class="brand-logo">
+        <picture>
+          <source srcset="/assets/brand/parsa-apps-logo-320.webp" type="image/webp">
+          <img
+            src="/assets/brand/parsa-apps-logo-320.png"
+            alt="لوگوی رسمی پارسا اپس"
+            width="320"
+            height="320"
+            class="brand-logo-img">
+        </picture>
       </span>
       <button type="button" class="icon-btn" id="drawerCloseBtn" aria-label="بستن منوی موبایل">✕</button>
     </div>
@@ -268,9 +368,16 @@
 
       <div class="hero-crest-stage" aria-hidden="true">
         <div class="hero-crest">
-          <img src="/assets/brand/parsa-main-crown.svg" alt="" class="hero-crest-crown" width="104" height="49">
-          <span class="hero-crest-title">Parsa</span>
-          <span class="hero-crest-sub">Apps</span>
+          <picture>
+            <source srcset="/assets/brand/parsa-apps-logo-1024.webp" type="image/webp">
+            <img
+              src="/assets/brand/parsa-apps-logo-1024.png"
+              alt=""
+              class="hero-crest-logo"
+              width="1024"
+              height="1024"
+              decoding="sync">
+          </picture>
         </div>
       </div>
     </div>
@@ -293,6 +400,18 @@
           <div class="about-story-kicker">
             <img src="/assets/crown.svg" alt="" width="26" height="19">
             <span>درباره ما</span>
+          </div>
+          <div class="about-brand-logo">
+            <picture>
+              <source srcset="/assets/brand/parsa-apps-logo-512.webp" type="image/webp">
+              <img
+                src="/assets/brand/parsa-apps-logo-512.png"
+                alt="لوگوی رسمی پارسا اپس — سنجاب تاج‌دار با نشان آبی و نقره‌ای P"
+                width="512"
+                height="512"
+                loading="lazy"
+                decoding="async">
+            </picture>
           </div>
           <h2 id="aboutHeading">پارسا اپس</h2>
           <p>
@@ -1250,13 +1369,16 @@
 
       <div class="footer-brand-col">
         <a href="#home" aria-label="پارسا اپس — ابتدای صفحه">
-          <span class="brand-lockup">
-            <img src="/assets/crown.svg" alt="" class="brand-crown" width="34" height="26">
-            <span class="brand-word">
-              <span class="brand-parsa">Parsa</span>
-              <span class="brand-apps">Apps</span>
-            </span>
-          </span>
+          <picture class="brand-logo brand-logo-footer">
+            <source srcset="/assets/brand/parsa-apps-logo-512.webp" type="image/webp">
+            <img
+              src="/assets/brand/parsa-apps-logo-512.png"
+              alt="لوگوی رسمی پارسا اپس"
+              width="512"
+              height="512"
+              loading="lazy"
+              decoding="async">
+          </picture>
         </a>
       </div>
     </div>

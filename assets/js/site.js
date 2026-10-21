@@ -708,9 +708,76 @@
     });
   }
 
+  /* ---------- افتتاحیه سینمایی سه‌ثانیه‌ای لوگوی رسمی ---------- */
+  function initCinemaIntro() {
+    var intro = $('#cinemaIntro');
+    var root = document.documentElement;
+    if (!intro) {
+      root.classList.remove('cinema-lock');
+      return;
+    }
+
+    // اگر در همین نشست قبلاً پخش شده، اصلاً نمایش داده نشود
+    if (root.getAttribute('data-intro') === 'skip') {
+      if (intro.parentNode) intro.parentNode.removeChild(intro);
+      root.classList.remove('cinema-lock');
+      return;
+    }
+
+    var finished = false;
+
+    function removeIntro() {
+      root.classList.remove('cinema-lock');
+      if (intro && intro.parentNode) {
+        intro.parentNode.removeChild(intro);
+      }
+    }
+
+    function finish(withFade) {
+      if (finished) return;
+      finished = true;
+      try {
+        sessionStorage.setItem('parsa-cinema-intro', 'done');
+      } catch (e) {}
+      if (withFade) {
+        root.classList.add('cinema-dismiss');
+        setTimeout(removeIntro, 320);
+      } else {
+        removeIntro();
+      }
+    }
+
+    var skipBtn = $('#cinemaSkip');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', function () {
+        finish(true);
+      });
+    }
+
+    // دکمه Escape نیز افتتاحیه را رد می‌کند
+    document.addEventListener('keydown', function (e) {
+      if (!finished && (e.key === 'Escape' || e.key === 'Esc')) {
+        finish(true);
+      }
+    });
+
+    // پایان انیمیشن پوسته → حذف کامل لایه افتتاحیه
+    intro.addEventListener('animationend', function (e) {
+      if (e.target === intro) {
+        finish(false);
+      }
+    });
+
+    // تضمین نهایی: سایت هرگز روی صفحه افتتاحیه گیر نمی‌کند
+    setTimeout(function () {
+      finish(false);
+    }, 3800);
+  }
+
   /* ---------- راه‌اندازی اولیه ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     initTheme();
+    initCinemaIntro();
     initScrollAndNav();
     initMobileDrawer();
     initTabs();

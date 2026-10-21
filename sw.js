@@ -1,16 +1,16 @@
 /* ============================================================
-   پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۲
-   - نوسازی کش پس از بازطراحی کامل سرمه‌ای و طلایی سایت
+   پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۳
+   - نوسازی کش پس از افزودن لوگوی رسمی و افتتاحیه سینمایی
    - عدم ذخیره ویدیوها و فایل‌های حجیم
    - سقف حجم ۳۰ مگابایت با حذف هوشمند قدیمی‌ترین فایل‌ها
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v12";
+const CACHE_NAME = "parsa-apps-v13";
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
-const META_KEY = "__parsa-meta-v12__";
+const META_KEY = "__parsa-meta-v13__";
 
 async function getMeta(cache) {
   try {
