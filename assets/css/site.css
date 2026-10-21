@@ -280,66 +280,53 @@ ul, ol {
 }
 
 /* =====================================================================
-   نشان برند طلایی با تاج (Parsa Apps + تاج ظریف)
+   لوگوی رسمی برند پارسا اپس (تصویر اصلی سه‌بعدی — بدون بازطراحی)
    ===================================================================== */
-.brand-lockup {
+.brand-logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   direction: ltr;
   unicode-bidi: isolate;
   user-select: none;
+  line-height: 0;
 }
 
-.brand-crown {
-  width: 34px;
-  height: 26px;
-  flex: 0 0 auto;
-  filter: drop-shadow(0 2px 10px rgba(248, 210, 106, 0.45));
+.brand-logo-img {
+  height: 58px;
+  width: auto;
+  max-width: min(190px, 24vw);
+  object-fit: contain;
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 16px rgba(248, 210, 106, 0.28));
+  transition: transform 0.35s var(--ease-spring), filter 0.35s var(--ease-out);
+}
+
+.nav-brand-link:hover .brand-logo-img {
+  transform: translateY(-2px) scale(1.03);
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 22px rgba(248, 210, 106, 0.5));
+}
+
+.brand-logo-footer img {
+  height: clamp(96px, 12vw, 128px);
+  width: auto;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 26px rgba(248, 210, 106, 0.3));
   transition: transform 0.35s var(--ease-spring);
 }
 
-.brand-lockup:hover .brand-crown {
-  transform: translateY(-2px) rotate(-4deg);
+.brand-logo-footer:hover img {
+  transform: translateY(-3px) scale(1.02);
 }
 
-.brand-word {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
+.brand-logo-err img {
+  height: clamp(110px, 22vw, 150px);
+  width: auto;
+  margin-inline: auto;
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 26px rgba(248, 210, 106, 0.32));
 }
 
-.brand-parsa {
-  font-family: var(--font-fa);
-  font-weight: 900;
-  font-size: 24px;
-  letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #fff5cf 0%, #f8cf65 48%, #d79124 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
-}
-
-html[data-theme="light"] .brand-parsa {
-  background: linear-gradient(180deg, #1b365d 0%, #0b1d35 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  filter: none;
-}
-
-.brand-apps {
-  align-self: flex-end;
-  font-family: var(--font-fa);
-  font-weight: 700;
-  font-size: 11.5px;
-  color: #f6dc92;
-  margin-top: 1px;
-  letter-spacing: 0.04em;
-}
-
-html[data-theme="light"] .brand-apps {
-  color: #b7770d;
+.drawer-head .brand-logo-img {
+  height: 50px;
+  max-width: 150px;
 }
 
 /* =====================================================================
@@ -828,7 +815,7 @@ html[data-theme="light"] .btn-glass {
   gap: 14px;
 }
 
-/* نشان سه‌بعدی طلایی وسط تصویر آغازین (مشابه تصویر مرجع) */
+/* نشان سه‌بعدی طلایی وسط تصویر آغازین — لوگوی رسمی کامل */
 .hero-crest-stage {
   display: flex;
   justify-content: center;
@@ -837,7 +824,7 @@ html[data-theme="light"] .btn-glass {
 
 .hero-crest {
   position: relative;
-  padding: 28px 36px 24px;
+  padding: clamp(10px, 2vw, 22px);
   border-radius: 36px;
   text-align: center;
   direction: ltr;
@@ -846,7 +833,7 @@ html[data-theme="light"] .btn-glass {
   animation: crestFloat 6.5s ease-in-out infinite;
 }
 
-/* حلقه طلایی نورانی دور نشان Parsa Apps در بخش آغازین */
+/* حلقه طلایی نورانی دور لوگوی Parsa Apps در بخش آغازین */
 .hero-crest::before {
   content: '';
   position: absolute;
@@ -860,38 +847,15 @@ html[data-theme="light"] .btn-glass {
   pointer-events: none;
 }
 
-.hero-crest-crown {
-  width: clamp(68px, 8vw, 104px);
-  margin: 0 auto -8px;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 20px rgba(255, 213, 98, 0.55));
-}
-
-.hero-crest-title {
+.hero-crest-logo {
   display: block;
-  font-family: var(--font-fa);
-  font-weight: 900;
-  font-size: clamp(46px, 6.2vw, 84px);
-  line-height: 0.96;
-  background: linear-gradient(180deg, #fffbe2 0%, #ffe082 36%, #efa92a 72%, #b76f0c 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  width: clamp(230px, 26vw, 380px);
+  height: auto;
+  margin-inline: auto;
   filter:
-    drop-shadow(0 5px 0 #5b3305)
-    drop-shadow(0 14px 28px rgba(0, 0, 0, 0.72));
-}
-
-.hero-crest-sub {
-  display: inline-block;
-  margin-top: 6px;
-  padding: 4px 20px;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(180deg, #1b653e, #0e3d26);
-  border: 1.5px solid rgba(250, 214, 115, 0.7);
-  color: #fff6d5;
-  font-weight: 800;
-  font-size: clamp(16px, 2vw, 24px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+    drop-shadow(0 14px 34px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 30px rgba(56, 189, 248, 0.28))
+    drop-shadow(0 0 42px rgba(248, 200, 76, 0.3));
 }
 
 @keyframes crestFloat {
@@ -1005,6 +969,22 @@ html[data-theme="light"] .btn-glass {
 .about-story-kicker img {
   width: 26px;
   height: 19px;
+}
+
+/* لوگوی رسمی در بخش معرفی برند */
+.about-brand-logo {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 10px;
+  line-height: 0;
+}
+
+.about-brand-logo img {
+  height: clamp(120px, 16vw, 168px);
+  width: auto;
+  filter:
+    drop-shadow(0 12px 28px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 24px rgba(248, 210, 106, 0.28));
 }
 
 .about-story h2 {
@@ -2675,6 +2655,494 @@ html[data-theme="light"] .field-group textarea {
 }
 
 /* =====================================================================
+   افتتاحیه سینمایی سه‌ثانیه‌ای لوگوی رسمی (بدون وابستگی به شبکه/JS)
+   جدول زمانی: ۰–۰٫۶ انرژی · ۰٫۶–۱٫۵ ورود لوگو · ۱٫۵–۲٫۴ لحظه باشکوه · ۲٫۴–۳ انتقال
+   ===================================================================== */
+.cinema-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 92% at 50% 42%, rgba(14, 34, 62, 0.92) 0%, rgba(5, 11, 21, 0.97) 56%, #02050c 100%),
+    #02050c;
+}
+
+html[data-intro="play"] .cinema-intro,
+html[data-intro="reduced"] .cinema-intro {
+  display: block;
+}
+
+html[data-intro="skip"] .cinema-intro {
+  display: none;
+}
+
+/* قفل موقت اسکرول فقط هنگام پخش افتتاحیه (همراه تضمین بازگشت در اسکریپت) */
+html.cinema-lock,
+html.cinema-lock body {
+  overflow: hidden;
+}
+
+html[data-intro="play"] .cinema-intro {
+  animation: introOverlay 3.2s linear forwards;
+}
+
+@keyframes introOverlay {
+  0%, 82% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* رد کردن دستی: محو فوری و بدون گیرکردن */
+html.cinema-dismiss .cinema-intro {
+  animation: none !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s;
+}
+
+/* ---------- لایه مدارهای الکترونیکی ---------- */
+.cinema-circuits {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-intro="play"] .cinema-circuits {
+  animation: circuitsLife 3.2s linear forwards;
+}
+
+@keyframes circuitsLife {
+  0% { opacity: 0; }
+  12% { opacity: 0.85; }
+  70% { opacity: 0.55; }
+  88% { opacity: 0.22; }
+  100% { opacity: 0; }
+}
+
+.cinema-circuits svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cline {
+  stroke-dasharray: 920;
+  stroke-dashoffset: 920;
+  opacity: 0.8;
+}
+
+html[data-intro="play"] .cline {
+  animation: circuitDraw 1.05s var(--ease-out) forwards;
+}
+
+html[data-intro="play"] .cl1 { animation-delay: 0.02s; }
+html[data-intro="play"] .cl2 { animation-delay: 0.1s; }
+html[data-intro="play"] .cl3 { animation-delay: 0.06s; }
+html[data-intro="play"] .cl4 { animation-delay: 0.16s; }
+html[data-intro="play"] .cl5 { animation-delay: 0.22s; }
+html[data-intro="play"] .cl6 { animation-delay: 0.28s; }
+
+@keyframes circuitDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+.cnode {
+  opacity: 0;
+}
+
+html[data-intro="play"] .cnode {
+  animation: nodePulse 1.9s ease-in-out infinite;
+}
+
+html[data-intro="play"] .n1 { animation-delay: 0.35s; }
+html[data-intro="play"] .n2 { animation-delay: 0.55s; }
+html[data-intro="play"] .n3 { animation-delay: 0.75s; }
+html[data-intro="play"] .n4 { animation-delay: 0.95s; }
+html[data-intro="play"] .n5 { animation-delay: 0.45s; }
+html[data-intro="play"] .n6 { animation-delay: 0.65s; }
+html[data-intro="play"] .n7 { animation-delay: 0.85s; }
+html[data-intro="play"] .n8 { animation-delay: 1.05s; }
+html[data-intro="play"] .n9 { animation-delay: 1.15s; }
+
+@keyframes nodePulse {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 1; }
+}
+
+/* ---------- هاله طلایی مرکزی ---------- */
+.cinema-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(78vmin, 620px);
+  height: min(78vmin, 620px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(248, 200, 76, 0.3) 0%,
+      rgba(248, 200, 76, 0.11) 36%,
+      rgba(56, 189, 248, 0.08) 58%,
+      transparent 72%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.55);
+  pointer-events: none;
+}
+
+html[data-intro="play"] .cinema-halo {
+  animation: haloLife 3.2s ease-out forwards;
+}
+
+@keyframes haloLife {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+  19% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  47% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  75% {
+    opacity: 0.88;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.16);
+  }
+}
+
+/* ---------- ذرات نور آبی و طلایی ---------- */
+.c-particle {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: #7dd3fc;
+  box-shadow: 0 0 10px rgba(125, 211, 252, 0.85);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.c-particle.c-gold {
+  background: #f8d26a;
+  box-shadow: 0 0 10px rgba(248, 210, 106, 0.85);
+}
+
+html[data-intro="play"] .c-particle {
+  animation: particleRise var(--dur, 2.6s) ease-out var(--d, 0s) forwards;
+}
+
+@keyframes particleRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.6);
+  }
+  18% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.85;
+    transform: translate3d(0, -34px, 0) scale(1);
+  }
+  82% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -120px, 0) scale(1.15);
+  }
+}
+
+/* ---------- صحنه و لوگوی اصلی (تصویر دست‌نخورده) ---------- */
+.cinema-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.cinema-logo-wrap {
+  position: relative;
+  width: min(62vmin, 480px);
+  aspect-ratio: 1;
+  line-height: 0;
+}
+
+.cinema-logo-wrap picture {
+  display: block;
+  line-height: 0;
+}
+
+.cinema-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+html[data-intro="play"] .cinema-logo {
+  animation: logoLife 3.2s linear forwards;
+}
+
+@keyframes logoLife {
+  0%, 17% {
+    opacity: 0;
+    transform: scale(1.12) translate3d(0, 26px, 0);
+    animation-timing-function: var(--ease-out);
+  }
+  36% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+    animation-timing-function: ease-in-out;
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+    animation-timing-function: ease-in;
+  }
+  90% {
+    opacity: 0.85;
+    transform: scale(0.94) translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) translate3d(0, 0, 0);
+  }
+}
+
+/* لایه‌های نور (تاج طلایی و درخشش الکتریکی P) با ماسک خود لوگو — بدون دستکاری تصویر */
+@supports ((-webkit-mask-image: url("")) or (mask-image: url(""))) {
+  .cinema-sweep,
+  .cinema-glow {
+    -webkit-mask-image: url("/assets/brand/parsa-apps-logo-320.png");
+    mask-image: url("/assets/brand/parsa-apps-logo-320.png");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .cinema-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .cinema-glow-gold {
+    background:
+      radial-gradient(52% 42% at 50% 26%,
+        rgba(255, 214, 110, 0.8) 0%,
+        rgba(255, 200, 80, 0.3) 42%,
+        transparent 72%);
+  }
+
+  .cinema-glow-blue {
+    background:
+      radial-gradient(56% 48% at 50% 55%,
+        rgba(96, 192, 255, 0.78) 0%,
+        rgba(56, 189, 248, 0.28) 46%,
+        transparent 74%);
+  }
+
+  html[data-intro="play"] .cinema-glow-gold {
+    animation: glowGold 3.2s ease-in-out forwards;
+  }
+
+  html[data-intro="play"] .cinema-glow-blue {
+    animation: glowBlue 3.2s ease-in-out forwards;
+  }
+
+  @keyframes glowGold {
+    0%, 42% {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    56% {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+    71% {
+      opacity: 0.72;
+      transform: scale(1.05);
+    }
+    86% {
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes glowBlue {
+    0%, 50% {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    65% {
+      opacity: 0.95;
+      transform: scale(1.03);
+    }
+    79% {
+      opacity: 0.55;
+      transform: scale(1.05);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* موج نور سینمایی عبوری از روی لوگو — ماسک ثابت، نوار نور متحرک */
+  .cinema-sweep {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cinema-sweep-band {
+    position: absolute;
+    top: -20%;
+    right: -60%;
+    bottom: -20%;
+    left: -60%;
+    opacity: 0;
+    background:
+      linear-gradient(102deg,
+        transparent 41%,
+        rgba(255, 255, 255, 0.02) 44%,
+        rgba(255, 240, 200, 0.6) 50%,
+        rgba(255, 255, 255, 0.02) 56%,
+        transparent 59%);
+  }
+
+  html[data-intro="play"] .cinema-sweep-band {
+    animation: sweepPass 0.95s ease-in-out 1.02s forwards;
+  }
+
+  @keyframes sweepPass {
+    0% {
+      opacity: 0;
+      transform: translate3d(-58%, 0, 0) skewX(-8deg);
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(58%, 0, 0) skewX(-8deg);
+    }
+  }
+}
+
+/* ---------- دکمه رد کردن ---------- */
+.cinema-skip {
+  position: absolute;
+  bottom: max(18px, env(safe-area-inset-bottom, 18px));
+  left: 18px;
+  z-index: 6;
+  padding: 10px 22px;
+  min-height: 42px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(248, 210, 106, 0.42);
+  background: rgba(10, 24, 42, 0.68);
+  color: #f6e3ae;
+  font-family: var(--font-fa);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+html[data-intro="play"] .cinema-skip {
+  animation: skipAppear 0.5s ease-out 0.85s forwards;
+}
+
+html[data-intro="reduced"] .cinema-skip {
+  opacity: 1;
+}
+
+@keyframes skipAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cinema-skip:hover,
+.cinema-skip:focus-visible {
+  background: rgba(248, 210, 106, 0.16);
+  border-color: rgba(248, 210, 106, 0.8);
+  color: #fff3c9;
+  outline: none;
+}
+
+.cinema-skip:focus-visible {
+  box-shadow: 0 0 0 3px rgba(248, 210, 106, 0.35);
+}
+
+/* ---------- نسخه ساده و سریع برای کاهش حرکت (نمایش کوتاه و ایمن) ---------- */
+html[data-intro="reduced"] .cinema-intro {
+  animation: introFadeSimple 0.45s ease-out 0.75s forwards !important;
+}
+
+html[data-intro="reduced"] .cinema-circuits,
+html[data-intro="reduced"] .cinema-particles,
+html[data-intro="reduced"] .cinema-sweep,
+html[data-intro="reduced"] .cinema-glow {
+  display: none;
+}
+
+html[data-intro="reduced"] .cinema-halo {
+  opacity: 0.85;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+html[data-intro="reduced"] .cinema-logo {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@keyframes introFadeSimple {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* =====================================================================
    انیمیشن‌های ورود نرم هنگام پیمایش
    ===================================================================== */
 .reveal {
@@ -2771,7 +3239,11 @@ html[data-theme="light"] .field-group textarea {
     order: -1;
   }
   .hero-crest {
-    padding: 14px 22px;
+    padding: 10px 16px;
+  }
+  .brand-logo-img {
+    height: 52px;
+    max-width: min(150px, 30vw);
   }
   .hero-scrim {
     background:
@@ -2801,8 +3273,26 @@ html[data-theme="light"] .field-group textarea {
     padding-top: calc(var(--nav-h) + 22px);
     padding-bottom: 68px;
   }
-  .hero-crest-title {
-    font-size: clamp(38px, 12vw, 52px);
+  .hero-crest-logo {
+    width: clamp(210px, 62vw, 320px);
+  }
+  .brand-logo-img {
+    height: 46px;
+    max-width: min(128px, 32vw);
+  }
+  .cinema-logo-wrap {
+    width: min(70vmin, 420px);
+  }
+  .cinema-skip {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    padding: 9px 20px;
+    font-size: 13px;
+  }
+  .cinema-skip:hover,
+  .cinema-skip:focus-visible {
+    transform: translateX(-50%);
   }
   .hero-title {
     font-size: clamp(28px, 8.4vw, 38px);
@@ -2862,12 +3352,9 @@ html[data-theme="light"] .field-group textarea {
   .container {
     padding-inline: 14px;
   }
-  .brand-parsa {
-    font-size: 20px;
-  }
-  .brand-crown {
-    width: 28px;
-    height: 22px;
+  .brand-logo-img {
+    height: 42px;
+    max-width: 112px;
   }
   .phones-fan {
     height: 250px;
