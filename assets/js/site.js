@@ -1,776 +1,722 @@
 /* =====================================================================
-   PARSA APPS — PREMIUM MOTION ENGINE v3
-   Cinematic loader • particle fields • 3D tilt • scroll-driven reveals
-   • magnetic buttons • custom cursor • phone tilt • smooth scroll
+   پارسا اپس (Parsa Apps) — موتور تعامل، دسترس‌پذیری و پویانمایی سبک
+   نسخه ۴.۰ · کاملاً فارسی · سازگار با صفحه‌کلید و کاهش حرکت
    ===================================================================== */
 (function () {
   'use strict';
 
-  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var FINE_POINTER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  /* Low-power / mobile devices: heavy GPU effects are disabled so the
-     browser tab does not run out of memory (aurora blur, 3 particle
-     canvases, cursor rings, 3D tilts …). */
-  var LOW_POWER =
-    !FINE_POINTER ||
-    (navigator.hardwareConcurrency || 8) <= 4 ||
-    (navigator.deviceMemory || 8) <= 4 ||
-    (window.innerWidth || 1280) < 900;
-  var SAVER = REDUCED || LOW_POWER;
-  var $ = function (s, c) { return (c || document).querySelector(s); };
-  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
-  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
-  var lerp = function (a, b, t) { return a + (b - a) * t; };
-  /* Persian numerals for every counter / dynamic number on the page */
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
   var FA_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-  var faNum = function (n) {
-    return String(n).replace(/[0-9]/g, function (d) { return FA_DIGITS[+d]; });
-  };
-
-  /* =====================================================================
-     1. CINEMATIC LOADER — logo assembly + curtain reveal + flash
-     ===================================================================== */
-  var loader = $('#loader');
-  var loaderBar = $('#loaderBar');
-  var loaderStatus = $('#loaderStatus');
-  var loaderDone = false;
-
-  var STATUS = [
-    ['INITIALIZING CORE', 'راه‌اندازی هسته'],
-    ['DRAWING MONOGRAM', 'ترسیم مونوگرام P'],
-    ['CONNECTING CIRCUITS', 'اتصال مدارهای نئونی'],
-    ['CHARGING SHADERS', 'شارژ نور و سایه'],
-    ['LOADING PARTICLES', 'بارگذاری ذرات'],
-    ['PLACING CROWN', 'نشان‌گذاری طلایی'],
-    ['READY', 'آماده']
-  ];
-
-  function runLoader() {
-    if (!loader) return;
-    /* Show the cinematic loader only once per visit, and never on
-       mobile / low-end devices — it was blocking the page for ~4 s. */
-    var skip = REDUCED || LOW_POWER || sessionStorage.getItem('pa-loader-seen') === '1';
-    try { sessionStorage.setItem('pa-loader-seen', '1'); } catch (e) { /* ignore */ }
-    if (skip) {
-      loader.classList.add('gone');
-      loader.remove();
-      document.body.classList.remove('lock');
-      startHero();
-      return;
-    }
-
-    var t0 = performance.now();
-    var DURATION = 1300;
-    var frame;
-    var idx = 0;
-    var statusFlick = 0;
-
-    function tick(now) {
-      var t = clamp((now - t0) / DURATION, 0, 1);
-      // smooth easeInOutCubic
-      var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      var pct = Math.round(eased * 100);
-
-      if (loaderBar) loaderBar.style.width = pct + '%';
-
-      statusFlick += 1;
-      var si = Math.min(STATUS.length - 1, Math.floor(t * STATUS.length));
-      if (si !== idx) {
-        idx = si;
-        if (loaderStatus) loaderStatus.innerHTML = STATUS[si][0] + ' · ' + STATUS[si][1] + ' <span class="tick">▮</span>';
-      } else if (loaderStatus && statusFlick % 12 === 0) {
-        loaderStatus.innerHTML = STATUS[si][0] + ' · ' + STATUS[si][1] + ' <span class="tick">▮</span>';
-      }
-
-      if (t < 1) {
-        frame = requestAnimationFrame(tick);
-      } else {
-        finishLoader();
-      }
-    }
-    frame = requestAnimationFrame(tick);
-
-    // safety: never hold the user beyond 2.6s
-    setTimeout(function () {
-      if (!loaderDone) finishLoader(true);
-    }, 2600);
-
-    function finishLoader(force) {
-      if (loaderDone) return;
-      loaderDone = true;
-      cancelAnimationFrame(frame);
-      loader.classList.add('done');
-      startHero();
-      setTimeout(function () { document.body.classList.remove('lock'); }, 1100);
-      setTimeout(function () {
-        loader.classList.add('gone');
-        loader.style.display = 'none';
-        window.dispatchEvent(new CustomEvent('parsa:loaded'));
-      }, 1500);
-    }
+  function toFaDigits(val) {
+    return String(val).replace(/[0-9]/g, function (d) { return FA_DIGITS[Number(d)]; });
   }
 
-  /* =====================================================================
-     2. ADVANCED PARTICLE FIELD ENGINE
-     ===================================================================== */
-  function ParticleField(canvas, opts) {
-    if (!canvas || REDUCED) return null;
-    var ctx = canvas.getContext('2d');
-    var o = opts || {};
-    var W = 0, H = 0, DPR = 1;
-    var parts = [];
-    var running = true;
-    var mouse = { x: -9999, y: -9999 };
-    var time = 0;
-
-    var COLORS = o.colors || ['139,123,255', '63,224,255', '245,197,102', '255,110,199'];
-    var COUNT = o.count || 65;
-    var LINK_DIST = o.linkDist || 140;
-    var SPEED = o.speed || 0.2;
-    var MOUSE_INTERACT = o.mouse || false;
-    var GLOW = o.glow !== undefined ? o.glow : true;
-
-    function resize() {
-      /* Cap the backing store: DPR 2 on a phone = a ~10 MP canvas
-         cleared 60×/s, which is what made low-end devices crash. */
-      DPR = Math.min(window.devicePixelRatio || 1, LOW_POWER ? 1 : 1.5);
-      W = canvas.clientWidth || window.innerWidth;
-      H = canvas.clientHeight || window.innerHeight;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      seed();
-    }
-
-    function seed() {
-      var scale = LOW_POWER ? 0.3 : clamp(W / 1440, 0.4, 1);
-      var n = Math.max(8, Math.round(COUNT * scale));
-      parts = [];
-      for (var i = 0; i < n; i++) {
-        parts.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * SPEED,
-          vy: (Math.random() - 0.5) * SPEED,
-          r: Math.random() * 1.8 + 0.3,
-          c: COLORS[(Math.random() * COLORS.length) | 0],
-          a: Math.random() * 0.5 + 0.12,
-          ph: Math.random() * Math.PI * 2,
-          // Orbit drift for extra motion
-          orbitSpeed: (Math.random() - 0.5) * 0.003,
-          orbitRadius: Math.random() * 0.4
-        });
-      }
-    }
-
-    function step() {
-      if (!running) { requestAnimationFrame(step); return; }
-      ctx.clearRect(0, 0, W, H);
-      time++;
-      var i, j, p, q;
-
-      for (i = 0; i < parts.length; i++) {
-        p = parts[i];
-        // Add orbital drift for organic feel
-        p.x += p.vx + Math.sin(time * p.orbitSpeed + p.ph) * p.orbitRadius;
-        p.y += p.vy + Math.cos(time * p.orbitSpeed + p.ph) * p.orbitRadius;
-        
-        if (p.x < -30) p.x = W + 30; if (p.x > W + 30) p.x = -30;
-        if (p.y < -30) p.y = H + 30; if (p.y > H + 30) p.y = -30;
-
-        // Mouse repulsion
-        if (MOUSE_INTERACT && FINE_POINTER) {
-          var dx = p.x - mouse.x, dy = p.y - mouse.y;
-          var d2 = dx * dx + dy * dy;
-          if (d2 < 140 * 140 && d2 > 0.01) {
-            var d = Math.sqrt(d2);
-            var force = (140 - d) / 140;
-            p.x += (dx / d) * force * 1.2;
-            p.y += (dy / d) * force * 1.2;
-          }
-        }
-
-        var tw = 0.5 + 0.5 * Math.sin(time * 0.015 + p.ph);
-        
-        // Draw glow
-        if (GLOW && p.r > 1) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + p.c + ',' + (p.a * tw * 0.15).toFixed(3) + ')';
-          ctx.fill();
-        }
-        
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + p.c + ',' + (p.a * tw).toFixed(3) + ')';
-        ctx.fill();
-      }
-
-      // Connection lines with gradient (skipped on low-power devices —
-      // the O(n²) pair check is the most expensive part of the field)
-      if (LINK_DIST > 0 && !LOW_POWER) {
-        ctx.lineWidth = 0.4;
-        for (i = 0; i < parts.length; i++) {
-          for (j = i + 1; j < parts.length; j++) {
-            p = parts[i]; q = parts[j];
-            var ddx = p.x - q.x, ddy = p.y - q.y;
-            var dist = Math.sqrt(ddx * ddx + ddy * ddy);
-            if (dist < LINK_DIST) {
-              var alpha = (1 - dist / LINK_DIST) * 0.14;
-              ctx.strokeStyle = 'rgba(139,123,255,' + alpha.toFixed(3) + ')';
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(q.x, q.y);
-              ctx.stroke();
-            }
-          }
-        }
-      }
-      requestAnimationFrame(step);
-    }
-
-    if (MOUSE_INTERACT && FINE_POINTER) {
-      window.addEventListener('mousemove', function (e) {
-        mouse.x = e.clientX; mouse.y = e.clientY;
-      }, { passive: true });
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-    requestAnimationFrame(step);
-
-    return {
-      pause: function () { running = false; },
-      play: function () { running = true; }
-    };
+  /* ---------- اعلان کوتاه وضعیت (Toast) ---------- */
+  var toastTimer = null;
+  function showToast(message) {
+    var el = $('#toastMsg');
+    if (!el) return;
+    el.textContent = message;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      el.classList.remove('show');
+    }, 3000);
   }
 
-  /* =====================================================================
-     3. CUSTOM CURSOR with click feedback
-     ===================================================================== */
-  function cursorFX() {
-    if (!FINE_POINTER || REDUCED) return;
-    var dot = $('.cursor-dot');
-    var ring = $('.cursor-ring');
-    if (!dot || !ring) return;
-    var mx = -100, my = -100, rx = -100, ry = -100;
+  /* ---------- ۱. تغییر واقعی پوسته (شب سرمه‌ای / روز روشن) ---------- */
+  function initTheme() {
+    var html = document.documentElement;
+    var metaTheme = $('meta[name="theme-color"]');
+    var buttons = $$('[data-theme-toggle]');
 
-    window.addEventListener('mousemove', function (e) {
-      mx = e.clientX; my = e.clientY;
-      dot.style.opacity = '1'; ring.style.opacity = '1';
-      var t = e.target.closest ? e.target.closest('a,button,.proj-card,.gal-item,.hero-chip,.skill-card,.up-item') : null;
-      ring.classList.toggle('grow', !!t);
-    }, { passive: true });
-
-    // Click animation
-    window.addEventListener('mousedown', function () {
-      ring.classList.add('click');
-      setTimeout(function () { ring.classList.remove('click'); }, 200);
-    });
-
-    document.addEventListener('mouseleave', function () {
-      dot.style.opacity = '0'; ring.style.opacity = '0';
-    });
-
-    (function loop() {
-      rx = lerp(rx, mx, 0.15);
-      ry = lerp(ry, my, 0.15);
-      dot.style.transform = 'translate3d(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px,0)';
-      ring.style.transform = 'translate3d(' + (rx - ring.offsetWidth / 2) + 'px,' + (ry - ring.offsetHeight / 2) + 'px,0)';
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  /* =====================================================================
-     4. HERO ENTRANCE + 3D CORE PARALLAX
-     ===================================================================== */
-  function startHero() {
-    document.body.classList.add('loaded');
-    var hero = $('#hero');
-    if (hero) {
-      // Small delay to ensure CSS transitions trigger properly
-      requestAnimationFrame(function () {
-        hero.classList.add('in');
+    function syncUI(theme) {
+      var isLight = theme === 'light';
+      html.setAttribute('data-theme', theme);
+      if (metaTheme) {
+        metaTheme.setAttribute('content', isLight ? '#f7f9fc' : '#050c17');
+      }
+      buttons.forEach(function (btn) {
+        btn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+        var label = isLight ? 'تغییر به پوسته تیره سرمه‌ای' : 'تغییر به پوسته روشن روز';
+        btn.setAttribute('aria-label', label);
+        btn.setAttribute('title', label);
+        var txt = btn.querySelector('[data-theme-label]');
+        if (txt) {
+          txt.textContent = isLight ? 'حالت شب سینمایی' : 'حالت روز روشن';
+        }
       });
     }
-  }
 
-  function hero3D() {
-    if (REDUCED || !FINE_POINTER) return;
-    var stage = $('#heroStage');
-    if (!stage) return;
+    syncUI(html.getAttribute('data-theme') || 'dark');
 
-    var tx = 0, ty = 0, cx = 0, cy = 0;
-    window.addEventListener('mousemove', function (e) {
-      tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      ty = (e.clientY / window.innerHeight - 0.5) * 2;
-    }, { passive: true });
-
-    (function loop() {
-      cx = lerp(cx, tx, 0.06);
-      cy = lerp(cy, ty, 0.06);
-      stage.style.transform = 'translate3d(' + (cx * 16).toFixed(2) + 'px,' + (cy * 12).toFixed(2) + 'px,0) rotateY(' + (cx * 16).toFixed(2) + 'deg) rotateX(' + (-cy * 14).toFixed(2) + 'deg)';
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  /* =====================================================================
-     5. MAGNETIC BUTTONS
-     ===================================================================== */
-  function magnetic() {
-    if (!FINE_POINTER || REDUCED) return;
-    $$('.btn, .socials a, .to-top').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = (e.clientX - r.left - r.width / 2) * 0.24;
-        var dy = (e.clientY - r.top - r.height / 2) * 0.3;
-        el.style.transform = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0)';
-      });
-      el.addEventListener('mouseleave', function () {
-        el.style.transition = 'transform .65s cubic-bezier(.34,1.56,.64,1)';
-        el.style.transform = '';
-        setTimeout(function () { el.style.transition = ''; }, 650);
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        try {
+          localStorage.setItem('parsa-theme', next);
+        } catch (err) { /* مرورگر در حالت محدود */ }
+        syncUI(next);
+        showToast(next === 'light' ? 'پوسته روشن فعال شد' : 'پوسته شب سرمه‌ای و طلایی فعال شد');
       });
     });
   }
 
-  /* =====================================================================
-     6. PHONE 3D TILT
-     ===================================================================== */
-  function phoneTilt() {
-    if (REDUCED) return;
-    $$('.phone-stage').forEach(function (stage) {
-      var phone = stage.querySelector('.phone-3d');
-      if (!phone) return;
-
-      var rx = 0, ry = 0, trx = 0, try_ = 0;
-
-      stage.addEventListener('mousemove', function (e) {
-        var r = stage.getBoundingClientRect();
-        var dx = (e.clientX - r.left - r.width / 2) / r.width;
-        var dy = (e.clientY - r.top - r.height / 2) / r.height;
-        try_ = clamp(dx, -1, 1) * 18;
-        trx = clamp(dy, -1, 1) * -16;
-      }, { passive: true });
-
-      stage.addEventListener('mouseleave', function () {
-        trx = 0; try_ = 0;
-      });
-
-      (function loop() {
-        rx = lerp(rx, trx, 0.08);
-        ry = lerp(ry, try_, 0.08);
-        // skip the style write once the tilt has settled (saves paint work)
-        if (Math.abs(rx - trx) > 0.02 || Math.abs(ry - try_) > 0.02 ||
-            Math.abs(rx) > 0.02 || Math.abs(ry) > 0.02) {
-          phone.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
-        }
-        requestAnimationFrame(loop);
-      })();
-    });
-  }
-
-  /* =====================================================================
-     7. SCROLL ENGINE
-     ===================================================================== */
-  function initScroll() {
+  /* ---------- ۲. نوار پیمایش، پارالاکس ملایم بخش آغازین و نشانگر بخش فعال ---------- */
+  function initScrollAndNav() {
+    var header = $('#siteHeader');
     var progress = $('#scrollProgress');
-    var nav = $('#nav');
-    var toTop = $('.to-top');
-    var lastY = 0;
+    var toTop = $('#toTopBtn');
+    var heroBg = $('#heroBgLayer');
+    var heroSec = $('#home');
     var ticking = false;
 
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        var y = window.scrollY || document.documentElement.scrollTop;
-        var doc = document.documentElement;
-        var max = doc.scrollHeight - doc.clientHeight;
-        var p = max > 0 ? y / max : 0;
-        if (progress) progress.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    function updateOnScroll() {
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      var doc = document.documentElement;
+      var maxScroll = Math.max(1, doc.scrollHeight - doc.clientHeight);
+      var ratio = Math.min(1, Math.max(0, y / maxScroll));
 
-        // Timeline progress
-        var tl = $('.timeline');
-        if (tl) {
-          var r = tl.getBoundingClientRect();
-          var vh = window.innerHeight;
-          var prog = clamp((vh * 0.72 - r.top) / (r.height + vh * 0.1), 0, 1) * 100;
-          tl.style.setProperty('--tl-progress', prog.toFixed(1));
-        }
-
-        // Nav behavior
-        if (nav) {
-          nav.classList.toggle('solid', y > 30);
-          nav.classList.toggle('hidden', y > 500 && y > lastY && y < doc.scrollHeight - (window.innerHeight || 800) * 1.4);
-        }
-        lastY = y;
-        if (toTop) toTop.classList.toggle('show', y > 900);
-        ticking = false;
-      });
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // Scroll-spy for active nav link
-    var spy = $$('section[id]');
-    var links = $$('.nav-links a[href^="#"]');
-    if ('IntersectionObserver' in window && spy.length) {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (en) {
-          if (en.isIntersecting) {
-            links.forEach(function (l) {
-              l.classList.toggle('active', l.getAttribute('href') === '#' + en.target.id);
-            });
-          }
-        });
-      }, { rootMargin: '-42% 0px -52% 0px' });
-      spy.forEach(function (s) { io.observe(s); });
-    }
-
-    // Reveal on scroll
-    var rvs = $$('.rv');
-    if ('IntersectionObserver' in window && !REDUCED) {
-      var rio = new IntersectionObserver(function (es) {
-        es.forEach(function (en) {
-          if (en.isIntersecting) {
-            en.target.classList.add('in');
-            rio.unobserve(en.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
-      rvs.forEach(function (el) { rio.observe(el); });
-    } else {
-      rvs.forEach(function (el) { el.classList.add('in'); });
-    }
-
-    // Animated counters
-    $$('.stat-num[data-count]').forEach(function (el) {
-      var target = parseFloat(el.getAttribute('data-count'));
-      var suf = el.getAttribute('data-suffix') || '';
-      var done = false;
-      if (!('IntersectionObserver' in window) || REDUCED) {
-        el.innerHTML = faNum(target) + (suf ? '<span class="suf">' + suf + '</span>' : '');
-        return;
+      if (progress) {
+        progress.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
       }
-      var cio = new IntersectionObserver(function (es) {
-        es.forEach(function (en) {
-          if (!en.isIntersecting || done) return;
-          done = true;
-          cio.unobserve(el);
-          var t0 = performance.now(), dur = 2000;
-          (function cstep(now) {
-            var t = clamp((now - t0) / dur, 0, 1);
-            var e = 1 - Math.pow(1 - t, 5); // quintic ease out
-            var val = Math.round(target * e);
-            el.innerHTML = faNum(val) + (suf ? '<span class="suf">' + suf + '</span>' : '');
-            if (t < 1) requestAnimationFrame(cstep);
-          })(t0);
+      if (header) {
+        header.classList.toggle('scrolled', y > 24);
+      }
+      if (toTop) {
+        toTop.classList.toggle('visible', y > 520);
+      }
+      if (!REDUCED && heroBg && heroSec) {
+        var heroH = heroSec.offsetHeight || 800;
+        if (y <= heroH) {
+          heroBg.style.transform = 'translate3d(0, ' + (y * 0.14).toFixed(1) + 'px, 0)';
+        }
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateOnScroll);
+      }
+    }, { passive: true });
+    updateOnScroll();
+
+    if (toTop) {
+      toTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' });
+      });
+    }
+
+    /* همگام‌سازی نشانگر فعال در منوی اصلی و موبایل */
+    var navLinks = $$('[data-nav-section]');
+    var trackedIds = ['home', 'about', 'projects', 'contact'];
+    var sections = trackedIds.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+    function setActiveSection(id) {
+      navLinks.forEach(function (link) {
+        var match = link.getAttribute('data-nav-section') === id;
+        link.classList.toggle('active', match);
+        if (match) {
+          link.setAttribute('aria-current', 'true');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    if ('IntersectionObserver' in window && sections.length) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
         });
-      }, { threshold: 0.5 });
-      cio.observe(el);
+      }, { rootMargin: '-38% 0px -50% 0px', threshold: 0 });
+      sections.forEach(function (sec) { spy.observe(sec); });
+    }
+  }
+
+  /* ---------- ۳. کشوی منوی موبایل با مدیریت کامل صفحه‌کلید ---------- */
+  function initMobileDrawer() {
+    var burger = $('#burgerBtn');
+    var drawer = $('#mobileDrawer');
+    var closeBtn = $('#drawerCloseBtn');
+    var backdrop = $('#drawerBackdrop');
+    if (!burger || !drawer) return;
+
+    var isOpen = false;
+
+    function setOpen(next) {
+      isOpen = next;
+      drawer.classList.toggle('open', isOpen);
+      drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.classList.toggle('modal-open', isOpen);
+      if (isOpen) {
+        if (closeBtn) closeBtn.focus();
+      } else {
+        burger.focus();
+      }
+    }
+
+    burger.addEventListener('click', function () { setOpen(!isOpen); });
+    if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
+    if (backdrop) backdrop.addEventListener('click', function () { setOpen(false); });
+
+    $$('a[href^="#"]', drawer).forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (isOpen) setOpen(false);
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!isOpen) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+      }
     });
   }
 
-  /* =====================================================================
-     8. SPOTLIGHT + 3D TILT CARDS
-     ===================================================================== */
-  function spotFX() {
-    if (!FINE_POINTER) return;
-    
-    // Spotlight follow for glass cards
-    $$('.spot,.skill-card').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-        el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-      }, { passive: true });
-    });
+  /* ---------- ۴. زبانه‌های تعاملی دسترس‌پذیر (درباره ما و نمایش عمیق محصولات) ---------- */
+  function initTabs() {
+    $$('[role="tablist"][data-tabs]').forEach(function (tablist) {
+      var tabs = $$('[role="tab"]', tablist);
+      if (!tabs.length) return;
 
-    if (REDUCED) return;
-    
-    // 3D tilt on project cards
-    $$('.proj-card').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = (e.clientX - r.left) / r.width - 0.5;
-        var dy = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = 'perspective(1200px) rotateY(' + (dx * 12) + 'deg) rotateX(' + (-dy * 10) + 'deg) translateY(-8px)';
-      });
-      el.addEventListener('mouseleave', function () {
-        el.style.transition = 'transform .85s cubic-bezier(.22,1,.36,1)';
-        el.style.transform = '';
-        setTimeout(function () { el.style.transition = ''; }, 850);
-      });
-    });
+      function activateTab(selectedTab, moveFocus) {
+        tabs.forEach(function (tab) {
+          var active = tab === selectedTab;
+          var panelId = tab.getAttribute('aria-controls');
+          var panel = panelId ? document.getElementById(panelId) : null;
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+          tab.setAttribute('tabindex', active ? '0' : '-1');
+          if (panel) {
+            if (active) {
+              panel.removeAttribute('hidden');
+            } else {
+              panel.setAttribute('hidden', '');
+              $$('video', panel).forEach(function (v) {
+                try { v.pause(); } catch (err) { /* نادیده گرفتن */ }
+              });
+            }
+          }
+        });
+        if (moveFocus) selectedTab.focus();
+      }
 
-    // Subtle tilt on skill cards
-    $$('.skill-card').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = (e.clientX - r.left) / r.width - 0.5;
-        var dy = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = 'perspective(800px) rotateY(' + (dx * 8) + 'deg) rotateX(' + (-dy * 6) + 'deg) translateY(-10px) scale(1.03)';
-      });
-      el.addEventListener('mouseleave', function () {
-        el.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)';
-        el.style.transform = '';
-        setTimeout(function () { el.style.transition = ''; }, 600);
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () { activateTab(tab, false); });
+        tab.addEventListener('keydown', function (e) {
+          var nextIndex = null;
+          if (e.key === 'ArrowLeft') nextIndex = (index + 1) % tabs.length;
+          if (e.key === 'ArrowRight') nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (e.key === 'Home') nextIndex = 0;
+          if (e.key === 'End') nextIndex = tabs.length - 1;
+          if (nextIndex !== null) {
+            e.preventDefault();
+            activateTab(tabs[nextIndex], true);
+          }
+        });
       });
     });
   }
 
-  /* =====================================================================
-     9. GALLERY: drag scroll + lightbox
-     ===================================================================== */
-  function galleryFX() {
-    var track = $('#galTrack');
-    var allItems = $$('.gal-item');
-    var visible = allItems.slice();
+  /* ---------- ۵. داده‌های معتبر پروژه‌ها + پنجره جزئیات + فیلتر و جابه‌جایی ---------- */
+  var PROJECTS_DATA = {
+    jazire: {
+      title: 'جزیره فندقی',
+      status: 'منتشرشده در مایکت · نسخهٔ ۷.۵.۷ (۱۴۰۵/۰۷/۲۷)',
+      image: '/assets/images/cinema/card-jazire-800.webp',
+      alt: 'تصویر هنری محصول جزیره فندقی ساخته پارسا اپس',
+      description: 'محصول شاخص پارسا اپس برای کودکان ۳ تا ۹ سال؛ نقشه جزیره با چرخه شب و روز، آموزش الفبا و اعداد و رنگ‌ها، ده بازی آموزشی، قصه‌های صوتی، لالایی، ۸۰ پرسش مهارت زندگی و بخش گزارش و تنظیمات والدین — کاملاً آفلاین، بدون تبلیغ و بدون ردیابی.',
+      highlights: [
+        '۱۰ بازی آموزشی تعاملی با سطح و امتیاز',
+        'آموزش الفبا، اعداد، رنگ، شکل و حیوانات ایران',
+        'قصه‌های صوتی، لالایی شبانه و کارتون‌کده',
+        'پشتیبانی از ۳ پروفایل کودک و گزارش والدین'
+      ],
+      links: [
+        { label: 'دانلود رسمی از مایکت', href: 'https://myket.ir/app/com.parsaapps.amoozesh_fandoghi', primary: true, external: true },
+        { label: 'نسخه کافه‌بازار در گیت‌هاب', href: 'https://github.com/Parsa-apps/Jazire-Fandoqi/releases/tag/v7.5.6-bazaar', primary: false, external: true },
+        { label: 'مخزن و یادداشت نسخه‌ها', href: 'https://github.com/Parsa-apps/Jazire-Fandoqi', primary: false, external: true }
+      ]
+    },
+    kartoniya: {
+      title: 'کارتونیا',
+      status: 'در حال توسعه پیشرفته · نسخهٔ ۱.۳.۰ (۱۴۰۵/۰۷/۲۸)',
+      image: '/assets/images/cinema/card-kartoniya-800.webp',
+      alt: 'تصویر هنری محصول کارتونیا برای تماشای کارتون کودکان',
+      description: 'فضایی رنگارنگ، ساده و امن برای کشف و تماشای کارتون‌های کودکانه به زبان فارسی؛ شامل ۸ دسته‌بندی موضوعی، ۱۶ کارتون با پخش درون‌برنامه‌ای از آپارات، جست‌وجوی هوشمند فارسی، ادامه تماشا و قفل ریاضی مخصوص والدین بدون نیاز به ساخت حساب کاربری.',
+      highlights: [
+        '۸ دسته‌بندی موضوعی و ۱۶ کارتون منتخب',
+        'پخش روان درون‌برنامه‌ای به همراه جست‌وجوی فارسی',
+        'پروفایل محلی کودک با ۲۰ آواتار اختصاصی',
+        'محافظت از تنظیمات با قفل ریاضی والدین'
+      ],
+      links: [
+        { label: 'مشاهده پروژه در گیت‌هاب', href: 'https://github.com/Parsa-apps/Kartoniya', primary: true, external: true },
+        { label: 'مستندات فنی محصول', href: 'https://github.com/Parsa-apps/Kartoniya/tree/main/docs', primary: false, external: true }
+      ]
+    },
+    survival: {
+      title: 'سرزمین بقا',
+      status: 'در دست طراحی و توسعه در کارگاه پارسا اپس',
+      image: '/assets/images/cinema/card-survival-800.webp',
+      alt: 'تصویر هنری پروژه بازی سرزمین بقا با محوریت ماجراجویی در جزیره',
+      description: 'پروژه بازی موبایل با محوریت بقا، اکتشاف در جزیره‌های ناشناخته، جمع‌آوری منابع و ساخت سرپناه. این محصول هم‌اکنون در مرحله طراحی مکانیک‌های بازی و توسعه فنی قرار دارد و پس از آماده شدن نسخه عمومی، پیوند رسمی آن در همین صفحه منتشر خواهد شد.',
+      highlights: [
+        'محوریت بقا، کاوش طبیعت و ماجراجویی مرحله‌ای',
+        'چرخه محیطی پویا و مدیریت منابع در جزیره',
+        'طراحی رابط کاربری لمسی روان برای موبایل',
+        'انتشار پیوند عمومی پس از تکمیل نسخه آزمایشی'
+      ],
+      links: [
+        { label: 'پیگیری خبرهای انتشار در تلگرام رسمی', href: 'https://t.me/Parsaappsadmin', primary: true, external: true }
+      ]
+    },
+    naqashi: {
+      title: 'استودیو نقاشی فندوقی',
+      status: 'منتشرشده به‌صورت متن‌باز · نسخهٔ ۲.۰ آفلاین',
+      image: '/assets/images/cinema/card-naqashi-800.webp',
+      alt: 'تصویر هنری استودیو نقاشی فندوقی ویژه خلاقیت کودکان',
+      description: 'برنامه و وب‌اپلیکیشن ۱۰۰٪ آفلاین نقاشی و خلاقیت کودکان با رابط کاربری راست‌چین فارسی؛ مجهز به قلم‌موهای جادویی (رنگین‌کمان، نئون و مهرهای کودکانه)، ۸ آموزش گام‌به‌گام، آلبوم ذخیره محلی شاهکارها، بازگشت تا ۲۵ مرحله و دروازه ریاضی والدین.',
+      highlights: [
+        'قلم‌موهای جادویی، سطل رنگ و شکل‌های هندسی',
+        '۸ درس آموزش نقاشی گام‌به‌گام برای کودکان',
+        'اجرای ۱۰۰٪ آفلاین بدون ارسال داده به سرور',
+        'مجهز به ۱۶۷ تست خودکار واحد و یکپارچه'
+      ],
+      links: [
+        { label: 'مشاهده کد و پروژه در گیت‌هاب', href: 'https://github.com/Parsa-apps/Naqashi-Fandoqi', primary: true, external: true }
+      ]
+    }
+  };
+
+  function initProjectsAndModal() {
+    /* فیلتر دسته‌بندی کارت‌های پروژه */
+    var filterBtns = $$('[data-project-filter]');
+    var cards = $$('.product-card[data-status]');
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = btn.getAttribute('data-project-filter');
+        filterBtns.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var show = filter === 'all' || card.getAttribute('data-status') === filter;
+          if (show) {
+            card.removeAttribute('hidden');
+          } else {
+            card.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+
+    /* دکمه‌های چرخش نرم کارت‌های پروژه (پشتیبانی از لمس و صفحه‌کلید) */
+    var track = $('#productsTrack');
+    var prevBtn = $('#projPrevBtn');
+    var nextBtn = $('#projNextBtn');
+    if (track && prevBtn && nextBtn) {
+      var highlightIndex = 0;
+      var stepHighlight = function (delta) {
+        var visibleCards = cards.filter(function (c) { return !c.hasAttribute('hidden'); });
+        if (!visibleCards.length) return;
+        highlightIndex = (highlightIndex + delta + visibleCards.length) % visibleCards.length;
+        var target = visibleCards[highlightIndex];
+        target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+        var btnInside = target.querySelector('button, a');
+        if (btnInside) btnInside.focus({ preventScroll: true });
+      };
+      prevBtn.addEventListener('click', function () { stepHighlight(-1); });
+      nextBtn.addEventListener('click', function () { stepHighlight(1); });
+    }
+
+    /* پنجره جزئیات کامل پروژه */
+    var modal = $('#projectModal');
+    var closeBtn = $('#projectModalClose');
+    var titleEl = $('#modalProjTitle');
+    var statusEl = $('#modalProjStatus');
+    var imgEl = $('#modalProjImg');
+    var descEl = $('#modalProjDesc');
+    var listEl = $('#modalProjList');
+    var actionsEl = $('#modalProjActions');
+    var lastTrigger = null;
+
+    function openProjectModal(key, trigger) {
+      var item = PROJECTS_DATA[key];
+      if (!modal || !item) return;
+      lastTrigger = trigger || document.activeElement;
+      titleEl.textContent = item.title;
+      statusEl.textContent = item.status;
+      imgEl.src = item.image;
+      imgEl.alt = item.alt;
+      descEl.textContent = item.description;
+      listEl.innerHTML = '';
+      item.highlights.forEach(function (h) {
+        var li = document.createElement('li');
+        li.textContent = '✦ ' + h;
+        listEl.appendChild(li);
+      });
+      actionsEl.innerHTML = '';
+      item.links.forEach(function (lnk) {
+        var a = document.createElement('a');
+        a.href = lnk.href;
+        a.className = lnk.primary ? 'btn btn-gold btn-sm' : 'btn btn-glass btn-sm';
+        a.textContent = lnk.label;
+        if (lnk.external) {
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+        }
+        actionsEl.appendChild(a);
+      });
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeProjectModal() {
+      if (!modal || !modal.classList.contains('open')) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (lastTrigger && typeof lastTrigger.focus === 'function') {
+        lastTrigger.focus();
+      }
+    }
+
+    $$('[data-open-project]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        openProjectModal(btn.getAttribute('data-open-project'), btn);
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeProjectModal);
+    if (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeProjectModal();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && modal.classList.contains('open')) {
+        e.preventDefault();
+        closeProjectModal();
+      }
+    });
+  }
+
+  /* ---------- ۶. گالری اسکرین‌شات‌های واقعی + بادبزن ۵ گوشی + لایت‌باکس ---------- */
+  function initGalleryAndLightbox() {
     var lb = $('#lightbox');
     var lbImg = $('#lightboxImg');
-    var lbCap = $('#lightboxCap');
-    var idx = 0;
+    var lbCap = $('#lightboxCaption');
+    var lbClose = $('#lbCloseBtn');
+    var lbPrev = $('#lbPrevBtn');
+    var lbNext = $('#lbNextBtn');
+    var strip = $('#screenshotsStrip');
+    var shotCards = $$('.shot-card');
+    var activeShots = shotCards.slice();
+    var currentIdx = 0;
+    var returnFocusEl = null;
 
-    if (track && allItems.length) {
-      var isDown = false, startX = 0, startScroll = 0, moved = false;
-      track.addEventListener('pointerdown', function (e) {
-        isDown = true; moved = false;
-        startX = e.clientX; startScroll = track.scrollLeft;
-        track.classList.add('dragging');
-        track.setPointerCapture(e.pointerId);
+    function showAt(idx) {
+      if (!lb || !activeShots.length) return;
+      currentIdx = (idx + activeShots.length) % activeShots.length;
+      var card = activeShots[currentIdx];
+      var full = card.getAttribute('data-full');
+      var cap = card.getAttribute('data-caption') || '';
+      lbImg.src = full;
+      lbImg.alt = cap;
+      lbCap.textContent = cap + ' (' + toFaDigits(currentIdx + 1) + ' از ' + toFaDigits(activeShots.length) + ')';
+    }
+
+    function openLightboxFromIndex(idx, trigger) {
+      if (!lb) return;
+      returnFocusEl = trigger || document.activeElement;
+      showAt(idx);
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      if (lbClose) lbClose.focus();
+    }
+
+    function openSinglePreview(fullSrc, captionText, trigger) {
+      if (!lb) return;
+      returnFocusEl = trigger || document.activeElement;
+      lbImg.src = fullSrc;
+      lbImg.alt = captionText;
+      lbCap.textContent = captionText;
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      if (lbClose) lbClose.focus();
+    }
+
+    function closeLightbox() {
+      if (!lb || !lb.classList.contains('open')) return;
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (returnFocusEl && typeof returnFocusEl.focus === 'function') {
+        returnFocusEl.focus();
+      }
+    }
+
+    shotCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        var i = activeShots.indexOf(card);
+        openLightboxFromIndex(i >= 0 ? i : 0, card);
       });
-      track.addEventListener('pointermove', function (e) {
-        if (!isDown) return;
-        var dx = e.clientX - startX;
-        if (Math.abs(dx) > 6) moved = true;
-        track.scrollLeft = startScroll - dx;
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          var i = activeShots.indexOf(card);
+          openLightboxFromIndex(i >= 0 ? i : 0, card);
+        }
       });
-      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) {
-        track.addEventListener(ev, function () {
-          isDown = false;
-          track.classList.remove('dragging');
+    });
+
+    /* کلیک روی هر یک از ۵ گوشی بادبزنی در بخش درباره ما */
+    $$('[data-preview-src]').forEach(function (phoneBtn) {
+      phoneBtn.addEventListener('click', function () {
+        openSinglePreview(
+          phoneBtn.getAttribute('data-preview-src'),
+          phoneBtn.getAttribute('data-preview-caption') || 'پیش‌نمایش محیط واقعی اپلیکیشن',
+          phoneBtn
+        );
+      });
+    });
+
+    /* فیلترهای گالری تصاویر واقعی */
+    var galFilters = $$('[data-shot-filter]');
+    galFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var app = btn.getAttribute('data-shot-filter');
+        galFilters.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
-      });
-      allItems.forEach(function (it) {
-        it.addEventListener('click', function () {
-          if (moved) return;
-          var i = visible.indexOf(it);
-          if (i > -1) openLb(i);
-        });
-        it.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            var i = visible.indexOf(it);
-            if (i < 0) return;
-            e.preventDefault();
-            openLb(i);
+        activeShots = [];
+        shotCards.forEach(function (c) {
+          var match = app === 'all' || c.getAttribute('data-app') === app;
+          if (match) {
+            c.removeAttribute('hidden');
+            activeShots.push(c);
+          } else {
+            c.setAttribute('hidden', '');
           }
         });
+        if (strip) strip.scrollLeft = 0;
       });
+    });
 
-      /* ---- Filter tabs: همه / جزیره فندقی / کارتونیا ---- */
-      var filters = $$('.gal-filter');
-      filters.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var f = btn.getAttribute('data-filter') || 'all';
-          filters.forEach(function (b) {
-            var on = b === btn;
-            b.classList.toggle('active', on);
-            b.setAttribute('aria-selected', on ? 'true' : 'false');
-          });
-          visible = [];
-          allItems.forEach(function (it) {
-            var shows = f === 'all' || it.getAttribute('data-app') === f;
-            it.classList.toggle('hide', !shows);
-            if (shows) visible.push(it);
-          });
-          if (track) track.scrollLeft = 0;
-        });
+    /* دکمه‌های پیمایش چپ و راست نوار گالری */
+    var galPrev = $('#galPrevBtn');
+    var galNext = $('#galNextBtn');
+    if (strip && galPrev && galNext) {
+      galPrev.addEventListener('click', function () {
+        strip.scrollBy({ left: 260, behavior: REDUCED ? 'auto' : 'smooth' });
+      });
+      galNext.addEventListener('click', function () {
+        strip.scrollBy({ left: -260, behavior: REDUCED ? 'auto' : 'smooth' });
       });
     }
 
-    function openLb(i) {
-      if (!lb || !visible.length) return;
-      if (i < 0 || i >= visible.length) i = 0;
-      idx = i;
-      var item = visible[i];
-      var img = item.querySelector('.gal-app + img') || item.querySelector('img');
-      var cap = item.querySelector('.cap');
-      var capSmall = cap ? cap.querySelector('small') : null;
-      var capTitle = cap ? cap.textContent.replace(capSmall ? capSmall.textContent : '', '').trim() : '';
-      lbImg.src = img.getAttribute('data-full') || img.src;
-      lbImg.alt = img.alt;
-      if (lbCap) {
-        lbCap.textContent = capTitle
-          ? capTitle + (capSmall ? ' · ' + capSmall.textContent : '')
-          : img.alt;
-      }
-      lb.classList.add('open');
-      document.body.classList.add('lock');
-    }
-    function closeLb() {
-      if (!lb) return;
-      lb.classList.remove('open');
-      document.body.classList.remove('lock');
-    }
-    function navLb(d) {
-      if (!visible.length) return;
-      openLb((idx + d + visible.length) % visible.length);
-    }
-
+    if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lbPrev) lbPrev.addEventListener('click', function () { showAt(currentIdx - 1); });
+    if (lbNext) lbNext.addEventListener('click', function () { showAt(currentIdx + 1); });
     if (lb) {
-      $('.lb-close', lb).addEventListener('click', closeLb);
-      $('.lb-btn.prev', lb).addEventListener('click', function (e) { e.stopPropagation(); navLb(-1); });
-      $('.lb-btn.next', lb).addEventListener('click', function (e) { e.stopPropagation(); navLb(1); });
-      lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
-      document.addEventListener('keydown', function (e) {
-        if (!lb.classList.contains('open')) return;
-        if (e.key === 'Escape') closeLb();
-        if (e.key === 'ArrowLeft') navLb(-1);
-        if (e.key === 'ArrowRight') navLb(1);
+      lb.addEventListener('click', function (e) {
+        if (e.target === lb) closeLightbox();
       });
     }
-  }
 
-  /* =====================================================================
-     10. FULLSCREEN MENU
-     ===================================================================== */
-  function menuFX() {
-    var burger = $('#burgerBtn');
-    var menu = $('#menu');
-    if (!burger || !menu) return;
-    var canvas = $('#menuCanvas');
-    var field = SAVER ? null : ParticleField(canvas, {
-      count: 32, colors: ['139,123,255', '63,224,255'], linkDist: 110, speed: 0.14, mouse: true
-    });
-    var open = false;
-
-    function toggle() {
-      open = !open;
-      menu.classList.toggle('open', open);
-      burger.classList.toggle('on', open);
-      document.body.classList.toggle('lock', open);
-      document.body.classList.toggle('menu-open', open);
-      var items = $$('.menu-links a');
-      items.forEach(function (a, i) {
-        a.style.transitionDelay = (open ? 0.08 + i * 0.065 : 0) + 's';
-      });
-      if (field) { open ? field.play() : field.pause(); }
-    }
-
-    burger.addEventListener('click', toggle);
-    $$('.menu-links a').forEach(function (a) {
-      a.addEventListener('click', function () { if (open) toggle(); });
-    });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && open) toggle();
+      if (!lb || !lb.classList.contains('open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); showAt(currentIdx - 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); showAt(currentIdx + 1); }
     });
   }
 
-  /* =====================================================================
-     11. SMOOTH ANCHOR SCROLLING
-     ===================================================================== */
-  function anchorsFX() {
-    $$('a[href^="#"]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        var id = a.getAttribute('href');
-        if (id.length < 2) return;
-        var el = document.querySelector(id);
-        if (!el) return;
-        e.preventDefault();
-        el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+  /* ---------- ۷. شمارنده سبک ویژگی‌های واقعی و ورود نرم بخش‌ها ---------- */
+  function initRevealsAndCounters() {
+    var reveals = $$('.reveal');
+    if ('IntersectionObserver' in window && !REDUCED) {
+      var revObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+      reveals.forEach(function (el) { revObs.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    var counters = $$('[data-counter]');
+    counters.forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-counter'), 10) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      if (REDUCED || !('IntersectionObserver' in window)) {
+        el.textContent = toFaDigits(target) + suffix;
+        return;
+      }
+      var started = false;
+      var cObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting || started) return;
+          started = true;
+          cObs.unobserve(el);
+          var t0 = performance.now();
+          var dur = 1100;
+          function frame(now) {
+            var p = Math.min(1, (now - t0) / dur);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = toFaDigits(Math.round(target * eased)) + suffix;
+            if (p < 1) window.requestAnimationFrame(frame);
+          }
+          window.requestAnimationFrame(frame);
+        });
+      }, { threshold: 0.4 });
+      cObs.observe(el);
+    });
+  }
+
+  /* ---------- ۸. فرم تماس فارسی با اعتبارسنجی دقیق + کپی نشانی ایمیل ---------- */
+  function initContactForm() {
+    $$('[data-copy-email]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var email = btn.getAttribute('data-copy-email') || 'farshadparsa2019@gmail.com';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(function () {
+            showToast('نشانی ایمیل رسمی در حافظه کپی شد');
+          }).catch(function () {
+            showToast('نشانی ایمیل: ' + email);
+          });
+        } else {
+          showToast('نشانی ایمیل: ' + email);
+        }
       });
     });
-    var top = $('.to-top');
-    if (top) top.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' });
-    });
-  }
 
-  /* =====================================================================
-     12. PARALLAX SCROLL for data-parallax elements
-     ===================================================================== */
-  function parallaxFX() {
-    if (REDUCED) return;
-    var floats = $$('[data-parallax]');
-    if (!floats.length) return;
-    var py = 0, pyT = 0;
-    window.addEventListener('scroll', function () { pyT = window.scrollY; }, { passive: true });
-    (function loop() {
-      py = lerp(py, pyT, 0.07);
-      floats.forEach(function (el) {
-        var sp = parseFloat(el.getAttribute('data-parallax')) || 0.12;
-        el.style.transform = 'translateY(' + (-(py * sp) % 130).toFixed(1) + 'px)';
+    var form = $('#contactForm');
+    if (!form) return;
+
+    var nameInput = $('#senderName');
+    var replyInput = $('#senderReply');
+    var topicInput = $('#messageTopic');
+    var bodyInput = $('#messageBody');
+    var feedback = $('#formFeedback');
+
+    function setFieldError(input, errId, msg) {
+      var errEl = document.getElementById(errId);
+      if (errEl) errEl.textContent = msg || '';
+      if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    }
+
+    function validateAll() {
+      var valid = true;
+      var nameVal = (nameInput.value || '').trim();
+      var replyVal = (replyInput.value || '').trim();
+      var bodyVal = (bodyInput.value || '').trim();
+
+      if (nameVal.length < 2) {
+        setFieldError(nameInput, 'errSenderName', 'لطفاً نام یا عنوان خود را وارد کنید (حداقل ۲ حرف).');
+        valid = false;
+      } else {
+        setFieldError(nameInput, 'errSenderName', '');
+      }
+
+      if (replyVal.length < 4) {
+        setFieldError(replyInput, 'errSenderReply', 'لطفاً ایمیل یا شناسه تلگرام معتبر برای پاسخ‌گویی وارد کنید.');
+        valid = false;
+      } else {
+        setFieldError(replyInput, 'errSenderReply', '');
+      }
+
+      if (bodyVal.length < 10) {
+        setFieldError(bodyInput, 'errMessageBody', 'لطفاً متن پیام را با جزئیات کافی بنویسید (حداقل ۱۰ نویسه).');
+        valid = false;
+      } else {
+        setFieldError(bodyInput, 'errMessageBody', '');
+      }
+
+      return valid;
+    }
+
+    [nameInput, replyInput, bodyInput].forEach(function (inp) {
+      if (!inp) return;
+      inp.addEventListener('input', function () {
+        if (inp.getAttribute('aria-invalid') === 'true') validateAll();
       });
-      requestAnimationFrame(loop);
-    })();
-  }
+    });
 
-  /* =====================================================================
-     13. SECTION DIVIDER GLOW — subtle breathing light between sections
-     ===================================================================== */
-  function sectionGlowFX() {
-    if (REDUCED) return;
-    // Add subtle glow dividers between major sections
-    $$('section').forEach(function (sec, i) {
-      if (i === 0) return;
-      var divider = document.createElement('div');
-      divider.setAttribute('aria-hidden', 'true');
-      divider.style.cssText = 'position:absolute;top:-1px;left:10%;right:10%;height:1px;' +
-        'background:linear-gradient(90deg,transparent,rgba(139,123,255,.3),rgba(63,224,255,.2),transparent);' +
-        'pointer-events:none;z-index:10';
-      sec.style.position = 'relative';
-      sec.appendChild(divider);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validateAll()) {
+        if (feedback) {
+          feedback.className = 'form-feedback err';
+          feedback.textContent = 'لطفاً موارد مشخص‌شده در فرم را تکمیل و اصلاح کنید.';
+          feedback.removeAttribute('hidden');
+        }
+        var firstInvalid = form.querySelector('[aria-invalid="true"]');
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      var subject = 'پیام از وب‌سایت پارسا اپس — ' + topicInput.value;
+      var formatted =
+        'نام فرستنده: ' + nameInput.value.trim() + '\n' +
+        'راه ارتباطی پاسخ: ' + replyInput.value.trim() + '\n' +
+        'موضوع: ' + topicInput.value + '\n' +
+        '────────────────────\n' +
+        bodyInput.value.trim();
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(formatted).catch(function () {});
+      }
+
+      var mailtoHref =
+        'mailto:farshadparsa2019@gmail.com?subject=' +
+        encodeURIComponent(subject) +
+        '&body=' +
+        encodeURIComponent(formatted);
+
+      if (feedback) {
+        feedback.className = 'form-feedback ok';
+        feedback.textContent =
+          'متن پیام شما آماده و در حافظه کپی شد و برنامه ایمیل برای ارسال به farshadparsa2019@gmail.com باز شد. در صورت نداشتن برنامه ایمیل روی دستگاه، می‌توانید همین متن کپی‌شده را مستقیماً در تلگرام رسمی ارسال کنید.';
+        feedback.removeAttribute('hidden');
+      }
+
+      window.location.href = mailtoHref;
     });
   }
 
-  /* =====================================================================
-     14. TYPING EFFECT for hero eyebrow (optional subtle touch)
-     ===================================================================== */
-  function heroTypingFX() {
-    // Removed - keep the eyebrow static for cleaner look
-  }
-
-  /* =====================================================================
-     BOOT — initialize everything
-     ===================================================================== */
+  /* ---------- راه‌اندازی اولیه ---------- */
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.classList.add('lock');
-
-    /* One particle layer only (was 3 fullscreen canvases running at
-       60 fps forever — the main CPU/GPU killer on phones). */
-    var fxField = null;
-    if (!SAVER) {
-      fxField = ParticleField($('#fxCanvas'), {
-        count: 40, colors: ['139,123,255', '63,224,255', '255,255,255'], linkDist: 150, speed: 0.16, mouse: true, glow: true
-      });
-    }
-
-    // Pause the particle engine while the tab is hidden
-    document.addEventListener('visibilitychange', function () {
-      if (!fxField) return;
-      if (document.hidden) { fxField.pause(); } else { fxField.play(); }
-    });
-
-    // Initialize all interactive systems (heavy ones only on capable devices)
-    if (!SAVER) {
-      cursorFX();
-      hero3D();
-      magnetic();
-      phoneTilt();
-      spotFX();
-      parallaxFX();
-    }
-    initScroll();
-    galleryFX();
-    menuFX();
-    anchorsFX();
-    sectionGlowFX();
-
-    // Run the cinematic loader last
-    runLoader();
+    initTheme();
+    initScrollAndNav();
+    initMobileDrawer();
+    initTabs();
+    initProjectsAndModal();
+    initGalleryAndLightbox();
+    initRevealsAndCounters();
+    initContactForm();
   });
-
 })();

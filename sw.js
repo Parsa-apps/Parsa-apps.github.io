@@ -1,20 +1,17 @@
 /* ============================================================
-   Parsa Apps — Service Worker v11 (performance + cache health)
-   - v11 refreshes the shell after the Jazire Fandoqi 7.5.7 / Kartoniya 1.3.0 site update
-   - Never caches videos / big files / range requests
-   - Cache quota: keeps the cache small (LRU eviction)
-   - JS/CSS/fonts/images: stale-while-revalidate (instant loads)
+   پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۲
+   - نوسازی کش پس از بازطراحی کامل سرمه‌ای و طلایی سایت
+   - عدم ذخیره ویدیوها و فایل‌های حجیم
+   - سقف حجم ۳۰ مگابایت با حذف هوشمند قدیمی‌ترین فایل‌ها
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v11";
+const CACHE_NAME = "parsa-apps-v12";
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
-// Cache health limits
-const MAX_CACHE_BYTES = 30 * 1024 * 1024; // 30 MB total (mobile-friendly)
-const MAX_ENTRY_BYTES = 2 * 1024 * 1024; // skip anything bigger than 2 MB
-const META_KEY = "__parsa-meta-v11__";
+const MAX_CACHE_BYTES = 30 * 1024 * 1024;
+const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
+const META_KEY = "__parsa-meta-v12__";
 
-/* ---------- LRU bookkeeping (kept inside the same cache) ---------- */
 async function getMeta(cache) {
   try {
     const r = await cache.match(META_KEY);
@@ -40,12 +37,9 @@ async function saveMeta(cache, meta) {
 
 async function putGuarded(cache, request, response) {
   if (request.method !== "GET") return false;
-  if (request.headers.get("range")) return false; // media seeking
+  if (request.headers.get("range")) return false;
   if (!response || response.status !== 200 || response.type !== "basic") return false;
 
-  // Only cache responses with a known, safe size. GitHub Pages always
-  // sends Content-Length for static files, so we never have to read a
-  // huge body just to measure it.
   const len = Number(response.headers.get("content-length"));
   if (!len || len > MAX_ENTRY_BYTES) return false;
 
@@ -53,7 +47,6 @@ async function putGuarded(cache, request, response) {
   const meta = await getMeta(cache);
   meta.entries[url] = { size: len, time: Date.now() };
 
-  // Evict oldest entries until we are under the quota
   let total = Object.keys(meta.entries).reduce(
     (sum, k) => sum + (meta.entries[k].size || 0),
     0
@@ -75,7 +68,6 @@ async function putGuarded(cache, request, response) {
   return true;
 }
 
-/* ---------- Install / Activate ---------- */
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -83,7 +75,7 @@ self.addEventListener("install", (event) => {
         const cache = await caches.open(CACHE_NAME);
         await cache.addAll(APP_SHELL);
       } catch {
-        // ignore if some shell asset fails (e.g. offline)
+        // ignore offline install failure
       }
       await self.skipWaiting();
     })()
@@ -112,7 +104,6 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-/* ---------- Fetch ---------- */
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
@@ -120,7 +111,6 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // Navigation: network-first, cached fallback
   if (request.mode === "navigate") {
     event.respondWith(
       (async () => {
@@ -143,9 +133,6 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Media (video/audio) and range requests: let the browser stream them
-  // normally — they are NEVER stored in Cache Storage (this was the
-  // main cause of the oversized cache).
   if (
     request.destination === "video" ||
     request.destination === "audio" ||
@@ -162,7 +149,9 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith(".json") ||
     url.pathname.endsWith(".woff2") ||
     url.pathname.endsWith(".webmanifest") ||
-    url.pathname.endsWith(".svg");
+    url.pathname.endsWith(".svg") ||
+    url.pathname.endsWith(".webp") ||
+    url.pathname.endsWith(".avif");
 
   if (!isCacheable) return;
 
@@ -171,7 +160,6 @@ self.addEventListener("fetch", (event) => {
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(request);
 
-      // Stale-while-revalidate: return cache instantly, refresh quietly
       const network = fetch(request)
         .then((response) => {
           if (response && response.ok) {
@@ -191,7 +179,6 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-/* ---------- Messages ---------- */
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
