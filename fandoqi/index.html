@@ -24,6 +24,19 @@
     main::before { content:"✦  ·  ✿  ·  ✦"; position:absolute; top:15px; left:17px; color:#f4b63f; font-size:18px; letter-spacing:3px; transform:rotate(-9deg); opacity:.9; }
     main::after { content:"☁"; position:absolute; right:16px; bottom:10px; color:#9fe5f3; font-size:38px; opacity:.75; pointer-events:none; animation:cloud-bob 4s ease-in-out infinite; }
     @keyframes cloud-bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-6px); } }
+
+    .mascot-stage { position:relative; width:100%; min-height:112px; margin:3px auto 10px; display:flex; align-items:center; justify-content:center; gap:12px; }
+    .mascot { width:94px; height:106px; overflow:visible; filter:drop-shadow(0 8px 5px #6d8caf26); animation:mascot-bob 3.8s ease-in-out infinite; transform-origin:50% 85%; }
+    .mascot .eye { transform-box:fill-box; transform-origin:center; animation:mascot-blink 5.2s infinite; }
+    .mascot .eye.right { animation-delay:.12s; }
+    .mascot .cheek { animation:cheek-glow 3.8s ease-in-out infinite; }
+    .mascot-caption { max-width:175px; padding:10px 13px; border:2px solid #fff; border-radius:18px 18px 18px 5px; background:#fff3c9; color:#765321; font-size:14px; font-weight:800; line-height:1.8; box-shadow:0 4px 0 #f2d88d; }
+    @keyframes mascot-bob { 0%,100% { transform:translateY(0) rotate(-2deg); } 50% { transform:translateY(-5px) rotate(2deg); } }
+    @keyframes mascot-blink { 0%,44%,48%,100% { transform:scaleY(1); } 46% { transform:scaleY(.08); } }
+    @keyframes cheek-glow { 0%,100% { opacity:.75; } 50% { opacity:1; } }
+    @media (max-width:360px) { .mascot-stage { min-height:95px; gap:7px; } .mascot { width:78px; height:92px; } .mascot-caption { max-width:150px; font-size:12px; padding:8px 10px; } }
+    @media (prefers-reduced-motion: reduce) { .mascot, .mascot .eye, .mascot .cheek { animation:none !important; } }
+
     .eyebrow { display:inline-block; margin:0 auto 12px; padding:7px 15px; border:2px solid #ffe19a; border-radius:999px; background:#fff1bf; color:#8d641b; font-size:14px; font-weight:800; box-shadow:0 3px 0 #f7d77f; }
     .icon-wrap { position:relative; width:132px; height:132px; margin:0 auto 18px; display:grid; place-items:center; animation:logo-arrive .95s cubic-bezier(.2,.85,.25,1.25) both; }
     .icon-wrap::before { content:""; position:absolute; inset:3px; border-radius:38px; background:conic-gradient(from 0deg,#ffb8de,#ffd166,#8be7ce,#83dcff,#c8b6ff,#ffb8de); filter:blur(9px); opacity:.85; animation:halo-turn 12s linear infinite; }
@@ -58,6 +71,26 @@
   <main>
     <div class="eyebrow">🌈 دنیای رنگیِ کوچولوها 🌈</div>
     <div class="icon-wrap"><img class="icon" src="../assets/brand/jazireh-fandoghi-app-icon-512.png" alt="لوگوی جزیره فندقی" width="112" height="112"></div>
+    <div class="mascot-stage" aria-label="فندق کوچولو، دوست جزیره">
+      <svg class="mascot" viewBox="0 0 120 140" role="img" aria-labelledby="mascotTitle">
+        <title id="mascotTitle">فندق کوچولوی جزیره فندقی</title>
+        <path d="M58 29 C44 5 69 0 83 12 C79 23 70 29 58 29Z" fill="#55b96c" stroke="#328d50" stroke-width="2.5"/>
+        <path d="M60 29 C63 19 72 13 81 12" fill="none" stroke="#328d50" stroke-width="2"/>
+        <path d="M28 58 C25 36 43 27 61 29 C83 27 99 43 96 65 C109 82 100 111 79 121 C62 130 36 122 25 105 C12 87 17 70 28 58Z" fill="#b96d35" stroke="#8a4826" stroke-width="3"/>
+        <path d="M31 64 C37 48 48 43 62 44 C78 43 91 54 92 70 C95 90 80 108 61 110 C42 108 27 91 31 64Z" fill="#e8a65c"/>
+        <ellipse cx="46" cy="72" rx="7" ry="9" fill="#3d2b28" class="eye"/>
+        <ellipse cx="75" cy="72" rx="7" ry="9" fill="#3d2b28" class="eye right"/>
+        <circle cx="48" cy="69" r="2.2" fill="#fff"/>
+        <circle cx="77" cy="69" r="2.2" fill="#fff"/>
+        <ellipse cx="35" cy="85" rx="8" ry="5" fill="#f58c8c" class="cheek"/>
+        <ellipse cx="86" cy="85" rx="8" ry="5" fill="#f58c8c" class="cheek"/>
+        <path d="M51 86 Q61 97 72 86" fill="none" stroke="#743d2d" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M56 87 Q61 90 66 87" fill="none" stroke="#fff4dd" stroke-width="2"/>
+        <path d="M35 47 Q44 37 53 42" fill="none" stroke="#f4c080" stroke-width="3" stroke-linecap="round"/>
+        <path d="M76 42 Q85 38 89 48" fill="none" stroke="#f4c080" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div class="mascot-caption">سلام کوچولو! 🌰<br>بیا بازی کنیم و چیزای تازه یاد بگیریم.</div>
+    </div>
     <h1>جزیره فندقی</h1>
     <p class="subtitle">آموزش و بازی کودک<br>بازی کن، یاد بگیر، بخند! 🐿️<br>برای دانلود، فروشگاهت رو انتخاب کن.</p>
     <a class="store myket" href="https://myket.ir/app/com.parsaapps.amoozesh_fandoghi" target="_blank" rel="noopener noreferrer"><img class="store-logo" src="./myket-logo.svg" alt="" width="38" height="38" loading="eager"> <span>دانلود از مایکت</span></a>
