@@ -12,19 +12,26 @@
     :root { color-scheme: dark; --bg:#10182c; --panel:#18243d; --text:#f8fafc; --muted:#b9c5d9; }
     * { box-sizing:border-box; }
     body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; font-family:Tahoma, Arial, sans-serif; color:var(--text); background:radial-gradient(ellipse at top,#293b62 0%,#10182c 58%,#0a1020 100%); }
-    main { width:min(100%,440px); text-align:center; padding:32px 22px; border:1px solid #ffffff20; border-radius:28px; background:#18243dcc; box-shadow:0 24px 70px #0005; }
+    main { width:min(100%,440px); text-align:center; padding:32px 22px; border:1px solid #ffffff20; border-radius:28px; background:linear-gradient(145deg,#1c2b49ee,#131e35f5); box-shadow:0 24px 70px #0005,inset 0 1px #ffffff12; animation:panel-arrive .8s ease both; position:relative; overflow:hidden; }
     .icon-wrap { position:relative; width:132px; height:132px; margin:0 auto 18px; display:grid; place-items:center; animation:logo-arrive .95s cubic-bezier(.2,.85,.25,1.25) both; }
     .icon-wrap::before { content:""; position:absolute; inset:3px; border-radius:34px; background:conic-gradient(from 0deg,#ffd166,#ff9f43,#fff0a6,#7ee7b4,#ffd166); filter:blur(11px); opacity:.7; animation:halo-turn 7s linear infinite; }
     .icon { position:relative; display:block; width:112px; height:112px; object-fit:contain; border-radius:25px; box-shadow:0 10px 30px #f5b83d45; animation:logo-float 3.6s ease-in-out 1s infinite; }
     h1 { animation:title-arrive .7s ease .25s both; }
+    @keyframes panel-arrive { from { opacity:0; transform:translateY(18px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes button-arrive { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes button-shine { 0%,60%,100% { left:-70%; } 80% { left:135%; } }
     @keyframes logo-arrive { 0% { opacity:0; transform:translateY(24px) scale(.68) rotate(-8deg); } 70% { opacity:1; transform:translateY(-4px) scale(1.05) rotate(2deg); } 100% { opacity:1; transform:translateY(0) scale(1) rotate(0); } }
     @keyframes logo-float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-6px); } }
     @keyframes halo-turn { to { transform:rotate(360deg); } }
     @keyframes title-arrive { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     h1 { margin:0; font-size:clamp(25px,7vw,34px); line-height:1.5; }
     .subtitle { margin:8px 0 26px; color:var(--muted); font-size:15px; line-height:1.9; }
-    .store { display:flex; align-items:center; justify-content:center; gap:12px; width:100%; min-height:60px; margin:13px 0; padding:15px 18px; border-radius:16px; color:#10182c; text-decoration:none; font-size:17px; font-weight:700; transition:transform .18s ease, filter .18s ease; }
-    .store:active { transform:scale(.98); }
+    .store { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; gap:12px; width:100%; min-height:60px; margin:13px 0; padding:15px 18px; border:1px solid #ffffff45; border-radius:16px; color:#10182c; text-decoration:none; font-size:17px; font-weight:700; box-shadow:0 7px 0 #00000020,0 12px 25px #00000018; transition:transform .22s ease,filter .22s ease,box-shadow .22s ease; animation:button-arrive .65s cubic-bezier(.2,.8,.2,1) both; }
+    .myket { animation-delay:.45s; }
+    .bazaar { animation-delay:.62s; }
+    .store::after { content:""; position:absolute; top:-50%; bottom:-50%; left:-70%; width:42%; transform:skewX(-20deg); background:linear-gradient(90deg,transparent,#ffffff80,transparent); animation:button-shine 5.5s ease-in-out 2s infinite; }
+    .store:hover,.store:focus-visible { transform:translateY(-3px); filter:brightness(1.06); box-shadow:0 10px 0 #00000018,0 18px 30px #00000025; outline:2px solid #ffffffa0; outline-offset:3px; }
+    .store:active { transform:translateY(2px) scale(.99); box-shadow:0 3px 0 #00000020; }
     .myket { background:linear-gradient(135deg,#b9f6c7,#56d982); }
     .bazaar { background:linear-gradient(135deg,#ffe1a6,#ffb64c); }
     .hint { margin:22px 0 0; color:#aab7cd; font-size:12px; line-height:1.9; }
