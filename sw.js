@@ -1,14 +1,8 @@
-/* ============================================================
-   پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۴
-   - نوسازی کش پس از افزودن لوگوی رسمی و افتتاحیه سینمایی
-   - نسخه ۱۴: همه لوگوها/آیکون‌ها/فاویکن (favicon) → فایل رسمی 2026
-   - عدم ذخیره ویدیوها و فایل‌های حجیم
-   - سقف حجم ۳۰ مگابایت با حذف هوشمند قدیمی‌ترین فایل‌ها
-   ============================================================ */
+/* service worker v15 - AURUM 2.0 theme layer + brand remap */
 
-const CACHE_NAME = "parsa-apps-v14";
+const CACHE_NAME = "parsa-apps-v15";
 
-/* ===== نگاشت لوگوی رسمی ۲۰۲۶ (منبع: ریلیز brand-2026) ===== */
+/* ===== official 2026 brand logo map (release: brand-2026) ===== */
 const BRAND_LOGO_PNG =
   "https://github.com/Parsa-apps/Parsa-apps.github.io/releases/download/brand-2026/parsa-apps-logo-official-2026.png";
 const BRAND_MAP = {
@@ -25,11 +19,37 @@ const BRAND_MAP = {
   "/assets/favicon.svg": BRAND_LOGO_PNG,
   "/favicon.ico": BRAND_LOGO_PNG,
 };
-const APP_SHELL = ["./", "./index.html", "./manifest.json"];
+const APP_SHELL = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./assets/css/aurum.css",
+  "./assets/js/aurum.js",
+];
+
+/* ---- AURUM 2.0 injector: adds theme layer CSS+JS to HTML pages ---- */
+function aurumify(response) {
+  return (async () => {
+    try {
+      const ctype = response.headers.get("content-type") || "";
+      if (!ctype.includes("text/html")) return response;
+      const html = await response.text();
+      if (html.indexOf("aurum.css") !== -1 || !html.includes("</head>")) {
+        return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
+      }
+      const patched = html
+        .replace("</head>", '<link rel="stylesheet" href="/assets/css/aurum.css">\n</head>')
+        .replace(/<\/body>/i, '<script src="/assets/js/aurum.js" defer></script>\n</body>');
+      return new Response(patched, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
+    } catch (e) {
+      return response;
+    }
+  })();
+}
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
-const META_KEY = "__parsa-meta-v14__";
+const META_KEY = "__parsa-meta-v15__";
 
 async function getMeta(cache) {
   try {
@@ -130,7 +150,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  /* لوگو/آیکون‌های برند → فایل رسمی ۲۰۲۶ */
+  /* brand logo/icons -> official 2026 asset */
   const brandTarget = BRAND_MAP[url.pathname];
   if (brandTarget) {
     event.respondWith(
@@ -148,8 +168,9 @@ self.addEventListener("fetch", (event) => {
           const fresh = await fetch(request, { cache: "no-store" });
           if (fresh && fresh.ok) {
             const cache = await caches.open(CACHE_NAME);
-            cache.put("./index.html", fresh.clone()).catch(() => undefined);
-            return fresh;
+            const page = await aurumify(fresh.clone());
+            cache.put("./index.html", page.clone()).catch(() => undefined);
+            return page;
           }
           throw new Error("bad response");
         } catch {
