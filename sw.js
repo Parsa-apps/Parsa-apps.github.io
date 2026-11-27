@@ -1,6 +1,6 @@
-/* service worker v16 - AURUM 2.0 theme layer + brand remap */
+/* service worker v17 - AURUM 2.0 theme layer + brand remap */
 
-const CACHE_NAME = "parsa-apps-v16";
+const CACHE_NAME = "parsa-apps-v17";
 
 /* ===== official 2026 brand logo map (release: brand-2026) ===== */
 const BRAND_LOGO_PNG =
@@ -49,7 +49,7 @@ function aurumify(response) {
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
-const META_KEY = "__parsa-meta-v16__";
+const META_KEY = "__parsa-meta-v17__";
 
 async function getMeta(cache) {
   try {
@@ -205,6 +205,27 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith(".avif");
 
   if (!isCacheable) return;
+
+  /* AURUM layer: network-first so theme tweaks ship instantly */
+  if (url.pathname === "/assets/css/aurum.css" || url.pathname === "/assets/js/aurum.js") {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        try {
+          const fresh = await fetch(request);
+          if (fresh && fresh.ok) {
+            cache.put(request, fresh.clone()).catch(() => undefined);
+            return fresh;
+          }
+          throw new Error("bad");
+        } catch {
+          const cached = await cache.match(request);
+          return cached || Response.error();
+        }
+      })()
+    );
+    return;
+  }
 
   event.respondWith(
     (async () => {
