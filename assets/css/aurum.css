@@ -65,7 +65,7 @@
 
 .au-grain {
   z-index: 1200;
-  opacity: 0.05;
+  opacity: 0.035;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
 }
@@ -145,6 +145,10 @@ main, .site-header, .site-footer {
 }
 
 /* ---------- 3) section heads: gold rule ---------- */
+.section-head {
+  position: relative;
+}
+
 .section-title {
   position: relative;
   display: inline-block;
@@ -212,6 +216,15 @@ main, .site-header, .site-footer {
   transform: translateY(-7px);
   box-shadow: 0 26px 60px rgba(2, 6, 13, 0.6), 0 0 0 1px var(--au-hair);
   border-color: transparent;
+}
+
+.why-item,
+.metric-col {
+  transition: transform 0.45s var(--au-ease), box-shadow 0.45s var(--au-ease);
+}
+
+.why-item:hover {
+  box-shadow: 0 18px 40px rgba(2, 6, 13, 0.45);
 }
 
 .product-card:hover::before,
@@ -305,7 +318,7 @@ main, .site-header, .site-footer {
 }
 
 .icon-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) rotate(0.001deg);
 }
 
 /* ---------- 6) hero crest: breathing aura ---------- */
@@ -348,15 +361,11 @@ main, .site-header, .site-footer {
   background-clip: text;
 }
 
-.metric-col {
-  transition: transform 0.4s var(--au-ease);
-}
-
 .metric-col:hover {
   transform: translateY(-4px);
 }
 
-/* ---------- 8) pillars & why icon rings ---------- */
+/* ---------- 8) pillars & why: icon rings ---------- */
 .pillar-orb,
 .why-icon-circle {
   position: relative;
@@ -378,8 +387,8 @@ main, .site-header, .site-footer {
 
 .why-item:hover .why-icon-circle,
 .pillar-orb:hover {
-  transform: scale(1.06) rotate(-3deg);
-  box-shadow: 0 0 26px color-mix(in srgb, var(--au-gold) 26%, transparent);
+  transform: scale(1.05);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--au-gold) 16%, transparent);
 }
 
 .why-item:hover .why-icon-circle::after,
@@ -419,7 +428,7 @@ main, .site-header, .site-footer {
   transition: transform 0.45s var(--au-ease), color 0.45s var(--au-ease);
 }
 
-/* ---------- 10) reveal spring (handled transition-delay by aurum.js) ---------- */
+/* ---------- 10) reveal spring (delays set by aurum.js) ---------- */
 .reveal {
   transition-duration: 0.9s !important;
 }
@@ -528,7 +537,10 @@ html[data-theme="light"] ::selection {
 }
 
 @media (max-width: 720px) {
-  .au-ambience i { filter: blur(64px); opacity: 0.4; }
+  .au-ambience i { filter: blur(46px); opacity: 0.22; width: 70vw !important; height: 70vw !important; }
+  .au-ambience { opacity: 0.55; }
+  .au-grain { display: none; }
+  .hero-crest::after { inset: -6%; filter: blur(22px); opacity: 0.55; animation-duration: 26s; }
   .product-card:hover,
   .why-item:hover,
   .shot-card:hover { transform: translateY(-4px); }
