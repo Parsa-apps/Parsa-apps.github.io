@@ -1,16 +1,31 @@
 /* ============================================================
-   پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۳
+   پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۴
    - نوسازی کش پس از افزودن لوگوی رسمی و افتتاحیه سینمایی
+   - نسخه ۱۴: جایگزینی تمام لوگوها/آیکون‌های برند با فایل رسمی ۲۰۲۶
    - عدم ذخیره ویدیوها و فایل‌های حجیم
    - سقف حجم ۳۰ مگابایت با حذف هوشمند قدیمی‌ترین فایل‌ها
    ============================================================ */
 
-const CACHE_NAME = "parsa-apps-v13";
+const CACHE_NAME = "parsa-apps-v14";
 const APP_SHELL = ["./", "./index.html", "./manifest.json"];
+
+/* ===== نگاشت لوگوی رسمی ۲۰۲۶ (منبع: ریلیز brand-2026) ===== */
+const BRAND_LOGO_PNG =
+  "https://github.com/Parsa-apps/Parsa-apps.github.io/releases/download/brand-2026/parsa-apps-logo-official-2026.png";
+const BRAND_MAP = {
+  "/assets/brand/parsa-apps-logo-320.webp": BRAND_LOGO_PNG,
+  "/assets/brand/parsa-apps-logo-320.png": BRAND_LOGO_PNG,
+  "/assets/brand/parsa-apps-logo-512.webp": BRAND_LOGO_PNG,
+  "/assets/brand/parsa-apps-logo-512.png": BRAND_LOGO_PNG,
+  "/assets/brand/parsa-apps-logo-1024.webp": BRAND_LOGO_PNG,
+  "/assets/brand/parsa-apps-logo-1024.png": BRAND_LOGO_PNG,
+  "/assets/favicon.svg": BRAND_LOGO_PNG,
+  "/favicon.ico": BRAND_LOGO_PNG,
+};
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
-const META_KEY = "__parsa-meta-v13__";
+const META_KEY = "__parsa-meta-v14__";
 
 async function getMeta(cache) {
   try {
@@ -110,6 +125,17 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  /* لوگو/آیکون‌های برند → فایل رسمی ۲۰۲۶ */
+  const brandTarget = BRAND_MAP[url.pathname];
+  if (brandTarget) {
+    event.respondWith(
+      fetch(brandTarget, { mode: "cors", cache: "force-cache" }).catch(() =>
+        fetch(brandTarget, { mode: "no-cors" })
+      )
+    );
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith(
