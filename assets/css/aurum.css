@@ -545,8 +545,8 @@ html[data-theme="light"] ::selection {
   ::-webkit-scrollbar { display: none; }
   .hero-crest img,
   .cinema-logo-wrap img {
-    border-radius: 24px;
-    box-shadow: 0 14px 44px rgba(2, 6, 13, 0.55), 0 0 0 1px var(--au-hair);
+    border-radius: 50%;
+    box-shadow: 0 18px 46px rgba(1, 5, 12, 0.72), 0 0 0 1px var(--au-hair), 0 0 30px color-mix(in srgb, var(--au-gold) 12%, transparent);
   }
   .product-card:hover,
   .why-item:hover,
