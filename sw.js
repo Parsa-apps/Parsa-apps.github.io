@@ -1,6 +1,6 @@
-/* service worker v15 - AURUM 2.0 theme layer + brand remap */
+/* service worker v16 - AURUM 2.0 theme layer + brand remap */
 
-const CACHE_NAME = "parsa-apps-v15";
+const CACHE_NAME = "parsa-apps-v16";
 
 /* ===== official 2026 brand logo map (release: brand-2026) ===== */
 const BRAND_LOGO_PNG =
@@ -49,7 +49,7 @@ function aurumify(response) {
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
-const META_KEY = "__parsa-meta-v15__";
+const META_KEY = "__parsa-meta-v16__";
 
 async function getMeta(cache) {
   try {
