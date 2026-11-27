@@ -84,9 +84,9 @@ main, .site-header, .site-footer {
   block-size: 2px;
   z-index: 2000;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--au-gold-deep), var(--au-gold-bright), var(--au-cyan));
-  box-shadow: 0 0 12px color-mix(in srgb, var(--au-gold) 55%, transparent);
-  transition: inline-size 90ms linear;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--au-gold-deep) 70%, transparent), var(--au-gold-bright));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--au-gold) 40%, transparent);
+  transition: inline-size 140ms ease-out;
 }
 
 /* ---------- 2) header on scroll ---------- */
@@ -538,9 +538,16 @@ html[data-theme="light"] ::selection {
 
 @media (max-width: 720px) {
   .au-ambience i { filter: blur(46px); opacity: 0.22; width: 70vw !important; height: 70vw !important; }
-  .au-ambience { opacity: 0.55; }
+  .au-ambience { opacity: 0.5; }
   .au-grain { display: none; }
-  .hero-crest::after { inset: -6%; filter: blur(22px); opacity: 0.55; animation-duration: 26s; }
+  .hero-crest::after { inset: -4%; filter: blur(26px); opacity: 0.4; animation-duration: 26s; }
+  html { scrollbar-width: none; }
+  ::-webkit-scrollbar { display: none; }
+  .hero-crest img,
+  .cinema-logo-wrap img {
+    border-radius: 24px;
+    box-shadow: 0 14px 44px rgba(2, 6, 13, 0.55), 0 0 0 1px var(--au-hair);
+  }
   .product-card:hover,
   .why-item:hover,
   .shot-card:hover { transform: translateY(-4px); }
