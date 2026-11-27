@@ -1,13 +1,12 @@
 /* ============================================================
    پارسا اپس (Parsa Apps) — سرویس‌ورکر نسخه ۱۴
    - نوسازی کش پس از افزودن لوگوی رسمی و افتتاحیه سینمایی
-   - نسخه ۱۴: جایگزینی تمام لوگوها/آیکون‌های برند با فایل رسمی ۲۰۲۶
+   - نسخه ۱۴: همه لوگوها/آیکون‌ها/فاویکن (favicon) → فایل رسمی 2026
    - عدم ذخیره ویدیوها و فایل‌های حجیم
    - سقف حجم ۳۰ مگابایت با حذف هوشمند قدیمی‌ترین فایل‌ها
    ============================================================ */
 
 const CACHE_NAME = "parsa-apps-v14";
-const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 /* ===== نگاشت لوگوی رسمی ۲۰۲۶ (منبع: ریلیز brand-2026) ===== */
 const BRAND_LOGO_PNG =
@@ -19,9 +18,14 @@ const BRAND_MAP = {
   "/assets/brand/parsa-apps-logo-512.png": BRAND_LOGO_PNG,
   "/assets/brand/parsa-apps-logo-1024.webp": BRAND_LOGO_PNG,
   "/assets/brand/parsa-apps-logo-1024.png": BRAND_LOGO_PNG,
+  "/assets/icons/icon-192.png": BRAND_LOGO_PNG,
+  "/assets/icons/icon-512.png": BRAND_LOGO_PNG,
+  "/assets/icons/icon-512-maskable.png": BRAND_LOGO_PNG,
+  "/assets/brand/parsa-apps-icon-512.png": BRAND_LOGO_PNG,
   "/assets/favicon.svg": BRAND_LOGO_PNG,
   "/favicon.ico": BRAND_LOGO_PNG,
 };
+const APP_SHELL = ["./", "./index.html", "./manifest.json"];
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
