@@ -1,10 +1,10 @@
-/* service worker v17 - AURUM 2.0 theme layer + brand remap */
+/* service worker v18 - AURUM 2.0 theme layer + transparent brand */
 
-const CACHE_NAME = "parsa-apps-v17";
+const CACHE_NAME = "parsa-apps-v18";
 
-/* ===== official 2026 brand logo map (release: brand-2026) ===== */
+/* ===== official 2026 brand logo map (release: brand-2026, transparent) ===== */
 const BRAND_LOGO_PNG =
-  "https://github.com/Parsa-apps/Parsa-apps.github.io/releases/download/brand-2026/parsa-apps-logo-official-2026.png";
+  "https://github.com/Parsa-apps/Parsa-apps.github.io/releases/download/brand-2026/parsa-apps-logo-clear-2026.png";
 const BRAND_MAP = {
   "/assets/brand/parsa-apps-logo-320.webp": BRAND_LOGO_PNG,
   "/assets/brand/parsa-apps-logo-320.png": BRAND_LOGO_PNG,
@@ -49,7 +49,7 @@ function aurumify(response) {
 
 const MAX_CACHE_BYTES = 30 * 1024 * 1024;
 const MAX_ENTRY_BYTES = 2 * 1024 * 1024;
-const META_KEY = "__parsa-meta-v17__";
+const META_KEY = "__parsa-meta-v18__";
 
 async function getMeta(cache) {
   try {
@@ -150,7 +150,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  /* brand logo/icons -> official 2026 asset */
+  /* brand logo/icons -> official 2026 transparent asset */
   const brandTarget = BRAND_MAP[url.pathname];
   if (brandTarget) {
     event.respondWith(
